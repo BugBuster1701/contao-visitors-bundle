@@ -1,0 +1,16 @@
+.git/
+# Transifex
+/.tx/
+#for development in vbox
+/vendor/
+src/vendor/
+src/composer.json
+composer.lock
+#IDE
+.buildpath
+.project
+.settings/
+#Cache
+src/cache/largebrowscap_*/largebrowscap.iniparts.*
+src/cache/largebrowscap_*/largebrowscap.patterns.*
+

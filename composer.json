@@ -1,0 +1,66 @@
+{
+	"name":"bugbuster/contao-visitors-bundle",
+	"description":"Contao 4 bundle, allows you to count hits and visits of your website.",
+	"keywords":["contao","bundle","counter","visits","hits"],
+	"type":"contao-bundle",
+	"homepage":"http://contao.ninja",
+	"license":"LGPL-3.0+",
+	"authors":[
+		{
+			"name":"Glen Langer",
+			"homepage":"http://contao.ninja",
+			"role":"Developer"
+		}
+	],
+	"support":{
+		"issues":"https://github.com/BugBuster1701/contao-visitors-bundle/issues",
+		"irc":"irc://irc.freenode.org/contao.dev",
+		"source":"https://github.com/BugBuster1701/contao-visitors-bundle",
+		"wiki":"http://de.contaowiki.org/Visitors",
+		"forum":"https://community.contao.org/de/forumdisplay.php?28-visitors"
+	},
+	"require":{
+		"php": ">=5.6.0",
+		"contao/core-bundle": "~4.3",
+		"bugbuster/contao-botdetection-bundle":">=0.1.1,<2",
+		"phpoffice/phpexcel":">=1.7.9,<2"
+	},
+	"require-dev": {
+			"contao/manager-plugin": "^2.0"
+	},
+	"conflict": {
+			"contao/manager-plugin": "<2.0 || >=3.0",
+			"symfony/symfony": "3.2.7"
+	},
+	"autoload":{
+			"psr-4": {
+					"BugBuster\\VisitorsBundle\\": "src/"
+		},
+		"classmap": [
+					"src/Resources/contao/"
+		],
+		"exclude-from-classmap": [
+					"src/Resources/contao/config/",
+					"src/Resources/contao/dca/",
+					"src/Resources/contao/languages/",
+					"src/Resources/contao/templates/"
+		]
+	},
+	"extra":{
+		"contao":{
+			"transifex": {
+				"project": "contao-visitors-bundle",
+				"prefix": "master-",
+				"languages_cto": "src/Resources/contao/languages",
+				"languages_tx": ".tx"
+			},
+			"runonce":[
+				"src/runonce/runonce.php"
+			]
+		},
+		"branch-alias": {
+			"dev-develop": "1.1.x-dev"
+		},
+		"contao-manager-plugin": "BugBuster\\VisitorsBundle\\ContaoManager\\Plugin"
+	}
+}
