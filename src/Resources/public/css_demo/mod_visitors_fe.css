@@ -1,0 +1,101 @@
+.mod_visitors {
+    border:1px solid #000000;
+    margin:20px 10px 20px 10px;
+}
+.mod_visitors h1 {
+    margin: 0px 10px 0px 10px;
+}
+
+.mod_visitors .visitor_count {
+	width:0px;
+	height:0px;
+}
+
+.mod_visitors .visitor_name {
+    margin:10px 10px 4px 10px;
+    border-bottom:1px solid #C6AD8D;
+    font-weight:bold;
+}
+.mod_visitors .visitor_name #VisitorsNameLegend {
+	float: left;
+}
+.mod_visitors .visitor_name #VisitorsName {
+	text-align: left;
+}
+
+.mod_visitors .visitor_useronline {
+    margin: 0px 10px 0px 10px;
+    font-weight:bold;
+}
+.mod_visitors .visitor_useronline #VisitorsOnlineCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_useronline #VisitorsOnlineCount {
+	text-align: right;
+}
+
+.mod_visitors .visitor_visitstoday {
+    margin: 0px 10px 0px 10px;
+    font-weight:bold;
+}
+.mod_visitors .visitor_visitstoday #TodayVisitCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_visitstoday #TodayVisitCount {
+	text-align: right;
+}
+
+.mod_visitors .visitor_hitstoday {
+    margin: 0px 10px 0px 10px;
+}
+.mod_visitors .visitor_hitstoday #TodayHitCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_hitstoday #TodayHitCount {
+	text-align: right;
+}
+
+.mod_visitors .visitor_visitstotal {
+    margin: 0px 10px 0px 10px;
+}
+.mod_visitors .visitor_visitstotal #TotalVisitCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_visitstotal #TotalVisitCount {
+	text-align: right;
+}
+
+
+.mod_visitors .visitor_hitstotal {
+    margin: 0px 10px 0px 10px;
+}
+.mod_visitors .visitor_hitstotal #TotalHitCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_hitstotal #TotalHitCount {
+	text-align: right;
+}
+
+.mod_visitors .visitor_average {
+    margin: 0px 10px 0px 10px;
+}
+.mod_visitors .visitor_average #AverageVisitsLegend {
+	float: left;
+}
+.mod_visitors .visitor_average #AverageVisits {
+	text-align: right;
+}
+
+.mod_visitors .visitor_countsince {
+    margin:6px 10px 10px 10px;
+}
+.mod_visitors .visitor_countsince #VisitorsStartDateLegend {
+	float: left;
+    font-weight:bold;
+    font-size:0.8em;
+}
+.mod_visitors .visitor_countsince #VisitorsStartDate {
+	text-align: right;
+    font-weight:bold;
+    font-size:0.8em;
+}
