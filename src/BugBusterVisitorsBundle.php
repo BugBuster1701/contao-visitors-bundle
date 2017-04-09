@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  *
  * @author Glen Langer
  */
-class VisitorsBundle extends Bundle
+class BugBusterVisitorsBundle extends Bundle
 {
 
 }
