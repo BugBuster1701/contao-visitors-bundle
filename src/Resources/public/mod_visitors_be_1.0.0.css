@@ -1,0 +1,121 @@
+/* Style sheet visitors backend */
+.mod_visitors_be_statistics {
+  width:50%;
+  float:left;
+}
+.mod_visitors_be_initial {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_average_nodata {
+  color:#B9B9B9;
+}
+
+.mod_visitors_be_countings {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_chart {
+  width:50%;
+  float:left;
+}
+.mod_visitors_be_chart td {
+	padding-left:0 !important;
+	padding-right:0 !important;
+}
+
+.mod_visitors_be_browser {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_browser_mini {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_browser_other {
+  margin-top:16px;
+}
+.mod_visitors_be_searchenginekeywords {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_searchengines {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_page_visit_hit_top {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_page_visit_hit_days {
+  width:50%;
+  float:left;;	
+}
+
+.mod_visitors_be_page_visit_hit_today {
+  width:50%;
+  float:left;
+}
+
+.mod_visitors_be_page_visit_hit_yesterday {
+  width:50%;
+  float:left;
+}
+.mod_visitors_be_referrer {
+  width:50%;
+  float:left;	
+}
+
+.mod_visitors_be_screen_top_resolution {
+  width:50%;
+  float:left;	
+}
+
+.mod_visitors_be_screen_top_resolution_days {
+  width:50%;
+  float:left;		
+}
+
+.mod_visitors_be_version {
+  
+}
+
+.mod_visitors_be_table { 
+  padding: 0;
+  width: 90%;
+}
+
+.mod_visitors_be_folder 
+{
+	padding:1px 0;
+	border-bottom:1px solid #e9e9e9;
+	background-color:#f6f6f6;
+}
+
+.mod_visitors_be_table_version { 
+  margin: 2px 0 !important;
+  width: 100%;
+  padding: 0;
+}
+
+.mod_visitors_be_table_version td {
+  height:18px;
+  padding-left:6px !important;
+  padding-right:6px !important;
+}
+
+#ctrl_visitors_stat_admins {
+	margin-top: 1px;
+}
+
+.w50h .tl_tip
+{
+    height: auto;
+}
