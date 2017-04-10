@@ -43,9 +43,9 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 		'sorting' => array
 		(
 			'mode'                    => 4,
-			'filter'                  => true,
+			//'filter'                  => true,
 			'fields'                  => array('sorting'),
-			'panelLayout'             => 'search,filter,limit',
+			'panelLayout'             => 'filter;search,limit',
 			'headerFields'            => array('title', 'tstamp'), //, 'visitors_template'
 			'child_record_callback'   => array('BugBuster\Visitors\DcaVisitors', 'listVisitors')
 		),/**
@@ -70,25 +70,25 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['edit'],
 				'href'                => 'act=edit',
-				'icon'                => 'edit.gif'
+				'icon'                => 'edit.svg'
 			),
 			'copy' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['copy'],
 				'href'                => 'act=copy',
-				'icon'                => 'copy.gif'
+				'icon'                => 'copy.svg'
 			),
 			'delete' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['delete'],
 				'href'                => 'act=delete',
-				'icon'                => 'delete.gif',
+				'icon'                => 'delete.svg',
 				'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['MSC']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'toggle' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['toggle'],
-                'icon'                => 'visible.gif',
+                'icon'                => 'visible.svg',
                 'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
                 'button_callback'     => array('BugBuster\Visitors\DcaVisitors', 'toggleIcon')
             ),
@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['show'],
 				'href'                => 'act=show',
-				'icon'                => 'show.gif'
+				'icon'                => 'sshow.svg'
 			)
 		)
 	),
