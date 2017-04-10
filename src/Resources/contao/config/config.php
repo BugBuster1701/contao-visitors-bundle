@@ -31,15 +31,15 @@ define('VISITORS_BE_CSS', '1.0.0');
 $GLOBALS['BE_MOD']['content']['visitors'] = array
 (
 	'tables'     => array('tl_visitors_category', 'tl_visitors'),
-	//'icon'       => 'system/modules/visitors/assets/iconVisitor.png',
-	//'stylesheet' => 'system/modules/visitors/assets/mod_visitors_be_'.VISITORS_BE_CSS.'.css'
+	'icon'       => 'bundles/bugbustervisitors/iconVisitor.png',
+	'stylesheet' => 'bundles/bugbustervisitors/mod_visitors_be_'.VISITORS_BE_CSS.'.css'
 );
 
 $GLOBALS['BE_MOD']['system']['visitorstat'] = array
 (
 	'callback'   => 'Visitors\ModuleVisitorStat',
-	//'icon'       => 'system/modules/visitors/assets/iconVisitor.png',
-	//'stylesheet' => 'system/modules/visitors/assets/mod_visitors_be_'.VISITORS_BE_CSS.'.css'
+	'icon'       => 'bundles/bugbustervisitors/iconVisitor.png',
+	'stylesheet' => 'bundles/bugbustervisitors/mod_visitors_be_'.VISITORS_BE_CSS.'.css'
 );
 
 /**
