@@ -1,0 +1,25 @@
+<div class="mod_visitors_be_screen_top_resolution">
+<!-- ScreenTopResolution::start -->
+<table summary="Table lists countings" class="mod_visitors_be_table">
+			<tbody>
+			<tr>
+				<td colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top'] .'<br>&nbsp;'; ?></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']; ?></td>
+				<td style="padding-left: 2px; text-align: center;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']; ?></td>
+				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></td>
+			</tr>
+<?php if ($this->ScreenTopResolution !== false) : ?>
+	<?php foreach ($this->ScreenTopResolution AS $ScreenTopResolutionRow) : ?>
+			<tr>
+			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?php echo (isset($ScreenTopResolutionRow['v_s_width'])    ? $ScreenTopResolutionRow['v_s_width'] .'x'.$ScreenTopResolutionRow['v_s_height']  : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($ScreenTopResolutionRow['v_s_iwidth'])   ? $ScreenTopResolutionRow['v_s_iwidth'].'x'.$ScreenTopResolutionRow['v_s_iheight'] : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($ScreenTopResolutionRow['v_screen_sum']) ? $ScreenTopResolutionRow['v_screen_sum'] : ''); ?></td>
+			</tr>
+	<?php endforeach; ?>
+<?php endif; ?>
+			</tbody>
+</table>
+<!-- ScreenTopResolution::stop -->
+</div>
