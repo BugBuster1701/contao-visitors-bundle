@@ -148,7 +148,7 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 			'inputType'               => 'radio',
 			'options'                 => array('1', '2'),
 			'reference'               => &$GLOBALS['TL_LANG']['tl_visitors_category'],
-			'sql'                     => "tinyint(3) unsigned NOT NULL default '1'",
+			'sql'                     => "tinyint(1) NOT NULL default '1'",
 			'eval'                    => array('mandatory'=>true)
 		),
 		'visitors_stat_protected'       => array
