@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_visitors_pages'] = array
                 ),
                 'visitors_page_type'  => array
                 (
-                        'sql'         => "tinyint(3) unsigned NOT NULL default '0'",
+                        'sql'         => "tinyint(1) NOT NULL default '0'",
                 ),
             	'visitors_page_visit' => array
             	(
