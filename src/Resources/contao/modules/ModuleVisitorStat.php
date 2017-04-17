@@ -18,6 +18,10 @@
  */
 namespace BugBuster\Visitors;
 
+use BugBuster\Visitors\ModuleVisitorCharts;
+use BugBuster\Visitors\ModuleVisitorStatPageCounter;
+use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
+
 /**
  * Class ModuleVisitorStat
  *
@@ -147,7 +151,7 @@ class ModuleVisitorStat extends \BackendModule
 		if ($intRowsX>0) 
 		{
 			//Vorbereiten Chart
-			$ModuleVisitorCharts = new \Visitors\ModuleVisitorCharts();
+			$ModuleVisitorCharts = new ModuleVisitorCharts();
 			$ModuleVisitorCharts->setName($GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit'].' (<span style="color:red">'.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red'].'</span>)');
 			$ModuleVisitorCharts->setName2($GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit'].' (<span style="color:green">'.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_green'].'</span>)');
 			$ModuleVisitorCharts->setHeight(270); // setMaxvalueHeight + 20 + 20 +10
@@ -212,10 +216,10 @@ class ModuleVisitorStat extends \BackendModule
 				$arrVisitorsChart[$intAnzCounter] = $ModuleVisitorCharts->display(false);
 				
 				//Page Hits
-				$arrVisitorsPageVisitHits[$intAnzCounter]          = \Visitors\ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTop($objVisitorsID,20);
-				$arrVisitorsPageVisitHitsDays[$intAnzCounter]      = \Visitors\ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitDays($objVisitorsID,7,5);
-				$arrVisitorsPageVisitHitsToday[$intAnzCounter]     = \Visitors\ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitToday($objVisitorsID,5);
-				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = \Visitors\ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID,5);
+				$arrVisitorsPageVisitHits[$intAnzCounter]          = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTop($objVisitorsID,20);
+				$arrVisitorsPageVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitDays($objVisitorsID,7,5);
+				$arrVisitorsPageVisitHitsToday[$intAnzCounter]     = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitToday($objVisitorsID,5);
+				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID,5);
 				
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);
@@ -227,8 +231,8 @@ class ModuleVisitorStat extends \BackendModule
 				$arrVisitorsStatReferrer[$intAnzCounter] = $this->getReferrerTop($objVisitorsID);
 				
 				//Screen Resolutions
-				$arrVisitorsScreenTopResolution[$intAnzCounter]     = \Visitors\ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolution($objVisitorsID,20);
-				$arrVisitorsScreenTopResolutionDays[$intAnzCounter] = \Visitors\ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolutionDays($objVisitorsID,20,30);
+				$arrVisitorsScreenTopResolution[$intAnzCounter]     = ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolution($objVisitorsID,20);
+				$arrVisitorsScreenTopResolutionDays[$intAnzCounter] = ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolutionDays($objVisitorsID,20,30);
 				
 				$intAnzCounter++;
 			} //while X next

@@ -18,6 +18,11 @@
  */
 namespace BugBuster\Visitors;
 
+use BugBuster\Visitors\ModuleVisitorChecks;
+use BugBuster\Visitors\ModuleVisitorBrowser3;
+use BugBuster\Visitors\ModuleVisitorSearchEngine;
+use BugBuster\Visitors\ModuleVisitorReferrer;
+
 /**
  * Initialize the system
  */
@@ -122,7 +127,7 @@ class ModuleVisitorsCount extends \Frontend
 	 */
 	protected function visitorCountUpdate($vid, $BlockTime, $visitors_category_id)
 	{
-		$ModuleVisitorChecks = new \Visitors\ModuleVisitorChecks();
+		$ModuleVisitorChecks = new ModuleVisitorChecks();
 		if ($ModuleVisitorChecks->checkBot() === true) 
 		{
 			$this->_BOT = true;
@@ -302,7 +307,7 @@ class ModuleVisitorsCount extends \Frontend
 		    if ( strlen(\Environment::get('httpUserAgent'))>0 ) 
 		    {
 			    /* Variante 3 */
-			    $ModuleVisitorBrowser3 = new \Visitors\ModuleVisitorBrowser3();
+			    $ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
 				$ModuleVisitorBrowser3->initBrowser(\Environment::get('httpUserAgent'),implode(",", \Environment::get('httpAcceptLanguage')));
 				if ($ModuleVisitorBrowser3->getLang() === null) 
 				{
@@ -388,7 +393,7 @@ class ModuleVisitorsCount extends \Frontend
 	 */
 	protected function visitorCheckSearchEngine($vid)
 	{
-		$ModuleVisitorSearchEngine = new \Visitors\ModuleVisitorSearchEngine();
+		$ModuleVisitorSearchEngine = new ModuleVisitorSearchEngine();
 		$ModuleVisitorSearchEngine->checkEngines();
 		$SearchEngine = $ModuleVisitorSearchEngine->getEngine();
 		$Keywords     = $ModuleVisitorSearchEngine->getKeywords();
@@ -428,7 +433,7 @@ class ModuleVisitorsCount extends \Frontend
 		{
 			if ($this->_PF === false) 
 			{
-				$ModuleVisitorReferrer = new \Visitors\ModuleVisitorReferrer();
+				$ModuleVisitorReferrer = new ModuleVisitorReferrer();
 				$ModuleVisitorReferrer->checkReferrer();
 				$ReferrerDNS = $ModuleVisitorReferrer->getReferrerDNS();
 				$ReferrerFull= $ModuleVisitorReferrer->getReferrerFull();

@@ -17,6 +17,8 @@
  */
 namespace BugBuster\Visitors\Stat\Export; 
 
+use BugBuster\Visitors\ModuleVisitorStatPageCounter;
+
 /**
  * Class VisitorsStatExport
  *
@@ -249,7 +251,7 @@ class VisitorsStatExport extends \System
         $objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
         
-        $arrVisitorsPageVisitHits = \Visitors\ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTopDays($VisitorsID,$this->export_days,false);
+        $arrVisitorsPageVisitHits = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTopDays($VisitorsID,$this->export_days,false);
         $row = 1; 
         if (count($arrVisitorsPageVisitHits)>0 && $arrVisitorsPageVisitHits !== false) 
         {

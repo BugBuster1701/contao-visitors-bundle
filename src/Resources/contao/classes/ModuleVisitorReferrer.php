@@ -18,6 +18,7 @@
  */
 namespace BugBuster\Visitors;
 use BugBuster\Visitors\ModuleVisitorLog;
+use BugBuster\Visitors\ForceUTF8\Encoding;
 
 /**
  * Class ModuleVisitorReferrer
@@ -64,7 +65,7 @@ class ModuleVisitorReferrer	extends \System
 	    	$this->_http_referrer  = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : self::REFERRER_UNKNOWN ;
 	    }
 	    //Fixed #206
-	    $this->_http_referrer = \Visitors\ForceUTF8\Encoding::toUTF8( urldecode( $this->_http_referrer ) );
+	    $this->_http_referrer = Encoding::toUTF8( urldecode( $this->_http_referrer ) );
 	    
 	    $this->_referrer_DNS = self::REFERRER_UNKNOWN;
 	    if ($this->_http_referrer == '' || 
