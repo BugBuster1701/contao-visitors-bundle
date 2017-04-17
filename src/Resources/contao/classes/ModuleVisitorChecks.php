@@ -17,7 +17,10 @@
  * Run in a custom namespace, so the class can be replaced
  */
 namespace BugBuster\Visitors;
+
 use BugBuster\Visitors\ModuleVisitorLog;
+use BugBuster\BotDetection\ModuleBotDetection;
+
 
 /**
  * Class ModuleVisitorChecks 
@@ -32,7 +35,7 @@ class ModuleVisitorChecks extends \Frontend
 	/**
 	 * Current version of the class.
 	 */
-	const VERSION           = '3.4';
+	const VERSION           = '4.0';
 	
 	/**
 	 * Spider Bot Check
@@ -41,13 +44,16 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function checkBot() 
 	{
-		if ( !in_array( 'botdetection', \ModuleLoader::getActive() ) )
+	    $bundles = array_keys(\System::getContainer()->getParameter('kernel.bundles')); // old \ModuleLoader::getActive()
+	    
+		if ( !in_array( 'BugBusterBotdetectionBundle', $bundles ) )
 		{
-			//botdetection Modul fehlt, Abbruch
-			$this->log('BotDetection extension required for extension: Visitors!', 'ModuleVisitorChecks checkBot', TL_ERROR);
+			//BugBusterBotdetectionBundle Modul fehlt, Abbruch
+			$this->log('contao-botdetection-bundle extension required for extension: Visitors!', 'ModuleVisitorChecks checkBot', TL_ERROR);
+			ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , print_r($bundles, true) );
 			return false;
 		}
-		$ModuleBotDetection = new \BotDetection\ModuleBotDetection();
+		$ModuleBotDetection = new ModuleBotDetection();
 	    if ($ModuleBotDetection->checkBotAllTests()) 
 	    {
 	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
