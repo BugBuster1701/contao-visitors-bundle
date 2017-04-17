@@ -20,7 +20,7 @@
  var sWidth  = screen.width;
  var sHeight = screen.height;
  
- document.write('<img class="invisible" src="system/modules/visitors/public/ModuleVisitorsScreenCount.php?vcid=<?php echo $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'">');  
+ document.write('<img class="invisible" src="bundles/bugbustervisitors/ModuleVisitorsScreenCount.php?vcid=<?php echo $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'">');  
 </script>
 <?php endforeach; ?>
 </section>

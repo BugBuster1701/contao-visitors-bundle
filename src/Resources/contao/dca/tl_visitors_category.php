@@ -102,7 +102,7 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['stat'],
 				'href'                => 'do=visitorstat',
-				'icon'                => 'system/modules/visitors/assets/iconVisitor.png'
+				'icon'                => 'bundles/bugbustervisitors/iconVisitor.png'
 			)
 		)
 	),

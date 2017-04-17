@@ -82,7 +82,7 @@ class ModuleVisitorReferrerDetails extends \Backend // Backend bringt DB mit
 echo '<!--[if lte IE 7]><link type="text/css" rel="stylesheet" href="system/themes/'.$this->getTheme().'/iefixes.css" media="screen" /><![endif]-->
 ';
 echo '
-<link rel="stylesheet" type="text/css" href="system/modules/visitors/assets/mod_visitors_be_'.VISITORS_BE_CSS.'.css" media="all" />
+<link rel="stylesheet" type="text/css" href="bundles/bugbustervisitors/mod_visitors_be_'.VISITORS_BE_CSS.'.css" media="all" />
 </head>
 <body id="top">
 <div id="main">
