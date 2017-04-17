@@ -111,7 +111,7 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 	'palettes' => array
 	(
 		'__selector__'                => array('visitors_stat_protected'),
-		'default'                     => '{title_legend},title;{cache_legend:hide},visitors_cache_mode;{protected_stat_legend:hide},visitors_stat_protected'
+		'default'                     => '{title_legend},title;{protected_stat_legend:hide},visitors_stat_protected'
 	),
 
 	// Subpalettes
@@ -139,17 +139,6 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 			'inputType'               => 'text',
 			'sql'                     => "varchar(60) NOT NULL default ''",
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>60, 'tl_class'=>'w50')
-		),
-		'visitors_cache_mode' => array
-		(
-			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode'],
-			'exclude'                 => true,
-			'default'                 => '1',
-			'inputType'               => 'radio',
-			'options'                 => array('1', '2'),
-			'reference'               => &$GLOBALS['TL_LANG']['tl_visitors_category'],
-			'sql'                     => "tinyint(1) NOT NULL default '1'",
-			'eval'                    => array('mandatory'=>true)
 		),
 		'visitors_stat_protected'       => array
 		(

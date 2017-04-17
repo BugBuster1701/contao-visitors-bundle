@@ -11,9 +11,6 @@
  * last-updated: 2015-02-10T23:51:51+01:00
  */
 
-$GLOBALS['TL_LANG']['tl_visitors_category']['1']                            = 'Нагрузка подсчета лежит на сервере Contao';
-$GLOBALS['TL_LANG']['tl_visitors_category']['2']                            = 'Подсчитывать браузерами на стороне клиента, (только в режиме кэширования Contao: \'Использовать кэш сервера и кэш браузера\' / \'Использовать кэш браузера\')';
-$GLOBALS['TL_LANG']['tl_visitors_category']['cache_legend']                 = 'Режим подсчета';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['0']                    = 'Копировать категорию';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['1']                    = 'Копировать категорию ID %s';
 $GLOBALS['TL_LANG']['tl_visitors_category']['delete']['0']                  = 'Удалить категорию';
@@ -35,8 +32,6 @@ $GLOBALS['TL_LANG']['tl_visitors_category']['title']['1']                   = '�
 $GLOBALS['TL_LANG']['tl_visitors_category']['title_legend']                 = 'Название';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['0']                  = 'Дата редакции';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['1']                  = 'Дата и время последней редакции';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['0']     = 'Режим подсчета';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['1']     = 'Метод подсчета при кэшировании страниц.';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_admins']['0']    = 'Администраторы';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_admins']['1']    = 'Администраторы имеют неограниченный доступ ко всей статистике посетителей.';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_groups']['0']    = 'Разрешенные группы пользователей';

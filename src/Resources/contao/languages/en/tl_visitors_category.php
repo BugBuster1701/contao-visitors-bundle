@@ -12,9 +12,6 @@
  */
 
 
-$GLOBALS['TL_LANG']['tl_visitors_category']['1']                        = 'Load counting, server side by Contao';
-$GLOBALS['TL_LANG']['tl_visitors_category']['2']                        = 'Read counting, client side by browser (only on Contao cacheMode: server and browser cache / only browser cache)';
-$GLOBALS['TL_LANG']['tl_visitors_category']['cache_legend']             = 'Counting mode';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['0']                = 'Copy category';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['1']                = 'Copy category ID %s';
 $GLOBALS['TL_LANG']['tl_visitors_category']['delete']['0']              = 'Delete category';
@@ -35,8 +32,6 @@ $GLOBALS['TL_LANG']['tl_visitors_category']['title']['1']               = 'Pleas
 $GLOBALS['TL_LANG']['tl_visitors_category']['title_legend']             = 'Title';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['0']              = 'Revision date';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['1']              = 'Date and time of latest revision';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['0'] = 'Counting mode';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['1'] = 'Counting method when pages are cached.';
 $GLOBALS['TL_LANG']['tl_visitors_category']['protected_stat_legend']      = 'Access protection for the statistic';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_protected']['0'] = 'Protect the statistic';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_protected']['1'] = 'Show the visitor statistic for this category to certain user groups only.';

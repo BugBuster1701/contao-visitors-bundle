@@ -12,9 +12,6 @@
  */
 
 
-$GLOBALS['TL_LANG']['tl_visitors_category']['1']                        = 'Liczenie obciążenia, po stronie Contao';
-$GLOBALS['TL_LANG']['tl_visitors_category']['2']                        = 'Liczenie czytelnika, po stronie przeglądarki (tylko z włączonym cacheMode: cache serwera i przeglądarki / tylko cache przeglądarki )';
-$GLOBALS['TL_LANG']['tl_visitors_category']['cache_legend']             = 'Tryb liczenia';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['0']                = 'Kopiuj kategorię';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['1']                = 'Kopiuj kategorię ID %s';
 $GLOBALS['TL_LANG']['tl_visitors_category']['delete']['0']              = 'Usuń kategorię';
@@ -33,6 +30,5 @@ $GLOBALS['TL_LANG']['tl_visitors_category']['title']['1']               = 'Wprow
 $GLOBALS['TL_LANG']['tl_visitors_category']['title_legend']             = 'Tytuł i szablon licznika';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['0']              = 'Data aktualizacji';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['1']              = 'Data i czas ostatniej aktualizacji';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['0'] = 'Tryb liczenia';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['1'] = 'Metoda liczenia gdy strony są buforowane.';
+
 

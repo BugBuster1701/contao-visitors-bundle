@@ -107,8 +107,7 @@ class ModuleVisitorsTag extends \Frontend
 			$objVisitors = \Database::getInstance()
 			        ->prepare("SELECT 
                                     tl_visitors.id AS id, 
-                                    visitors_block_time, 
-                                    visitors_cache_mode
+                                    visitors_block_time
                                 FROM 
                                     tl_visitors 
                                 LEFT JOIN 
@@ -134,19 +133,8 @@ class ModuleVisitorsTag extends \Frontend
 			    	$this->visitorCheckReferrer($objVisitors->id);
 			    }
 			}
-			//Debug log_message('run BOT SE : '.(int)$this->_BOT . '-' . (int)$this->_SE,'debug.log');
-			if ($GLOBALS['TL_CONFIG']['cacheMode'] === 'server' 
-			 || $GLOBALS['TL_CONFIG']['cacheMode'] === 'none'
-			 || $objVisitors->visitors_cache_mode == 1) 
-			{
-			    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'Counted Server: True' );
-				return '<!-- counted -->'; // <img src="system/modules/visitors/assets/leer.gif" alt="" /> // style="width:0px; height:0px; visibility:hidden; display:inline; left:-1000px; overflow:hidden; position:absolute; top:-1000px;"
-			} 
-			else 
-			{
-			    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'Counted Client: True' );
-				return '<img src="system/modules/visitors/public/ModuleVisitorsCount.php?vkatid='.$visitors_category_id.'" alt="" />'; // style="width:0px; height:0px; visibility:hidden; display:inline; left:-1000px; overflow:hidden; position:absolute; top:-1000px;"
-			}
+		    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'Counted Server: True' );
+			return '<!-- counted -->'; 
 		}
 		
 		/* ____  __  ____________  __  ________

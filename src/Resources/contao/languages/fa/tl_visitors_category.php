@@ -11,7 +11,6 @@
  * last-updated: 2015-02-10T23:51:51+01:00
  */
 
-$GLOBALS['TL_LANG']['tl_visitors_category']['cache_legend']                 = 'حالت شمارش';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['0']                    = 'کپی دسته';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['1']                    = 'کپی دسته شناسه %s';
 $GLOBALS['TL_LANG']['tl_visitors_category']['delete']['0']                  = 'حذف دسته';
@@ -29,7 +28,6 @@ $GLOBALS['TL_LANG']['tl_visitors_category']['title']['0']                   = '�
 $GLOBALS['TL_LANG']['tl_visitors_category']['title_legend']                 = 'عنوان';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['0']                  = 'تاریخ بازنگری';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['1']                  = 'تاریخ و ساعت آخرین بازنگری';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['0']     = 'حالت شمارش';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_admins']['0']    = 'مدیرها';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_groups']['0']    = 'گروه‌های کاربری مجاز';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_protected']['0'] = 'حفاظت آمار';

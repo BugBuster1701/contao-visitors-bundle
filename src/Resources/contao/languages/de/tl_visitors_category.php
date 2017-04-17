@@ -12,9 +12,6 @@
  */
 
 
-$GLOBALS['TL_LANG']['tl_visitors_category']['1']                        = 'Last-Zählung, serverseitig durch Contao';
-$GLOBALS['TL_LANG']['tl_visitors_category']['2']                        = 'Lese-Zählung, clientseitig durch Browser (nur im Contao cacheModus: Server- und Browsercache / Nur Browsercache)';
-$GLOBALS['TL_LANG']['tl_visitors_category']['cache_legend']             = 'Zählweise';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['0']                = 'Kategorie duplizieren';
 $GLOBALS['TL_LANG']['tl_visitors_category']['copy']['1']                = 'Kategorie ID %s duplizieren';
 $GLOBALS['TL_LANG']['tl_visitors_category']['delete']['0']              = 'Kategorie löschen';
@@ -35,8 +32,6 @@ $GLOBALS['TL_LANG']['tl_visitors_category']['title']['1']               = 'Bitte
 $GLOBALS['TL_LANG']['tl_visitors_category']['title_legend']             = 'Kategorie';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['0']              = 'Änderungsdatum';
 $GLOBALS['TL_LANG']['tl_visitors_category']['tstamp']['1']              = 'Datum und Uhrzeit der letzten Änderung';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['0'] = 'Zählmodus';
-$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_cache_mode']['1'] = 'Zählweise, wenn die Seiten zwischengespeichert werden.';
 $GLOBALS['TL_LANG']['tl_visitors_category']['protected_stat_legend']        = 'Zugriffsschutz für die Statistik';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_admins']['0']    = 'Administratoren';
 $GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_admins']['1']    = 'Administratoren haben uneingeschränkten Zugriff auf alle Besucherstatistiken.';
