@@ -18,6 +18,10 @@
  */
 namespace BugBuster\Visitors;
 use BugBuster\Visitors\ModuleVisitorLog;
+use BugBuster\Visitors\ModuleVisitorChecks;
+use BugBuster\Visitors\ModuleVisitorBrowser3;
+use BugBuster\Visitors\ModuleVisitorSearchEngine;
+use BugBuster\Visitors\ModuleVisitorReferrer;
 
 /**
  * Class ModuleVisitorsTag 
@@ -386,7 +390,7 @@ class ModuleVisitorsTag extends \Frontend
 	 */
 	protected function visitorCountUpdate($vid, $BlockTime, $visitors_category_id)
 	{
-		$ModuleVisitorChecks = new \Visitors\ModuleVisitorChecks();
+		$ModuleVisitorChecks = new ModuleVisitorChecks();
 		if (!isset($GLOBALS['TL_CONFIG']['mod_visitors_bot_check']) || $GLOBALS['TL_CONFIG']['mod_visitors_bot_check'] !== false) 
 		{
 			if ($ModuleVisitorChecks->checkBot() === true) 
@@ -746,7 +750,7 @@ class ModuleVisitorsTag extends \Frontend
 		    if ( strlen(\Environment::get('httpUserAgent'))>0 ) 
 		    {
 			    /* Variante 3 */
-				$ModuleVisitorBrowser3 = new \Visitors\ModuleVisitorBrowser3();
+				$ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
 				$ModuleVisitorBrowser3->initBrowser(\Environment::get('httpUserAgent'),implode(",", \Environment::get('httpAcceptLanguage')));
 				if ($ModuleVisitorBrowser3->getLang() === null) 
 				{
@@ -825,7 +829,7 @@ class ModuleVisitorsTag extends \Frontend
 	
 	protected function visitorCheckSearchEngine($vid)
 	{
-		$ModuleVisitorSearchEngine = new \Visitors\ModuleVisitorSearchEngine();
+		$ModuleVisitorSearchEngine = new ModuleVisitorSearchEngine();
 		$ModuleVisitorSearchEngine->checkEngines();
 		$SearchEngine = $ModuleVisitorSearchEngine->getEngine();
 		$Keywords     = $ModuleVisitorSearchEngine->getKeywords();
@@ -867,7 +871,7 @@ class ModuleVisitorsTag extends \Frontend
 		{
 			if ($this->_PF === false) 
 			{
-				$ModuleVisitorReferrer = new \Visitors\ModuleVisitorReferrer();
+				$ModuleVisitorReferrer = new ModuleVisitorReferrer();
 				$ModuleVisitorReferrer->checkReferrer();
 				$ReferrerDNS = $ModuleVisitorReferrer->getReferrerDNS();
 				$ReferrerFull= $ModuleVisitorReferrer->getReferrerFull();
