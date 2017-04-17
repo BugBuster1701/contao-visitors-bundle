@@ -247,7 +247,7 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitors_base    = \Environment::get('base');
 		$this->Template->visitors_footer  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['footer'];
 		$this->Template->theme            = $this->getTheme();
-		$this->Template->theme0           = 'default'; // for down0.gif
+		$this->Template->theme0           = 'bundles/bugbustervisitors/flexible'; // for down0.gif
 
 		
 		$this->Template->visitorsanzcounter   	   = $intAnzCounter;
