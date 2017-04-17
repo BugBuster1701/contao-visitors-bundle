@@ -82,7 +82,7 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
                                         `tl_visitors_screen_counter`
                                     WHERE
                                         `vid` = ?
-                                    GROUP BY `v_s_w` , `v_s_h` 
+                                    GROUP BY `v_s_w`, `v_s_h`, `v_s_iw`, `v_s_ih`
                                     ORDER BY v_screen_sum DESC
                                 ")
                         ->limit($limit)
@@ -123,7 +123,7 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
                                         `vid` = ?
                                     AND
                                         `v_date` >= ?
-                                    GROUP BY `v_s_w` , `v_s_h` 
+                                    GROUP BY `v_s_w`, `v_s_h`, `v_s_iw`, `v_s_ih` 
                                     ORDER BY v_screen_sum DESC
                                 ")
                         ->limit($limit)
