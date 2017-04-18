@@ -18,10 +18,12 @@
  */
 namespace BugBuster\Visitors;
 use BugBuster\Visitors\ModuleVisitorLog;
+use BugBuster\Visitors\ModuleVisitorChecks;
 
 /**
  * Initialize the system
  */
+define('TL_SCRIPT', 'ModuleVisitorsScreenCount.php');
 define('TL_MODE', 'FE');
 
 $dir = __DIR__;
@@ -149,7 +151,7 @@ class ModuleVisitorsScreenCount extends \Frontend
 	{
 	    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ': '.print_r($this->_SCREEN, true) );
 	    
-		$ModuleVisitorChecks = new \Visitors\ModuleVisitorChecks();
+		$ModuleVisitorChecks = new ModuleVisitorChecks();
 		if ($ModuleVisitorChecks->checkBot() === true) 
 		{
 			//Debug log_message("visitorCountUpdate BOT=true","debug.log");

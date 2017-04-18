@@ -21,6 +21,7 @@ namespace BugBuster\Visitors;
 /**
  * Initialize the system
  */
+define('TL_SCRIPT', 'ModuleVisitorReferrerDetails.php');
 define('TL_MODE', 'BE');
 
 $dir = __DIR__;

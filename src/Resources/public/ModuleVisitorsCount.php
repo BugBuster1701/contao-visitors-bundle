@@ -3,7 +3,7 @@
 /**
  * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
  * 
- * Modul Visitors Count - Frontend for Counting
+ * Modul Visitors Count - Frontend for Counting over Browser - DEPRECATED, DO NOT USE
  *
  * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
  * @author     Glen Langer (BugBuster)
@@ -26,6 +26,7 @@ use BugBuster\Visitors\ModuleVisitorReferrer;
 /**
  * Initialize the system
  */
+define('TL_SCRIPT', 'ModuleVisitorsCount.php');
 define('TL_MODE', 'FE');
 
 $dir = __DIR__;
@@ -102,6 +103,8 @@ class ModuleVisitorsCount extends \Frontend
 				{
 				    $this->visitorCountUpdate($objVisitors->id, $objVisitors->visitors_block_time, $visitors_category_id);
 				    $this->visitorCheckSearchEngine($objVisitors->id);
+				    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'BOT: '.(int) $this->_BOT);
+				    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'SE : '.(int) $this->_SE);
 				    if ($this->_BOT === false && $this->_SE === false) 
 				    {
 				    	$this->visitorCheckReferrer($objVisitors->id);
@@ -120,6 +123,7 @@ class ModuleVisitorsCount extends \Frontend
 		header('Content-length: 43');
 
 		echo base64_decode('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==');
+		ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'Counted Server: True' );
 	} //function
 	
 	/**
