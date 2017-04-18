@@ -4,11 +4,11 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/de/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/de/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2015-02-10T23:23:51+01:00
+ * last-updated: 2017-04-10T00:36:10+02:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Aktiv';
@@ -39,7 +39,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                             = 'Kategorie';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']                      = 'letzter Monat';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                       = 'letzte Woche';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                         = 'Visitors Modul';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                         = 'Visitors Bundle';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                            = 'Name';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']                         = 'Keine Daten vorhanden für diese Kategorie.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']                    = 'Keine Statistik Daten vorhanden für diesen Zähler.';
