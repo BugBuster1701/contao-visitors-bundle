@@ -867,7 +867,7 @@ class ModuleVisitorsTag extends \Frontend
 	 */
 	protected function visitorCheckReferrer($vid)
 	{
-		if ($this->_VB === false) 
+		if ($this->_HitCounted === true) 
 		{
 			if ($this->_PF === false) 
 			{
