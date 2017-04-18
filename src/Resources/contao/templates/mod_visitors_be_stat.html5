@@ -223,7 +223,7 @@
 			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits60']; ?></td>
 			</tr>
 			<tr>
-				<td colspan="4" style="width: 330px; text-align: center; font-size: 9px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_tipp']; ?></td>
+				<td colspan="4" style="width: 330px; text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_tipp']; ?></td>
 			</tr>
 			</tbody>
 			</table>
@@ -456,7 +456,7 @@
 		</tr>
 <?php else : ?>
 		<tr>
-	    	<td style="text-align: center; font-size: 9px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']; ?></td>
+	    	<td style="text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']; ?></td>
 		</tr>
 <?php endif; ?>
 		</tbody>
@@ -486,7 +486,7 @@
 			</tr>
 	<?php endforeach; ?>
 			<tr>
-	    		<td colspan="3" style="text-align: center; font-size: 9px;"><br><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_data']; ?></td>
+	    		<td colspan="3" style="text-align: center; font-size: 0.75rem;"><br><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_data']; ?></td>
 			</tr>
 <?php endif; ?>
 			</tbody>
