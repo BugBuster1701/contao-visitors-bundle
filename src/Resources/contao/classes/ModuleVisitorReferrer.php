@@ -132,7 +132,7 @@ class ModuleVisitorReferrer	extends \System
 	    }
 
 	    //Special fake and local checks
-	    $this->import('\Visitors\ModuleVisitorChecks','ModuleVisitorChecks');
+	    $this->import('BugBuster\Visitors\ModuleVisitorChecks','ModuleVisitorChecks');
 
 	    if ( $this->ModuleVisitorChecks->isIP4($this->_referrer_DNS) === true 
 	      || $this->ModuleVisitorChecks->isIP6($this->_referrer_DNS) === true) 

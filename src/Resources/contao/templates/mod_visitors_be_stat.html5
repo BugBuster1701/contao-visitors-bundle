@@ -482,7 +482,7 @@
 			<tr>
 			    <td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= (isset($Referrer[0]) ? \Idna::decode($Referrer[0]) : ''); ?></td>
 			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= (isset($Referrer[1]) ? $Referrer[1] : ''); ?></td>
-   			    <td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a onclick="Backend.openModalIframe({'width':780,'height':600,'title':'Details','url':this.href});return false" title="Details" href="<?= $this->visitors_base; ?>system/modules/visitors/public/ModuleVisitorReferrerDetails.php?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/images/show.gif"></a><?php endif; ?></td>
+   			    <td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a onclick="Backend.openModalIframe({'width':780,'height':600,'title':'Details','url':this.href});return false" title="Details" href="<?= $this->visitors_base; ?>bundles/bugbustervisitors/ModuleVisitorReferrerDetails.php?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/images/show.gif"></a><?php endif; ?></td>
 			</tr>
 	<?php endforeach; ?>
 			<tr>
