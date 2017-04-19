@@ -32,7 +32,7 @@ class BackendController extends Controller
      *
      * @Route("/details", name="visitors_backend_details")
      */
-    public function visitordetailsAction()
+    public function detailsAction()
     {
         $this->container->get('contao.framework')->initialize();
 
