@@ -30,7 +30,7 @@ class BackendController extends Controller
      *
      * @return Response
      *
-     * @Route("/visitordetails", name="contao_backend_visitordeatils")
+     * @Route("/visitordetails", name="contao_backend_visitordetails")
      */
     public function visitordetailsAction()
     {
