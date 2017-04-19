@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace BugBuster\BugBusterVisitorsBundle\Controller;
+namespace BugBuster\VisitorsBundle\Controller;
 
 use BugBuster\Visitors\BackendVisitors;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @Route("/visitors", defaults={"_scope" = "backend", "_token_check" = true})
  */
-class BackendController extends Controller
+class VisitorsController extends Controller
 {
     /**
      * Renders the alerts content.
