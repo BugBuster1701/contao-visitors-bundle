@@ -8,9 +8,9 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao\CoreBundle\Controller;
+namespace BugBuster\BugBusterVisitorsBundle\Controller;
 
-use Contao\BackendVisitors;
+use BugBuster\Visitors\BackendVisitors;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Andreas Schempp <https://github.com/aschempp>
  * @author Leo Feyer <https://github.com/leofeyer>
  *
- * @Route("/contao", defaults={"_scope" = "backend", "_token_check" = true})
+ * @Route("/visitors", defaults={"_scope" = "backend", "_token_check" = true})
  */
 class BackendController extends Controller
 {
@@ -30,7 +30,7 @@ class BackendController extends Controller
      *
      * @return Response
      *
-     * @Route("/visitordetails", name="contao_backend_visitordetails")
+     * @Route("/details", name="visitors_backend_details")
      */
     public function visitordetailsAction()
     {

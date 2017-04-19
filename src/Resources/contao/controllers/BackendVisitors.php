@@ -8,7 +8,7 @@
  * @license LGPL-3.0+
  */
 
-namespace Contao;
+namespace BugBuster\Visitors;
 
 use Symfony\Component\HttpFoundation\Response;
 
