@@ -1,0 +1,123 @@
+.mod_visitors {
+    border:1px solid #000000;
+    margin:20px 10px 20px 10px;
+}
+.mod_visitors h1 {
+    margin: 0px 10px 0px 10px;
+}
+
+.mod_visitors .visitor_count {
+	width:0px;
+	height:0px;
+}
+
+.mod_visitors .visitor_name {
+    margin:10px 10px 4px 10px;
+    border-bottom:1px solid #C6AD8D;
+    font-weight:bold;
+}
+.mod_visitors .visitor_name #VisitorsNameLegend {
+	float: left;
+}
+.mod_visitors .visitor_name #VisitorsName {
+	text-align: left;
+}
+
+.mod_visitors .visitor_useronline {
+    float: left;
+    margin: 0px 0px 0px 10px;
+}
+.mod_visitors .visitor_useronline #VisitorsOnlineCountLegend {
+	float: left;
+	margin: 0px 4px 0px 0px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_useronline #VisitorsOnlineCount {
+	float: left;
+	padding: 0px 5px 0px 0px;
+	border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_visitstoday {
+    float: left;
+}
+.mod_visitors .visitor_visitstoday #TodayVisitCountLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_visitstoday #TodayVisitCount {
+    float: left;
+    padding: 0px 5px 0px 0px;
+    border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_hitstoday {
+    float: left;
+}
+.mod_visitors .visitor_hitstoday #TodayHitCountLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_hitstoday #TodayHitCount {
+	float: left;
+    padding: 0px 5px 0px 0px;
+    border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_visitstotal {
+    float: left;
+}
+.mod_visitors .visitor_visitstotal #TotalVisitCountLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_visitstotal #TotalVisitCount {
+	float: left;
+    padding: 0px 5px 0px 0px;
+    border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_hitstotal {
+    float: left;
+}
+.mod_visitors .visitor_hitstotal #TotalHitCountLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_hitstotal #TotalHitCount {
+	float: left;
+    padding: 0px 5px 0px 0px;
+    border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_average {
+    float: left;
+}
+.mod_visitors .visitor_average #AverageVisitsLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_average #AverageVisits {
+	float: left;
+    padding: 0px 5px 0px 0px;
+}
+
+.mod_visitors .visitor_countsince {
+    clear:left;
+    padding:6px 10px 10px 10px;
+}
+.mod_visitors .visitor_countsince #VisitorsStartDateLegend {
+	float: left;
+    font-weight:bold;
+    font-size:0.8em;
+}
+.mod_visitors .visitor_countsince #VisitorsStartDate {
+	text-align: left;
+    font-weight:bold;
+    font-size:0.8em;
+}
