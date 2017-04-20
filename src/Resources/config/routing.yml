@@ -1,3 +1,7 @@
 visitors_backend_details:
     resource: "@BugBusterVisitorsBundle/Controller"
     type: annotation
+
+visitors_frontend_screencount:
+    resource: "@BugBusterVisitorsBundle/Controller"
+    type: annotation
