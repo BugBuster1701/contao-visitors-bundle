@@ -53,6 +53,7 @@ class ModuleVisitorStat extends \BackendModule
 	    parent::__construct();
 	    
 	    \System::loadLanguageFile('tl_visitors_stat_export');
+	    \System::loadLanguageFile('tl_visitors_referrer');
 	    
 	    if (\Input::get('act',true)=='zero') 
 	    {
