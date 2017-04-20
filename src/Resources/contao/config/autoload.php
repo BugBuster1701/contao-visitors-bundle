@@ -30,7 +30,6 @@ ClassLoader::addClasses(array
 	// Public
 	'BugBuster\Visitors\ModuleVisitorsCount'            => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/public/ModuleVisitorsCount.php',
 	'BugBuster\Visitors\ModuleVisitorsScreenCount'      => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/public/ModuleVisitorsScreenCount.php',
-	'BugBuster\Visitors\ModuleVisitorReferrerDetails'   => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/public/ModuleVisitorReferrerDetails.php',
 
 	// Classes
 	'BugBuster\Visitors\ModuleVisitorBrowser3'          => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorBrowser3.php',
