@@ -67,4 +67,5 @@ TemplateLoader::addFiles(array
 	'mod_visitors_be_stat_partial_pagevisithittoday'       => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/templates',
 	'mod_visitors_be_stat_partial_pagevisithityesterday'   => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/templates',
 	'mod_visitors_be_stat'                                 => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/templates',
+	'mod_visitors_be_stat_details_referrer'                => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/templates',
 ));
