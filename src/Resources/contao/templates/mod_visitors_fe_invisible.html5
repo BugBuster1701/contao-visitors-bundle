@@ -1,14 +1,14 @@
 <!-- indexer::stop -->
 <!-- Template for "only counting", no display in Frontend. -->
 <?php foreach ($this->visitors as $visitor): ?>
-<span class="visitor_count invisible">{{cache_visitors::<?php echo $visitor['VisitorsKatID']; ?>::count}}</span>
+<span class="visitor_count invisible">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::count}}</span>
 <script>
  var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth); 
  var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
  var sWidth  = screen.width;
  var sHeight = screen.height;
  
- document.write('<img class="invisible" src="system/modules/visitors/public/ModuleVisitorsScreenCount.php?vcid=<?php echo $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'">');  
+ document.write('<img class="invisible" src="<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'">');  
 </script>
 <?php endforeach; ?>
 <!-- indexer::continue -->
