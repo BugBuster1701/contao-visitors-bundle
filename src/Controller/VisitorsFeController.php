@@ -1,11 +1,11 @@
 <?php
 
-/*
- * This file is part of Contao.
- *
- * Copyright (c) 2005-2017 Leo Feyer
- *
- * @license LGPL-3.0+
+/**
+ * @copyright  Glen Langer 2017 <http://contao.ninja>
+ * @author     Glen Langer (BugBuster)
+ * @package    Visitors
+ * @license    LGPL-3.0+
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 namespace BugBuster\VisitorsBundle\Controller;
@@ -16,10 +16,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Handles the Contao backend routes.
+ * Handles the Visitors front end routes.
  *
- * @author Andreas Schempp <https://github.com/aschempp>
- * @author Leo Feyer <https://github.com/leofeyer>
+ * @copyright  Glen Langer 2017 <http://contao.ninja>
+ * @author     Glen Langer (BugBuster)
  *
  * @Route("/visitors", defaults={"_scope" = "frontend", "_token_check" = false})
  */

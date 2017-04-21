@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Contao Open Source CMS
- *
- * Copyright (c) 2005-2017 Leo Feyer
- *
- * @license LGPL-3.0+
+ * @copyright  Glen Langer 2017 <http://contao.ninja>
+ * @author     Glen Langer (BugBuster)
+ * @package    Visitors
+ * @license    LGPL-3.0+
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 namespace BugBuster\Visitors;
@@ -15,9 +15,9 @@ use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\Visitors\ModuleVisitorChecks;
 
 /**
- * Back end alerts wizard.
+ * Front end visitors wizard.
  *
- * @author Leo Feyer <https://github.com/leofeyer>
+ * @author     Glen Langer (BugBuster)
  */
 class FrontendVisitors extends \Frontend
 {
