@@ -1097,11 +1097,8 @@ class ModuleVisitorsTag extends \Frontend
 	    
 	    if ($PageType == self::PAGE_TYPE_FORBIDDEN)
 	    {
-	        //Page ID von der 403 Seite ermitteln
-	        ////$pageId = $this->visitorGetRootPageFromUrl(false);
-	        ////$objPage = \PageModel::find403ByPid($pageId);
+	        //Page ID von der 403 Seite ermitteln - nicht mehr
 	        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdNormal over 403: '. $PageId);
-	        ////return $objPage->id;
 	        return $PageId; 
 	    }
 	    

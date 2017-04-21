@@ -100,11 +100,6 @@ class FrontendVisitors extends \Frontend
 	    }
 	    
 	    //Pixel und raus hier
-	    //header('Cache-Control: no-cache');
-	    //header('Content-type: image/gif');
-	    //header('Content-length: 43');
-	    
-	    
 	    $objResponse = new Response( base64_decode('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==') );
 	    $objResponse->headers->set('Content-type', 'image/gif');
 	    $objResponse->headers->set('Content-length', 43);

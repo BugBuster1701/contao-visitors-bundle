@@ -491,7 +491,6 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         // Find the matching root pages (thanks to Andreas Schempp)
         $objRootPage = \PageModel::findFirstPublishedRootByHostAndLanguage($host, $visitors_page_lang);
         $objPage = \PageModel::find403ByPid($objRootPage->id);
-        //$objPage = \PageModel::findWithDetails($objPage->id);
         return $objPage->alias;
     }
     
