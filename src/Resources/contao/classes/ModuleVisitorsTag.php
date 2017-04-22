@@ -5,7 +5,7 @@
  * 
  * Modul Visitors Tag - Frontend for InsertTags
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -28,7 +28,7 @@ use Contao\CoreBundle\Monolog\ContaoContext;
 /**
  * Class ModuleVisitorsTag 
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL 

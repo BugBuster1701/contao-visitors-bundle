@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2015 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  * 
  * Modul Visitors Statistic Export 
  * 
- * @copyright	Glen Langer 2015 <http://contao.ninja>
+ * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
  * @package     VisitorsStatisticExport 
  * @license     LGPL 
@@ -22,7 +22,7 @@ use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 /**
  * Class VisitorsStatExport
  *
- * @copyright	Glen Langer 2015 <http://contao.ninja>
+ * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
  * @package     VisitorsStatisticExport 
  */

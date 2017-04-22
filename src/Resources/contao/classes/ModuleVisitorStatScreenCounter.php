@@ -5,7 +5,7 @@
  *
  * Modul Visitors Stat Screen Counter
  *
- * @copyright  Glen Langer 2009..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2009..2014 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL
@@ -21,7 +21,7 @@ namespace BugBuster\Visitors;
 /**
  * Class ModuleVisitorStatScreenCounter
  *
- * @copyright  Glen Langer 2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2014 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  */

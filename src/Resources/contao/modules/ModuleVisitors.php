@@ -1,11 +1,11 @@
 <?php 
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  *
  * Modul Visitors File - Frontend
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -23,7 +23,7 @@ use Contao\CoreBundle\Monolog\ContaoContext;
 /**
  * Class ModuleVisitors 
  *
- * @copyright  Glen Langer 2009..2014
+ * @copyright  Glen Langer 2009..2017
  * @author     Glen Langer 
  * @package    GLVisitors
  * @license    LGPL 

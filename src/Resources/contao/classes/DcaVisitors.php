@@ -5,7 +5,7 @@
  *
  * Contao Module "Visitors" - DCA Helper Class DcaVisitors
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL
@@ -23,7 +23,7 @@ use Contao\CoreBundle\Monolog\ContaoContext;
 /**
  * DCA Helper Class DcaVisitors
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  *

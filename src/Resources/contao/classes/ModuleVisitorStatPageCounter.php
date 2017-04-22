@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2015 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  *
  * Modul Visitors Stat Page Counter
  *
- * @copyright  Glen Langer 2009..2015 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL
@@ -21,7 +21,7 @@ namespace BugBuster\Visitors;
 /**
  * Class ModuleVisitorStatPageCounter
  *
- * @copyright  Glen Langer 2014..2015 <http://contao.ninja>
+ * @copyright  Glen Langer 2014..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  */

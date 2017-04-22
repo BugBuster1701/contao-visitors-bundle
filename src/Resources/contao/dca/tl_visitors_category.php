@@ -7,7 +7,7 @@
  *
  * This is the data container array for table tl_visitors_category.
  *
- * @copyright  Glen Langer 2009..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2009..2014 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
