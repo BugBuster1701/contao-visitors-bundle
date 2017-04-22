@@ -79,7 +79,7 @@ class FrontendVisitors extends \Frontend
                                         pid = ? AND published = ?
                                     ORDER BY id , visitors_name")
                                 ->limit(1)
-                                ->executeUncached($visitors_category_id,1);
+                                ->execute($visitors_category_id,1);
 	            if ($objVisitors->numRows < 1)
 	            {
 	                $this->log($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'], 'ModuleVisitorsScreenCount '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR);
@@ -171,7 +171,7 @@ class FrontendVisitors extends \Frontend
                                     vid = ?
                                 AND
                                     visitors_type = ?")
-                    ->executeUncached($BlockTime, $vid, 's');
+                    ->execute($BlockTime, $vid, 's');
 	     
 	    //Blocker IP lesen, sofern vorhanden
 	    $objVisitBlockerIP = \Database::getInstance()
@@ -181,7 +181,7 @@ class FrontendVisitors extends \Frontend
                                     tl_visitors_blocker
                                 WHERE
                                     visitors_ip = ? AND vid = ? AND visitors_type = ?")
-                    ->executeUncached($ClientIP, $vid, 's');
+                    ->execute($ClientIP, $vid, 's');
 	    //Debug ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':\n'.$objVisitBlockerIP->query );
 	    //Daten lesen, nur Screen Angaben, die Inner Angaben werden jedesmal überschrieben
 	    $objScreenCounter = \Database::getInstance()
@@ -194,7 +194,7 @@ class FrontendVisitors extends \Frontend
                                                         AND vid = ?
                                                         AND v_s_w = ?
                                                         AND v_s_h = ?")
-	                                        ->executeUncached($CURDATE, $vid, $this->_SCREEN['scrw'], $this->_SCREEN['scrh']);
+	                                        ->execute($CURDATE, $vid, $this->_SCREEN['scrw'], $this->_SCREEN['scrh']);
 	     
 	    if ($objScreenCounter->numRows < 1)
 	    {
@@ -209,7 +209,7 @@ class FrontendVisitors extends \Frontend
                                                 visitors_tstamp=CURRENT_TIMESTAMP,
                                                 visitors_ip=?,
                                                 visitors_type=?")
-                                ->executeUncached($vid, $ClientIP, 's');
+                                ->execute($vid, $ClientIP, 's');
 	            // Insert
 	            $arrSet = array
 	            (
@@ -224,7 +224,7 @@ class FrontendVisitors extends \Frontend
 	            \Database::getInstance()
 	                           ->prepare("INSERT IGNORE INTO tl_visitors_screen_counter %s")
 	                           ->set($arrSet)
-	                           ->executeUncached();
+	                           ->execute();
 	            ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ': insert into tl_visitors_screen_counter' );
 	            return ;
 	        }
@@ -239,7 +239,7 @@ class FrontendVisitors extends \Frontend
                                             visitors_tstamp=CURRENT_TIMESTAMP
                                         WHERE
                                             visitors_ip=? AND vid=? AND visitors_type=?")
-                                ->executeUncached($ClientIP, $vid, 's');
+                                ->execute($ClientIP, $vid, 's');
 	            ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ': update tl_visitors_blocker' );
 	            return ;
 	        }
@@ -259,7 +259,7 @@ class FrontendVisitors extends \Frontend
                                                 visitors_tstamp=CURRENT_TIMESTAMP,
                                                 visitors_ip=?,
                                                 visitors_type=?")
-                                ->executeUncached($vid, $ClientIP, 's');
+                                ->execute($vid, $ClientIP, 's');
 	
 	            $objScreenCounter->next();
 	            //Update der Screen Counter, Inner Daten dabei aktualisieren
@@ -275,7 +275,7 @@ class FrontendVisitors extends \Frontend
                                             AND vid = ?
                                             AND v_s_w = ?
                                             AND v_s_h = ?")
-                                ->executeUncached($this->_SCREEN['scriw'],
+                                ->execute($this->_SCREEN['scriw'],
 	                                                $this->_SCREEN['scrih'],
 	                                                $objScreenCounter->v_screen_counter +1,
 	                                                $CURDATE,
@@ -296,7 +296,7 @@ class FrontendVisitors extends \Frontend
                                                 visitors_tstamp=CURRENT_TIMESTAMP
                                             WHERE
                                                 visitors_ip=? AND vid=? AND visitors_type=?")
-                                ->executeUncached($ClientIP, $vid, 's');
+                                ->execute($ClientIP, $vid, 's');
 	            ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ': update tl_visitors_blocker' );
 	        }
 	    }
@@ -318,7 +318,7 @@ class FrontendVisitors extends \Frontend
                                                 pid=? AND published=?
                                             ORDER BY tl_visitors.id, visitors_name")
 	                            ->limit(1)
-	                            ->executeUncached($visitors_category_id,1);
+	                            ->execute($visitors_category_id,1);
 	    while ($objVisitors->next())
 	    {
 	        $GLOBALS['visitors']['debug']['screenresolutioncount'] = (boolean)$objVisitors->visitors_expert_debug_screenresolutioncount;
