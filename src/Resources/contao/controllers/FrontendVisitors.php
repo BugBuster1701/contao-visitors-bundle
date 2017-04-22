@@ -13,6 +13,8 @@ namespace BugBuster\Visitors;
 use Symfony\Component\HttpFoundation\Response;
 use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\Visitors\ModuleVisitorChecks;
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
 
 /**
  * Front end visitors wizard.
@@ -53,7 +55,8 @@ class FrontendVisitors extends \Frontend
 	 */
 	public function run()
 	{
-
+	    $logger = static::getContainer()->get('monolog.logger.contao');
+	    
 	    //Parameter holen
 	    if ((int)\Input::get('vcid')  > 0)
 	    {
@@ -82,7 +85,9 @@ class FrontendVisitors extends \Frontend
                                 ->execute($visitors_category_id,1);
 	            if ($objVisitors->numRows < 1)
 	            {
-	                $this->log($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'], 'ModuleVisitorsScreenCount '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR);
+	                $logger->log(LogLevel::ERROR, 
+	                             $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'], 
+	                             array('contao' => new ContaoContext('ModuleVisitorsScreenCount '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 	            }
 	            else
 	            {
@@ -96,7 +101,9 @@ class FrontendVisitors extends \Frontend
 	    }
 	    else
 	    {
-	        $this->log($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'], 'ModuleVisitorsScreenCount '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR);
+	        $logger->log(LogLevel::ERROR,
+	                     $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
+	                     array('contao' => new ContaoContext('ModuleVisitorsScreenCount '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 	    }
 	    
 	    //Pixel und raus hier
