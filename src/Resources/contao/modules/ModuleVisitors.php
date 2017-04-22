@@ -17,6 +17,8 @@
  * Run in a custom namespace, so the class can be replaced
  */
 namespace BugBuster\Visitors;
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
 
 /**
  * Class ModuleVisitors 
@@ -97,7 +99,12 @@ class ModuleVisitors extends \Module
 		{
 			$this->strTemplate = 'mod_visitors_error';
 			$this->Template = new \FrontendTemplate($this->strTemplate); 
-			$this->log("ModuleVisitors User Error: no published counter found.",'ModulVisitors compile', TL_ERROR);
+
+			\System::getContainer()
+			     ->get('monolog.logger.contao')
+			     ->log(LogLevel::ERROR,
+			           'ModuleVisitors User Error: no published counter found.',
+			           array('contao' => new ContaoContext('ModulVisitors compile ', TL_ERROR)));
 			return;
 		}
        

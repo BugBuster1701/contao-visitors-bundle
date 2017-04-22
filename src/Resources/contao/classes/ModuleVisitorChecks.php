@@ -20,7 +20,8 @@ namespace BugBuster\Visitors;
 
 use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\BotDetection\ModuleBotDetection;
-
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
 
 /**
  * Class ModuleVisitorChecks 
@@ -49,7 +50,11 @@ class ModuleVisitorChecks extends \Frontend
 		if ( !in_array( 'BugBusterBotdetectionBundle', $bundles ) )
 		{
 			//BugBusterBotdetectionBundle Modul fehlt, Abbruch
-			$this->log('contao-botdetection-bundle extension required for extension: Visitors!', 'ModuleVisitorChecks checkBot', TL_ERROR);
+			\System::getContainer()
+			     ->get('monolog.logger.contao')
+			     ->log(LogLevel::ERROR,
+			           'contao-botdetection-bundle extension required for extension: Visitors!',
+			           array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', TL_ERROR)));
 			ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , print_r($bundles, true) );
 			return false;
 		}

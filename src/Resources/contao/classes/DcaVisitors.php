@@ -17,6 +17,8 @@
  * Run in a custom namespace, so the class can be replaced
  */
 namespace BugBuster\Visitors;
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
 
 /**
  * DCA Helper Class DcaVisitors
@@ -95,7 +97,12 @@ class DcaVisitors extends \Backend
         // Check permissions to publish
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_visitors::published', 'alexf'))
         {
-            $this->log('Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"', 'tl_visitors toggleVisibility', TL_ERROR);
+            \System::getContainer()
+                ->get('monolog.logger.contao')
+                ->log(LogLevel::ERROR, 
+                      'Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"', 
+                      array('contao' => new ContaoContext('tl_visitors toggleVisibility', TL_ERROR)));
+            
             $this->redirect('contao/main.php?act=error');
         }
     
