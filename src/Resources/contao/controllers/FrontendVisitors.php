@@ -55,7 +55,7 @@ class FrontendVisitors extends \Frontend
 	 */
 	public function run()
 	{
-	    $logger = static::getContainer()->get('monolog.logger.contao');
+	    $logger = \System::getContainer()->get('monolog.logger.contao');
 	    
 	    //Parameter holen
 	    if ((int)\Input::get('vcid')  > 0)
