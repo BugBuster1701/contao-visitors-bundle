@@ -116,6 +116,10 @@ class ModuleVisitorLog
         {
             $strLog = 'prod-' . date('Y-m-d') . '.log';
         }
+        else 
+        {
+            $strLog = 'prod-' . date('Y-m-d') . '-' . $strLog . '.log';
+        }
         
         $strLogsDir = null;
         
