@@ -45,7 +45,7 @@ class ModuleVisitorLog
                 {
                     $arrUniqid = trimsplit('.', uniqid('c0n7a0',true) );
                     $GLOBALS['visitors']['debug']['first'] = $arrUniqid[1];
-                    log_message(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$method,$line,$value),'visitors_debug.log');
+                    self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$method,$line,$value),'visitors_debug.log');
                     return ;
                 }
                 return ;
@@ -70,37 +70,65 @@ class ModuleVisitorLog
             case "ModuleVisitorsTag":
                 if ($GLOBALS['visitors']['debug']['tag'])
                 {
-                    log_message(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
+                    self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
                 }
                 break;
             case "ModuleVisitorChecks":
                 if ($GLOBALS['visitors']['debug']['checks'])
                 {
-                    log_message(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
+                    self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
                 }
                 break;
             case "ModuleVisitorReferrer":
                 if ($GLOBALS['visitors']['debug']['referrer'])
                 {
-                    log_message(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
+                    self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
                 }
                 break;
             case "ModuleVisitorSearchEngine":
                 if ($GLOBALS['visitors']['debug']['searchengine'])
                 {
-                    log_message(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
+                    self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
                 }
                 break;
             case "ModuleVisitorsScreenCount":
                 if ($GLOBALS['visitors']['debug']['screenresolutioncount'])
                 {
-                    log_message(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
+                    self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug.log');
                 }
                 break;
             default:
-                log_message(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$method,$line,'('.$vclass.')'.$value),'visitors_debug.log');
+                self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$method,$line,'('.$vclass.')'.$value),'visitors_debug.log');
                 break;
         }
         return ;
+    }
+    
+    /**
+     * Wrapper for old log_message
+     * 
+     * @param string $strMessage
+     * @param string $strLogg
+     */
+    public static function logMessage($strMessage, $strLog=null)
+    {
+        if ($strLog === null)
+        {
+            $strLog = 'prod-' . date('Y-m-d') . '.log';
+        }
+        
+        $strLogsDir = null;
+        
+        if (($container = \System::getContainer()) !== null)
+        {
+            $strLogsDir = $container->getParameter('kernel.logs_dir');
+        }
+        
+        if (!$strLogsDir)
+        {
+            $strLogsDir = TL_ROOT . '/var/logs';
+        }
+        
+        error_log(sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage), 3, $strLogsDir . '/' . $strLog);
     }
 }
