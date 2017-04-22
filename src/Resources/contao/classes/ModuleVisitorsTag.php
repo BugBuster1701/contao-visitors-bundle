@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  * 
  * Modul Visitors Tag - Frontend for InsertTags
  *
@@ -10,7 +10,7 @@
  * @licence    LGPL
  * @filesource
  * @package    GLVisitors
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**

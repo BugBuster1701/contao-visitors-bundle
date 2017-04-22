@@ -10,7 +10,7 @@
  * @package    GLVisitors
  * @license    LGPL
  * @filesource
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**

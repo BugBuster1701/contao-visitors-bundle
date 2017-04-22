@@ -1,16 +1,16 @@
 <?php 
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2015 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  * 
  * Modul Visitors Config File
  *
- * @copyright  Glen Langer 2009..2014 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
  * @package    GLVisitors
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 define('VISITORS_VERSION', '1.0');

@@ -1,7 +1,7 @@
 <?php 
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  *
  * Contao Module "Visitors" - DCA Helper Class DcaVisitorsCategory
  *
@@ -10,7 +10,7 @@
  * @package    GLVisitors
  * @license    LGPL
  * @filesource
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**

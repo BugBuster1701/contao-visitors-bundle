@@ -9,7 +9,7 @@
  * @licence    LGPL
  * @filesource
  * @package    Visitors
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 namespace BugBuster\Visitors;
