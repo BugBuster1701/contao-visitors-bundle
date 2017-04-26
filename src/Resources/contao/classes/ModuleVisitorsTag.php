@@ -86,7 +86,7 @@ class ModuleVisitorsTag extends \Frontend
 				return false; // nicht für uns
 			}
 		}
-		$this->loadLanguageFile('tl_visitors');
+		\System::loadLanguageFile('tl_visitors');
 		
 		if (isset($arrTag[1]))
 		{
