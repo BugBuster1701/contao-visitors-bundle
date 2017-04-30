@@ -19,6 +19,8 @@
 namespace BugBuster\Visitors;
 use Psr\Log\LogLevel;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\StringUtil;
+use Contao\Image;
 
 /**
  * DCA Helper Class DcaVisitors
@@ -81,10 +83,10 @@ class DcaVisitors extends \Backend
     
         if (!$row['published'])
         {
-            $icon = 'invisible.gif';
+            $icon = 'invisible.svg';
         }
     
-        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label, 'data-state="' . ($row['published'] ? 1 : 0) . '"').'</a> ';
     }
     
     /**
