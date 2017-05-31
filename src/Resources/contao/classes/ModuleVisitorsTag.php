@@ -1,16 +1,16 @@
 <?php 
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  * 
  * Modul Visitors Tag - Frontend for InsertTags
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
  * @package    GLVisitors
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**
@@ -22,11 +22,13 @@ use BugBuster\Visitors\ModuleVisitorChecks;
 use BugBuster\Visitors\ModuleVisitorBrowser3;
 use BugBuster\Visitors\ModuleVisitorSearchEngine;
 use BugBuster\Visitors\ModuleVisitorReferrer;
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
 
 /**
  * Class ModuleVisitorsTag 
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL 
@@ -84,7 +86,7 @@ class ModuleVisitorsTag extends \Frontend
 				return false; // nicht für uns
 			}
 		}
-		$this->loadLanguageFile('tl_visitors');
+		\System::loadLanguageFile('tl_visitors');
 		
 		if (isset($arrTag[1]))
 		{
@@ -95,7 +97,11 @@ class ModuleVisitorsTag extends \Frontend
 		
 		if (!isset($arrTag[2])) 
 		{
-			$this->log($GLOBALS['TL_LANG']['tl_visitors']['no_key'], 'ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR);
+			\System::getContainer()
+			     ->get('monolog.logger.contao')
+			     ->log(LogLevel::ERROR,
+			           $GLOBALS['TL_LANG']['tl_visitors']['no_key'],
+			           array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 			return false;  // da fehlt was
 		}
 
@@ -120,10 +126,14 @@ class ModuleVisitorsTag extends \Frontend
                                     pid=? AND published=?
                                 ORDER BY id, visitors_name")
                     ->limit(1)
-                    ->executeUncached($visitors_category_id,1);
+                    ->execute($visitors_category_id,1);
 			if ($objVisitors->numRows < 1)
 			{
-			    $this->log($GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'], 'ModulVisitors ReplaceInsertTags', TL_ERROR);
+			    \System::getContainer()
+			         ->get('monolog.logger.contao')
+			         ->log(LogLevel::ERROR,
+			               $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+			               array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 				return false;
 			}
 			while ($objVisitors->next())
@@ -164,10 +174,14 @@ class ModuleVisitorsTag extends \Frontend
                                 pid=? AND published=?
                             ORDER BY id, visitors_name")
                 ->limit(1)
-                ->executeUncached($visitors_category_id,1);
+                ->execute($visitors_category_id,1);
 		if ($objVisitors->numRows < 1)
 		{
-		    $this->log($GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'], 'ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR);
+		    \System::getContainer()
+		          ->get('monolog.logger.contao')
+		          ->log(LogLevel::ERROR,
+		                $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+		                array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 			return false;
 		}
 		$objVisitors->next();
@@ -188,7 +202,7 @@ class ModuleVisitorsTag extends \Frontend
                                         tl_visitors_blocker
                                     WHERE 
                                         vid=? AND visitors_type=?")
-                        ->executeUncached($objVisitors->id,'v');
+                        ->execute($objVisitors->id,'v');
 	            $objVisitorsOnlineCount->next();
 	            $VisitorsOnlineCount = ($objVisitorsOnlineCount->VOC === null) ? 0 : $objVisitorsOnlineCount->VOC;
 				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsOnlineCount,0) : $VisitorsOnlineCount;
@@ -217,7 +231,7 @@ class ModuleVisitorsTag extends \Frontend
                                         tl_visitors_counter
                                     WHERE 
                                         vid=?")
-                        ->executeUncached($objVisitors->id);
+                        ->execute($objVisitors->id);
 				$VisitorsTotalVisitCount = $objVisitors->visitors_visit_start; //startwert
 				if ($objVisitorsTotalCount->numRows > 0) 
 				{
@@ -236,7 +250,7 @@ class ModuleVisitorsTag extends \Frontend
                                         tl_visitors_counter
                                     WHERE 
                                         vid=?")
-                        ->executeUncached($objVisitors->id);
+                        ->execute($objVisitors->id);
 				$VisitorsTotalHitCount   = $objVisitors->visitors_hit_start;   //startwert
 				if ($objVisitorsTotalCount->numRows > 0) 
 				{
@@ -255,7 +269,7 @@ class ModuleVisitorsTag extends \Frontend
                                         tl_visitors_counter
                                     WHERE 
                                         vid=? AND visitors_date=?")
-                        ->executeUncached($objVisitors->id,date('Y-m-d'));
+                        ->execute($objVisitors->id,date('Y-m-d'));
 			    if ($objVisitorsTodaysCount->numRows < 1) 
 			    {
 			    	$VisitorsTodaysVisitCount = 0;
@@ -277,7 +291,7 @@ class ModuleVisitorsTag extends \Frontend
                                         tl_visitors_counter
                                     WHERE 
                                         vid=? AND visitors_date=?")
-                        ->executeUncached($objVisitors->id,date('Y-m-d'));
+                        ->execute($objVisitors->id,date('Y-m-d'));
 			    if ($objVisitorsTodaysCount->numRows < 1) 
 			    {
 			    	$VisitorsTodaysHitCount   = 0;
@@ -304,7 +318,7 @@ class ModuleVisitorsTag extends \Frontend
                                             tl_visitors_counter
                                         WHERE 
                                             vid=? AND visitors_date<?")
-                            ->executeUncached($objVisitors->id,$today);
+                            ->execute($objVisitors->id,$today);
 	    		    if ($objVisitorsAverageCount->numRows > 0) 
 	    		    {
 	                    $objVisitorsAverageCount->next();
@@ -331,7 +345,11 @@ class ModuleVisitorsTag extends \Frontend
 		        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
 		    	if (!isset($arrTag[3])) 
 		    	{
-					$this->log($GLOBALS['TL_LANG']['tl_visitors']['no_param4'], 'ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR);
+					\System::getContainer()
+					       ->get('monolog.logger.contao')
+					       ->log(LogLevel::ERROR,
+					             $GLOBALS['TL_LANG']['tl_visitors']['no_param4'],
+					             array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 					ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , $GLOBALS['TL_LANG']['tl_visitors']['no_param4'] );
 					return false;  // da fehlt was
 				}
@@ -379,7 +397,11 @@ class ModuleVisitorsTag extends \Frontend
 		    	break;
 			default:
 			    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':' .$GLOBALS['TL_LANG']['tl_visitors']['wrong_key'] );
-				$this->log($GLOBALS['TL_LANG']['tl_visitors']['wrong_key'], 'ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR);
+				\System::getContainer()
+				        ->get('monolog.logger.contao')
+				        ->log(LogLevel::ERROR,
+				              $GLOBALS['TL_LANG']['tl_visitors']['wrong_key'],
+				              array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 				return false;
 				break;
 		}
@@ -416,7 +438,7 @@ class ModuleVisitorsTag extends \Frontend
                                 CURRENT_TIMESTAMP - INTERVAL ? SECOND > visitors_tstamp
                                 AND vid = ? 
                                 AND visitors_type = ?")
-                ->executeUncached($BlockTime, $vid, 'v');
+                ->execute($BlockTime, $vid, 'v');
 
 	    //Hit Blocker for IE8 Bullshit and Browser Counting
 	    \Database::getInstance()
@@ -426,7 +448,7 @@ class ModuleVisitorsTag extends \Frontend
                                 CURRENT_TIMESTAMP - INTERVAL ? SECOND > visitors_tstamp
                                 AND vid = ? 
                                 AND visitors_type = ?")
-                ->executeUncached(3, $vid, 'h'); // 3 Sekunden Blockierung zw. Zählung per Tag und Zählung per Browser
+                ->execute(3, $vid, 'h'); // 3 Sekunden Blockierung zw. Zählung per Tag und Zählung per Browser
 	    if ($ModuleVisitorChecks->checkBE() === true) 
 	    {
 	    	$this->_PF = true; // Bad but functionally
@@ -444,7 +466,7 @@ class ModuleVisitorsTag extends \Frontend
                                 visitors_ip = ?
                                 AND vid = ? 
                                 AND visitors_type = ?")
-                ->executeUncached($ClientIP, $vid, 'h');
+                ->execute($ClientIP, $vid, 'h');
 				
 	    //Hits und Visits lesen
 	    $objHitCounter = \Database::getInstance()
@@ -456,7 +478,7 @@ class ModuleVisitorsTag extends \Frontend
                                 tl_visitors_counter
                             WHERE 
                                 visitors_date = ? AND vid = ?")
-                ->executeUncached($CURDATE, $vid);
+                ->execute($CURDATE, $vid);
         //Hits setzen
 	    if ($objHitCounter->numRows < 1) 
 	    {
@@ -483,7 +505,7 @@ class ModuleVisitorsTag extends \Frontend
 			    \Database::getInstance()
 			            ->prepare("INSERT IGNORE INTO tl_visitors_counter %s")
                         ->set($arrSet)
-                        ->executeUncached();
+                        ->execute();
 			    //for page counter
 			    $this->_HitCounted = true;
 	    	} 
@@ -518,7 +540,7 @@ class ModuleVisitorsTag extends \Frontend
                                         visitors_hit=? 
                                     WHERE 
                                         id=?")
-                        ->executeUncached($visitors_hits, $objHitCounter->id);
+                        ->execute($visitors_hits, $objHitCounter->id);
 		    	//for page counter
 		    	$this->_HitCounted = true;
 			} 
@@ -537,7 +559,7 @@ class ModuleVisitorsTag extends \Frontend
                                 tl_visitors_blocker
                             WHERE 
                                 visitors_ip = ? AND vid = ? AND visitors_type = ?")
-                ->executeUncached($ClientIP, $vid, 'v');
+                ->execute($ClientIP, $vid, 'v');
 	    if ($objVisitIP->numRows < 1) 
 	    {
 	        // not blocked: Insert IP + Update Visits
@@ -558,7 +580,7 @@ class ModuleVisitorsTag extends \Frontend
                                     visitors_visit = ?
                                 WHERE 
                                     visitors_date = ? AND vid = ?")
-                    ->executeUncached($visitors_visit, $CURDATE, $vid);
+                    ->execute($visitors_visit, $CURDATE, $vid);
 	        //for page counter
 	        $this->_VisitCounted = true;
 	    } 
@@ -574,7 +596,7 @@ class ModuleVisitorsTag extends \Frontend
                                     visitors_ip = ?
                                     AND vid = ? 
                                     AND visitors_type = ?")
-                    ->executeUncached($ClientIP, $vid, 'v');
+                    ->execute($ClientIP, $vid, 'v');
 	    	$this->_VB = true;
 	    }
 	    
@@ -687,7 +709,7 @@ class ModuleVisitorsTag extends \Frontend
                                             AND
                                                 visitors_page_type = ?
                                             ")
-                                    ->executeUncached($CURDATE, $vid, $objPageId, $objPage->language, $visitors_page_type);
+                                    ->execute($CURDATE, $vid, $objPageId, $objPage->language, $visitors_page_type);
     	    // eventuell $GLOBALS['TL_LANGUAGE']
     	    // oder      $objPage->rootLanguage; // Sprache der Root-Seite
     	    if ($objPageHitVisit->numRows < 1)
@@ -708,7 +730,7 @@ class ModuleVisitorsTag extends \Frontend
         	        \Database::getInstance()
                     	        ->prepare("INSERT IGNORE INTO tl_visitors_pages %s")
                     	        ->set($arrSet)
-                    	        ->executeUncached();
+                    	        ->execute();
     	        }
     	    }
     	    else
@@ -736,7 +758,7 @@ class ModuleVisitorsTag extends \Frontend
                                         WHERE
                                             id = ?
                                         ")
-                            ->executeUncached($visitors_page_hits, 
+                            ->execute($visitors_page_hits, 
                                               $visitors_page_visits, 
                                               $objPageHitVisit->id);
     	    }
@@ -754,8 +776,11 @@ class ModuleVisitorsTag extends \Frontend
 				$ModuleVisitorBrowser3->initBrowser(\Environment::get('httpUserAgent'),implode(",", \Environment::get('httpAcceptLanguage')));
 				if ($ModuleVisitorBrowser3->getLang() === null) 
 				{
-					log_message("ModuleVisitorBrowser3 Systemerror","error.log");
-			    	$this->log("ModuleVisitorBrowser3 Systemerror",'ModulVisitors', TL_ERROR);
+    		    	\System::getContainer()
+    	                   ->get('monolog.logger.contao')
+			    	        ->log(LogLevel::ERROR,
+			    	              'ModuleVisitorBrowser3 Systemerror',
+			    	              array('contao' => new ContaoContext('ModulVisitors', TL_ERROR)));
 				} 
 				else 
 				{
@@ -794,7 +819,7 @@ class ModuleVisitorsTag extends \Frontend
                                             AND visitors_browser = ?
                                             AND visitors_os = ?
                                             AND visitors_lang = ?")
-                            ->executeUncached($vid, $arrBrowser['brversion'], $arrBrowser['Platform'], $arrBrowser['lang']);
+                            ->execute($vid, $arrBrowser['brversion'], $arrBrowser['Platform'], $arrBrowser['lang']);
 				    //setzen
 				    if ($objBrowserCounter->numRows < 1) 
 				    {
@@ -820,7 +845,7 @@ class ModuleVisitorsTag extends \Frontend
 				    	// Update
 				    	\Database::getInstance()
                                 ->prepare("UPDATE tl_visitors_browser SET visitors_counter=? WHERE id=?")
-                                ->executeUncached($visitors_counter, $objBrowserCounter->id);
+                                ->execute($visitors_counter, $objBrowserCounter->id);
 				    }
 			    } // else von NULL
 			} // if strlen
@@ -849,7 +874,7 @@ class ModuleVisitorsTag extends \Frontend
 			    \Database::getInstance()
 			            ->prepare("INSERT INTO tl_visitors_searchengines %s")
                         ->set($arrSet)
-                        ->executeUncached();
+                        ->execute();
 			    // Delete old entries
 			    $CleanTime = mktime(0, 0, 0, date("m")-3, date("d"), date("Y")); // Einträge >= 90 Tage werden gelöscht
 			    \Database::getInstance()
@@ -892,7 +917,7 @@ class ModuleVisitorsTag extends \Frontend
 			        \Database::getInstance()
 			                ->prepare("INSERT INTO tl_visitors_referrer %s")
                             ->set($arrSet)
-                            ->executeUncached();
+                            ->execute();
 				    // Delete old entries
 				    $CleanTime = mktime(0, 0, 0, date("m")-4, date("d"), date("Y")); // Einträge >= 120 Tage werden gelöscht
 				    \Database::getInstance()
@@ -924,7 +949,7 @@ class ModuleVisitorsTag extends \Frontend
                                 pid=? AND published=?
                             ORDER BY tl_visitors.id, visitors_name")
                 ->limit(1)
-                ->executeUncached($visitors_category_id,1);
+                ->execute($visitors_category_id,1);
 	    while ($objVisitors->next())
 	    {
 	        $GLOBALS['visitors']['debug']['tag']          = (boolean)$objVisitors->visitors_expert_debug_tag;
@@ -1052,7 +1077,7 @@ class ModuleVisitorsTag extends \Frontend
     	    $objReaderPage = \Database::getInstance()
                                 ->prepare("SELECT id FROM tl_news_archive WHERE jumpTo=?")
                                 ->limit(1)
-                                ->executeUncached($PageId);
+                                ->execute($PageId);
     	    if ($objReaderPage->numRows > 0)
     	    {
     	        //News Reader
@@ -1067,7 +1092,7 @@ class ModuleVisitorsTag extends \Frontend
 	        $objReaderPage = \Database::getInstance()
                                 ->prepare("SELECT id FROM tl_faq_category WHERE jumpTo=?")
                                 ->limit(1)
-                                ->executeUncached($PageId);
+                                ->execute($PageId);
 	        if ($objReaderPage->numRows > 0)
 	        {
 	            //FAQ Reader
@@ -1097,11 +1122,8 @@ class ModuleVisitorsTag extends \Frontend
 	    
 	    if ($PageType == self::PAGE_TYPE_FORBIDDEN)
 	    {
-	        //Page ID von der 403 Seite ermitteln
-	        ////$pageId = $this->visitorGetRootPageFromUrl(false);
-	        ////$objPage = \PageModel::find403ByPid($pageId);
+	        //Page ID von der 403 Seite ermitteln - nicht mehr
 	        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdNormal over 403: '. $PageId);
-	        ////return $objPage->id;
 	        return $PageId; 
 	    }
 	    
@@ -1133,7 +1155,7 @@ class ModuleVisitorsTag extends \Frontend
             $objNews = \Database::getInstance()
                             ->prepare("SELECT id FROM tl_news WHERE alias=?")
                             ->limit(1)
-                            ->executeUncached($alias);
+                            ->execute($alias);
             if ($objNews->numRows > 0)
             {
                 ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdNews: '. $objNews->id);
@@ -1147,7 +1169,7 @@ class ModuleVisitorsTag extends \Frontend
 	        $objFaq = \Database::getInstance()
                             ->prepare("SELECT id FROM tl_faq WHERE alias=?")
                             ->limit(1)
-                            ->executeUncached($alias);
+                            ->execute($alias);
 	        if ($objFaq->numRows > 0)
 	        {
 	            ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdFaq: '. $objFaq->id);

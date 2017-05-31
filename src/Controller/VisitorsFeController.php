@@ -10,34 +10,34 @@
 
 namespace BugBuster\VisitorsBundle\Controller;
 
-use BugBuster\Visitors\BackendVisitors;
+use BugBuster\Visitors\FrontendVisitors;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Handles the Visitors back end routes.
+ * Handles the Visitors front end routes.
  *
  * @copyright  Glen Langer 2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  *
- * @Route("/visitors", defaults={"_scope" = "backend", "_token_check" = true})
+ * @Route("/visitors", defaults={"_scope" = "frontend", "_token_check" = false})
  */
-class VisitorsController extends Controller
+class VisitorsFeController extends Controller
 {
     /**
      * Renders the alerts content.
      *
      * @return Response
      *
-     * @Route("/details", name="visitors_backend_details")
+     * @Route("/screencount", name="visitors_frontend_screencount")
      */
-    public function detailsAction()
+    public function screencountAction()
     {
         $this->container->get('contao.framework')->initialize();
-
-        $controller = new BackendVisitors();
-
+    
+        $controller = new FrontendVisitors();
+    
         return $controller->run();
     }
 }

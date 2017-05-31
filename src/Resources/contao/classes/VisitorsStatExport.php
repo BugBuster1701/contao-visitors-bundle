@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2015 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  * 
  * Modul Visitors Statistic Export 
  * 
- * @copyright	Glen Langer 2015 <http://contao.ninja>
+ * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
  * @package     VisitorsStatisticExport 
  * @license     LGPL 
@@ -22,7 +22,7 @@ use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 /**
  * Class VisitorsStatExport
  *
- * @copyright	Glen Langer 2015 <http://contao.ninja>
+ * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
  * @package     VisitorsStatisticExport 
  */
@@ -123,9 +123,6 @@ class VisitorsStatExport extends \System
         header('Cache-Control: max-age=0');
         if ($this->BrowserAgent == 'IE')
         {
-            // If you're serving to IE 9, then the following may be needed
-            //header('Cache-Control: max-age=1');
-    
             // If you're serving to IE over SSL, then the following may be needed
             header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
             header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
@@ -145,9 +142,6 @@ class VisitorsStatExport extends \System
         header('Cache-Control: max-age=0');
         if ($this->BrowserAgent == 'IE')
         {
-            // If you're serving to IE 9, then the following may be needed
-            //header('Cache-Control: max-age=1');
-        
             // If you're serving to IE over SSL, then the following may be needed
             header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
             header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified

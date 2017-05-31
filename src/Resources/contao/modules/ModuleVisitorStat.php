@@ -10,7 +10,7 @@
  * @package    GLVisitors
  * @license    LGPL
  * @filesource
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**
@@ -1080,7 +1080,7 @@ class ModuleVisitorStat extends \BackendModule
                                 tl_visitors.pid=? AND published=?
                             ORDER BY id")
                 ->limit(1)
-                ->executeUncached($VisitorsKatID,1);
+                ->execute($VisitorsKatID,1);
 		if ($objVisitors->numRows > 0) 
 		{
 			$objVisitors->next();
@@ -1242,7 +1242,7 @@ class ModuleVisitorStat extends \BackendModule
                                 tl_visitors_blocker
                             WHERE 
                                 vid=? AND visitors_type=?")
-                ->executeUncached($VisitorsID,'v');
+                ->execute($VisitorsID,'v');
 		$objVisitorsOnlineCount->next();
 		return ($objVisitorsOnlineCount->VOC === null) ? 0 : $objVisitorsOnlineCount->VOC;
 	}

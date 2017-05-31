@@ -2,7 +2,7 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2014 Leo Feyer
+ * Copyright (C) 2005-2017 Leo Feyer
  *
  * Formerly known as TYPOlight Open Source CMS.
  * 

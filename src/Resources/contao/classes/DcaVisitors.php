@@ -1,27 +1,31 @@
 <?php 
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  *
  * Contao Module "Visitors" - DCA Helper Class DcaVisitors
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL
  * @filesource
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**
  * Run in a custom namespace, so the class can be replaced
  */
 namespace BugBuster\Visitors;
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\StringUtil;
+use Contao\Image;
 
 /**
  * DCA Helper Class DcaVisitors
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  *
@@ -79,10 +83,10 @@ class DcaVisitors extends \Backend
     
         if (!$row['published'])
         {
-            $icon = 'invisible.gif';
+            $icon = 'invisible.svg';
         }
     
-        return '<a href="'.$this->addToUrl($href).'" title="'.specialchars($title).'"'.$attributes.'>'.$this->generateImage($icon, $label).'</a> ';
+        return '<a href="'.$this->addToUrl($href).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label, 'data-state="' . ($row['published'] ? 1 : 0) . '"').'</a> ';
     }
     
     /**
@@ -95,7 +99,12 @@ class DcaVisitors extends \Backend
         // Check permissions to publish
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_visitors::published', 'alexf'))
         {
-            $this->log('Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"', 'tl_visitors toggleVisibility', TL_ERROR);
+            \System::getContainer()
+                ->get('monolog.logger.contao')
+                ->log(LogLevel::ERROR, 
+                      'Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"', 
+                      array('contao' => new ContaoContext('tl_visitors toggleVisibility', TL_ERROR)));
+            
             $this->redirect('contao/main.php?act=error');
         }
     

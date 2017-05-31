@@ -68,10 +68,9 @@
 		</div>
 	</form>
 	<!-- Export Zeile Ende //-->
-<?php endif; ?>
 </div> <!--  tl_panel cf-->
 <div class="clear"></div>
-
+<?php endif; ?>
 <br> <br>
 <?php if ($this->visitorsanzcounter==0) : ?>
 	<table summary="Table lists records" class="tl_listing">

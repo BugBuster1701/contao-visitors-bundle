@@ -1,16 +1,16 @@
 <?php 
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  * 
  * Modul Visitors SearchEngine - Frontend
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
- * @package    GLVisitors
- * @see	       https://github.com/BugBuster1701/visitors
+ * @package    Visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**
@@ -24,7 +24,7 @@ use BugBuster\Visitors\ModuleVisitorLog;
  * 
  * Check for searchengines in referrer
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL 
@@ -79,6 +79,9 @@ class ModuleVisitorSearchEngine// extends Frontend
     const SEARCH_ENGINE_SNAPDO     = 'Snapdo';
     const SEARCH_ENGINE_SOFTONIC   = 'Softonic';
     const SEARCH_ENGINE_QWANT      = 'Qwant'; // Europa sein Google Ersatz
+    const SEARCH_ENGINE_BENEFIND   = 'Benefind';
+    const SEARCH_ENGINE_WOW        = 'Wow';
+    const SEARCH_ENGINE_AVAST      = 'Avast';
     
     /**
 	 * Reset all properties
@@ -171,6 +174,9 @@ class ModuleVisitorSearchEngine// extends Frontend
 	        $this->checkEngineSnapdo()      ||
 	        $this->checkEngineSoftonic()    ||
 	        $this->checkEngineQwant()       ||
+	        $this->checkEngineBenefind()    ||
+	        $this->checkEngineWow()         ||
+	        $this->checkEngineAvast()       ||
 	            
 	        //last check 
 			$this->checkEngineGeneric()     ||
@@ -697,6 +703,45 @@ class ModuleVisitorSearchEngine// extends Frontend
 	    if (preg_match('/(http|https):\/\/www\.qwant\.com/', $this->_http_referer ))
 	    {
 	        $this->_search_engine = self::SEARCH_ENGINE_QWANT ;
+	        if ( isset($this->_parse_result['q']) )
+	        {
+	            $this->_keywords = $this->_parse_result['q'];
+	        }
+	        return true;
+	    }
+	    return false;
+	}
+	
+	protected function checkEngineBenefind()
+	{
+	    if (preg_match('/(http|https):\/\/www\.benefind\.de/', $this->_http_referer ))
+	    {
+	        $this->_search_engine = self::SEARCH_ENGINE_BENEFIND ;
+	        if ( isset($this->_parse_result['q']) )
+	        {
+	            $this->_keywords = $this->_parse_result['q'];
+	        }
+	        return true;
+	    }
+	    return false;
+	}
+	
+	protected function checkEngineWow()
+	{
+	    if (preg_match('/(http|https):\/\/.*\.wow\.com\//', $this->_http_referer ))
+	    {
+	        $this->_search_engine = self::SEARCH_ENGINE_WOW ;
+	        if ( isset($this->_parse_result['q']) ) { $this->_keywords = $this->_parse_result['q']; }
+	        return true;
+	    }
+	    return false;
+	}
+	
+	protected function checkEngineAvast()
+	{
+	    if (preg_match('/(http|https):\/\/search\.avast\.com/', $this->_http_referer ))
+	    {
+	        $this->_search_engine = self::SEARCH_ENGINE_AVAST ;
 	        if ( isset($this->_parse_result['q']) )
 	        {
 	            $this->_keywords = $this->_parse_result['q'];

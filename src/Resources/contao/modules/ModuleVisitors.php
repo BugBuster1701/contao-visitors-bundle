@@ -1,27 +1,29 @@
 <?php 
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  *
  * Modul Visitors File - Frontend
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
  * @package    GLVisitors
- * @see	       https://github.com/BugBuster1701/visitors 
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle 
  */
 
 /**
  * Run in a custom namespace, so the class can be replaced
  */
 namespace BugBuster\Visitors;
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
 
 /**
  * Class ModuleVisitors 
  *
- * @copyright  Glen Langer 2009..2014
+ * @copyright  Glen Langer 2009..2017
  * @author     Glen Langer 
  * @package    GLVisitors
  * @license    LGPL 
@@ -97,7 +99,12 @@ class ModuleVisitors extends \Module
 		{
 			$this->strTemplate = 'mod_visitors_error';
 			$this->Template = new \FrontendTemplate($this->strTemplate); 
-			$this->log("ModuleVisitors User Error: no published counter found.",'ModulVisitors compile', TL_ERROR);
+
+			\System::getContainer()
+			     ->get('monolog.logger.contao')
+			     ->log(LogLevel::ERROR,
+			           'ModuleVisitors User Error: no published counter found.',
+			           array('contao' => new ContaoContext('ModulVisitors compile ', TL_ERROR)));
 			return;
 		}
        

@@ -12,13 +12,13 @@
  */
 
 
-//$GLOBALS['TL_LANG']['tl_visitors_stat_export']['all_months']                = 'All months';
-//$GLOBALS['TL_LANG']['tl_visitors_stat_export']['all_years']                 = 'All years';
+//old $GLOBALS['TL_LANG']['tl_visitors_stat_export']['all_months']                = 'All months';
+//old $GLOBALS['TL_LANG']['tl_visitors_stat_export']['all_years']                 = 'All years';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv']                       = 'CSV .csv';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['excel']                     = 'Excel .xlsx';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['opendocument']              = 'OpenDocument .ods';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export']                    = 'Export';
-//$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_button_title']       = 'The Button opens a new window.';
+//old $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_button_title']       = 'The Button opens a new window.';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_category']     = 'Category';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_id']           = 'ID';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_name']         = 'Name';
@@ -31,7 +31,7 @@ $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_title']              = 'V
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_page_title']         = 'Page Statistic';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format']                    = 'Format';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['number_of_days']            = 'Number of days';
-//$GLOBALS['TL_LANG']['tl_visitors_stat_export']['month']                     = 'Month';
+//old $GLOBALS['TL_LANG']['tl_visitors_stat_export']['month']                     = 'Month';
 $GLOBALS['TL_LANG']['tl_visitors_stat_export']['statistics_export']         = 'Statistics export';
-//$GLOBALS['TL_LANG']['tl_visitors_stat_export']['year']                      = 'Year';
+//old $GLOBALS['TL_LANG']['tl_visitors_stat_export']['year']                      = 'Year';
 

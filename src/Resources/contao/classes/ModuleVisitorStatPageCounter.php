@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2015 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  *
  * Modul Visitors Stat Page Counter
  *
- * @copyright  Glen Langer 2009..2015 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL
  * @filesource
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**
@@ -21,7 +21,7 @@ namespace BugBuster\Visitors;
 /**
  * Class ModuleVisitorStatPageCounter
  *
- * @copyright  Glen Langer 2014..2015 <http://contao.ninja>
+ * @copyright  Glen Langer 2014..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  */
@@ -491,7 +491,6 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         // Find the matching root pages (thanks to Andreas Schempp)
         $objRootPage = \PageModel::findFirstPublishedRootByHostAndLanguage($host, $visitors_page_lang);
         $objPage = \PageModel::find403ByPid($objRootPage->id);
-        //$objPage = \PageModel::findWithDetails($objPage->id);
         return $objPage->alias;
     }
     

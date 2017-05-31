@@ -1,16 +1,16 @@
 <?php 
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2014 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
  * 
  * Modul Visitors Checks - Frontend
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
  * @package    GLVisitors
- * @see	       https://github.com/BugBuster1701/visitors
+ * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 /**
@@ -20,12 +20,13 @@ namespace BugBuster\Visitors;
 
 use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\BotDetection\ModuleBotDetection;
-
+use Psr\Log\LogLevel;
+use Contao\CoreBundle\Monolog\ContaoContext;
 
 /**
  * Class ModuleVisitorChecks 
  *
- * @copyright  Glen Langer 2012..2014 <http://www.contao.glen-langer.de>
+ * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    GLVisitors
  * @license    LGPL 
@@ -49,7 +50,11 @@ class ModuleVisitorChecks extends \Frontend
 		if ( !in_array( 'BugBusterBotdetectionBundle', $bundles ) )
 		{
 			//BugBusterBotdetectionBundle Modul fehlt, Abbruch
-			$this->log('contao-botdetection-bundle extension required for extension: Visitors!', 'ModuleVisitorChecks checkBot', TL_ERROR);
+			\System::getContainer()
+			     ->get('monolog.logger.contao')
+			     ->log(LogLevel::ERROR,
+			           'contao-botdetection-bundle extension required for extension: Visitors!',
+			           array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', TL_ERROR)));
 			ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , print_r($bundles, true) );
 			return false;
 		}
