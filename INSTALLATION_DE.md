@@ -10,6 +10,8 @@ Es gibt zwei Arten der Installation.
 
 * Suche das Paket: `bugbuster/contao-visitors-bundle`
 * Installation der Erweiterung
+* Klick auf "Install Tool"
+* Anmelden und Datenbank Update durchführen
 
 
 ## Installation über die Kommandozeile
@@ -19,6 +21,8 @@ Es gibt zwei Arten der Installation.
 Installation in einer Composer-basierenden Contao 4.3+ Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle"`
+* Aufruf https://deinedomain/contao/install
+* Datenbank Update durchführen
 
 
 ### Installation in einer Contao Standard-Edition
@@ -35,4 +39,5 @@ Cache leeren und neu anlegen lassen:
 
 * `vendor/bin/contao-console cache:clear --env=prod`
 * `vendor/bin/contao-console cache:warmup -e prod`
-
+* Aufruf https://deinedomain/contao/install
+* Datenbank Update durchführen

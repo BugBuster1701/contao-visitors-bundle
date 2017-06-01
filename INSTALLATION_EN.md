@@ -10,6 +10,8 @@ There are two types of installation.
 
 * search for package: `bugbuster/contao-visitors-bundle`
 * install the package
+* Click on "Install Tool"
+* Login and update the database
 
 
 ## Installation via command line
@@ -19,6 +21,8 @@ There are two types of installation.
 Installation in a Composer-based Contao 4.3+ Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle"`
+* Call http://yourdomain/contao/install
+* Login and update the database
 
 
 ### Installation for Contao Standard-Edition
@@ -35,4 +39,6 @@ Clears the cache and warms up an empty cache:
 
 * `vendor/bin/contao-console cache:clear --env=prod`
 * `vendor/bin/contao-console cache:warmup -e prod`
+* Call http://yourdomain/contao/install
+* Login and update the database
 
