@@ -2,7 +2,7 @@
 
 There are two types of installation.
 
-* with the Contao-Manger, only for Contao Managed-Editon
+* with the Contao-Manager, only for Contao Managed-Editon
 * via the command line, for Contao Standard-Edition and Managed-Editon
 
 
