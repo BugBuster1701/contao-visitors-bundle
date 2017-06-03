@@ -37,7 +37,7 @@ $GLOBALS['BE_MOD']['content']['visitors'] = array
 
 $GLOBALS['BE_MOD']['system']['visitorstat'] = array
 (
-	'callback'   => 'Visitors\ModuleVisitorStat',
+	'callback'   => 'BugBuster\Visitors\ModuleVisitorStat',
 	'icon'       => 'bundles/bugbustervisitors/iconVisitor.png',
 	'stylesheet' => 'bundles/bugbustervisitors/mod_visitors_be_'.VISITORS_BE_CSS.'.css'
 );
@@ -49,7 +49,7 @@ $GLOBALS['BE_MOD']['system']['visitorstat'] = array
  */
 array_insert($GLOBALS['FE_MOD']['miscellaneous'], 0, array
 (
-	'visitors' => 'Visitors\ModuleVisitors',
+	'visitors' => 'BugBuster\Visitors\ModuleVisitors',
 ));
 
 /**
@@ -57,4 +57,4 @@ array_insert($GLOBALS['FE_MOD']['miscellaneous'], 0, array
  * HOOKS
  * -------------------------------------------------------------------------
  */
-$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('Visitors\ModuleVisitorsTag', 'replaceInsertTagsVisitors');
+$GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('BugBuster\Visitors\ModuleVisitorsTag', 'replaceInsertTagsVisitors');
