@@ -16,7 +16,6 @@ Installation Guide (EN): [INSTALLATION_EN.md](INSTALLATION_EN.md)
 Installationsanleitung (DE): [INSTALLATION_DE.md](INSTALLATION_DE.md)
 
 ## User guide
-Notice: This user guide is for the old Contao 3 extension. The new user guide follows later.
 
 * English: https://docs.contao.ninja/en/visitors.html
 * German: https://docs.contao.ninja/de/visitors.html

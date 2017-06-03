@@ -4,11 +4,11 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/ru/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/ru/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2015-02-10T23:35:02+01:00
+ * last-updated: 2017-04-10T00:36:10+02:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Активные';
@@ -39,7 +39,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                             = 'Категория';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']                      = 'В прошлом месяце';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                       = 'На прошлой неделе';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                         = 'Модуль посетители';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                         = 'Пакет посетителей';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                            = 'Название';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']                         = 'Нет доступных данных для этой категории.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']                    = 'Нет статистических данных для этого счетчика.';
