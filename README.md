@@ -1,4 +1,4 @@
-# Contao Visitors Bundle
+# Contao 4 Visitors Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) [![Latest Unstable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/unstable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
 
@@ -7,7 +7,13 @@
 
 ## About
 
-A Contao counter extension for hits and visits
+A Contao 4 counter extension for hits and visits
+
+## Installation
+
+Installation Guide (EN): [INSTALLATION_EN.md](INSTALLATION_EN.md)
+
+Installationsanleitung (DE): [INSTALLATION_DE.md](INSTALLATION_DE.md)
 
 ## User guide
 

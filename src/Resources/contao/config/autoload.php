@@ -10,46 +10,6 @@
 
 
 /**
- * Register the namespaces
- */
-ClassLoader::addNamespaces(array
-(
-	'BugBuster',
-));
-
-
-/**
- * Register the classes
- */
-ClassLoader::addClasses(array
-(
-	// Modules
-	'BugBuster\Visitors\ModuleVisitorStat'              => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/modules/ModuleVisitorStat.php',
-	'BugBuster\Visitors\ModuleVisitors'                 => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/modules/ModuleVisitors.php',
-
-	// Public
-	'BugBuster\Visitors\ModuleVisitorsCount'            => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/public/ModuleVisitorsCount.php',
-	'BugBuster\Visitors\ModuleVisitorsScreenCount'      => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/public/ModuleVisitorsScreenCount.php',
-
-	// Classes
-	'BugBuster\Visitors\ModuleVisitorBrowser3'          => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorBrowser3.php',
-	'BugBuster\Visitors\ModuleVisitorStatScreenCounter' => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorStatScreenCounter.php',
-	'BugBuster\Visitors\DcaModuleVisitors'              => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/DcaModuleVisitors.php',
-	'BugBuster\Visitors\DcaVisitors'                    => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/DcaVisitors.php',
-	'BugBuster\Visitors\DcaVisitorsCategory'            => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/DcaVisitorsCategory.php',
-	'BugBuster\Visitors\ModuleVisitorStatPageCounter'   => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorStatPageCounter.php',
-	'BugBuster\Visitors\ModuleVisitorSearchEngine'      => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorSearchEngine.php',
-	'BugBuster\Visitors\ModuleVisitorsTag'              => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorsTag.php',
-	'BugBuster\Visitors\ModuleVisitorLog'               => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorLog.php',
-	'BugBuster\Visitors\ModuleVisitorReferrer'          => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorReferrer.php',
-	'BugBuster\Visitors\ModuleVisitorCharts'            => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorCharts.php',
-	'BugBuster\Visitors\ModuleVisitorChecks'            => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/ModuleVisitorChecks.php',
-	'BugBuster\Visitors\Stat\Export\VisitorsStatExport' => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/VisitorsStatExport.php',
-	'BugBuster\Visitors\ForceUTF8\Encoding'             => 'vendor/bugbuster/contao-visitors-bundle/src/Resources/contao/classes/Encoding.php',
-));
-
-
-/**
  * Register the templates
  */
 TemplateLoader::addFiles(array
