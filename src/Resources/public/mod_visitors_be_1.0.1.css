@@ -119,3 +119,14 @@
 {
     height: auto;
 }
+
+/* Limit Toggler */
+.visitors_toggler {
+	border-bottom: 0 none;
+	padding: 0;
+}
+
+.visitors_toggler .limit_toggler button span {
+	color: green;
+	font-weight: bold;
+}
