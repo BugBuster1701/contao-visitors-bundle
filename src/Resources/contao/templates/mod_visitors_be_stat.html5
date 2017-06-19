@@ -87,6 +87,7 @@
 <!-- Schleife ueber alle Counter -->
 <?php for ($vcid=0; $vcid<$this->visitorsanzcounter; $vcid++) : ?>
 <div class="tl_listing list_view">
+  <div class="tl_listing_container">
 	<table style="width: 100%;">
 	<tbody>
 	<tr>
@@ -110,6 +111,7 @@
 	</tr>
 	</tbody>
 	</table>
+  </div>
 <?php if ($this->visitorsstatTotals[$vcid]['VisitorsTotalVisitCount'] >0) : ?>
 <?php if ($this->visitorskatid>0) : ?>
     <div class="tl_listing_container">
