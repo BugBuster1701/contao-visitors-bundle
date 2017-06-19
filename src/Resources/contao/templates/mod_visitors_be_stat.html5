@@ -86,8 +86,8 @@
 <?php endif; ?>
 <!-- Schleife ueber alle Counter -->
 <?php for ($vcid=0; $vcid<$this->visitorsanzcounter; $vcid++) : ?>
-<div class="tl_listing_container list_view">
-	<table class="tl_listing">
+<div class="tl_listing list_view">
+	<table style="width: 100%;">
 	<tbody>
 	<tr>
 	    <td style="width: 320px; padding-left: 2px;"                     class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']; ?></td>
@@ -112,7 +112,7 @@
 	</table>
 <?php if ($this->visitorsstatTotals[$vcid]['VisitorsTotalVisitCount'] >0) : ?>
 <?php if ($this->visitorskatid>0) : ?>
-    <div class="tl_listing">
+    <div class="tl_listing_container">
         <div class="mod_visitors_be_statistics">
 			<table summary="Table lists statistik" class="mod_visitors_be_table">
 			<tbody>
@@ -278,7 +278,7 @@
         </div>
 	</div> <!-- 2 -->
 	<div style="clear:left;"></div><hr>
-	<div class="tl_listing">
+	<div class="tl_listing_container">
 		<div class="mod_visitors_be_countings">
 			<table  class="mod_visitors_be_table">
 			<tbody>
