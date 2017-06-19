@@ -73,7 +73,7 @@
 <?php endif; ?>
 <br> <br>
 <?php if ($this->visitorsanzcounter==0) : ?>
-	<table summary="Table lists records" class="tl_listing">
+	<table class="tl_listing">
 	<tbody>
 	<tr>
 	    <td class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']; ?></td>
@@ -86,8 +86,9 @@
 <?php endif; ?>
 <!-- Schleife ueber alle Counter -->
 <?php for ($vcid=0; $vcid<$this->visitorsanzcounter; $vcid++) : ?>
-<div class="tl_listing_container list_view">
-	<table summary="Table lists records" class="tl_listing">
+<div class="tl_listing list_view">
+  <div class="tl_listing_container">
+	<table style="width: 100%;">
 	<tbody>
 	<tr>
 	    <td style="width: 320px; padding-left: 2px;"                     class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']; ?></td>
@@ -110,9 +111,10 @@
 	</tr>
 	</tbody>
 	</table>
+  </div>
 <?php if ($this->visitorsstatTotals[$vcid]['VisitorsTotalVisitCount'] >0) : ?>
 <?php if ($this->visitorskatid>0) : ?>
-    <div class="tl_listing">
+    <div class="tl_listing_container">
         <div class="mod_visitors_be_statistics">
 			<table summary="Table lists statistik" class="mod_visitors_be_table">
 			<tbody>
@@ -278,9 +280,9 @@
         </div>
 	</div> <!-- 2 -->
 	<div style="clear:left;"></div><hr>
-	<div class="tl_listing">
+	<div class="tl_listing_container">
 		<div class="mod_visitors_be_countings">
-			<table summary="Table lists countings" class="mod_visitors_be_table">
+			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
 			    <td style="width:    120px; padding-left:  2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']; ?></td>
@@ -305,20 +307,22 @@
 	</div> <!-- 3 -->
 	<div style="clear:left;"></div><hr>
 	
-	<div class="tl_listing limit_height h88 block">
-		<?= $this->visitorsstatPageVisitHits[$vcid]; ?>
-		<?= $this->visitorsstatPageVisitHitsDays[$vcid]; ?>
-		<div style="clear:left;"><br></div>	
-		<?= $this->visitorsstatPageVisitHitsToday[$vcid]; ?>
-		<?= $this->visitorsstatPageVisitHitsYesterday[$vcid]; ?>
+	<div class="tl_content tl_listing_container list_view visitors_toggler">
+		<div class="tl_listing limit_height h100 block">
+			<?= $this->visitorsstatPageVisitHits[$vcid]; ?>
+			<?= $this->visitorsstatPageVisitHitsDays[$vcid]; ?>
+			<div style="clear:left;"><br></div>	
+			<?= $this->visitorsstatPageVisitHitsToday[$vcid]; ?>
+			<?= $this->visitorsstatPageVisitHitsYesterday[$vcid]; ?>
+		</div>
 	</div>
 	<div style="clear:left;"></div><hr>
 	
 	
-	
-	<div class="tl_listing limit_height h88 block"> 
+	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	  <div class="tl_listing limit_height h100 block"> 
 		<div class="mod_visitors_be_browser">
-			<table summary="Table lists countings" class="mod_visitors_be_table">
+			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
 				<td colspan="5"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top20']; ?></td>
@@ -352,7 +356,7 @@
 		</div>
 		<div class="mod_visitors_be_browser_mini">
 			<div class="mod_visitors_be_browser2">
-				<table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left:auto;">
+				<table  class="mod_visitors_be_table" style="margin-left:auto;">
 				<tbody>
 				<tr style="height: 25px;">
 					<td colspan="2"  style="height: 19px; padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top10']; ?></td>
@@ -372,7 +376,7 @@
 				</table>
 			</div>
 			<div class="mod_visitors_be_browser_other"> <!-- Unknown -->
-				<table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left:auto;">
+				<table  class="mod_visitors_be_table" style="margin-left:auto;">
 				<tbody>
 				<tr>
 					<td colspan="2"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_definition']; ?></td>
@@ -399,12 +403,14 @@
 				</table>
 			</div>
 		</div>
+	  </div>
 	</div> <!-- 4 -->
 	<div style="clear:left;"></div>
 	<hr>
-	<div class="tl_listing limit_height h88 block"> 
+	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	  <div class="tl_listing limit_height h100 block"> 
 		<div class="mod_visitors_be_searchenginekeywords">
-			<table summary="Table lists countings" class="mod_visitors_be_table">
+			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
 				<td colspan="3"  style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchenginekeywords_top']; ?></td>
@@ -427,7 +433,7 @@
 			</table>
 		</div>
 		<div class="mod_visitors_be_searchengines"> 
-			<table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left:auto;">
+			<table  class="mod_visitors_be_table" style="margin-left:auto;">
 			<tbody>
 			<tr>
 				<td colspan="2"  style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengines_top']; ?></td>
@@ -447,7 +453,7 @@
 			</tbody>
 			</table>
 		</div>
-		<table summary="Table lists records" class="tl_listing">
+		<table class="tl_listing">
 		<tbody>
 <?php if ($this->visitorssearchengine === false) : ?>
 		<tr>
@@ -460,13 +466,14 @@
 <?php endif; ?>
 		</tbody>
 		</table>
+	  </div>
 	</div> <!-- 5 -->
 	<div style="clear:left;"></div>	
 	<hr>
-	
-	<div class="tl_listing limit_height h88 block"> 
+	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	  <div class="tl_listing limit_height h100 block"> 
 		<div class="mod_visitors_be_referrer">
-			<table summary="Table lists countings" class="mod_visitors_be_table">
+			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
 				<td colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_top']; ?></td>
@@ -491,20 +498,23 @@
 			</tbody>
 			</table>
 		</div>
+	  </div>
 	</div> <!-- 6 -->
 	<div style="clear:left;"></div>
 	
 	<!-- Screen resolution -->
 	<hr>
-	<div class="tl_listing limit_height h88 block">
-		<?= $this->visitorsstatScreenTop[$vcid]; ?>
-		<?= $this->visitorsstatScreenTopDays[$vcid]; ?>
+	<div class="tl_content tl_listing_container list_view visitors_toggler">
+		<div class="tl_listing limit_height h140 block">
+			<?= $this->visitorsstatScreenTop[$vcid]; ?>
+			<?= $this->visitorsstatScreenTopDays[$vcid]; ?>
+		</div>
 	</div>
 	<div style="clear:left;"></div>
 		
 <?php endif; ?>
 <?php else : ?>
-	    <table summary="Table lists records" class="tl_listing">
+	    <table class="tl_listing">
 		<tbody>
 		<tr>
 		    <td class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']; ?></td>
