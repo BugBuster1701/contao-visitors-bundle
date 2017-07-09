@@ -3,7 +3,7 @@
 <div class="clear"></div>
 <div class="tl_panel cf">
 	<!-- Kategorie Zeile //-->
-	<form method="post" class="tl_form" action="<?= $this->visitors_base_be ?>/main.php?do=visitorstat">
+	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
 	<div class="tl_submit_panel tl_subpanel">
 		<input type="image" alt="<?= specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" title="<?= specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" class="tl_img_submit" src="system/themes/<?= $this->theme ?>/images/reload.gif" value="statistics" id="filter" name="filter">
 	</div>
@@ -26,7 +26,7 @@
 <?php if ($this->visitorskatid>0 && $this->visitorsanzcounter>0) : ?>
 <div class="tl_panel cf">	
 	<!-- Export Zeile //-->
-	<form method="post" class="tl_form" action="<?= $this->visitors_base_be ?>/main.php?do=visitorstat">
+	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
 		<input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
 		<input type="hidden" name="act" value="export">
 		<input type="hidden" name="catid" value="<?= $this->visitorskatid ?>">
