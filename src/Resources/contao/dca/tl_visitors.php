@@ -96,7 +96,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['show'],
 				'href'                => 'act=show',
-				'icon'                => 'sshow.svg'
+				'icon'                => 'show.svg'
 			)
 		)
 	),
