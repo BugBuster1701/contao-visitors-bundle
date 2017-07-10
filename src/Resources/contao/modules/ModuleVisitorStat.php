@@ -7,7 +7,7 @@
  * 
  * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    GLVisitors
+ * @package    Visitors
  * @license    LGPL
  * @filesource
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -21,13 +21,14 @@ namespace BugBuster\Visitors;
 use BugBuster\Visitors\ModuleVisitorCharts;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
+use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
 
 /**
  * Class ModuleVisitorStat
  *
  * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    GLVisitors
+ * @package    Visitors
  * @todo       Must be completely rewritten.
  */
 class ModuleVisitorStat extends \BackendModule
@@ -162,7 +163,7 @@ class ModuleVisitorStat extends \BackendModule
 			while ($objVisitorsX->next()) 
 			{
 		        // 14 Tages Stat [0..13] und Vorgabewerte [100,104,110] (ehemals 7)
-		        $arrVisitorsStatDays[$intAnzCounter]    = $this->getSevenDays($this->intKatID,$objVisitorsX->id);
+		        $arrVisitorsStatDays[$intAnzCounter]    = $this->getFourteenDays($this->intKatID,$objVisitorsX->id);
 				$objVisitorsID = $arrVisitorsStatDays[$intAnzCounter][104]['VisitorsID'];
 		        
 				//Monat Stat
@@ -283,7 +284,6 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatkat       = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'];
 		$this->Template->visitors_export_title = $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_button_title'];
 		$this->Template->visitors_exportfield  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'].' '.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'];
-        $this->Template->visitors_base_be      = \Environment::get('base') . 'contao';
 		
         //ExportDays
         $this->Template->visitors_export_days   = (isset($_SESSION['VISITORS_EXPORT_DAYS'])) ? $_SESSION['VISITORS_EXPORT_DAYS'] : 365;
@@ -305,7 +305,7 @@ class ModuleVisitorStat extends \BackendModule
 	 * 14 Tagesstat und Vorgabewerte
 	 * 
 	 */
-	protected function getSevenDays($KatID, $VisitorsXid)
+	protected function getFourteenDays($KatID, $VisitorsXid)
 	{
 		$visitors_today_visit     = 0;
 		$visitors_today_hit       = 0;
@@ -1421,7 +1421,7 @@ class ModuleVisitorStat extends \BackendModule
 	
 	protected function generateExport()
 	{
-	    $export = new \BugBuster\Visitors\Stat\Export\VisitorsStatExport;
+	    $export = new VisitorsStatExport;
 	    return $export->run();
 	}
 	

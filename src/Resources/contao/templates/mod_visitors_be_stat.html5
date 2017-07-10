@@ -3,7 +3,7 @@
 <div class="clear"></div>
 <div class="tl_panel cf">
 	<!-- Kategorie Zeile //-->
-	<form method="post" class="tl_form" action="<?= $this->visitors_base_be ?>/main.php?do=visitorstat">
+	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
 	<div class="tl_submit_panel tl_subpanel">
 		<input type="image" alt="<?= specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" title="<?= specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" class="tl_img_submit" src="system/themes/<?= $this->theme ?>/images/reload.gif" value="statistics" id="filter" name="filter">
 	</div>
@@ -26,7 +26,7 @@
 <?php if ($this->visitorskatid>0 && $this->visitorsanzcounter>0) : ?>
 <div class="tl_panel cf">	
 	<!-- Export Zeile //-->
-	<form method="post" class="tl_form" action="<?= $this->visitors_base_be ?>/main.php?do=visitorstat">
+	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
 		<input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
 		<input type="hidden" name="act" value="export">
 		<input type="hidden" name="catid" value="<?= $this->visitorskatid ?>">
@@ -103,7 +103,7 @@
 	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][0]['visitors_active']; ?></td>
 	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][0]['visitors_startdate']; ?></td>
 	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list">&nbsp;</td>
-	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><a href="<?= $this->visitors_base_be; ?>/main.php?do=visitorstat&amp;act=zero&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.gif" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" height="16" width="16"></a></td>
+	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zero&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.gif" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" height="16" width="16"></a></td>
 	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list">&nbsp;</td>
 	</tr>
 	<tr>
@@ -326,7 +326,7 @@
 			<tbody>
 			<tr>
 				<td colspan="5"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top20']; ?></td>
-				<td style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><a href="<?= $this->visitors_base_be; ?>/main.php?do=visitorstat&amp;act=zerobrowser&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.gif" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" height="16" width="16"></a></td>
+				<td style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zerobrowser&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.gif" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" height="16" width="16"></a></td>
 			</tr>
 			<tr>
 				<td colspan="2" style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></td>
