@@ -29,8 +29,7 @@
 			"contao/manager-plugin": "^2.0"
 	},
 	"conflict": {
-			"contao/manager-plugin": "<2.0 || >=3.0",
-			"symfony/symfony": "3.2.7"
+			"contao/manager-plugin": "<2.0 || >=3.0"
 	},
 	"autoload":{
 			"psr-4": {
@@ -53,10 +52,7 @@
 				"prefix": "master-",
 				"languages_cto": "src/Resources/contao/languages",
 				"languages_tx": ".tx"
-			},
-			"runonce":[
-				"src/runonce/runonce.php"
-			]
+			}
 		},
 		"branch-alias": {
 			"dev-develop": "1.1.x-dev"
