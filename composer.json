@@ -1,7 +1,7 @@
 {
 	"name":"bugbuster/contao-visitors-bundle",
-	"description":"Contao 4 bundle, allows you to count hits and visits of your website.",
-	"keywords":["contao","bundle","counter","visits","hits"],
+	"description":"Contao 4 visitors bundle, allows you to count hits and visits of your website.",
+	"keywords":["contao","bundle","counter","visits","hits","visitors"],
 	"type":"contao-bundle",
 	"homepage":"http://contao.ninja",
 	"license":"LGPL-3.0+",
