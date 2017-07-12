@@ -29,5 +29,3 @@ Project Link: [https://www.transifex.com/projects/p/contao-visitors-bundle/](htt
 Howto: [http://docs.transifex.com/faq/#translating](http://docs.transifex.com/faq/#translating)
 
 
-This Contao 4 extension is still in development.
-

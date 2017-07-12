@@ -217,7 +217,7 @@ class ModuleVisitorsTag extends \Frontend
 			    else 
 			    {
 			        global $objPage;
-			        $VisitorsStartDate = $this->parseDate($objPage->dateFormat, $objVisitors->visitors_startdate);
+			        $VisitorsStartDate = \Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
 			    }
 				return $VisitorsStartDate;
 				break;

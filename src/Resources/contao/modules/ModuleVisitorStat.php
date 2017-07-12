@@ -1222,7 +1222,7 @@ class ModuleVisitorStat extends \BackendModule
 		}
 		else
 		{
-			$strDate = $this->parseDate($strModified, $intTstamp);
+			$strDate = \Date::parse($strModified, $intTstamp);
 		}
 		return $strDate;
 	}
