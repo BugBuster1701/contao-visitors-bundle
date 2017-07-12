@@ -4,11 +4,11 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/nl/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/nl/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2014-06-30T23:18:59+02:00
+ * last-updated: 2017-04-10T00:36:10+02:00
  */
 
 $GLOBALS['TL_LANG']['tl_visitors']['average_legend']            = 'Gemiddeld';
@@ -16,6 +16,7 @@ $GLOBALS['TL_LANG']['tl_visitors']['copy']['0']                 = 'Dupliceer tel
 $GLOBALS['TL_LANG']['tl_visitors']['copy']['1']                 = 'Dupliceer teller %s';
 $GLOBALS['TL_LANG']['tl_visitors']['delete']['0']               = 'Wis teller';
 $GLOBALS['TL_LANG']['tl_visitors']['delete']['1']               = 'Wis teller %s';
+$GLOBALS['TL_LANG']['tl_visitors']['design_legend']             = 'Ontwerp';
 $GLOBALS['TL_LANG']['tl_visitors']['edit']['0']                 = 'Bewerk teller';
 $GLOBALS['TL_LANG']['tl_visitors']['edit']['1']                 = 'Bewerk teller ID %s';
 $GLOBALS['TL_LANG']['tl_visitors']['editheader']['0']           = 'Bewerk categorie';
@@ -33,6 +34,7 @@ $GLOBALS['TL_LANG']['tl_visitors']['start_legend']              = 'Optionele beg
 $GLOBALS['TL_LANG']['tl_visitors']['title_legend']              = 'Naam en begindatum';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_average']['0']     = 'Bezoekers per dag';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_average']['1']     = 'Het gemiddelde aantal bezoekers per dag.';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_legend']    = 'Expert instellingen';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['0']   = 'Beginwaarde hits';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['1']   = 'Het opgegeven getal wordt opgeteld bij de teller.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_name']['0']        = 'Naam';
