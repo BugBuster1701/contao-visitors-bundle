@@ -37,8 +37,8 @@ Add in `app/AppKernel.php` following line at the end of the `$bundles` array.
 
 Clears the cache and warms up an empty cache:
 
-* `vendor/bin/contao-console cache:clear --env=prod`
-* `vendor/bin/contao-console cache:warmup -e prod`
+* `bin/console cache:clear --env=prod --no-warmup`
+* `bin/console cache:warmup --env=prod`
 * Call http://yourdomain/contao/install
 * Login and update the database
 
