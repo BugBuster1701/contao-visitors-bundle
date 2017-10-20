@@ -4,11 +4,11 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/hi/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/hi/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2015-02-10T23:35:01+01:00
+ * last-updated: 2017-04-10T00:36:10+02:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                = 'सक्रिय';
@@ -31,15 +31,11 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']             = 'ल�
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']         = 'इस महीने';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']          = 'इस सप्ताह';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                  = 'दिनांक';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export']                = 'निर्यात';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_button_title']   = 'यह कुंजी नई खिड़की खोलती है।';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_headline']       = 'श्रेणी,पहचान,नाम,प्रकाशित,दिनांक,परिदर्शक,देखा गया';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                   = 'पहुंच';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']        = 'प्रारंभिक मान';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                   = 'श्रेणी';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']            = 'पिछले महीने';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']             = 'पिछले सप्ताह';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']               = 'परिदर्शक मापांक';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                  = 'नाम';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']               = 'इस श्रेणी हेतु आंकड़ा उपलब्ध नहीं।';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['number']                = 'संख्या';

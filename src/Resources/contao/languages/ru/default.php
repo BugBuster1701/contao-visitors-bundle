@@ -31,9 +31,6 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']                   = 'Текущий месяц';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']                    = 'Текущая неделя';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                            = 'Дата';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export']                          = 'Экспорт';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_button_title']             = 'Кнопка открывает новое окно.';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_headline']                 = 'Категория,ID,Название,Опубликовано,Дата,Посещения,Просмотры';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                             = 'Просмотры';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                  = 'Начальные значения';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                             = 'Категория';

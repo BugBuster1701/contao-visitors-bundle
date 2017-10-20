@@ -4,13 +4,12 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/pl/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/pl/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2014-05-31T22:46:56+02:00
+ * last-updated: 2017-04-10T00:36:10+02:00
  */
-
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                   = 'Aktywne';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_hits']             = 'Odsłon dziennie:';
@@ -32,15 +31,11 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                = 'cz
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']            = 'Bieżący miesiąc';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']             = 'Bieżący tydzień';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                     = 'Data';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export']                   = 'Eksportuj';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_button_title']      = 'Przycisk otwiera nowe okno.';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_headline']          = 'Kategoria,ID,Nazwa,Opublikowany,Data,Wizyt,Odsłon';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                      = 'Odsłony';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']           = 'Wartości początkowe';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                      = 'Kategoria';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']               = 'Ostatni miesiąc';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                = 'Ostatni tydzień';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                  = 'Moduł wizyt';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                     = 'Nazwa';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']                  = 'Brak danych w tej kategorii.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']             = 'Brak danych statystycznych dla tego licznika.';

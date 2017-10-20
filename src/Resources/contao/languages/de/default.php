@@ -31,9 +31,6 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']                   = 'aktueller Monat';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']                    = 'aktuelle Woche';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                            = 'Datum';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export']                          = 'Export';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_button_title']             = 'Der Export erfolgt in einem neuen Fenster.';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_headline']                 = 'Kategorie,ID,Name,Veröffentlicht,Datum,Besucher,Zugriffe';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                             = 'Zugriffe';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                  = 'Startwerte';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                             = 'Kategorie';

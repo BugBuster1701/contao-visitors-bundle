@@ -31,15 +31,11 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']                 = 'Deze maand';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']                  = 'Deze week';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                          = 'Datum';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export']                        = 'Export';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_button_title']           = 'Deze knop opent een nieuw venster.';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_headline']               = 'Categorie,ID,Naam,Gepubliceerd,Datum,Bezoeken,Hits';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                           = 'Hits';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                = 'Beginwaarden';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                           = 'Categorie';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']                    = 'Vorige maand';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                     = 'Vorige week';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                       = 'Visitors Module';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                          = 'Naam';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']                       = 'Geen gegevens bekend voor deze categorie.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']                  = 'Geen statistieken bekend voor deze teller.';

@@ -4,11 +4,11 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/fa/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/fa/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2015-02-10T23:51:51+01:00
+ * last-updated: 2017-04-10T00:36:10+02:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                        = 'فعال';
@@ -30,14 +30,11 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']                 = 'ماه جاری';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']                  = 'هفته جاری';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                          = 'تاریخ';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export']                        = 'خروجی';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['export_headline']               = 'دسته‌بندی،شناسه،نام،انتشار،تاریخ،بازدیدها،کلیک‌ها';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                           = 'کلیک‌ها';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                = 'مقادیر اولیه';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                           = 'شاخه';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']                    = 'ماه آخر';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                     = 'هفته آخر';
-$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                       = 'ماژول بازدیدکنندگان';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                          = 'نام';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']                  = 'هیچ داده‌ی آماری برای این شمارنده';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['not_defined']                   = 'تعریف نشده';
