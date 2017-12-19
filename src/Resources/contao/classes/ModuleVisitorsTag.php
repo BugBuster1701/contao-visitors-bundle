@@ -64,6 +64,8 @@ class ModuleVisitorsTag extends \Frontend
 	 * visitors::katid::totalhit		- TotalHitCount
 	 * visitors::katid::todayvisit		- TodayVisitCount
 	 * visitors::katid::todayhit		- TodayHitCount
+	 * visitors::katid::yesterdayvisit	- YesterdayVisitCount
+	 * visitors::katid::yesterdayhit	- YesterdayHitCount
 	 * visitors::katid::averagevisits	- AverageVisits
 	 * 
 	 * cache_visitors::katid::count		- Counting (only)
@@ -299,10 +301,54 @@ class ModuleVisitorsTag extends \Frontend
 			    else 
 			    {
 	    		    $objVisitorsTodaysCount->next();
-	    		    $VisitorsTodaysHitCount   = ($objVisitorsTodaysCount->visitors_hit   === null) ? 0 : $objVisitorsTodaysCount->visitors_hit;
+	    		    $VisitorsTodaysHitCount = ($objVisitorsTodaysCount->visitors_hit === null) ? 0 : $objVisitorsTodaysCount->visitors_hit;
 			    }
 				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsTodaysHitCount,0) : $VisitorsTodaysHitCount;
 				break;
+			case "yesterdayvisit":
+				    //YesterdayVisitCount
+				    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
+				    $objVisitorsYesterdayCount = \Database::getInstance()
+                        ->prepare("SELECT
+                                        visitors_visit
+                                    FROM
+                                        tl_visitors_counter
+                                    WHERE
+                                        vid=? AND visitors_date=?")
+                        ->execute($objVisitors->id,date('Y-m-d', strtotime( '-1 days' ) ));
+                    if ($objVisitorsYesterdayCount->numRows < 1)
+                    {
+                        $VisitorsYesterdayVisitCount = 0;
+                    }
+                    else
+                    {
+                        $objVisitorsYesterdayCount->next();
+                        $VisitorsYesterdayVisitCount = ($objVisitorsYesterdayCount->visitors_visit === null) ? 0 : $objVisitorsYesterdayCount->visitors_visit;
+                    }
+                    return ($boolSeparator) ? $this->getFormattedNumber($VisitorsYesterdayVisitCount,0) : $VisitorsYesterdayVisitCount;
+                    break;
+            case "yesterdayhit":
+                    //YesterdayHitCount
+                    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
+                    $objVisitorsYesterdayCount = \Database::getInstance()
+                        ->prepare("SELECT
+                                        visitors_hit
+                                    FROM
+                                        tl_visitors_counter
+                                    WHERE
+                                        vid=? AND visitors_date=?")
+                        ->execute($objVisitors->id,date('Y-m-d', strtotime( '-1 days' ) ));
+                    if ($objVisitorsYesterdayCount->numRows < 1)
+                    {
+                        $VisitorsYesterdayHitCount   = 0;
+                    }
+                    else
+                    {
+                        $objVisitorsYesterdayCount->next();
+                        $VisitorsYesterdayHitCount = ($objVisitorsYesterdayCount->visitors_hit === null) ? 0 : $objVisitorsYesterdayCount->visitors_hit;
+                    }
+                    return ($boolSeparator) ? $this->getFormattedNumber($VisitorsYesterdayHitCount,0) : $VisitorsYesterdayHitCount;
+                    break;
 		    case "averagevisits":
 				// Average Visits
 		        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
