@@ -154,7 +154,10 @@ class ModuleVisitors extends \Module
 	                'TotalHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend'],
 	                'TodayVisitCountLegend'     => $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend'],
 	                'TodayHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend'],
-	                'AverageVisitsLegend'       => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']
+	                'AverageVisitsLegend'       => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend'],
+				    'YesterdayHitCountLegend'   => $GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend'],
+				    'YesterdayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend'],
+				    'PageHitCountLegend'        => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']
 				);
 			} 
 			else 

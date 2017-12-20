@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-04-10T00:36:10+02:00
+ * last-updated: 2017-12-18T23:54:17+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Aktiv';
@@ -86,10 +86,13 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']               
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Bildschirmauflösungen TOP 20<br>(der letzten 30 Tage)';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']               = 'Besucher an diesem Tag';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                            = 'Besucher pro Tag:';
+$GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']                             = 'Seitenzugriffe';
 $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend']                            = 'Zugriffe heute:';
 $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend']                          = 'Besucher heute:';
 $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend']                            = 'Zugriffe gesamt:';
 $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend']                          = 'Besucher gesamt:';
 $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend']                      = 'Online:';
 $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend']                        = 'Zählung seit:';
+$GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend']                        = 'Zugriffe gestern:';
+$GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend']                      = 'Besucher gestern:';
 
