@@ -55,6 +55,26 @@
 	text-align: right;
 }
 
+.mod_visitors .visitor_visitsyesterday {
+    margin: 0px 10px 0px 10px;
+}
+.mod_visitors .visitor_visitsyesterday #YesterdayVisitCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_visitsyesterday #YesterdayVisitCount {
+	text-align: right;
+}
+
+.mod_visitors .visitor_hitsyesterday {
+    margin: 0px 10px 0px 10px;
+}
+.mod_visitors .visitor_hitsyesterday #YesterdayHitCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_hitsyesterday #YesterdayHitCount {
+	text-align: right;
+}
+
 .mod_visitors .visitor_visitstotal {
     margin: 0px 10px 0px 10px;
 }
@@ -64,7 +84,6 @@
 .mod_visitors .visitor_visitstotal #TotalVisitCount {
 	text-align: right;
 }
-
 
 .mod_visitors .visitor_hitstotal {
     margin: 0px 10px 0px 10px;
@@ -83,6 +102,16 @@
 	float: left;
 }
 .mod_visitors .visitor_average #AverageVisits {
+	text-align: right;
+}
+
+.mod_visitors .visitor_pagehits {
+    margin: 0px 10px 0px 10px;
+}
+.mod_visitors .visitor_pagehits #PageHitCountLegend {
+	float: left;
+}
+.mod_visitors .visitor_pagehits #PageHitCount {
 	text-align: right;
 }
 
