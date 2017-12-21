@@ -152,7 +152,8 @@
 }
 
 .mod_visitors .visitor_countsince {
-    float: left;
+    clear:left;
+	padding:6px 0px 0px 10px;
 }
 .mod_visitors .visitor_countsince #VisitorsStartDateLegend {
 	float: left;
