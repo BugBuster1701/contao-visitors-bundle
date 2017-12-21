@@ -51,6 +51,8 @@ class ModuleVisitorBrowser3Test extends PHPUnit_Framework_TestCase
             array('IE',         'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 7.0; InfoPath.3; .NET CLR 3.1.40767; Trident/6.0; en-IN)'),
             array('IE',         'Mozilla/5.0 (compatible, MSIE 11, Windows NT 6.3; Trident/7.0; rv:11.0) like Gecko'),
             array('Vivaldi',    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Vivaldi/1.0.94.2 Safari/537.36'),
+            array('Dooble',     'Dooble/0.07 (de_DE) WebKit'),
+            array('QtWeb Browser','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.9.3 Chrome/56.0.2924.122 Safari/537.36'),
             array('unknown',    'Mosiller/42 (MyOs; MyBot/42')
         );
     }

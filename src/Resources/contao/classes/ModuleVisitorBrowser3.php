@@ -66,8 +66,10 @@ class ModuleVisitorBrowser3
 	const BROWSER_IPHONE = 'iPhone';                          // http://apple.com
 	const BROWSER_IPOD = 'iPod';                              // http://apple.com
 	const BROWSER_IPAD = 'iPad';                              // http://apple.com
-	const BROWSER_CHROME = 'Chrome';                          // http://www.google.com/chrome
+	const BROWSER_CHROME  = 'Chrome';                         // http://www.google.com/chrome
 	const BROWSER_VIVALDI = 'Vivaldi';                        // http://vivaldi.com
+	const BROWSER_DOOBLE  = 'Dooble';                         // https://textbrowser.github.io/dooble/
+	const BROWSER_QTWEB   = 'QtWeb Browser';                  // Dooble und andere
 	
 	const BROWSER_ANDROID = 'Android';                        // http://www.android.com/
 	const BROWSER_GALAXY_S        = 'Galaxy S';
@@ -375,6 +377,8 @@ class ModuleVisitorBrowser3
 			$this->checkBrowserChromePlus() ||	//add BugBuster
 		    $this->checkBrowserCoolNovo()   ||	//add BugBuster
 		    $this->checkBrowserVivaldi()    ||  //add BugBuster
+		    $this->checkBrowserDooble()     ||  //add BugBuster
+		    $this->checkBrowserQtWebBrowser() || //add BugBuster
 			
 			$this->checkBrowserOmniWeb() ||
 
@@ -711,6 +715,36 @@ class ModuleVisitorBrowser3
             $aversion = explode(' ',$aresult[1]);
             $this->setVersion($aversion[0]);
             $this->setBrowser(self::BROWSER_VIVALDI);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Determine if the browser is Dooble (1.x) or not
+     * @return boolean True if the browser is Dooble otherwise false
+     */
+    protected function checkBrowserDooble() {
+        if( stripos($this->_agent,'Dooble') !== false ) {
+            $aresult  = explode('/',stristr($this->_agent,'Dooble'));
+            $aversion = explode(' ',$aresult[1]);
+            $this->setVersion($aversion[0]);
+            $this->setBrowser(self::BROWSER_DOOBLE);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Determine if the browser is QtWebBrowser or not
+     * @return boolean True if the browser is QtWebBrowser otherwise false
+     */
+    protected function checkBrowserQtWebBrowser() {
+        if( stripos($this->_agent,'QtWebEngine') !== false ) {
+            $aresult  = explode('/',stristr($this->_agent,'QtWebEngine'));
+            $aversion = explode('.',$aresult[1]);
+            $this->setVersion($aversion[0]);
+            $this->setBrowser(self::BROWSER_QTWEB);
             return true;
         }
         return false;
