@@ -20,6 +20,7 @@ namespace BugBuster\Visitors;
 
 use BugBuster\Visitors\ModuleVisitorCharts;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
+use BugBuster\Visitors\ModuleVisitorStatNewsFaqCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
 use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
 
@@ -222,6 +223,9 @@ class ModuleVisitorStat extends \BackendModule
 				$arrVisitorsPageVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitDays($objVisitorsID,20,7);
 				$arrVisitorsPageVisitHitsToday[$intAnzCounter]     = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitToday($objVisitorsID,5);
 				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID,5);
+				
+				// News
+				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID,10,true);
 				
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);

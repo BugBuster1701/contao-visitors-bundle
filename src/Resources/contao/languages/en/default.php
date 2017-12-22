@@ -82,6 +82,9 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop']         
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_days']      = 'Page Statistic TOP 20: the last 7 days';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_today']     = 'Page Statistic TOP 5: today';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday'] = 'Page Statistic TOP 5: yesterday';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'News Statistic TOP 10';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ Statistic TOP 10';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['news_title']                      = 'News Archive'
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                     = 'Visitors per day:';
 $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend']                     = 'Hits today:';
 $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend']                   = 'Visits today:';
