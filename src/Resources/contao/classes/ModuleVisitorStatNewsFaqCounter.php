@@ -140,6 +140,72 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         }
     }
     
+    public function generateFaqVisitHitTop($VisitorsID, $limit = 10, $parse = true)
+    {
+        $arrFaqStatCount = false;
+    
+        //News Tables exists? // TODO nur einmal testen im constructor
+        if (\Database::getInstance()->tableExists('tl_faq') &&
+            \Database::getInstance()->tableExists('tl_faq_archive'))
+        {
+            $objFaqStatCount = \Database::getInstance()
+                            ->prepare("SELECT
+                                            visitors_page_id,
+                                            visitors_page_lang,
+                                            SUM(visitors_page_visit) AS visitors_page_visits,
+                                            SUM(visitors_page_hit)   AS visitors_page_hits
+                                        FROM
+                                            tl_visitors_pages
+                                        WHERE
+                                            vid = ?
+                                        AND visitors_page_type = ?
+                                        GROUP BY
+                                            visitors_page_id,
+                                            visitors_page_lang
+                                        ORDER BY
+                                            visitors_page_visits DESC,
+                                            visitors_page_hits DESC,
+                                            visitors_page_id,
+                                            visitors_page_lang
+                                    ")
+                            ->limit($limit)
+                            ->execute($VisitorsID, self::PAGE_TYPE_FAQ);
+
+            while ($objFaqStatCount->next())
+            {
+                $alias   = false;
+                $aliases = $this->getFaqAliases($objFaqStatCount->visitors_page_id);
+                if (false !== $aliases['PageAlias'])
+                {
+                    $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
+                }
+
+                if (false !== $alias)
+                {
+                    $arrFaqStatCount[] = array
+                    (
+                        'title'         => $aliases['FaqArchivTitle'],
+                        'alias'         => $alias,
+                        'lang'          => $objFaqStatCount->visitors_page_lang,
+                        'visits'        => $objFaqStatCount->visitors_page_visits,
+                        'hits'          => $objFaqStatCount->visitors_page_hits
+                    );
+                }
+            }
+        }
+    
+        if ($parse === true)
+        {
+            $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithittop');
+            $this->TemplatePartial->FaqVisitHitTop = $arrFaqStatCount;
+            return $this->TemplatePartial->parse();
+        }
+        else
+        {
+            return $arrFaqStatCount;
+        }
+    }
+    
     public function getNewsAliases($visitors_page_id)
     {
         //News Tables exists? // TODO nur einmal testen im constructor
@@ -186,7 +252,8 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             $objFaqAliases = \Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias',
-                                                tl_faq.alias AS 'FaqAlias'
+                                                tl_faq.alias AS 'FaqAlias',
+                                                tl_faq_archive.title as 'FaqArchivTitle'
                                             FROM
                                                 tl_page
                                             INNER JOIN
@@ -200,14 +267,16 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                                 ->execute($visitors_page_id);
             while ($objFaqAliases->next())
             {
-                return array('PageAlias' => $objFaqAliases->PageAlias,
-                             'FaqAlias'  => $objFaqAliases->FaqAlias);
+                return array('PageAlias'      => $objFaqAliases->PageAlias,
+                             'FaqAlias'       => $objFaqAliases->FaqAlias,
+                             'FaqArchivTitle' => $objFaqAliases->FaqArchivTitle);
             }
         }
         else
         {
-            return array('PageAlias' => false,
-                         'FaqAlias'  => false);
+            return array('PageAlias'      => false,
+                         'FaqAlias'       => false,
+                         'FaqArchivTitle' => false);
         }
     }
     
