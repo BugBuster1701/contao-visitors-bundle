@@ -146,7 +146,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     
         //News Tables exists? // TODO nur einmal testen im constructor
         if (\Database::getInstance()->tableExists('tl_faq') &&
-            \Database::getInstance()->tableExists('tl_faq_archive'))
+            \Database::getInstance()->tableExists('tl_faq_category'))
         {
             $objFaqStatCount = \Database::getInstance()
                             ->prepare("SELECT
@@ -177,7 +177,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                 $aliases = $this->getFaqAliases($objFaqStatCount->visitors_page_id);
                 if (false !== $aliases['PageAlias'])
                 {
-                    $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
+                    $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
                 }
 
                 if (false !== $alias)
@@ -247,13 +247,13 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     {
         //FAQ Tables exists? // TODO nur einmal testen im constructor
         if (\Database::getInstance()->tableExists('tl_faq') &&
-            \Database::getInstance()->tableExists('tl_faq_archive'))
+            \Database::getInstance()->tableExists('tl_faq_category'))
         {
             $objFaqAliases = \Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias',
                                                 tl_faq.alias AS 'FaqAlias',
-                                                tl_faq_archive.title as 'FaqArchivTitle'
+                                                tl_faq_category.title as 'FaqArchivTitle'
                                             FROM
                                                 tl_page
                                             INNER JOIN

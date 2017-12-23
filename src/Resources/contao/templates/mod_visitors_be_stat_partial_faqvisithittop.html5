@@ -1,12 +1,12 @@
 <div class="mod_visitors_be_faq_visit_hit_top">
 <!-- FaqHitTop::start -->
-<table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left: auto;">
+<table summary="Table lists countings" class="mod_visitors_be_table" style="width: 100%;">
 		<tbody>
 			<tr>
 				<td colspan="4"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']; ?></td>
 			</tr>
 			<tr>
-				<td style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"   class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']; ?></td>
 				<td style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></td>
 				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></td>
 				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></td>
