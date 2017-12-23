@@ -317,6 +317,13 @@
 		</div>
 	</div>
 	<div style="clear:left;"></div><hr>
+
+	<div class="tl_content tl_listing_container list_view visitors_toggler">
+		<div class="tl_listing limit_height h100 block">
+			<?= $this->visitorsstatNewsVisitHits[$vcid]; ?>
+		</div>
+	</div>
+	<div style="clear:left;"></div><hr>
 	
 	
 	<div class="tl_content tl_listing_container list_view visitors_toggler">
