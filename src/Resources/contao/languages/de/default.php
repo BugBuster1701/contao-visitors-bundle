@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-12-18T23:54:17+01:00
+ * last-updated: 2017-12-20T19:44:02+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Aktiv';
@@ -31,6 +31,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']                   = 'aktueller Monat';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']                    = 'aktuelle Woche';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                            = 'Datum';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']                       = 'FAQ-Archiv';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                             = 'Zugriffe';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                  = 'Startwerte';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                             = 'Kategorie';
@@ -38,6 +39,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']                    
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                       = 'letzte Woche';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                         = 'Visitors Bundle';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                            = 'Name';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['news_title']                      = 'Nachrichtenarchiv';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']                         = 'Keine Daten vorhanden für diese Kategorie.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']                    = 'Keine Statistik Daten vorhanden für diesen Zähler.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['not_defined']                     = 'Suchbegriff nicht definiert';
@@ -72,9 +74,11 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']                  
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']                     = 'Browserstatistik löschen für diesen Zähler.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']             = 'Browserstatistik wirklich löschen für diesen Zähler?';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']                = 'Derzeit online';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ-Statistik TOP 10';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']                 = 'Tag mit den wenigsten Besuchern';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']                   = 'Zugriffe an diesem Tag';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']                   = 'Tag mit den meisten Besuchern';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'Nachrichtenstatistik TOP 10';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']                      = 'Seitenalias';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language']                   = 'Sprache';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop']           = 'Seitenstatistik TOP 20';

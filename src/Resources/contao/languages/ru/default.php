@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-04-10T00:36:10+02:00
+ * last-updated: 2017-12-18T23:54:17+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Активные';
@@ -31,6 +31,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']                   = 'Текущий месяц';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']                    = 'Текущая неделя';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                            = 'Дата';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']                       = 'Архив FAQ';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                             = 'Просмотры';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                  = 'Начальные значения';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                             = 'Категория';
@@ -38,6 +39,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']                    
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                       = 'На прошлой неделе';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                         = 'Пакет посетителей';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                            = 'Название';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['news_title']                      = 'Архив новостей';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']                         = 'Нет доступных данных для этой категории.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']                    = 'Нет статистических данных для этого счетчика.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['not_defined']                     = 'Ключевое слово не определено';
@@ -72,9 +74,11 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']                  
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']                     = 'Статистика браузера будет удалена.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']             = 'Вы действительно хотите удалить статистику браузера?';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']                = 'В настоящее время онлайн';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ Статистика TOP 10';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']                 = 'День с наименьшим количеством посетителей';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']                   = 'Просмотров за день';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']                   = 'День с набольшим количеством посетителей';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'Новости Статистика TOP 10';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']                      = 'Алиас страницы';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language']                   = 'Язык';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop']           = 'Статистика страниц ТОП 20';
@@ -86,10 +90,13 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']               
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Разрешение экрана ТОП 20<br>(последние 30 дней)';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']               = 'Посетителей за день';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                            = 'Посетителей за день:';
+$GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']                             = 'Просмотров страницы:';
 $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend']                            = 'Просмотров сегодня:';
 $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend']                          = 'Посещений сегодня:';
 $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend']                            = 'Просмотров всего:';
 $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend']                          = 'Посещений всего:';
 $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend']                      = 'Онлайн:';
 $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend']                        = 'Подсчет с:';
+$GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend']                        = 'Просмотров вчера:';
+$GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend']                      = 'Посещений вчера:';
 
