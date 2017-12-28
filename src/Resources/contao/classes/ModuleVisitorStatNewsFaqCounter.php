@@ -36,6 +36,8 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     
     protected $today;
     protected $yesterday;
+    protected $newstableexists = false;
+    protected $faqtableexists  = false;
     
     const PAGE_TYPE_NEWS = 1;    //1 = Nachrichten/News
     const PAGE_TYPE_FAQ  = 2;    //2 = FAQ
@@ -50,6 +52,17 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         
         $this->today     = date('Y-m-d');
         $this->yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+        
+        if (\Database::getInstance()->tableExists('tl_news') &&
+            \Database::getInstance()->tableExists('tl_news_archive'))
+        {
+            $this->setNewstableexists(true);
+        }
+        if (\Database::getInstance()->tableExists('tl_faq') &&
+            \Database::getInstance()->tableExists('tl_faq_category'))
+        {
+            $this->setFaqtableexists(true);
+        }
     }
     
     
@@ -73,14 +86,47 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     }
 
     //////////////////////////////////////////////////////////////
+
+    /**
+     * @return the $newstableexists
+     */
+    public function getNewstableexists()
+    {
+        return $this->newstableexists;
+    }
+    
+    /**
+     * @return the $faqtableexists
+     */
+    public function getFaqtableexists()
+    {
+        return $this->faqtableexists;
+    }
+    
+    /**
+     * @param boolean $newstableexists
+     */
+    public function setNewstableexists($newstableexists)
+    {
+        $this->newstableexists = $newstableexists;
+    }
+    
+    /**
+     * @param boolean $faqtableexists
+     */
+    public function setFaqtableexists($faqtableexists)
+    {
+        $this->faqtableexists = $faqtableexists;
+    }
+    
+    //////////////////////////////////////////////////////////////
     
     public function generateNewsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
         $arrNewsStatCount = false;
         
-        //News Tables exists? // TODO nur einmal testen im constructor
-        if (\Database::getInstance()->tableExists('tl_news') &&
-            \Database::getInstance()->tableExists('tl_news_archive'))
+        //News Tables exists?
+        if (true === $this->getNewstableexists())
         {
             $objNewsStatCount = \Database::getInstance()
                             ->prepare("SELECT 
@@ -144,9 +190,8 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     {
         $arrFaqStatCount = false;
     
-        //News Tables exists? // TODO nur einmal testen im constructor
-        if (\Database::getInstance()->tableExists('tl_faq') &&
-            \Database::getInstance()->tableExists('tl_faq_category'))
+        //FAQ Tables exists?
+        if (true === $this->getFaqtableexists())
         {
             $objFaqStatCount = \Database::getInstance()
                             ->prepare("SELECT
@@ -208,9 +253,8 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     
     public function getNewsAliases($visitors_page_id)
     {
-        //News Tables exists? // TODO nur einmal testen im constructor
-        if (\Database::getInstance()->tableExists('tl_news') &&
-            \Database::getInstance()->tableExists('tl_news_archive'))
+        //News Tables exists?
+        if (true === $this->getNewstableexists())
         {
             $objNewsAliases = \Database::getInstance()
                                 ->prepare("SELECT 
@@ -245,9 +289,8 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     
     public function getFaqAliases($visitors_page_id)
     {
-        //FAQ Tables exists? // TODO nur einmal testen im constructor
-        if (\Database::getInstance()->tableExists('tl_faq') &&
-            \Database::getInstance()->tableExists('tl_faq_category'))
+        //FAQ Tables exists?
+        if (true === $this->getFaqtableexists())
         {
             $objFaqAliases = \Database::getInstance()
                                 ->prepare("SELECT
