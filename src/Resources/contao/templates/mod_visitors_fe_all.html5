@@ -11,6 +11,9 @@
 <div class="visitor_visitstotal"><div id="TotalVisitCountLegend"><?= $visitor['TotalVisitCountLegend'];         ?></div><div id="TotalVisitCount"    >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::totalvisit}}</div></div>
 <div class="visitor_hitstoday"  ><div id="TodayHitCountLegend"><?= $visitor['TodayHitCountLegend'];             ?></div><div id="TodayHitCount"      >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::todayhit}}</div></div>
 <div class="visitor_hitstotal"  ><div id="TotalHitCountLegend"><?= $visitor['TotalHitCountLegend'];             ?></div><div id="TotalHitCount"      >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::totalhit}}</div></div>
+<div class="visitor_visitsyesterday"><div id="YesterdayVisitCountLegend"><?= $visitor['YesterdayVisitCountLegend'];?></div><div id="YesterdayVisitCount">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::yesterdayvisit}}</div></div>
+<div class="visitor_hitsyesterday"><div id="YesterdayHitCountLegend"><?= $visitor['YesterdayHitCountLegend'];?></div><div id="YesterdayHitCount">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::yesterdayhit}}</div></div>
+<div class="visitor_pagehits"><div id="PageHitCountLegend"><?= $visitor['PageHitCountLegend'];?></div><div id="PageHitCount">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::pagehits}}</div></div>
 <div class="visitor_average" ><?php if ($visitor['AverageVisits']): ?><div id="AverageVisitsLegend"><?= $visitor['AverageVisitsLegend']; ?>&nbsp;&Oslash;</div><div id="AverageVisits">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::averagevisits}}</div><?php endif; ?></div>
 <?php if ($visitor['VisitorsStartDate']): ?><div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $visitor['VisitorsStartDateLegend']; ?></div><div id="VisitorsStartDate">&nbsp;{{visitors::<?= $visitor['VisitorsKatID']; ?>::start}}</div></div>
 <?php endif; ?>

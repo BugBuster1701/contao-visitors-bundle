@@ -20,6 +20,7 @@ namespace BugBuster\Visitors;
 
 use BugBuster\Visitors\ModuleVisitorCharts;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
+use BugBuster\Visitors\ModuleVisitorStatNewsFaqCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
 use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
 
@@ -223,6 +224,11 @@ class ModuleVisitorStat extends \BackendModule
 				$arrVisitorsPageVisitHitsToday[$intAnzCounter]     = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitToday($objVisitorsID,5);
 				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID,5);
 				
+				// News
+				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID,10,true);
+				// Faq
+				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID,10,true);
+				
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);
 				$arrVisitorsStatBrowser[$intAnzCounter] = $arrVSB['TOP'];
@@ -268,6 +274,8 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatPageVisitHitsDays      = $arrVisitorsPageVisitHitsDays;
 		$this->Template->visitorsstatPageVisitHitsToday     = $arrVisitorsPageVisitHitsToday;
 		$this->Template->visitorsstatPageVisitHitsYesterday = $arrVisitorsPageVisitHitsYesterday;
+		$this->Template->visitorsstatNewsVisitHits = $arrVisitorsNewsVisitHits;
+		$this->Template->visitorsstatFaqVisitHits  = $arrVisitorsFaqVisitHits;
 		$this->Template->visitorsstatBrowser  	   = $arrVisitorsStatBrowser;
 		$this->Template->visitorsstatBrowser2  	   = $arrVisitorsStatBrowser2;
 		$this->Template->visitorsstatBrowserDefinition = $arrVisitorsStatBrowserDefinition;

@@ -64,7 +64,10 @@ class ModuleVisitorsTag extends \Frontend
 	 * visitors::katid::totalhit		- TotalHitCount
 	 * visitors::katid::todayvisit		- TodayVisitCount
 	 * visitors::katid::todayhit		- TodayHitCount
+	 * visitors::katid::yesterdayvisit	- YesterdayVisitCount
+	 * visitors::katid::yesterdayhit	- YesterdayHitCount
 	 * visitors::katid::averagevisits	- AverageVisits
+	 * visitors::katid::pagehits        - PageHits
 	 * 
 	 * cache_visitors::katid::count		- Counting (only)
 	 * 
@@ -299,10 +302,54 @@ class ModuleVisitorsTag extends \Frontend
 			    else 
 			    {
 	    		    $objVisitorsTodaysCount->next();
-	    		    $VisitorsTodaysHitCount   = ($objVisitorsTodaysCount->visitors_hit   === null) ? 0 : $objVisitorsTodaysCount->visitors_hit;
+	    		    $VisitorsTodaysHitCount = ($objVisitorsTodaysCount->visitors_hit === null) ? 0 : $objVisitorsTodaysCount->visitors_hit;
 			    }
 				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsTodaysHitCount,0) : $VisitorsTodaysHitCount;
 				break;
+			case "yesterdayvisit":
+				    //YesterdayVisitCount
+				    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
+				    $objVisitorsYesterdayCount = \Database::getInstance()
+                        ->prepare("SELECT
+                                        visitors_visit
+                                    FROM
+                                        tl_visitors_counter
+                                    WHERE
+                                        vid=? AND visitors_date=?")
+                        ->execute($objVisitors->id,date('Y-m-d', strtotime( '-1 days' ) ));
+                    if ($objVisitorsYesterdayCount->numRows < 1)
+                    {
+                        $VisitorsYesterdayVisitCount = 0;
+                    }
+                    else
+                    {
+                        $objVisitorsYesterdayCount->next();
+                        $VisitorsYesterdayVisitCount = ($objVisitorsYesterdayCount->visitors_visit === null) ? 0 : $objVisitorsYesterdayCount->visitors_visit;
+                    }
+                    return ($boolSeparator) ? $this->getFormattedNumber($VisitorsYesterdayVisitCount,0) : $VisitorsYesterdayVisitCount;
+                    break;
+            case "yesterdayhit":
+                    //YesterdayHitCount
+                    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
+                    $objVisitorsYesterdayCount = \Database::getInstance()
+                        ->prepare("SELECT
+                                        visitors_hit
+                                    FROM
+                                        tl_visitors_counter
+                                    WHERE
+                                        vid=? AND visitors_date=?")
+                        ->execute($objVisitors->id,date('Y-m-d', strtotime( '-1 days' ) ));
+                    if ($objVisitorsYesterdayCount->numRows < 1)
+                    {
+                        $VisitorsYesterdayHitCount   = 0;
+                    }
+                    else
+                    {
+                        $objVisitorsYesterdayCount->next();
+                        $VisitorsYesterdayHitCount = ($objVisitorsYesterdayCount->visitors_hit === null) ? 0 : $objVisitorsYesterdayCount->visitors_hit;
+                    }
+                    return ($boolSeparator) ? $this->getFormattedNumber($VisitorsYesterdayHitCount,0) : $VisitorsYesterdayHitCount;
+                    break;
 		    case "averagevisits":
 				// Average Visits
 		        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
@@ -340,6 +387,39 @@ class ModuleVisitorsTag extends \Frontend
 	            }
 				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsAverageVisits,0) : $VisitorsAverageVisits;
 				break;
+		    case "pagehits":
+		        // Page Hits
+		        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
+		        //Page Data
+		        global $objPage;
+		        //if page from cache, we have no page-id
+		        if ($objPage->id == 0)
+		        {
+		            $objPage = $this->visitorGetPageObj();
+		             
+		        } //$objPage->id == 0
+
+		        $objPageStatCount = \Database::getInstance()
+                        ->prepare("SELECT
+                                        SUM(visitors_page_hit)   AS visitors_page_hits
+                                    FROM
+                                        tl_visitors_pages
+                                    WHERE
+                                        vid = ?
+                                    AND visitors_page_id = ?
+                                  ")
+                        ->execute($objVisitors->id, $objPage->id);
+                if ($objPageStatCount->numRows > 0)
+                {
+                    $objPageStatCount->next();
+                    $VisitorsPageHits = $objPageStatCount->visitors_page_hits;
+                }
+                else 
+                {
+                    $VisitorsPageHits = 0;
+                }
+		        return ($boolSeparator) ? $this->getFormattedNumber($VisitorsPageHits,0) : $VisitorsPageHits;
+		        break;
 		    case "bestday":
 		    	//Day with the most visitors
 		        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2] );
@@ -607,77 +687,8 @@ class ModuleVisitorsTag extends \Frontend
     	    //if page from cache, we have no page-id
     	    if ($objPage->id == 0) 
     	    {
-    	    	$pageId = $this->getPageIdFromUrl(); // Alias, not ID :-(
-    	    	// Load a website root page object if there is no page ID
-    	    	if ($pageId === null)
-    	    	{
-    	    	    $pageId = $this->visitorGetRootPageFromUrl();
-    	    	}
-    	    	ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Page ID over URL: '. $pageId);
-    	    	// Get the current page object(s), NULL on type 404
-    	    	$objPage = \PageModel::findPublishedByIdOrAlias($pageId);
-
-    	    	// Check the URL and language of each page if there are multiple results
-    	    	if ($objPage !== null && $objPage->count() > 1)
-    	    	{
-    	    	    $objNewPage = null;
-    	    	    $arrPages   = array();
-    	    	
-    	    	    // Order by domain and language
-    	    	    while ($objPage->next())
-    	    	    {
-    	    	        $objCurrentPage = $objPage->current()->loadDetails();
-    	    	
-    	    	        $domain = $objCurrentPage->domain ?: '*';
-    	    	        $arrPages[$domain][$objCurrentPage->rootLanguage] = $objCurrentPage;
-    	    	
-    	    	        // Also store the fallback language
-    	    	        if ($objCurrentPage->rootIsFallback)
-    	    	        {
-    	    	            $arrPages[$domain]['*'] = $objCurrentPage;
-    	    	        }
-    	    	    }
-    	    	
-    	    	    $strHost = \Environment::get('host');
-    	    	
-    	    	    // Look for a root page whose domain name matches the host name
-    	    	    if (isset($arrPages[$strHost]))
-    	    	    {
-    	    	        $arrLangs = $arrPages[$strHost];
-    	    	    }
-    	    	    else
-    	    	    {
-    	    	        $arrLangs = $arrPages['*']; // empty domain
-    	    	    }
-    	    	
-    	    	    // Use the first result (see #4872)
-    	    	    if (!$GLOBALS['TL_CONFIG']['addLanguageToUrl'])
-    	    	    {
-    	    	        $objNewPage = current($arrLangs);
-    	    	    }
-    	    	    // Try to find a page matching the language parameter
-    	    	    elseif (($lang = \Input::get('language')) != '' && isset($arrLangs[$lang]))
-    	    	    {
-    	    	        $objNewPage = $arrLangs[$lang];
-    	    	    }
-    	    	
-    	    	    // Store the page object
-    	    	    if (is_object($objNewPage))
-    	    	    {
-    	    	        $objPage = $objNewPage;
-    	    	    }
-    	    	}
-    	    	elseif ($objPage !== null && $objPage->count() == 1) 
-    	    	{
-                    $objPage = $objPage->current()->loadDetails();
-    	    	}
-    	    	elseif ($objPage === null)
-    	    	{
-    	    	    //404 page aus dem Cache
-    	    	    $pageId = $this->visitorGetRootPageFromUrl(false);
-    	    	    $objPage = \PageModel::find404ByPid($pageId);
-    	    	    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Page Root ID / Page ID 404: '. $pageId .' / '.$objPage->id);
-    	    	}
+    	        $objPage = $this->visitorGetPageObj();
+    	        
             } //$objPage->id == 0
             ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Page ID / Lang in Object: '. $objPage->id .' / '.$objPage->language);
 
@@ -851,6 +862,86 @@ class ModuleVisitorsTag extends \Frontend
 			} // if strlen
 	    } //VisitIP numRows
 	} //visitorCountUpdate
+	
+	protected function visitorGetPageObj()
+	{
+	    $objPage = null;
+	    $pageId  = null;
+	    
+	    $pageId = $this->getPageIdFromUrl(); // Alias, not ID :-(
+	    // Load a website root page object if there is no page ID
+	    if ($pageId === null)
+	    {
+	        $pageId = $this->visitorGetRootPageFromUrl();
+	    }
+	    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Page ID over URL: '. $pageId);
+	    // Get the current page object(s), NULL on type 404
+	    $objPage = \PageModel::findPublishedByIdOrAlias($pageId);
+	    
+	    // Check the URL and language of each page if there are multiple results
+	    if ($objPage !== null && $objPage->count() > 1)
+	    {
+	        $objNewPage = null;
+	        $arrPages   = array();
+	    
+	        // Order by domain and language
+	        while ($objPage->next())
+	        {
+	            $objCurrentPage = $objPage->current()->loadDetails();
+	    
+	            $domain = $objCurrentPage->domain ?: '*';
+	            $arrPages[$domain][$objCurrentPage->rootLanguage] = $objCurrentPage;
+	    
+	            // Also store the fallback language
+	            if ($objCurrentPage->rootIsFallback)
+	            {
+	                $arrPages[$domain]['*'] = $objCurrentPage;
+	            }
+	        }
+	    
+	        $strHost = \Environment::get('host');
+	    
+	        // Look for a root page whose domain name matches the host name
+	        if (isset($arrPages[$strHost]))
+	        {
+	            $arrLangs = $arrPages[$strHost];
+	        }
+	        else
+	        {
+	            $arrLangs = $arrPages['*']; // empty domain
+	        }
+	    
+	        // Use the first result (see #4872)
+	        if (!$GLOBALS['TL_CONFIG']['addLanguageToUrl'])
+	        {
+	            $objNewPage = current($arrLangs);
+	        }
+	        // Try to find a page matching the language parameter
+	        elseif (($lang = \Input::get('language')) != '' && isset($arrLangs[$lang]))
+	        {
+	            $objNewPage = $arrLangs[$lang];
+	        }
+	    
+	        // Store the page object
+	        if (is_object($objNewPage))
+	        {
+	            $objPage = $objNewPage;
+	        }
+	    }
+	    elseif ($objPage !== null && $objPage->count() == 1)
+	    {
+	        $objPage = $objPage->current()->loadDetails();
+	    }
+	    elseif ($objPage === null)
+	    {
+	        //404 page aus dem Cache
+	        $pageId = $this->visitorGetRootPageFromUrl(false);
+	        $objPage = \PageModel::find404ByPid($pageId);
+	        ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Page Root ID / Page ID 404: '. $pageId .' / '.$objPage->id);
+	    }
+	    return $objPage;
+	}
+	
 	
 	protected function visitorCheckSearchEngine($vid)
 	{

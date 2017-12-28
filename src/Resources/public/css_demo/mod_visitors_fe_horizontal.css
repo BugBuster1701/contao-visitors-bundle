@@ -105,11 +105,55 @@
 .mod_visitors .visitor_average #AverageVisits {
 	float: left;
     padding: 0px 5px 0px 0px;
+	border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_visitsyesterday {
+	clear:left;
+	padding:6px 0px 0px 5px;
+}
+.mod_visitors .visitor_visitsyesterday #YesterdayVisitCountLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_visitsyesterday #YesterdayVisitCount {
+    float: left;
+    padding: 0px 5px 0px 0px;
+    border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_hitsyesterday {
+    float: left;
+}
+.mod_visitors .visitor_hitsyesterday #YesterdayHitCountLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_hitsyesterday #YesterdayHitCount {
+	float: left;
+    padding: 0px 5px 0px 0px;
+    border-right:1px solid #C6AD8D;
+}
+
+.mod_visitors .visitor_pagehits {
+    float: left;
+}
+.mod_visitors .visitor_pagehits #PageHitCountLegend {
+	float: left;
+	margin: 0px 4px 0px 5px;
+	font-weight: bold;
+}
+.mod_visitors .visitor_pagehits #PageHitCount {
+	float: left;
+    padding: 0px 5px 0px 0px;
+    border-right:1px solid #C6AD8D;
 }
 
 .mod_visitors .visitor_countsince {
     clear:left;
-    padding:6px 10px 10px 10px;
+	padding:6px 0px 0px 10px;
 }
 .mod_visitors .visitor_countsince #VisitorsStartDateLegend {
 	float: left;

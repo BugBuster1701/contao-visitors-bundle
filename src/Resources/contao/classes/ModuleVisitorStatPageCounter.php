@@ -89,6 +89,8 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         tl_visitors_pages
                                     WHERE
                                         vid = ?
+                                    AND 
+                                        visitors_page_type IN (?,?)
                                     GROUP BY 
                                         visitors_page_id, 
                                         visitors_page_lang,
@@ -100,7 +102,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         visitors_page_lang
                                 ")
                         ->limit($limit)
-                        ->execute($VisitorsID);
+                        ->execute($VisitorsID, self::PAGE_TYPE_NORMAL, self::PAGE_TYPE_FORBIDDEN);
         
         while ($objPageStatCount->next())
         {
@@ -110,22 +112,6 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     $alias   = $objPage->alias;
                 	break;
-            	case self::PAGE_TYPE_NEWS :
-            	    $alias   = false;
-            	    $aliases = $this->getNewsAliases($objPageStatCount->visitors_page_id);
-            	    if (false !== $aliases['PageAlias'])
-            	    {
-            	       $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
-            	    }
-            	    break;
-        	    case self::PAGE_TYPE_FAQ :
-        	        $alias   = false;
-        	        $aliases = $this->getFaqAliases($objPageStatCount->visitors_page_id);
-        	        if (false !== $aliases['PageAlias'])
-        	        {
-        	           $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
-        	        }
-        	        break;
     	        case self::PAGE_TYPE_FORBIDDEN :
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
@@ -179,6 +165,8 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         tl_visitors_pages
                                     WHERE
                                         vid = ?
+                                    AND 
+                                        visitors_page_type IN (?,?)
                                     AND
                                         visitors_page_date = ?
                                     GROUP BY
@@ -192,7 +180,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         visitors_page_lang
                                 ")
                         ->limit($limit)
-                        ->execute($VisitorsID, $this->today);
+                        ->execute($VisitorsID, self::PAGE_TYPE_NORMAL, self::PAGE_TYPE_FORBIDDEN, $this->today);
         
         while ($objPageStatCount->next())
         {
@@ -202,22 +190,6 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     $alias   = $objPage->alias;
                 	break;
-            	case self::PAGE_TYPE_NEWS :
-            	    $alias   = false;
-            	    $aliases = $this->getNewsAliases($objPageStatCount->visitors_page_id);
-            	    if (false !== $aliases['PageAlias'])
-            	    {
-            	       $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
-            	    }
-            	    break;
-        	    case self::PAGE_TYPE_FAQ :
-        	        $alias   = false;
-        	        $aliases = $this->getFaqAliases($objPageStatCount->visitors_page_id);
-        	        if (false !== $aliases['PageAlias'])
-        	        {
-        	           $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
-        	        }
-        	        break;
     	        case self::PAGE_TYPE_FORBIDDEN :
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
@@ -263,6 +235,8 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         tl_visitors_pages
                                     WHERE
                                         vid = ?
+                                    AND 
+                                        visitors_page_type IN (?,?)
                                     AND
                                         visitors_page_date = ?
                                     GROUP BY
@@ -276,7 +250,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         visitors_page_lang
                                 ")
                         ->limit($limit)
-                        ->execute($VisitorsID, $this->yesterday);
+                        ->execute($VisitorsID, self::PAGE_TYPE_NORMAL, self::PAGE_TYPE_FORBIDDEN, $this->yesterday);
         
         while ($objPageStatCount->next())
         {
@@ -286,22 +260,6 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     $alias   = $objPage->alias;
                 	break;
-            	case self::PAGE_TYPE_NEWS :
-            	    $alias   = false;
-            	    $aliases = $this->getNewsAliases($objPageStatCount->visitors_page_id);
-            	    if (false !== $aliases['PageAlias'])
-            	    {
-            	       $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
-            	    }
-            	    break;
-        	    case self::PAGE_TYPE_FAQ :
-        	        $alias   = false;
-        	        $aliases = $this->getFaqAliases($objPageStatCount->visitors_page_id);
-        	        if (false !== $aliases['PageAlias'])
-        	        {
-        	           $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
-        	        }
-        	        break;
     	        case self::PAGE_TYPE_FORBIDDEN :
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
@@ -348,6 +306,8 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         tl_visitors_pages
                                     WHERE
                                         vid = ?
+                                    AND 
+                                        visitors_page_type IN (?,?)
                                     AND
                                         visitors_page_date >= ?
                                     GROUP BY
@@ -361,7 +321,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         visitors_page_lang
                                 ")
                         ->limit($limit)
-                        ->execute($VisitorsID, $week);
+                        ->execute($VisitorsID, self::PAGE_TYPE_NORMAL, self::PAGE_TYPE_FORBIDDEN, $week);
         
         while ($objPageStatCount->next())
         {
@@ -371,22 +331,6 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     $alias = $objPage->alias;
                 	break;
-            	case self::PAGE_TYPE_NEWS :
-            	    $alias   = false;
-            	    $aliases = $this->getNewsAliases($objPageStatCount->visitors_page_id);
-            	    if (false !== $aliases['PageAlias'])
-            	    {
-            	       $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
-            	    }
-            	    break;
-        	    case self::PAGE_TYPE_FAQ :
-        	        $alias   = false;
-        	        $aliases = $this->getFaqAliases($objPageStatCount->visitors_page_id);
-        	        if (false !== $aliases['PageAlias']) 
-        	        {
-        	        	$alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
-        	        }
-        	        break;
     	        case self::PAGE_TYPE_FORBIDDEN :
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
@@ -454,7 +398,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     {
         //FAQ Tables exists?
         if (\Database::getInstance()->tableExists('tl_faq') &&
-            \Database::getInstance()->tableExists('tl_faq_archive'))
+            \Database::getInstance()->tableExists('tl_faq_category'))
         {
             $objFaqAliases = \Database::getInstance()
                                 ->prepare("SELECT
@@ -530,7 +474,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         visitors_page_id,
                                         visitors_page_lang
                                     ")
-                                    ->execute($VisitorsID, $STARTDATE);
+                            ->execute($VisitorsID, $STARTDATE);
     
         while ($objPageStatCount->next())
         {
