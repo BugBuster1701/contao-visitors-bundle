@@ -4,7 +4,7 @@
 	"keywords":["contao","bundle","counter","visits","hits","visitors"],
 	"type":"contao-bundle",
 	"homepage":"http://contao.ninja",
-	"license":"LGPL-3.0+",
+	"license":"LGPL-3.0-or-later",
 	"authors":[
 		{
 			"name":"Glen Langer",
