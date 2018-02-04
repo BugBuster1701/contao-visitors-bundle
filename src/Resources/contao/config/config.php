@@ -13,7 +13,7 @@
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
-define('VISITORS_VERSION', '1.1');
+define('VISITORS_VERSION', '1.2');
 define('VISITORS_BUILD'  , '0');
 
 /**
