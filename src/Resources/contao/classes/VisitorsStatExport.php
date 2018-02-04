@@ -80,8 +80,8 @@ class VisitorsStatExport extends \System
     
     protected function exportXLSX()
     {
-        $objPHPExcel = $this->generateExportData(); 
-        $objPHPExcel->getProperties()->setCreator("Contao Module visitors_statistic_export")
+        $objVisitorExcel = $this->generateExportData(); 
+        $objVisitorExcel->getProperties()->setCreator("Contao Module visitors_statistic_export")
                                     ->setLastModifiedBy("Contao Module visitors_statistic_export")
                                     ->setTitle("Office 2007 XLSX Visitors Statistic Export")
                                     ->setSubject("Office 2007 XLSX Visitors Statistic Export")
@@ -101,15 +101,15 @@ class VisitorsStatExport extends \System
             header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
             header ('Pragma: public'); // HTTP/1.0
         }
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objVisitorExcel, 'Xlsx');
         $objWriter->save('php://output');
         exit;
     }
     
     protected function exportODS()
     {
-        $objPHPExcel = $this->generateExportData();
-        $objPHPExcel->getProperties()->setCreator("Contao Module visitors_statistic_export")
+        $objVisitorODS = $this->generateExportData();
+        $objVisitorODS->getProperties()->setCreator("Contao Module visitors_statistic_export")
                                     ->setLastModifiedBy("Contao Module visitors_statistic_export")
                                     ->setTitle("Office 2007 ODS Visitors Statistic Export")
                                     ->setSubject("Office 2007 ODS Visitors Statistic Export")
@@ -129,7 +129,7 @@ class VisitorsStatExport extends \System
             header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
             header ('Pragma: public'); // HTTP/1.0
         }
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'OpenDocument');
+        $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objVisitorODS, 'Ods');
         $objWriter->save('php://output');
         exit;
     }
@@ -149,8 +149,8 @@ class VisitorsStatExport extends \System
             header ('Pragma: public'); // HTTP/1.0
         }
         
-        $objPHPExcel = $this->generateExportData();
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'CSV')
+        $objVisitorCSV = $this->generateExportData();
+        $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objVisitorCSV, 'Csv')
                     ->setDelimiter(',')
                     ->setEnclosure('"')
                     ->setLineEnding("\r\n")
@@ -184,66 +184,66 @@ class VisitorsStatExport extends \System
                                     ORDER BY tvc.title, tv.id, tvs.visitors_date")
                             ->execute($this->catid);
         
-        $objPHPExcel = new \PHPExcel();
-        $objPHPExcel->setActiveSheetIndex(0);
-        $objPHPExcel->getActiveSheet()->setTitle($GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_title']);
-        $objPHPExcel->getActiveSheet()->setCellValue('A1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_category']);
-        $objPHPExcel->getActiveSheet()->setCellValue('B1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_id']);
-        $objPHPExcel->getActiveSheet()->setCellValue('C1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_name']);
-        $objPHPExcel->getActiveSheet()->setCellValue('D1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_published']);
-        $objPHPExcel->getActiveSheet()->setCellValue('E1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_date']);
-        $objPHPExcel->getActiveSheet()->setCellValue('F1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_visits']);
-        $objPHPExcel->getActiveSheet()->setCellValue('G1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_hits']);
+        $objVisitorExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $objVisitorExcel->setActiveSheetIndex(0);
+        $objVisitorExcel->getActiveSheet()->setTitle($GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_title']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('A1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_category']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('B1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_id']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('C1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_name']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('D1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_published']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('E1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_date']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('F1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_visits']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('G1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_hits']);
         
-        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
         
-        $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true);
         
         $row = 1;
         while ($objStatistic->next())
         {
             $row++;
-            $objPHPExcel->getActiveSheet()->setCellValue('A'.$row, $objStatistic->category_title);
-            $objPHPExcel->getActiveSheet()->setCellValue('B'.$row, $objStatistic->visitors_id);
-            $objPHPExcel->getActiveSheet()->setCellValue('C'.$row, $objStatistic->visitors_name);
-            $objPHPExcel->getActiveSheet()->setCellValue('D'.$row, $objStatistic->published=='' ? $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] : $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes']);
-            $objPHPExcel->getActiveSheet()->setCellValue('E'.$row, date($GLOBALS['TL_CONFIG']['dateFormat'], strtotime($objStatistic->visitors_date)));
-            $objPHPExcel->getActiveSheet()->setCellValue('F'.$row, $objStatistic->visitors_visit=='' ? '0' : $objStatistic->visitors_visit);
-            $objPHPExcel->getActiveSheet()->setCellValue('G'.$row, $objStatistic->visitors_hit  =='' ? '0' : $objStatistic->visitors_hit);
+            $objVisitorExcel->getActiveSheet()->setCellValue('A'.$row, $objStatistic->category_title);
+            $objVisitorExcel->getActiveSheet()->setCellValue('B'.$row, $objStatistic->visitors_id);
+            $objVisitorExcel->getActiveSheet()->setCellValue('C'.$row, $objStatistic->visitors_name);
+            $objVisitorExcel->getActiveSheet()->setCellValue('D'.$row, $objStatistic->published=='' ? $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] : $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes']);
+            $objVisitorExcel->getActiveSheet()->setCellValue('E'.$row, date($GLOBALS['TL_CONFIG']['dateFormat'], strtotime($objStatistic->visitors_date)));
+            $objVisitorExcel->getActiveSheet()->setCellValue('F'.$row, $objStatistic->visitors_visit=='' ? '0' : $objStatistic->visitors_visit);
+            $objVisitorExcel->getActiveSheet()->setCellValue('G'.$row, $objStatistic->visitors_hit  =='' ? '0' : $objStatistic->visitors_hit);
 
-            $objPHPExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $objPHPExcel->getActiveSheet()->getStyle('D'.$row)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $objVisitorExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $objVisitorExcel->getActiveSheet()->getStyle('D'.$row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
         $VisitorsID = $objStatistic->visitors_id;
         
         //Page Statistics
-        $objPHPExcel->createSheet();
-        $objPHPExcel->setActiveSheetIndex(1);
-        $objPHPExcel->getActiveSheet()->setTitle($GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_page_title']);
-        $objPHPExcel->getActiveSheet()->setCellValue('A1', $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']);
-        $objPHPExcel->getActiveSheet()->setCellValue('B1', $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language']);
-        $objPHPExcel->getActiveSheet()->setCellValue('C1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_visits']);
-        $objPHPExcel->getActiveSheet()->setCellValue('D1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_hits']);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
-        $objPHPExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
-        $objPHPExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
+        $objVisitorExcel->createSheet();
+        $objVisitorExcel->setActiveSheetIndex(1);
+        $objVisitorExcel->getActiveSheet()->setTitle($GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_page_title']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('A1', $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('B1', $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('C1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_visits']);
+        $objVisitorExcel->getActiveSheet()->setCellValue('D1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_hits']);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getColumnDimension('D')->setAutoSize(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
+        $objVisitorExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
         
         $arrVisitorsPageVisitHits = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTopDays($VisitorsID,$this->export_days,false);
         $row = 1; 
@@ -252,16 +252,16 @@ class VisitorsStatExport extends \System
             foreach ($arrVisitorsPageVisitHits as $arrVisitorsPageVisitHit) 
             {
                 $row++;
-                $objPHPExcel->getActiveSheet()->setCellValue('A'.$row, $arrVisitorsPageVisitHit['alias']);
-                $objPHPExcel->getActiveSheet()->setCellValue('B'.$row, $arrVisitorsPageVisitHit['lang']);
-                $objPHPExcel->getActiveSheet()->setCellValue('C'.$row, $arrVisitorsPageVisitHit['visits']);
-                $objPHPExcel->getActiveSheet()->setCellValue('D'.$row, $arrVisitorsPageVisitHit['hits']);
+                $objVisitorExcel->getActiveSheet()->setCellValue('A'.$row, $arrVisitorsPageVisitHit['alias']);
+                $objVisitorExcel->getActiveSheet()->setCellValue('B'.$row, $arrVisitorsPageVisitHit['lang']);
+                $objVisitorExcel->getActiveSheet()->setCellValue('C'.$row, $arrVisitorsPageVisitHit['visits']);
+                $objVisitorExcel->getActiveSheet()->setCellValue('D'.$row, $arrVisitorsPageVisitHit['hits']);
                 
-                $objPHPExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objVisitorExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             }
         }
-        $objPHPExcel->setActiveSheetIndex(0);
-        return $objPHPExcel;
+        $objVisitorExcel->setActiveSheetIndex(0);
+        return $objVisitorExcel;
     }
 
 }
@@ -269,10 +269,10 @@ class VisitorsStatExport extends \System
 /**
  	// Check if zip class exists
 // if (!class_exists($zipClass, FALSE)) {
-// throw new PHPExcel_Reader_Exception($zipClass . " library is not enabled");
+// throw new \PhpOffice\PhpSpreadsheet\Reader\Exception($zipClass . " library is not enabled");
 // }
  This allows the writing of Excel2007 files, even without ZipArchive enabled (it does require zlib), or when php_zip is one of the buggy PHP 5.2.6 or 5.2.8 versions
-It can be enabled using PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
+It can be enabled using \PhpOffice\PhpSpreadsheet\Settings::setZipClass(\PhpOffice\PhpSpreadsheet\Settings::PCLZIP);
 
  *  
 */
