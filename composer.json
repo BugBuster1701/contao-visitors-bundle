@@ -20,10 +20,10 @@
 		"forum":"https://community.contao.org/de/forumdisplay.php?28-visitors"
 	},
 	"require":{
-		"php": ">=5.6.0",
+		"php": "^5.6|^7.0",
 		"contao/core-bundle": "~4.3",
-		"bugbuster/contao-botdetection-bundle":">=0.2.1,<2",
-		"phpoffice/phpspreadsheet":"1.0.0"
+		"bugbuster/contao-botdetection-bundle": ">=0.2.1,<2",
+		"phpoffice/phpspreadsheet": "~1.0"
 	},
 	"require-dev": {
 			"contao/manager-plugin": "^2.0"
