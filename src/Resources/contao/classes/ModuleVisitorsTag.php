@@ -47,6 +47,8 @@ class ModuleVisitorsTag extends \Frontend
 	
 	private $_HitCounted   = false;
 	
+	private $_BackendUser  = false;
+	
 	const PAGE_TYPE_NORMAL     = 0;    //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
 	const PAGE_TYPE_NEWS       = 1;    //1   = Nachrichten/News
 	const PAGE_TYPE_FAQ        = 2;    //2   = FAQ
@@ -98,6 +100,17 @@ class ModuleVisitorsTag extends \Frontend
 		    $this->visitorSetDebugSettings($visitors_category_id);
 		}
 		
+		$objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
+		if ($objTokenChecker->hasBackendUser())
+		{
+		    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': BackendUser: Yes' );
+		    $this->_BackendUser = true;
+		} 
+		else 
+		{
+		    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': BackendUser: No' );
+		}
+		
 		if (!isset($arrTag[2])) 
 		{
 			\System::getContainer()
@@ -141,7 +154,7 @@ class ModuleVisitorsTag extends \Frontend
 			}
 			while ($objVisitors->next())
 			{
-			    $this->visitorCountUpdate($objVisitors->id, $objVisitors->visitors_block_time, $visitors_category_id);
+			    $this->visitorCountUpdate($objVisitors->id, $objVisitors->visitors_block_time, $visitors_category_id, $this->_BackendUser);
 			    $this->visitorCheckSearchEngine($objVisitors->id);
 			    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'BOT: '.(int) $this->_BOT);
 			    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , 'SE : '.(int) $this->_SE);
@@ -490,9 +503,9 @@ class ModuleVisitorsTag extends \Frontend
 	/**
 	 * Insert/Update Counter
 	 */
-	protected function visitorCountUpdate($vid, $BlockTime, $visitors_category_id)
+	protected function visitorCountUpdate($vid, $BlockTime, $visitors_category_id, $BackendUser = false)
 	{
-		$ModuleVisitorChecks = new ModuleVisitorChecks();
+		$ModuleVisitorChecks = new ModuleVisitorChecks($BackendUser);
 		if (!isset($GLOBALS['TL_CONFIG']['mod_visitors_bot_check']) || $GLOBALS['TL_CONFIG']['mod_visitors_bot_check'] !== false) 
 		{
 			if ($ModuleVisitorChecks->checkBot() === true) 

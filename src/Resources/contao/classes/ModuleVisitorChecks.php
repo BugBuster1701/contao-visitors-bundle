@@ -38,6 +38,17 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	const VERSION           = '4.0';
 	
+	private $_BackendUser   = false;
+	
+	/**
+	 * Initialize the object (do not remove)
+	 */
+	public function __construct($BackendUser = false)
+	{
+	    parent::__construct();
+	    $this->_BackendUser = $BackendUser;
+	}
+	
 	/**
 	 * Spider Bot Check
 	 * 
@@ -122,12 +133,9 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function checkBE()
 	{
-	    $strCookie = 'BE_USER_AUTH';
-	    
 	    if ($this->isContao45()) 
 	    {
-	        $objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
-	        if ($objTokenChecker->hasBackendUser())
+	        if ($this->_BackendUser)
 	        {
                 ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
                 return true;
@@ -136,6 +144,7 @@ class ModuleVisitorChecks extends \Frontend
 	        return false;
 	    }
 		//Contao <4.5.0
+	    $strCookie = 'BE_USER_AUTH';
 		$hash = sha1(session_id() . (!$GLOBALS['TL_CONFIG']['disableIpCheck'] ? \Environment::get('ip') : '') . $strCookie);
 		if (\Input::cookie($strCookie) == $hash)
 		{
