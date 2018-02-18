@@ -122,7 +122,20 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function checkBE()
 	{
-		$strCookie = 'BE_USER_AUTH';
+	    $strCookie = 'BE_USER_AUTH';
+	    
+	    if ($this->isContao45()) 
+	    {
+	        $objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
+	        if ($objTokenChecker->hasBackendUser())
+	        {
+                ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
+                return true;
+	        }
+	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
+	        return false;
+	    }
+		//Contao <4.5.0
 		$hash = sha1(session_id() . (!$GLOBALS['TL_CONFIG']['disableIpCheck'] ? \Environment::get('ip') : '') . $strCookie);
 		if (\Input::cookie($strCookie) == $hash)
 		{
@@ -184,5 +197,22 @@ class ModuleVisitorChecks extends \Frontend
 	    return (filter_var( $ip4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? true : false);
 	}
 	
+	/**
+	 * Check if contao/cor-bundle >= 4.5.0
+	 * 
+	 * @return boolean
+	 */
+	public function isContao45()
+	{
+        $packages = \System::getContainer()->getParameter('kernel.packages');
+	    $coreVersion = $packages['contao/core-bundle']; //a.b.c
+	    if ( version_compare($coreVersion, '4.5.0', '>=') )
+	    {
+	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
+	        return true;
+	    }
+        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
+        return false;
+	}
 }
 
