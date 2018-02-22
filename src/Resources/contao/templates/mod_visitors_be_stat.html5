@@ -467,19 +467,13 @@
 			</tbody>
 			</table>
 		</div>
-		<table class="tl_listing">
-		<tbody>
-<?php if ($this->visitorssearchengine === false) : ?>
-		<tr>
-	    	<td class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_no_data']; ?></td>
-		</tr>
-<?php else : ?>
-		<tr>
-	    	<td style="text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']; ?></td>
-		</tr>
-<?php endif; ?>
-		</tbody>
-		</table>
+		<div style="clear:both; width:100%; height: 40px;">
+		<?php if ($this->visitorssearchengine === false) : ?>
+			<p style="text-align: center; font-size: 0.75rem; height: 50px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_no_data']; ?></p>
+		<?php else : ?>
+	    	<p style="text-align: center; font-size: 0.75rem; height: 50px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']; ?></p>
+    	<?php endif; ?>
+		</div>
 	  </div>
 	</div> <!-- 5 -->
 	<div style="clear:left;"></div>	
@@ -519,7 +513,7 @@
 	<!-- Screen resolution -->
 	<hr>
 	<div class="tl_content tl_listing_container list_view visitors_toggler">
-		<div class="tl_listing limit_height h140 block">
+		<div class="tl_listing limit_height h120 block">
 			<?= $this->visitorsstatScreenTop[$vcid]; ?>
 			<?= $this->visitorsstatScreenTopDays[$vcid]; ?>
 		</div>
