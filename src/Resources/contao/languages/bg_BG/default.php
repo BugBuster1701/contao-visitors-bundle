@@ -8,9 +8,8 @@
  * @link https://www.transifex.com/signup/
  * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/bg_BG/
  *
- * last-updated: 2017-10-21T01:05:39+02:00
+ * last-updated: 2017-12-18T23:54:17+01:00
  */
-
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Активен';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_hits']                    = 'Попадения на ден:';
@@ -83,7 +82,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_today']   
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday'] = 'Статистика за страници ТОП 5: вчера';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']   = 'Размер устройства';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']                 = 'Екранен размер ТОП 20';
-$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Екранни размери ТОП 20<br>(последните 30 дни)';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Екранни размери ТОП 20 (последните 30 дни)';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']               = 'Посещения за деня';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                            = 'Посетители на ден:';
 $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend']                            = 'Попадения днес:';
