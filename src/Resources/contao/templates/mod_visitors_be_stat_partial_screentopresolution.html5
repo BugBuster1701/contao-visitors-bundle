@@ -3,7 +3,7 @@
 <table summary="Table lists countings" class="mod_visitors_be_table">
 			<tbody>
 			<tr>
-				<td colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top'] .'<br>&nbsp;'; ?></td>
+				<td colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top'] .''; ?></td>
 			</tr>
 			<tr>
 				<td style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']; ?></td>

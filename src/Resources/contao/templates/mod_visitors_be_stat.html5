@@ -499,12 +499,12 @@
    			    <td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a onclick="Backend.openModalIframe({'width':780,'height':600,'title':'<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Idna::decode($Referrer[0]); ?>','url':this.href});return false" title="<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for'];?> <?= \Idna::decode($Referrer[0]); ?>" href="<?= $this->route('visitors_backend_details') ?>?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/images/show.gif"></a><?php endif; ?></td>
 			</tr>
 	<?php endforeach; ?>
-			<tr>
-	    		<td colspan="3" style="text-align: center; font-size: 0.75rem;"><br><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_data']; ?></td>
-			</tr>
 <?php endif; ?>
 			</tbody>
 			</table>
+			<div style="clear:both; width:100%; height: 40px;">
+			   	<p style="text-align: center; font-size: 0.75rem; height: 50px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_data']; ?></p>
+			</div>
 		</div>
 	  </div>
 	</div> <!-- 6 -->
