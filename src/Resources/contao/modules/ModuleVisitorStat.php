@@ -1151,6 +1151,10 @@ class ModuleVisitorStat extends \BackendModule
 			    }
 		    }
 	    }
+	    if (0 == count($VisitorsSearchEngines) && 0 == count($VisitorsSearchEngineKeywords)) 
+	    { 
+	        return false;
+	    }
 	    return array('SearchEngines' => $VisitorsSearchEngines, 
                      'SearchEngineKeywords' =>$VisitorsSearchEngineKeywords);
 	}
