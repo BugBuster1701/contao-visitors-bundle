@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-04-10T00:36:10+02:00
+ * last-updated: 2017-12-18T23:54:17+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Actif';
@@ -82,7 +82,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_today']   
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday'] = 'Statistique pages TOP 20: hier';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']   = 'Résolution appareil';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']                 = 'Résolution écran TOP 20';
-$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Résolution écran TOP 20<br>(30 derniers jours)';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Résolution écran TOP 20 (30 derniers jours)';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']               = 'Visites ce jour';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                            = 'Visiteurs par jour :';
 $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend']                            = 'Hits aujourd\'hui :';

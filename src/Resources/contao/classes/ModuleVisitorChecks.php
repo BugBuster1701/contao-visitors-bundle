@@ -38,6 +38,17 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	const VERSION           = '4.0';
 	
+	private $_BackendUser   = false;
+	
+	/**
+	 * Initialize the object (do not remove)
+	 */
+	public function __construct($BackendUser = false)
+	{
+	    parent::__construct();
+	    $this->_BackendUser = $BackendUser;
+	}
+	
 	/**
 	 * Spider Bot Check
 	 * 
@@ -122,7 +133,18 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function checkBE()
 	{
-		$strCookie = 'BE_USER_AUTH';
+	    if ($this->isContao45()) 
+	    {
+	        if ($this->_BackendUser)
+	        {
+                ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
+                return true;
+	        }
+	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
+	        return false;
+	    }
+		//Contao <4.5.0
+	    $strCookie = 'BE_USER_AUTH';
 		$hash = sha1(session_id() . (!$GLOBALS['TL_CONFIG']['disableIpCheck'] ? \Environment::get('ip') : '') . $strCookie);
 		if (\Input::cookie($strCookie) == $hash)
 		{
@@ -184,5 +206,22 @@ class ModuleVisitorChecks extends \Frontend
 	    return (filter_var( $ip4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? true : false);
 	}
 	
+	/**
+	 * Check if contao/cor-bundle >= 4.5.0
+	 * 
+	 * @return boolean
+	 */
+	public function isContao45()
+	{
+        $packages = \System::getContainer()->getParameter('kernel.packages');
+	    $coreVersion = $packages['contao/core-bundle']; //a.b.c
+	    if ( version_compare($coreVersion, '4.5.0', '>=') )
+	    {
+	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
+	        return true;
+	    }
+        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
+        return false;
+	}
 }
 

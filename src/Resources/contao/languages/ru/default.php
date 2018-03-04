@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-12-18T23:54:17+01:00
+ * last-updated: 2017-12-28T21:35:28+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Активные';
@@ -87,7 +87,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_today']   
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday'] = 'Статистика страниц ТОП 5: вчера';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']   = 'Разрешения экрана устройств';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']                 = 'Разрешение экрана ТОП 20';
-$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Разрешение экрана ТОП 20<br>(последние 30 дней)';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Разрешение экрана ТОП 20 (последние 30 дней)';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']               = 'Посетителей за день';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                            = 'Посетителей за день:';
 $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']                             = 'Просмотров страницы:';

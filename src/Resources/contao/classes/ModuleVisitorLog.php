@@ -91,7 +91,7 @@ class ModuleVisitorLog
                     self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug');
                 }
                 break;
-            case "ModuleVisitorsScreenCount":
+            case "FrontendVisitors":
                 if ($GLOBALS['visitors']['debug']['screenresolutioncount'])
                 {
                     self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$vclass.'::'.$arrNamespace[1],$line,$value),'visitors_debug');

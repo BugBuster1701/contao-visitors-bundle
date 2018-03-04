@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-04-10T00:36:10+02:00
+ * last-updated: 2017-12-18T23:54:17+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                        = 'Actief';
@@ -58,7 +58,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']                          
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']                  = 'Weet u zeker dat u de teller(s) wil resetten (hits en bezoeken)?';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution'] = 'Apparaat Resoluties';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']               = 'Scherm Resoluties TOP 20';
-$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']          = 'Scherm Resoluties TOP 20<br>(laatste 30 dagen)';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']          = 'Scherm Resoluties TOP 20 (laatste 30 dagen)';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                          = 'Bezoekers per dag:';
 $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend']                          = 'Hits vandaag:';
 $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend']                        = 'Bezoeken vandaag:';

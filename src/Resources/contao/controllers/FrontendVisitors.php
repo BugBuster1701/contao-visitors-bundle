@@ -25,6 +25,8 @@ class FrontendVisitors extends \Frontend
 {
 
     private $_SCREEN = false; // Screen Resolution
+    
+    private static $_BackendUser  = false;
 
 	/**
 	 * Initialize the object (do not remove)
@@ -57,6 +59,20 @@ class FrontendVisitors extends \Frontend
 	{
 	    $logger = \System::getContainer()->get('monolog.logger.contao');
 	    
+	    if (false === self::$_BackendUser && true === $this->isContao45())
+	    {
+	        $objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
+	        if ($objTokenChecker->hasBackendUser())
+	        {
+	            ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': BackendUser: Yes' );
+	            self::$_BackendUser = true;
+	        }
+	        else
+	        {
+	            ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': BackendUser: No' );
+	        }
+	    }
+	    
 	    //Parameter holen
 	    if ((int)\Input::get('vcid')  > 0)
 	    {
@@ -87,13 +103,13 @@ class FrontendVisitors extends \Frontend
 	            {
 	                $logger->log(LogLevel::ERROR, 
 	                             $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'], 
-	                             array('contao' => new ContaoContext('ModuleVisitorsScreenCount '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+	                             array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 	            }
 	            else
 	            {
 	                while ($objVisitors->next())
 	                {
-	                    $this->visitorScreenCountUpdate($objVisitors->id, $objVisitors->visitors_block_time, $visitors_category_id);
+	                    $this->visitorScreenCountUpdate($objVisitors->id, $objVisitors->visitors_block_time, $visitors_category_id, self::$_BackendUser);
 	    
 	                }
 	            }
@@ -103,7 +119,7 @@ class FrontendVisitors extends \Frontend
 	    {
 	        $logger->log(LogLevel::ERROR,
 	                     $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
-	                     array('contao' => new ContaoContext('ModuleVisitorsScreenCount '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+	                     array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 	    }
 	    
 	    //Pixel und raus hier
@@ -144,11 +160,11 @@ class FrontendVisitors extends \Frontend
 	/**
 	 * Insert/Update Counter
 	 */
-	protected function visitorScreenCountUpdate($vid, $BlockTime, $visitors_category_id)
+	protected function visitorScreenCountUpdate($vid, $BlockTime, $visitors_category_id, $BackendUser = false)
 	{
 	    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ': '.print_r($this->_SCREEN, true) );
 	     
-	    $ModuleVisitorChecks = new ModuleVisitorChecks();
+	    $ModuleVisitorChecks = new ModuleVisitorChecks($BackendUser);
 	    if ($ModuleVisitorChecks->checkBot() === true)
 	    {
 	        //Debug log_message("visitorCountUpdate BOT=true","debug.log");
@@ -372,6 +388,24 @@ class FrontendVisitors extends \Frontend
 	protected function visitorIsPrivateIP($UserIP = false)
 	{
 	    return !filter_var($UserIP, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
+	}
+	
+	/**
+	 * Check if contao/cor-bundle >= 4.5.0
+	 *
+	 * @return boolean
+	 */
+	protected function isContao45()
+	{
+	    $packages = \System::getContainer()->getParameter('kernel.packages');
+	    $coreVersion = $packages['contao/core-bundle']; //a.b.c
+	    if ( version_compare($coreVersion, '4.5.0', '>=') )
+	    {
+	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
+	        return true;
+	    }
+	    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
+	    return false;
 	}
 	
 }
