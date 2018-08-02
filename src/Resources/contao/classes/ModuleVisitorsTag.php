@@ -24,6 +24,7 @@ use BugBuster\Visitors\ModuleVisitorSearchEngine;
 use BugBuster\Visitors\ModuleVisitorReferrer;
 use Psr\Log\LogLevel;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\StringUtil;
 
 /**
  * Class ModuleVisitorsTag 
@@ -83,7 +84,7 @@ class ModuleVisitorsTag extends \Frontend
 	 */
 	public function replaceInsertTagsVisitors($strTag)
 	{
-		$arrTag = trimsplit('::', $strTag);
+		$arrTag = StringUtil::trimsplit('::', $strTag);
 		if ($arrTag[0] != 'visitors')
 		{
 			if ($arrTag[0] != 'cache_visitors') 
