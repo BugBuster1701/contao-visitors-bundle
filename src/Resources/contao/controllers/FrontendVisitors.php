@@ -180,7 +180,7 @@ class FrontendVisitors extends \Frontend
 	        return; // Backend eingeloggt, nicht zaehlen (Feature: #197)
 	    }
 	    //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
-	    $ClientIP = bin2hex(sha1($visitors_category_id . $this->visitorGetUserIP(),true)); // sha1 20 Zeichen, bin2hex 40 zeichen
+	    $ClientIP = bin2hex(sha1($visitors_category_id . $ModuleVisitorChecks->visitorGetUserIP(),true)); // sha1 20 Zeichen, bin2hex 40 zeichen
 	    $BlockTime = ($BlockTime == '') ? 1800 : $BlockTime; //Sekunden
 	    $CURDATE = date('Y-m-d');
 	
@@ -349,46 +349,6 @@ class FrontendVisitors extends \Frontend
 	    }
 	}
 	
-	/**
-	 * Get User IP
-	 *
-	 * @return string
-	 */
-	protected function visitorGetUserIP()
-	{
-	    $UserIP = \Environment::get('ip');
-	    if (strpos($UserIP, ',') !== false) //first IP
-	    {
-	        $UserIP = trim( substr($UserIP, 0, strpos($UserIP, ',') ) );
-	    }
-	    if ( true === $this->visitorIsPrivateIP($UserIP) &&
-	        false === empty($_SERVER['HTTP_X_FORWARDED_FOR'])
-	    )
-	    {
-	        //second try
-	        $HTTPXFF = $_SERVER['HTTP_X_FORWARDED_FOR'];
-	        $_SERVER['HTTP_X_FORWARDED_FOR'] = '';
-	
-	        $UserIP = \Environment::get('ip');
-	        if (strpos($UserIP, ',') !== false) //first IP
-	        {
-	            $UserIP = trim( substr($UserIP, 0, strpos($UserIP, ',') ) );
-	        }
-	        $_SERVER['HTTP_X_FORWARDED_FOR'] = $HTTPXFF;
-	    }
-	    return $UserIP;
-	}
-	
-	/**
-	 * Check if an IP address is from private or reserved ranges.
-	 *
-	 * @param string $UserIP
-	 * @return boolean         true = private/reserved
-	 */
-	protected function visitorIsPrivateIP($UserIP = false)
-	{
-	    return !filter_var($UserIP, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE);
-	}
 	
 	/**
 	 * Check if contao/cor-bundle >= 4.5.0
