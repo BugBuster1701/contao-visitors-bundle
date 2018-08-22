@@ -421,7 +421,14 @@ class ModuleVisitorSearchEngine// extends Frontend
 	       )
 	    {
 			$this->_search_engine = self::SEARCH_ENGINE_YANDEX ;
-			if ( isset($this->_parse_result['text']) ) { $this->_keywords = $this->_parse_result['text']; }
+			if ( isset($this->_parse_result['text']) && 0 < strlen($this->_parse_result['text']))
+			{
+			    $this->_keywords = $this->_parse_result['text'];
+			}
+			if ('https://yandex.ru' == substr($this->_keywords, 0,17))
+			{
+			    $this->_keywords = self::KEYWORDS_NOT_DEFINED;
+			}
 			$this->_keywords = trim(preg_replace(array('/\xb6/','/  /'),array('',' '),$this->_keywords));
 			return true;
 	    }
