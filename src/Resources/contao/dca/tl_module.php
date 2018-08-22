@@ -2,7 +2,7 @@
 
 /**
  * Contao Open Source CMS
- * Copyright (C) 2005-2017 Leo Feyer
+ * Copyright (C) 2005-2018 Leo Feyer
  *
  * Formerly known as TYPOlight Open Source CMS.
  * 
@@ -11,7 +11,7 @@
  * This file modifies the data container array of table tl_module.
  *
  * PHP version 5
- * @copyright  Glen Langer 2009..2014
+ * @copyright  Glen Langer 2009..2018
  * @author     Glen Langer
  * @package    GLVisitors
  * @license    LGPL
@@ -22,8 +22,7 @@
 /**
  * Add palettes to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['visitors']   = 'name,type,headline;visitors_categories,visitors_template;guests,protected,visitors_useragent;{expert_legend:hide},cssID';
-
+$GLOBALS['TL_DCA']['tl_module']['palettes']['visitors']   = '{title_legend},name,type,headline;{config_legend},visitors_categories,visitors_template;{protected_legend:hide},protected;{expert_legend:hide},visitors_useragent,guests,cssID';
 
 
 /**
