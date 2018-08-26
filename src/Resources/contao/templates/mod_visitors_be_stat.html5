@@ -10,7 +10,7 @@
 	<div class="tl_limit tl_subpanel">
 		<strong><?= $this->visitorsstatkat ?>:</strong>
 		<input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
-		<select onchange="this.form.submit()" class="tl_select" name="id">
+		<select class="tl_select" name="id">
 <?php foreach ($this->visitorskats as $visitorskat): ?>
   <?php if ($visitorskat['id']==$this->visitorskatid) : ?>
 		    <option selected="selected" value="<?= $visitorskat['id'] ?>"><?= $visitorskat['title'] ?></option>
