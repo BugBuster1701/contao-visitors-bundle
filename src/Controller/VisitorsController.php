@@ -11,9 +11,9 @@
 namespace BugBuster\VisitorsBundle\Controller;
 
 use BugBuster\Visitors\BackendVisitors;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Handles the Visitors back end routes.
