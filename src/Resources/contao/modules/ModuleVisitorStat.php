@@ -447,7 +447,7 @@ class ModuleVisitorStat extends \BackendModule
 		    $arrVisitorsStat[] = array
 			(
 			    'visitors_id'           => $objVisitors->id,
-				'visitors_name'         => specialchars(ampersand($objVisitors->visitors_name)),
+				'visitors_name'         => \StringUtil::specialchars(ampersand($objVisitors->visitors_name)),
 				'visitors_active'       => $objVisitors->published,
 				'visitors_startdate'    => $visitors_startdate
             );
