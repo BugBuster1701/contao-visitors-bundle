@@ -389,7 +389,7 @@ class ModuleVisitorStat extends \BackendModule
     		    $arrVisitorsStat[] = array
     			(
     			    'visitors_id'           => $objVisitors->id,
-    				'visitors_name'         => specialchars(ampersand($objVisitors->visitors_name)),
+    				'visitors_name'         => \StringUtil::specialchars(ampersand($objVisitors->visitors_name)),
     				'visitors_active'       => $objVisitors->published,
     				'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
     				'visitors_date_ymd'     => $objVisitors->visitors_date,
