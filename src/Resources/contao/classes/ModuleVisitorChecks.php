@@ -145,13 +145,13 @@ class ModuleVisitorChecks extends \Frontend
 	    }
 		//Contao <4.5.0
 	    $strCookie = 'BE_USER_AUTH';
-		$hash = sha1(session_id() . (!$GLOBALS['TL_CONFIG']['disableIpCheck'] ? \Environment::get('ip') : '') . $strCookie);
+		$hash = sha1(session_id() . (!\Config::get('privacyAnonymizeIp') ? \Environment::get('ip') : '') . $strCookie);
 		if (\Input::cookie($strCookie) == $hash)
 		{
 			// Try to find the session
 			$objSession = \SessionModel::findByHashAndName($hash, $strCookie);
 			// Validate the session ID and timeout
-			if ($objSession !== null && $objSession->sessionID == session_id() && ($GLOBALS['TL_CONFIG']['disableIpCheck'] || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + $GLOBALS['TL_CONFIG']['sessionTimeout']) > time())
+			if ($objSession !== null && $objSession->sessionID == session_id() && (\Config::get('privacyAnonymizeIp') || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + $GLOBALS['TL_CONFIG']['sessionTimeout']) > time())
 			{
 			    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
 				return true;
