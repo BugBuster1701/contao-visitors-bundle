@@ -1200,11 +1200,11 @@ class ModuleVisitorsTag extends \Frontend
         $uri = $_SERVER['REQUEST_URI']; // /news/james-wilson-returns.html
         $alias = '';
         //steht suffix (html) am Ende?
-        //Default: GLOBALS['TL_CONFIG']['urlSuffix'] = '.html';
-        if (substr($uri,-strlen($GLOBALS['TL_CONFIG']['urlSuffix'])) == $GLOBALS['TL_CONFIG']['urlSuffix'])
+        $urlSuffix = \System::getContainer()->getParameter('contao.url_suffix'); // default: .html
+        if (substr($uri,-strlen($urlSuffix)) == $urlSuffix)
         {
             //Alias nehmen
-            $alias = substr($uri,strrpos($uri,'/')+1,-strlen($GLOBALS['TL_CONFIG']['urlSuffix']));
+            $alias = substr($uri,strrpos($uri,'/')+1,-strlen($urlSuffix));
             if (false === $alias) 
             {
                 ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdReaderSelf: '. $PageId);
@@ -1213,8 +1213,7 @@ class ModuleVisitorsTag extends \Frontend
         }
         else 
         {
-            ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdNoSuffix: '. $PageId);
-            return $PageId; // kein Suffix, Pech für die Kuh
+            $alias = substr($uri,strrpos($uri,'/')+1);
         }
         ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Alias: '. $alias);
         
