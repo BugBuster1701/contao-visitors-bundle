@@ -18,6 +18,8 @@
  */
 namespace BugBuster\Visitors;
 
+
+
 /**
  * Class ModuleVisitorStatPageCounter
  *
@@ -40,6 +42,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     const PAGE_TYPE_NORMAL      = 0;    //0 = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
     const PAGE_TYPE_NEWS        = 1;    //1 = Nachrichten/News
     const PAGE_TYPE_FAQ         = 2;    //2 = FAQ
+    const PAGE_TYPE_ISOTOPE     = 3;    //3   = Isotope
     const PAGE_TYPE_FORBIDDEN   = 403;  //403 = Forbidden Seite
     
     /**
@@ -428,6 +431,53 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         }
     }
     
+    public function getIsotopeAliases($visitors_page_id, $visitors_page_pid)
+    {
+        //Isotope Table exists?
+        if (\Database::getInstance()->tableExists('tl_iso_product'))
+        {
+            $PageAlias = false;
+            $objIsotopePageAlias = \Database::getInstance()
+                                    ->prepare("SELECT
+                                                tl_page.alias AS 'PageAlias'
+                                            FROM
+                                                tl_page
+                                            WHERE
+                                                tl_page.id = ?
+                                            ")
+                                    ->limit(1)
+                                    ->execute($visitors_page_pid);
+        
+            while ($objIsotopePageAlias->next())
+            {
+                $PageAlias = $objIsotopePageAlias->PageAlias;
+            }
+
+            $objIsotopeProduct= \Database::getInstance()
+                                ->prepare("SELECT
+                                                tl_iso_product.alias  AS 'ProductAlias'
+                                            FROM
+                                                tl_iso_product
+                                            WHERE
+                                                tl_iso_product.id = ?
+                                            ")
+                                ->limit(1)
+                                ->execute($visitors_page_id);
+        
+            while ($objIsotopeProduct->next())
+            {
+                return array('PageAlias'     => $PageAlias,
+                             'ProductAlias'  => $objIsotopeProduct->ProductAlias);
+            }
+        }
+        
+        return array('PageAlias'       => false,
+                     'ProductAlias'    => false
+                    );
+        
+        
+    }
+    
     public function getForbiddenAlias($visitors_page_id, $visitors_page_lang)
     {
         //Page ID von der 403 Seite ermitteln
@@ -454,6 +504,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         $objPageStatCount = \Database::getInstance()
                             ->prepare("SELECT
                                         visitors_page_id,
+                                        visitors_page_pid,
                                         visitors_page_lang,
                                         visitors_page_type,
                                         SUM(visitors_page_visit) AS visitors_page_visits,
@@ -466,12 +517,14 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                         visitors_page_date >= ?
                                     GROUP BY
                                         visitors_page_id,
+                                        visitors_page_pid,
                                         visitors_page_lang,
                                         visitors_page_type
                                     ORDER BY
                                         visitors_page_visits DESC,
                                         visitors_page_hits DESC,
                                         visitors_page_id,
+                                        visitors_page_pid,
                                         visitors_page_lang
                                     ")
                             ->execute($VisitorsID, $STARTDATE);
@@ -500,6 +553,14 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             	        $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
             	    }
             	    break;
+        	    case self::PAGE_TYPE_ISOTOPE:
+        	        $alias   = false;
+        	        $aliases = $this->getIsotopeAliases($objPageStatCount->visitors_page_id, $objPageStatCount->visitors_page_pid);
+        	        if (false !== $aliases['PageAlias'])
+        	        {
+        	            $alias = $aliases['PageAlias'] .'/'. $aliases['ProductAlias'];
+        	        }
+        	        break;
             	case self::PAGE_TYPE_FORBIDDEN :
             	    $alias   = false;
             	    $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);

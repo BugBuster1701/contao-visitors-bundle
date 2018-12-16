@@ -22,6 +22,7 @@ use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\BotDetection\ModuleBotDetection;
 use Psr\Log\LogLevel;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Jean85\PrettyVersions;
 
 /**
  * Class ModuleVisitorChecks 
@@ -213,15 +214,17 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function isContao45()
 	{
-        $packages = \System::getContainer()->getParameter('kernel.packages');
-	    $coreVersion = $packages['contao/core-bundle']; //a.b.c
-	    if ( version_compare($coreVersion, '4.5.0', '>=') )
+	    //Thanks fritzmg for this hint
+	    // get the Contao version
+	    $version = PrettyVersions::getVersion('contao/core-bundle');
+	    // check for Contao >=4.5
+	    if (\Composer\Semver\Semver::satisfies($version->getShortVersion(), '>=4.5'))
 	    {
 	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
 	        return true;
 	    }
-        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
-        return false;
+	    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
+	    return false;
 	}
 	
 	/**
