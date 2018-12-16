@@ -137,7 +137,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         	    if (false !== $aliases['PageAlias'])
         	    {
         	       $alias = $aliases['PageAlias'] .'/'. $aliases['ProductAlias'];
-        	       $title = $aliases['ProductTeaser'] .'/'. $aliases['ProductName'];
+        	       $title = $aliases['ProductTeaser'] .': '. $aliases['ProductName'];
         	    }
                 
                 if (false !== $alias) 
@@ -167,12 +167,18 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         }
     }
     
-    
+    /**
+     * 
+     * @param unknown $visitors_page_id     Product ID
+     * @param unknown $visitors_page_pid    Contao Page ID
+     * @return array
+     */
     public function getIsotopeAliases($visitors_page_id, $visitors_page_pid)
     {
         //Isotope Table exists?
         if (true === $this->getIsotopeTableExists())
         {
+            $PageAlias = false;
             $objIsotopePageAlias = \Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias' 
@@ -183,7 +189,11 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                                             ")
                                 ->limit(1)
                                 ->execute($visitors_page_pid);
-            $PageAlias = $objIsotopePageAlias->next()->PageAlias;
+            
+            while ($objIsotopePageAlias->next())
+            {
+                $PageAlias = $objIsotopePageAlias->PageAlias;
+            }            
             
             $objIsotopeProduct= \Database::getInstance()
                                     ->prepare("SELECT
@@ -197,23 +207,21 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                                             ")
                                     ->limit(1)
                                     ->execute($visitors_page_id);
+            
             while ($objIsotopeProduct->next())
             {
-               
                 return array('PageAlias'     => $PageAlias,
                              'ProductAlias'  => $objIsotopeProduct->ProductAlias,
                              'ProductTeaser' => $objIsotopeProduct->ProductTeaser,
                              'ProductName'   => $objIsotopeProduct->ProductName);
             }
         }
-        else 
-        {
-            return array('PageAlias'       => false, 
-                         'ProductAlias'    => false,
-                         'ProductTeaser'   => false,
-                         'ProductName'     => false
-            );
-        }
+
+        return array('PageAlias'       => false, 
+                     'ProductAlias'    => false,
+                     'ProductTeaser'   => false,
+                     'ProductName'     => false
+        );
     }
     
  
