@@ -137,13 +137,14 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         	    if (false !== $aliases['PageAlias'])
         	    {
         	       $alias = $aliases['PageAlias'] .'/'. $aliases['ProductAlias'];
+        	       $title = $aliases['ProductTeaser'] .'/'. $aliases['ProductName'];
         	    }
                 
                 if (false !== $alias) 
                 {
                     $arrIsotopeStatCount[] = array
                     (
-                        'title'         => 'Isotope Titel',//$aliases['IsotopeTitle'],
+                        'title'         => $title,
                         'alias'         => $alias,
                         'lang'          => $objIsotopeStatCount->visitors_page_lang,
                         'visits'        => $objIsotopeStatCount->visitors_page_visits,
@@ -181,28 +182,37 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                                                 tl_page.id = ?
                                             ")
                                 ->limit(1)
-                                ->execute($visitors_page_id);
+                                ->execute($visitors_page_pid);
             $PageAlias = $objIsotopePageAlias->next()->PageAlias;
             
-            $objIsotopeProductAlias = \Database::getInstance()
+            $objIsotopeProduct= \Database::getInstance()
                                     ->prepare("SELECT
-                                                tl_iso_product.alias AS 'ProductAlias'
+                                                tl_iso_product.alias  AS 'ProductAlias',
+                                                tl_iso_product.teaser AS 'ProductTeaser',
+                                                tl_iso_product.name   AS 'ProductName'
                                             FROM
                                                 tl_iso_product
                                             WHERE
                                                 tl_iso_product.id = ?
                                             ")
                                     ->limit(1)
-                                    ->execute($visitors_page_pid);
-            $ProductAlias = $objIsotopeProductAlias->next()->PageAlias;
-            
-            return array('PageAlias'       => $PageAlias, 
-                         'ProductAlias'    => $ProductAlias);
+                                    ->execute($visitors_page_id);
+            while ($objIsotopeProduct->next())
+            {
+               
+                return array('PageAlias'     => $PageAlias,
+                             'ProductAlias'  => $objIsotopeProduct->ProductAlias,
+                             'ProductTeaser' => $objIsotopeProduct->ProductTeaser,
+                             'ProductName'   => $objIsotopeProduct->ProductName);
+            }
         }
         else 
         {
             return array('PageAlias'       => false, 
-                         'ProductAlias'    => false);
+                         'ProductAlias'    => false,
+                         'ProductTeaser'   => false,
+                         'ProductName'     => false
+            );
         }
     }
     
