@@ -13,6 +13,7 @@
  */
 
 namespace BugBuster\Visitors;
+use Contao\StringUtil;
 
 /**
  * Class ModuleVisitorLog
@@ -43,7 +44,7 @@ class ModuleVisitorLog
                     (bool)$GLOBALS['visitors']['debug']['screenresolutioncount']
                    )
                 {
-                    $arrUniqid = trimsplit('.', uniqid('c0n7a0',true) );
+                    $arrUniqid = StringUtil::trimsplit('.', uniqid('c0n7a0',true) );
                     $GLOBALS['visitors']['debug']['first'] = $arrUniqid[1];
                     self::logMessage(sprintf('[%s] [%s] [%s] %s',$GLOBALS['visitors']['debug']['first'],$method,$line,$value),'visitors_debug');
                     return ;
@@ -56,8 +57,8 @@ class ModuleVisitorLog
             }
         }
                 
-        $arrNamespace = trimsplit('::', $method);
-        $arrClass =  trimsplit('\\', $arrNamespace[0]);
+        $arrNamespace = StringUtil::trimsplit('::', $method);
+        $arrClass =  StringUtil::trimsplit('\\', $arrNamespace[0]);
         $vclass = $arrClass[2]; // class that will write the log
         
         if (is_array($value))

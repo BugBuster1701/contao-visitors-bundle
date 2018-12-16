@@ -149,7 +149,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 			'inputType'               => 'text',
 			'explanation'	          => 'visitors_help',
 			'sql'                     => "varchar(10) NOT NULL default ''",
-			'eval'                    => array('maxlength'=>10, 'rgxp'=>'date', 'helpwizard'=>true, 'datepicker'=>$this->getDatePickerString(), 'tl_class'=>'w50 wizard')
+			'eval'                    => array('maxlength'=>10, 'rgxp'=>'date', 'helpwizard'=>true, 'datepicker'=>true, 'tl_class'=>'w50 wizard')
 		),
 		'visitors_visit_start' => array
 		(

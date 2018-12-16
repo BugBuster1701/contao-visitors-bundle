@@ -53,6 +53,7 @@ class ModuleVisitorsTag extends \Frontend
 	const PAGE_TYPE_NORMAL     = 0;    //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
 	const PAGE_TYPE_NEWS       = 1;    //1   = Nachrichten/News
 	const PAGE_TYPE_FAQ        = 2;    //2   = FAQ
+	const PAGE_TYPE_ISOTOPE    = 3;    //3   = Isotope
 	const PAGE_TYPE_FORBIDDEN  = 403;  //403 = Forbidden Page
 
 	/**
@@ -714,12 +715,17 @@ class ModuleVisitorsTag extends \Frontend
 	 	    //0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
             //1 = Nachrichten/News
             //2 = FAQ
+            //3 = Isotope
             //403 = Forbidden
 	 	    $visitors_page_type = $this->visitorGetPageType($objPage);
 	 	    //bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
 	 	    //Fixed #211, Duplicate entry in tl_search
-	 	    $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
-
+	 	    $objPageIdOrg = $objPage->id;
+	 	    $objPageId    = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
+	 	    
+	 	    if (self::PAGE_TYPE_ISOTOPE != $visitors_page_type) {
+	 	        $objPageIdOrg = 0; //backward compatibility
+	 	    }
     	    $objPageHitVisit = \Database::getInstance()
                 	               ->prepare("SELECT
                                                 id,
@@ -734,11 +740,13 @@ class ModuleVisitorsTag extends \Frontend
                                             AND
                                                 visitors_page_id = ?
                                             AND
+                                                visitors_page_pid = ?
+                                            AND
                                                 visitors_page_lang = ?
                                             AND
                                                 visitors_page_type = ?
                                             ")
-                                    ->execute($CURDATE, $vid, $objPageId, $objPage->language, $visitors_page_type);
+                                    ->execute($CURDATE, $vid, $objPageId, $objPageIdOrg, $objPage->language, $visitors_page_type);
     	    // eventuell $GLOBALS['TL_LANGUAGE']
     	    // oder      $objPage->rootLanguage; // Sprache der Root-Seite
     	    if ($objPageHitVisit->numRows < 1)
@@ -751,6 +759,7 @@ class ModuleVisitorsTag extends \Frontend
         	            'vid'                 => $vid,
         	            'visitors_page_date'  => $CURDATE,
         	            'visitors_page_id'    => $objPageId,
+        	            'visitors_page_pid'   => $objPageIdOrg,
         	            'visitors_page_type'  => $visitors_page_type,
         	            'visitors_page_visit' => 1,
         	            'visitors_page_hit'   => 1,
@@ -788,8 +797,8 @@ class ModuleVisitorsTag extends \Frontend
                                             id = ?
                                         ")
                             ->execute($visitors_page_hits, 
-                                              $visitors_page_visits, 
-                                              $objPageHitVisit->id);
+                                      $visitors_page_visits, 
+                                      $objPageHitVisit->id);
     	    }
 	    }
 	    //Page Counter End
@@ -1169,6 +1178,23 @@ class ModuleVisitorsTag extends \Frontend
 	        }
 	    }
 	    
+	    //Isotope Table tl_iso_product exists?
+	    if (\Input::get('items') && \Database::getInstance()->tableExists('tl_iso_product'))
+	    {
+			$strAlias = \Input::get('items');
+			ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Get items: '. print_r($strAlias, true));			
+
+	        $objReaderPage = \Database::getInstance()
+                                ->prepare("SELECT id FROM tl_iso_product WHERE alias=?")
+                                ->limit(1)
+                                ->execute($strAlias);
+			if ($objReaderPage->numRows > 0)
+			{
+	            //Isotope Reader
+	            $page_type = self::PAGE_TYPE_ISOTOPE;
+	        }
+	    }
+	    
 	    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageType: '. $page_type);
 	    return $page_type;
 	}
@@ -1200,11 +1226,11 @@ class ModuleVisitorsTag extends \Frontend
         $uri = $_SERVER['REQUEST_URI']; // /news/james-wilson-returns.html
         $alias = '';
         //steht suffix (html) am Ende?
-        //Default: GLOBALS['TL_CONFIG']['urlSuffix'] = '.html';
-        if (substr($uri,-strlen($GLOBALS['TL_CONFIG']['urlSuffix'])) == $GLOBALS['TL_CONFIG']['urlSuffix'])
+        $urlSuffix = \System::getContainer()->getParameter('contao.url_suffix'); // default: .html
+        if (substr($uri,-strlen($urlSuffix)) == $urlSuffix)
         {
             //Alias nehmen
-            $alias = substr($uri,strrpos($uri,'/')+1,-strlen($GLOBALS['TL_CONFIG']['urlSuffix']));
+            $alias = substr($uri,strrpos($uri,'/')+1,-strlen($urlSuffix));
             if (false === $alias) 
             {
                 ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdReaderSelf: '. $PageId);
@@ -1213,8 +1239,7 @@ class ModuleVisitorsTag extends \Frontend
         }
         else 
         {
-            ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdNoSuffix: '. $PageId);
-            return $PageId; // kein Suffix, Pech für die Kuh
+            $alias = substr($uri,strrpos($uri,'/')+1);
         }
         ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Alias: '. $alias);
         
@@ -1245,6 +1270,20 @@ class ModuleVisitorsTag extends \Frontend
 	            return $objFaq->id;
 	        }
 	    }
+	    if ($PageType == self::PAGE_TYPE_ISOTOPE)
+	    {
+	        //alias = a-perfect-circle-thirteenth-step
+	        $objIsotope = \Database::getInstance()
+                	        ->prepare("SELECT id FROM tl_iso_product WHERE alias=?")
+                	        ->limit(1)
+                	        ->execute($alias);
+	        if ($objIsotope->numRows > 0)
+	        {
+	            ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'PageIdIsotope: '. $objIsotope->id);
+	            return $objIsotope->id;
+	        }
+	    }
+	    
 	    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , 'Unknown PageType: '. $PageType);
 	}
 	

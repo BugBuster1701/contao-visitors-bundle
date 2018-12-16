@@ -229,6 +229,9 @@ class ModuleVisitorStat extends \BackendModule
 				// Faq
 				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID,10,true);
 				
+				// Isotope
+				$arrVisitorsIsotopeVisitHits[$intAnzCounter]       = ModuleVisitorStatIsotopeProductCounter::getInstance()->generateIsotopeVisitHitTop($objVisitorsID,20,true);
+				
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);
 				$arrVisitorsStatBrowser[$intAnzCounter] = $arrVSB['TOP'];
@@ -274,8 +277,9 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatPageVisitHitsDays      = $arrVisitorsPageVisitHitsDays;
 		$this->Template->visitorsstatPageVisitHitsToday     = $arrVisitorsPageVisitHitsToday;
 		$this->Template->visitorsstatPageVisitHitsYesterday = $arrVisitorsPageVisitHitsYesterday;
-		$this->Template->visitorsstatNewsVisitHits = $arrVisitorsNewsVisitHits;
-		$this->Template->visitorsstatFaqVisitHits  = $arrVisitorsFaqVisitHits;
+		$this->Template->visitorsstatNewsVisitHits     = $arrVisitorsNewsVisitHits;
+		$this->Template->visitorsstatFaqVisitHits      = $arrVisitorsFaqVisitHits;
+		$this->Template->visitorsstatIsotopeVisitHits  = $arrVisitorsIsotopeVisitHits;
 		$this->Template->visitorsstatBrowser  	   = $arrVisitorsStatBrowser;
 		$this->Template->visitorsstatBrowser2  	   = $arrVisitorsStatBrowser2;
 		$this->Template->visitorsstatBrowserDefinition = $arrVisitorsStatBrowserDefinition;
@@ -389,7 +393,7 @@ class ModuleVisitorStat extends \BackendModule
     		    $arrVisitorsStat[] = array
     			(
     			    'visitors_id'           => $objVisitors->id,
-    				'visitors_name'         => specialchars(ampersand($objVisitors->visitors_name)),
+    				'visitors_name'         => \StringUtil::specialchars(ampersand($objVisitors->visitors_name)),
     				'visitors_active'       => $objVisitors->published,
     				'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
     				'visitors_date_ymd'     => $objVisitors->visitors_date,
@@ -447,7 +451,7 @@ class ModuleVisitorStat extends \BackendModule
 		    $arrVisitorsStat[] = array
 			(
 			    'visitors_id'           => $objVisitors->id,
-				'visitors_name'         => specialchars(ampersand($objVisitors->visitors_name)),
+				'visitors_name'         => \StringUtil::specialchars(ampersand($objVisitors->visitors_name)),
 				'visitors_active'       => $objVisitors->published,
 				'visitors_startdate'    => $visitors_startdate
             );
