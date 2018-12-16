@@ -1,0 +1,27 @@
+<div class="mod_visitors_be_isotope_visit_hit_top">
+<!-- IsotopeHitTop::start -->
+<table summary="Table lists countings" class="mod_visitors_be_table" style="width: 100%;">
+		<tbody>
+			<tr>
+				<td colspan="4"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']; ?></td>
+			</tr>
+			<tr>
+				<td style="padding-left: 2px; text-align: left;"   class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['isotope_title']; ?></td>
+				<td style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></td>
+				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></td>
+				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></td>
+			</tr>
+<?php if ($this->IsotopeVisitHitTop !== false) : ?>
+	<?php foreach ($this->IsotopeVisitHitTop AS $IsotopeVisitHitTopRow) : ?>
+			<tr>
+			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($IsotopeVisitHitTopRow['title']) ? $IsotopeVisitHitTopRow['title']  : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($IsotopeVisitHitTopRow['alias']) ? $IsotopeVisitHitTopRow['alias'] .' ('.(isset($IsotopeVisitHitTopRow['lang']) ? $IsotopeVisitHitTopRow['lang'] .')' : '') : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($IsotopeVisitHitTopRow['hits'])  ? $IsotopeVisitHitTopRow['visits'] : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($IsotopeVisitHitTopRow['hits'])  ? $IsotopeVisitHitTopRow['hits']   : ''); ?></td>
+			</tr>
+	<?php endforeach; ?>
+<?php endif; ?>
+		</tbody>
+</table>
+<!-- NewsHitTop::stop -->
+</div>

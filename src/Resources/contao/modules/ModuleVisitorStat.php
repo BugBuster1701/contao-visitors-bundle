@@ -229,6 +229,9 @@ class ModuleVisitorStat extends \BackendModule
 				// Faq
 				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID,10,true);
 				
+				// Isotope
+				$arrVisitorsIsotopeVisitHits[$intAnzCounter]       = ModuleVisitorStatIsotopeProductCounter::getInstance()->generateIsotopeVisitHitTop($objVisitorsID,20,true);
+				
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);
 				$arrVisitorsStatBrowser[$intAnzCounter] = $arrVSB['TOP'];
@@ -274,8 +277,9 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatPageVisitHitsDays      = $arrVisitorsPageVisitHitsDays;
 		$this->Template->visitorsstatPageVisitHitsToday     = $arrVisitorsPageVisitHitsToday;
 		$this->Template->visitorsstatPageVisitHitsYesterday = $arrVisitorsPageVisitHitsYesterday;
-		$this->Template->visitorsstatNewsVisitHits = $arrVisitorsNewsVisitHits;
-		$this->Template->visitorsstatFaqVisitHits  = $arrVisitorsFaqVisitHits;
+		$this->Template->visitorsstatNewsVisitHits     = $arrVisitorsNewsVisitHits;
+		$this->Template->visitorsstatFaqVisitHits      = $arrVisitorsFaqVisitHits;
+		$this->Template->visitorsstatIsotopeVisitHits  = $arrVisitorsIsotopeVisitHits;
 		$this->Template->visitorsstatBrowser  	   = $arrVisitorsStatBrowser;
 		$this->Template->visitorsstatBrowser2  	   = $arrVisitorsStatBrowser2;
 		$this->Template->visitorsstatBrowserDefinition = $arrVisitorsStatBrowserDefinition;
