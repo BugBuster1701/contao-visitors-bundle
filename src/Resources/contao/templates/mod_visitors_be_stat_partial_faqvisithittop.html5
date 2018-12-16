@@ -6,10 +6,10 @@
 				<td colspan="4"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']; ?></td>
 			</tr>
 			<tr>
-				<td style="padding-left: 2px; text-align: left;"   class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']; ?></td>
-				<td style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></td>
-				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></td>
-				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></td>
 			</tr>
 <?php if ($this->FaqVisitHitTop !== false) : ?>
 	<?php foreach ($this->FaqVisitHitTop AS $FaqVisitHitTopRow) : ?>
