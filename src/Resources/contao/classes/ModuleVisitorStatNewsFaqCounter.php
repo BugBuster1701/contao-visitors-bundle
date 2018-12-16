@@ -172,18 +172,16 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                     );
                 }
             }
-        }
-        
-        if ($parse === true) 
-        {
-            $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_newsvisithittop');        
-            $this->TemplatePartial->NewsVisitHitTop = $arrNewsStatCount;        
-            return $this->TemplatePartial->parse();
-        }
-        else 
-        {
+            if ($parse === true)
+            {
+                /* @var $TemplatePartial Template */
+                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_newsvisithittop');
+                $TemplatePartial->NewsVisitHitTop = $arrNewsStatCount;
+                return $TemplatePartial->parse();
+            }
             return $arrNewsStatCount;
         }
+        return '<!-- no News -->';
     }
     
     public function generateFaqVisitHitTop($VisitorsID, $limit = 10, $parse = true)
@@ -237,18 +235,18 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                     );
                 }
             }
-        }
-    
-        if ($parse === true)
-        {
-            $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithittop');
-            $this->TemplatePartial->FaqVisitHitTop = $arrFaqStatCount;
-            return $this->TemplatePartial->parse();
-        }
-        else
-        {
+            if ($parse === true)
+            {
+                /* @var $TemplatePartial Template */
+                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithittop');
+                $TemplatePartial->FaqVisitHitTop = $arrFaqStatCount;
+                return $TemplatePartial->parse();
+            }
             return $arrFaqStatCount;
         }
+        
+        return '<!-- no FAQ -->';
+
     }
     
     public function getNewsAliases($visitors_page_id)

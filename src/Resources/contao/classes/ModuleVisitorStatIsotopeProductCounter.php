@@ -152,19 +152,18 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                     );
                 }
             }
-        }
-        
-        if ($parse === true) 
-        {
-            /* @var $TemplatePartial Template */
-            $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_isotopevisithittop');        
-            $TemplatePartial->IsotopeVisitHitTop = $arrIsotopeStatCount;        
-            return $TemplatePartial->parse();
-        }
-        else 
-        {
+            
+            if ($parse === true)
+            {
+                /* @var $TemplatePartial Template */
+                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_isotopevisithittop');
+                $TemplatePartial->IsotopeVisitHitTop = $arrIsotopeStatCount;
+                return $TemplatePartial->parse();
+            }
             return $arrIsotopeStatCount;
         }
+        
+        return '<!-- no Isotope -->';
     }
     
     /**
