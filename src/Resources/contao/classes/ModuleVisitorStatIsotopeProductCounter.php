@@ -174,7 +174,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         {
             $objIsotopePageAlias = \Database::getInstance()
                                 ->prepare("SELECT 
-                                                tl_page.alias AS 'PageAlias', 
+                                                tl_page.alias AS 'PageAlias' 
                                             FROM
                                                 tl_page
                                             WHERE
@@ -186,7 +186,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
             
             $objIsotopeProductAlias = \Database::getInstance()
                                     ->prepare("SELECT
-                                                tl_iso_product.alias AS 'ProductAlias',
+                                                tl_iso_product.alias AS 'ProductAlias'
                                             FROM
                                                 tl_iso_product
                                             WHERE
