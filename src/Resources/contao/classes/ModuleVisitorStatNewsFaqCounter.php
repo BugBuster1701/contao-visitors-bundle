@@ -181,7 +181,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             }
             return $arrNewsStatCount;
         }
-        return '<!-- no News -->';
+        return false;
     }
     
     public function generateFaqVisitHitTop($VisitorsID, $limit = 10, $parse = true)
@@ -245,7 +245,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             return $arrFaqStatCount;
         }
         
-        return '<!-- no FAQ -->';
+        return false;
 
     }
     

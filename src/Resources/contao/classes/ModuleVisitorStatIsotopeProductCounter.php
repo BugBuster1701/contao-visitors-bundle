@@ -163,7 +163,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
             return $arrIsotopeStatCount;
         }
         
-        return '<!-- no Isotope -->';
+        return false;
     }
     
     /**
