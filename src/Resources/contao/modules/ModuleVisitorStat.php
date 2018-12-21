@@ -45,6 +45,12 @@ class ModuleVisitorStat extends \BackendModule
 	 * @var int
 	 */
 	protected $intKatID;
+	
+	/**
+	 * is user allowed to reset the statistic
+	 * @var bool
+	 */
+	protected $boolAllowReset;
 
 	/**
 	 * Constructor
@@ -56,16 +62,6 @@ class ModuleVisitorStat extends \BackendModule
 	    
 	    \System::loadLanguageFile('tl_visitors_stat_export');
 	    \System::loadLanguageFile('tl_visitors_referrer');
-	    
-	    if (\Input::get('act',true)=='zero') 
-	    {
-	    	$this->setZero();
-	    }
-	    
-	    if (\Input::get('act',true)=='zerobrowser') 
-	    {
-	    	$this->setZeroBrowser();
-	    }
 	    
 	    if (\Input::post('act',true)=='export') //action Export
 	    {
@@ -83,6 +79,18 @@ class ModuleVisitorStat extends \BackendModule
 	    else 
 	    {
 	    	$this->intKatID = 0;
+	    }
+	    
+	    $this->boolAllowReset = $this->isUserInVisitorStatisticResetGroups($this->intKatID);
+	    
+	    if (\Input::get('act',true) == 'zero')
+	    {
+	        $this->setZero();
+	    }
+	     
+	    if (\Input::get('act',true) == 'zerobrowser')
+	    {
+	        $this->setZeroBrowser();
 	    }
 	}
 	
@@ -259,6 +267,7 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitors_footer  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['footer'];
 		$this->Template->theme            = $this->getTheme();
 		$this->Template->theme0           = 'bundles/bugbustervisitors/flexible'; // for down0.gif
+		$this->Template->allow_reset      = $this->boolAllowReset;
 
 		
 		$this->Template->visitorsanzcounter   	   = $intAnzCounter;
@@ -819,6 +828,10 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function setZero()
 	{
+	    if (false === $this->boolAllowReset)
+	    {
+	        return ;
+	    }
 	    $intCID = preg_replace('@\D@', '', \Input::get('zid')); //  only digits 
 	    if ($intCID>0) 
 	    {
@@ -869,6 +882,10 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function setZeroBrowser()
 	{
+	    if (false === $this->boolAllowReset)
+	    {
+	        return ;
+	    }
 	    $intCID = preg_replace('@\D@', '', \Input::get('zid')); //  only digits 
 	    if ($intCID>0) 
 	    {
@@ -1393,6 +1410,30 @@ class ModuleVisitorStat extends \BackendModule
 	        $arrVisitorCats[] = array('id' => '0', 'title' => '---------');
 	    }
 	    return $arrVisitorCats;
+	}
+	
+	protected function isUserInVisitorStatisticResetGroups($visitor_category_id)
+	{
+	    $arrVisitorGroups = array();
+	    $objVisitorGroups = \Database::getInstance()
+                                ->prepare("SELECT
+                                            `visitors_statreset_protected`
+                                           ,`visitors_statreset_groups`
+                                       FROM
+                                            tl_visitors_category
+                                        WHERE id=?
+                                        ")
+                                ->execute($visitor_category_id);
+        while ($objVisitorGroups->next())
+        {
+            if ( true === $this->isUserInVisitorStatGroups($objVisitorGroups->visitors_statreset_groups,
+                                                    (bool) $objVisitorGroups->visitors_statreset_protected) )
+            {
+                return true;
+            }
+        }
+	    
+        return false;
 	}
 	
 	/**
