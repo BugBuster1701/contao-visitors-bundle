@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-12-28T21:35:28+01:00
+ * last-updated: 2018-02-27T22:08:04+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Активные';
@@ -34,6 +34,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                          
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']                       = 'Архив FAQ';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                             = 'Просмотры';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                  = 'Начальные значения';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['isotope_title']                   = 'Приложения Isotope';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat']                             = 'Категория';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']                      = 'В прошлом месяце';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                       = 'На прошлой неделе';
@@ -54,6 +55,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_direct']               
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_dns']                    = 'Домен';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_top']                    = 'Реферер посетителя ТОП 30';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset']                           = 'Сброс';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']               = 'Сброс статистики для этого счетчика запрещен.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']        = 'Например<br>размер viewport';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine']                    = 'Поисковая система';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']               = 'Значения за последние 60 дней.';
@@ -77,6 +79,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']              
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ Статистика TOP 10';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']                 = 'День с наименьшим количеством посетителей';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']                   = 'Просмотров за день';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']        = 'Статистика Isotope ТОП 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']                   = 'День с набольшим количеством посетителей';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'Новости Статистика TOP 10';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']                      = 'Алиас страницы';
