@@ -128,7 +128,8 @@ class ModuleVisitorStat extends \BackendModule
 	    
 	    if ($this->intKatID == 0) //direkter Aufruf ohne ID
 	    {
-	        $this->intKatID = $this->getCatIdByCategories($arrVisitorCategories);
+	        $this->intKatID       = $this->getCatIdByCategories($arrVisitorCategories);
+	        $this->boolAllowReset = $this->isUserInVisitorStatisticResetGroups($this->intKatID);
 	    }
 	    else
         {
