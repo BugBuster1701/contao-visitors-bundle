@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2018-02-27T22:08:04+01:00
+ * last-updated: 2018-12-17T00:00:48+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Aktiv';
@@ -55,6 +55,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_direct']               
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_dns']                    = 'Domain';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_top']                    = 'Besucherherkunft TOP 30';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset']                           = 'Rücksetzung';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']               = 'Das Zurücksetzen der Statistik ist für diesen Zähler nicht erlaubt.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']        = 'Beispiel<br>Fenstergrößen';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine']                    = 'Suchmaschine';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']               = 'Werte aus den Daten der letzten 60 Tage.';

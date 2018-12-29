@@ -53,6 +53,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_direct']          = 'Di
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_dns']             = 'Domain';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_top']             = 'Visitor Referrer TOP 30';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset']                    = 'Reset';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']        = 'Reset the statistics is not allowed for this counter.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine']             = 'Search Engine';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']        = 'Values of the last 60 days.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_no_data']     = 'No data available.';

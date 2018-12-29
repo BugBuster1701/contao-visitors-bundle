@@ -110,14 +110,15 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('visitors_stat_protected'),
-		'default'                     => '{title_legend},title;{protected_stat_legend:hide},visitors_stat_protected'
+		'__selector__'                => array('visitors_stat_protected','visitors_statreset_protected'),
+		'default'                     => '{title_legend},title;{protected_stat_legend:hide},visitors_stat_protected;{protected_statreset_legend:hide},visitors_statreset_protected'
 	),
 
 	// Subpalettes
 	'subpalettes' => array
 	(
-		'visitors_stat_protected'      => 'visitors_stat_groups,visitors_stat_admins'
+		'visitors_stat_protected'      => 'visitors_stat_groups,visitors_stat_admins',
+	    'visitors_statreset_protected' => 'visitors_statreset_groups,visitors_statreset_admins'
 	),
 
 	// Fields
@@ -161,6 +162,34 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 		'visitors_stat_admins' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_stat_admins'],
+	        'inputType'               => 'checkbox',
+			'eval'                    => array('disabled'=>true),
+			'load_callback' => array
+			(
+			    array('BugBuster\Visitors\DcaVisitorsCategory', 'getAdminCheckbox')
+			)
+		),
+		'visitors_statreset_protected' => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_statreset_protected'],
+			'exclude'                 => true,
+			'filter'                  => true,
+			'inputType'               => 'checkbox',
+			'sql'                     => "char(1) NOT NULL default ''",
+			'eval'                    => array('submitOnChange'=>true)
+		),
+		'visitors_statreset_groups'   => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_statreset_groups'],
+			'exclude'                 => true,
+			'inputType'               => 'checkbox',
+			'foreignKey'              => 'tl_user_group.name',
+			'sql'                     => "varchar(255) NOT NULL default ''",
+			'eval'                    => array('multiple'=>true)
+		),
+		'visitors_statreset_admins'   => array
+		(
+			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors_category']['visitors_statreset_admins'],
 	        'inputType'               => 'checkbox',
 			'eval'                    => array('disabled'=>true),
 			'load_callback' => array
