@@ -107,7 +107,7 @@
 	    <?php if ($this->allow_reset) : ?>
 			<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zero&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.gif" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" height="16" width="16"></a>
 		<?php else: ?>
-			<img src="system/themes/<?= $this->theme ?>/icons/error.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']; ?>" width="16" height="16">
+			<img src="system/themes/<?= $this->theme ?>/icons/error.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']; ?>" width="16" height="16">
 		<?php endif; ?>
 	    </td>
 	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list">&nbsp;</td>
