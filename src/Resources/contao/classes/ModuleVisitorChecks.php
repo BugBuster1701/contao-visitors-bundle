@@ -173,7 +173,7 @@ class ModuleVisitorChecks extends \Frontend
 	    $dnsResult = false;
 	    //$this->_vhost :  Host.TLD
 	    //idn_to_ascii
-	    $dnsResult = dns_get_record( \Idna::encode( $host ), DNS_ANY );
+	    $dnsResult = @dns_get_record( \Idna::encode( $host ), DNS_ANY );
 	    if ( $dnsResult )
 	    {
 	        ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
