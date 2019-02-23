@@ -20,8 +20,8 @@
 		"forum":"https://community.contao.org/de/forumdisplay.php?28-visitors"
 	},
 	"require":{
-		"php": "^5.6|^7.0",
-		"contao/core-bundle": "~4.3",
+		"php": "^7.0",
+		"contao/core-bundle": "~4.4",
 		"bugbuster/contao-botdetection-bundle": ">=0.2.1,<2",
 		"composer/semver": "^1.0",
 		"jean85/pretty-package-versions": "^1.0",
@@ -57,7 +57,7 @@
 			}
 		},
 		"branch-alias": {
-			"dev-develop": "1.5.x-dev"
+			"dev-develop": "1.6.x-dev"
 		},
 		"contao-manager-plugin": "BugBuster\\VisitorsBundle\\ContaoManager\\Plugin"
 	}
