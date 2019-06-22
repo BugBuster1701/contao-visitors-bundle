@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) [![Latest Unstable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/unstable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9f597a57-400b-4054-88cd-ed0ce240021d/small.png)](https://insight.sensiolabs.com/projects/9f597a57-400b-4054-88cd-ed0ce240021d)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d55179131ab34d38a364685b57872af4)](https://www.codacy.com/app/BugBuster1701/contao-visitors-bundle?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BugBuster1701/contao-visitors-bundle&amp;utm_campaign=Badge_Grade)
 
 
 ## About
