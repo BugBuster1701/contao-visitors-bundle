@@ -11,7 +11,7 @@
 namespace BugBuster\VisitorsBundle\Controller;
 
 use BugBuster\Visitors\FrontendVisitors;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/visitors", defaults={"_scope" = "frontend", "_token_check" = false})
  */
-class VisitorsFeController extends Controller
+class VisitorsFeController extends AbstractController
 {
     /**
      * Renders the alerts content.
@@ -34,7 +34,7 @@ class VisitorsFeController extends Controller
      */
     public function screencountAction()
     {
-        $this->container->get('contao.framework')->initialize();
+        $this->get('contao.framework')->initialize();
     
         $controller = new FrontendVisitors();
     
