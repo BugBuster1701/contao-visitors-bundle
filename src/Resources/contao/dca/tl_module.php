@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Contao Open Source CMS
@@ -13,17 +13,14 @@
  * PHP version 5
  * @copyright  Glen Langer 2009..2018
  * @author     Glen Langer
- * @package    GLVisitors
  * @license    LGPL
  * @filesource
  */
-
 
 /**
  * Add palettes to tl_module
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes']['visitors']   = '{title_legend},name,type,headline;{config_legend},visitors_categories,visitors_template;{protected_legend:hide},protected;{expert_legend:hide},visitors_useragent,guests,cssID';
-
 
 /**
  * Add fields to tl_module

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
@@ -11,7 +11,6 @@
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
- * @package    Visitors
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
@@ -110,7 +109,7 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 	// Palettes
 	'palettes' => array
 	(
-		'__selector__'                => array('visitors_stat_protected','visitors_statreset_protected'),
+		'__selector__'                => array('visitors_stat_protected', 'visitors_statreset_protected'),
 		'default'                     => '{title_legend},title;{protected_stat_legend:hide},visitors_stat_protected;{protected_statreset_legend:hide},visitors_statreset_protected'
 	),
 

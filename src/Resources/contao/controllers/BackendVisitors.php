@@ -3,7 +3,6 @@
 /**
  * @copyright  Glen Langer 2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    Visitors
  * @license    LGPL-3.0+
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
@@ -11,7 +10,6 @@
 namespace BugBuster\Visitors;
 
 use Symfony\Component\HttpFoundation\Response;
-
 
 /**
  * Back end visitors wizard.
@@ -42,7 +40,6 @@ class BackendVisitors extends \Backend
 		\System::loadLanguageFile('tl_visitors_referrer');
 	}
 
-
 	/**
 	 * Run the controller and parse the template
 	 *
@@ -58,10 +55,11 @@ class BackendVisitors extends \Backend
 		$objTemplate->title         = \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['systemMessages']);
 		$objTemplate->charset       = \Config::get('characterSet');
 		$objTemplate->visitorsbecss = VISITORS_BE_CSS;
-		
-		if ( is_null( \Input::get('tl_vid',true) ) )
+
+		if (\is_null(\Input::get('tl_vid', true)))
 		{
 		    $objTemplate->messages = $GLOBALS['TL_LANG']['tl_visitors_referrer']['no_referrer'];
+
 		    return $objTemplate->getResponse();
 		}
 		// <h1 class="main_headline">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for'].': '.\Idna::decode(str_rot13($this->Input->get('tl_referrer',true))).'</h1>
@@ -90,7 +88,7 @@ class BackendVisitors extends \Backend
                                 visitors_referrer_dns = ? AND vid = ?
                             GROUP BY 1
                             ORDER BY 2 DESC")
-                ->execute(str_rot13(\Input::get('tl_referrer',true)),\Input::get('tl_vid',true));
+                ->execute(str_rot13(\Input::get('tl_referrer', true)), \Input::get('tl_vid', true));
 		$intRows = $objDetails->numRows;
 		if ($intRows > 0)
 		{
@@ -99,7 +97,7 @@ class BackendVisitors extends \Backend
 				$objTemplate->messages .= '
             <tr>
                 <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.rawurldecode(htmlspecialchars(\Idna::decode($objDetails->visitors_referrer_full))).'</td>
-                <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.date($GLOBALS['TL_CONFIG']['datimFormat'],$objDetails->maxtstamp).'</td>
+                <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.date($GLOBALS['TL_CONFIG']['datimFormat'], $objDetails->maxtstamp).'</td>
                 <td class="tl_file_list" style="text-align: center;">'.$objDetails->ANZ.'</td>
             </tr>';
 	        }
@@ -118,8 +116,7 @@ class BackendVisitors extends \Backend
             </tbody>
             </table>
         </div>';
-		
-		
+
 		return $objTemplate->getResponse();
 	}
 }

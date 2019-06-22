@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
@@ -9,23 +9,22 @@
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
- * @package    GLVisitors
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle 
  */
 
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors;
-use Psr\Log\LogLevel;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Psr\Log\LogLevel;
 
 /**
  * Class ModuleVisitors 
  *
  * @copyright  Glen Langer 2009..2017
  * @author     Glen Langer 
- * @package    GLVisitors
  * @license    LGPL 
  */
 class ModuleVisitors extends \Module
@@ -36,7 +35,7 @@ class ModuleVisitors extends \Module
 	 * @var string
 	 */
 	protected $strTemplate = 'mod_visitors_fe_all';
-	
+
 	protected $useragent_filter = '';
 
 	/**
@@ -53,11 +52,11 @@ class ModuleVisitors extends \Module
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
             $objTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
-		
+
 			return $objTemplate->parse();
 		}
 		//alte und neue Art gemeinsam zum Array bringen
-		if (strpos($this->visitors_categories,':') !== false) 
+		if (strpos($this->visitors_categories, ':') !== false) 
 		{
 			$this->visitors_categories = deserialize($this->visitors_categories, true);
 		} 
@@ -66,14 +65,14 @@ class ModuleVisitors extends \Module
 			$this->visitors_categories = array($this->visitors_categories);
 		}
 		// Return if there are no categories
-		if (!is_array($this->visitors_categories) || !is_numeric($this->visitors_categories[0]))
+		if (!\is_array($this->visitors_categories) || !is_numeric($this->visitors_categories[0]))
 		{
 			return '';
 		}
 		$this->useragent_filter = $this->visitors_useragent;
+
 		return parent::generate();
 	}
-	
 
 	/**
 	 * Generate module
@@ -94,7 +93,7 @@ class ModuleVisitors extends \Module
                                 pid=? AND published=?
                             ORDER BY id, visitors_name")
                 ->limit(1)
-                ->execute($this->visitors_categories[0],1);
+                ->execute($this->visitors_categories[0], 1);
 		if ($objVisitors->numRows < 1)
 		{
 			$this->strTemplate = 'mod_visitors_error';
@@ -105,9 +104,10 @@ class ModuleVisitors extends \Module
 			     ->log(LogLevel::ERROR,
 			           'ModuleVisitors User Error: no published counter found.',
 			           array('contao' => new ContaoContext('ModulVisitors compile ', TL_ERROR)));
+
 			return;
 		}
-       
+
 		$arrVisitors = array();
 
 		while ($objVisitors->next())
@@ -121,7 +121,7 @@ class ModuleVisitors extends \Module
 		    if ($this->strTemplate != 'mod_visitors_fe_invisible') 
 		    {
 		    	//VisitorsStartDate
-	            if (!strlen($objVisitors->visitors_startdate)) 
+	            if (!\strlen($objVisitors->visitors_startdate)) 
 	            {
 			    	$VisitorsStartDate = false;
 			    } 

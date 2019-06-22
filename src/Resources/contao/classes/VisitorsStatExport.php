@@ -7,7 +7,6 @@
  * 
  * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
- * @package     VisitorsStatisticExport 
  * @license     LGPL 
  * @filesource
  */
@@ -15,6 +14,7 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors\Stat\Export; 
 
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
@@ -24,7 +24,6 @@ use BugBuster\Visitors\ModuleVisitorStatPageCounter;
  *
  * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
- * @package     VisitorsStatisticExport 
  */
 class VisitorsStatExport extends \System
 {
@@ -32,24 +31,22 @@ class VisitorsStatExport extends \System
     protected $format = 'xlsx';
     protected $BrowserAgent ='NOIE';
     protected $export_days = 0;
-    
-    /**
-     */
+
     public function __construct()
     {
         parent::__construct();
         \System::loadLanguageFile('tl_visitors_stat_export');
-        
-        $this->format = \Input::post('visitors_export_format',true);
-        $this->catid  = \Input::post('catid',true);
-        $this->export_days = (int) \Input::post('visitors_export_days',true);
-        
+
+        $this->format = \Input::post('visitors_export_format', true);
+        $this->catid  = \Input::post('catid', true);
+        $this->export_days = (int) \Input::post('visitors_export_days', true);
+
         if ($this->export_days <1) 
         {
         	$this->export_days = 1;
         }
         $_SESSION['VISITORS_EXPORT_DAYS'] = $this->export_days;
-        
+
         //IE or other?
         $ua = \Environment::get('agent')->shorty;
         if ($ua == 'ie')
@@ -57,7 +54,7 @@ class VisitorsStatExport extends \System
             $this->BrowserAgent = 'IE';
         }
     }
-    
+
     public function run()
     {
         switch ($this->format) 
@@ -74,10 +71,10 @@ class VisitorsStatExport extends \System
         	default:
                 break;
         }
+
         return;
     }
-    
-    
+
     protected function exportXLSX()
     {
         $objVisitorExcel = $this->generateExportData(); 
@@ -105,7 +102,7 @@ class VisitorsStatExport extends \System
         $objWriter->save('php://output');
         exit;
     }
-    
+
     protected function exportODS()
     {
         $objVisitorODS = $this->generateExportData();
@@ -116,7 +113,7 @@ class VisitorsStatExport extends \System
                                     ->setDescription("Office 2007 ODS Visitors Statistic Export");
         //->setKeywords("office 2007 openxml php")
         //->setCategory("Test result file");
-    
+
         // Redirect output to a client’s web browser (Excel2007)
         header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
         header('Content-Disposition: attachment;filename="visitors_statistic-export.ods"');
@@ -133,8 +130,7 @@ class VisitorsStatExport extends \System
         $objWriter->save('php://output');
         exit;
     }
-    
-       
+
     protected function exportCSV()
     {
         header('Content-Type: text/csv; charset=' . $GLOBALS['TL_CONFIG']['characterSet']);
@@ -148,7 +144,7 @@ class VisitorsStatExport extends \System
             header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
             header ('Pragma: public'); // HTTP/1.0
         }
-        
+
         $objVisitorCSV = $this->generateExportData();
         $objWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($objVisitorCSV, 'Csv')
                     ->setDelimiter(',')
@@ -160,8 +156,7 @@ class VisitorsStatExport extends \System
         unset($objWriter);
         exit;
     }
-    
-    
+
     protected function generateExportData()
     {
         $objStatistic = \Database::getInstance()
@@ -183,7 +178,7 @@ class VisitorsStatExport extends \System
                                         tvc.id = ?
                                     ORDER BY tvc.title, tv.id, tvs.visitors_date")
                             ->execute($this->catid);
-        
+
         $objVisitorExcel = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
         $objVisitorExcel->setActiveSheetIndex(0);
         $objVisitorExcel->getActiveSheet()->setTitle($GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_title']);
@@ -194,7 +189,7 @@ class VisitorsStatExport extends \System
         $objVisitorExcel->getActiveSheet()->setCellValue('E1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_date']);
         $objVisitorExcel->getActiveSheet()->setCellValue('F1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_visits']);
         $objVisitorExcel->getActiveSheet()->setCellValue('G1', $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_field_hits']);
-        
+
         $objVisitorExcel->getActiveSheet()->getColumnDimension('A')->setAutoSize(true);
         $objVisitorExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
         $objVisitorExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
@@ -202,7 +197,7 @@ class VisitorsStatExport extends \System
         $objVisitorExcel->getActiveSheet()->getColumnDimension('E')->setAutoSize(true);
         $objVisitorExcel->getActiveSheet()->getColumnDimension('F')->setAutoSize(true);
         $objVisitorExcel->getActiveSheet()->getColumnDimension('G')->setAutoSize(true);
-        
+
         $objVisitorExcel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);
         $objVisitorExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
         $objVisitorExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
@@ -210,7 +205,7 @@ class VisitorsStatExport extends \System
         $objVisitorExcel->getActiveSheet()->getStyle('E1')->getFont()->setBold(true);
         $objVisitorExcel->getActiveSheet()->getStyle('F1')->getFont()->setBold(true);
         $objVisitorExcel->getActiveSheet()->getStyle('G1')->getFont()->setBold(true);
-        
+
         $row = 1;
         while ($objStatistic->next())
         {
@@ -227,7 +222,7 @@ class VisitorsStatExport extends \System
             $objVisitorExcel->getActiveSheet()->getStyle('D'.$row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
         }
         $VisitorsID = $objStatistic->visitors_id;
-        
+
         //Page Statistics
         $objVisitorExcel->createSheet();
         $objVisitorExcel->setActiveSheetIndex(1);
@@ -244,10 +239,10 @@ class VisitorsStatExport extends \System
         $objVisitorExcel->getActiveSheet()->getStyle('B1')->getFont()->setBold(true);
         $objVisitorExcel->getActiveSheet()->getStyle('C1')->getFont()->setBold(true);
         $objVisitorExcel->getActiveSheet()->getStyle('D1')->getFont()->setBold(true);
-        
-        $arrVisitorsPageVisitHits = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTopDays($VisitorsID,$this->export_days,false);
+
+        $arrVisitorsPageVisitHits = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTopDays($VisitorsID, $this->export_days, false);
         $row = 1; 
-        if (count($arrVisitorsPageVisitHits)>0 && $arrVisitorsPageVisitHits !== false) 
+        if (\count($arrVisitorsPageVisitHits)>0 && $arrVisitorsPageVisitHits !== false) 
         {
             foreach ($arrVisitorsPageVisitHits as $arrVisitorsPageVisitHit) 
             {
@@ -256,23 +251,22 @@ class VisitorsStatExport extends \System
                 $objVisitorExcel->getActiveSheet()->setCellValue('B'.$row, $arrVisitorsPageVisitHit['lang']);
                 $objVisitorExcel->getActiveSheet()->setCellValue('C'.$row, $arrVisitorsPageVisitHit['visits']);
                 $objVisitorExcel->getActiveSheet()->setCellValue('D'.$row, $arrVisitorsPageVisitHit['hits']);
-                
+
                 $objVisitorExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             }
         }
         $objVisitorExcel->setActiveSheetIndex(0);
+
         return $objVisitorExcel;
     }
 
 }
 
 /**
- 	// Check if zip class exists
-// if (!class_exists($zipClass, FALSE)) {
-// throw new \PhpOffice\PhpSpreadsheet\Reader\Exception($zipClass . " library is not enabled");
-// }
- This allows the writing of Excel2007 files, even without ZipArchive enabled (it does require zlib), or when php_zip is one of the buggy PHP 5.2.6 or 5.2.8 versions
-It can be enabled using \PhpOffice\PhpSpreadsheet\Settings::setZipClass(\PhpOffice\PhpSpreadsheet\Settings::PCLZIP);
-
- *  
-*/
+ * // Check if zip class exists
+ * // if (!class_exists($zipClass, FALSE)) {
+ * // throw new \PhpOffice\PhpSpreadsheet\Reader\Exception($zipClass . " library is not enabled");
+ * // }
+ * This allows the writing of Excel2007 files, even without ZipArchive enabled (it does require zlib), or when php_zip is one of the buggy PHP 5.2.6 or 5.2.8 versions
+ * It can be enabled using \PhpOffice\PhpSpreadsheet\Settings::setZipClass(\PhpOffice\PhpSpreadsheet\Settings::PCLZIP);
+ */

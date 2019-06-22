@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
@@ -7,7 +7,6 @@
  *
  * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    GLVisitors
  * @license    LGPL
  * @filesource
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -16,6 +15,7 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors;
 
 /**
@@ -23,8 +23,6 @@ namespace BugBuster\Visitors;
  *
  * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    GLVisitors
- *
  */
 class DcaModuleVisitors extends \Backend 
 {

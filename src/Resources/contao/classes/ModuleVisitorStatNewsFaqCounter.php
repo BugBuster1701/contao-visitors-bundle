@@ -7,7 +7,6 @@
  *
  * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    Visitors
  * @license    LGPL
  * @filesource
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -16,6 +15,7 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors;
 
 /**
@@ -23,36 +23,34 @@ namespace BugBuster\Visitors;
  *
  * @copyright  Glen Langer 2014..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    Visitors
  */
 class ModuleVisitorStatNewsFaqCounter extends \BackendModule
 {
-    
+
     /**
      * Current object instance
      * @var object
      */
     protected static $instance = null;
-    
+
     protected $today;
     protected $yesterday;
     protected $newstableexists = false;
     protected $faqtableexists  = false;
-    
+
     const PAGE_TYPE_NEWS = 1;    //1 = Nachrichten/News
     const PAGE_TYPE_FAQ  = 2;    //2 = FAQ
 
-    
     /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->today     = date('Y-m-d');
         $this->yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
-        
+
         if (\Database::getInstance()->tableExists('tl_news') &&
             \Database::getInstance()->tableExists('tl_news_archive'))
         {
@@ -64,13 +62,12 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             $this->setFaqtableexists(true);
         }
     }
-    
-    
+
     protected function compile()
     {
-    
+
     }
-    
+
     /**
      * Return the current object instance (Singleton)
      * @return ModuleVisitorStatPageCounter
@@ -79,9 +76,9 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     {
         if (self::$instance === null)
         {
-            self::$instance = new ModuleVisitorStatNewsFaqCounter();
+            self::$instance = new self();
         }
-    
+
         return self::$instance;
     }
 
@@ -94,7 +91,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     {
         return $this->newstableexists;
     }
-    
+
     /**
      * @return the $faqtableexists
      */
@@ -102,7 +99,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     {
         return $this->faqtableexists;
     }
-    
+
     /**
      * @param boolean $newstableexists
      */
@@ -110,7 +107,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     {
         $this->newstableexists = $newstableexists;
     }
-    
+
     /**
      * @param boolean $faqtableexists
      */
@@ -118,13 +115,13 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
     {
         $this->faqtableexists = $faqtableexists;
     }
-    
+
     //////////////////////////////////////////////////////////////
-    
+
     public function generateNewsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
         $arrNewsStatCount = false;
-        
+
         //News Tables exists?
         if (true === $this->getNewstableexists())
         {
@@ -150,7 +147,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                                     ")
                             ->limit($limit)
                             ->execute($VisitorsID, self::PAGE_TYPE_NEWS);
-            
+
             while ($objNewsStatCount->next())
             {
         	    $alias   = false;
@@ -159,7 +156,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         	    {
         	       $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
         	    }
-                
+
                 if (false !== $alias) 
                 {
                     $arrNewsStatCount[] = array
@@ -174,20 +171,23 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             }
             if ($parse === true)
             {
-                /* @var $TemplatePartial Template */
+                // @var $TemplatePartial Template
                 $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_newsvisithittop');
                 $TemplatePartial->NewsVisitHitTop = $arrNewsStatCount;
+
                 return $TemplatePartial->parse();
             }
+
             return $arrNewsStatCount;
         }
+
         return false;
     }
-    
+
     public function generateFaqVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
         $arrFaqStatCount = false;
-    
+
         //FAQ Tables exists?
         if (true === $this->getFaqtableexists())
         {
@@ -237,18 +237,20 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             }
             if ($parse === true)
             {
-                /* @var $TemplatePartial Template */
+                // @var $TemplatePartial Template
                 $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithittop');
                 $TemplatePartial->FaqVisitHitTop = $arrFaqStatCount;
+
                 return $TemplatePartial->parse();
             }
+
             return $arrFaqStatCount;
         }
-        
+
         return false;
 
     }
-    
+
     public function getNewsAliases($visitors_page_id)
     {
         //News Tables exists?
@@ -284,7 +286,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                          'NewsArchivTitle' => false);
         }
     }
-    
+
     public function getFaqAliases($visitors_page_id)
     {
         //FAQ Tables exists?
@@ -320,5 +322,5 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                          'FaqArchivTitle' => false);
         }
     }
-    
+
 }

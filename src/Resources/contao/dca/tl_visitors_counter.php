@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Table tl_visitors_counter

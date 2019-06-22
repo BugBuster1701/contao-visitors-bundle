@@ -3,6 +3,7 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors;
 
 class ModuleVisitorCharts 
@@ -15,100 +16,104 @@ class ModuleVisitorCharts
     private $x = array(); // Elements can be numeric or a string
     private $y = array(); // Elements are numeric (Visits)
     private $y2 = array(); // Elements are numeric (Hits)
-    
-        
+
     // Diagrammname setzen
-    public function setName($name){
-        if(!is_string($name) && !is_numeric($name)){
-            throw new \Exception("Falscher Dateityp (".gettype($name).") number or string expected!");
+    public function setName($name) {
+        if(!\is_string($name) && !is_numeric($name)){
+            throw new \Exception("Falscher Dateityp (".\gettype($name).") number or string expected!");
         }
         $this->name = $name;
     }
-    public function setName2($name2){
-        if(!is_string($name2) && !is_numeric($name2)){
-            throw new \Exception("Falscher Dateityp (".gettype($name2).") number or string expected!");
+    public function setName2($name2) {
+        if(!\is_string($name2) && !is_numeric($name2)){
+            throw new \Exception("Falscher Dateityp (".\gettype($name2).") number or string expected!");
         }
         $this->name2 = $name2;
     }
 
     // Diagrammname auslesen
-    public function getName(){
+    public function getName() {
         return $this->name;
     }
-    public function getName2(){
+    public function getName2() {
         return $this->name2;
     }
 
     // Höhe des Diagramms setzen
-    public function setHeight($height){
-        if(!is_int($height)){
-            throw new \Exception("Falscher Dateityp (".gettype($height).") integer expected!");
+    public function setHeight($height) {
+        if(!\is_int($height)){
+            throw new \Exception("Falscher Dateityp (".\gettype($height).") integer expected!");
         }
         $this->height = $height;
+
         return true;
     }
 
     // Höhe des Diagramms auslesen
-    public function getHeight(){
+    public function getHeight() {
         return $this->height;
     }
 
     // Breite des Diagramms setzen
-    public function setWidth($width){
-        if(!is_int($width)){
-            throw new \Exception("Falscher Dateityp (".gettype($width).") integer expected!");
+    public function setWidth($width) {
+        if(!\is_int($width)){
+            throw new \Exception("Falscher Dateityp (".\gettype($width).") integer expected!");
         }
         $this->width = $width;
+
         return true;
     }
 
     // Breite des Diagramms auslesen
-    public function getWidth(){
+    public function getWidth() {
         return $this->width;
     }
 
     // Balkenhöhe des Maximalwertes setzen
-    public function setMaxvalueHeight($maxvalue_height){
-        if(!is_int($maxvalue_height)){
-            throw new \Exception("Falscher Dateityp (".gettype($maxvalue_height).") integer expected!");
+    public function setMaxvalueHeight($maxvalue_height) {
+        if(!\is_int($maxvalue_height)){
+            throw new \Exception("Falscher Dateityp (".\gettype($maxvalue_height).") integer expected!");
         }
         $this->maxvalue_height = $maxvalue_height;
+
         return true;
     }
 
     // Balkenhöhe des Maximalwertes auslesen
-    public function getMaxvalueHeight(){
+    public function getMaxvalueHeight() {
         return $this->maxvalue_height;
     }
 
     // Fügt einen X-Wert hinzu
-    public function addX($x){
-        if(!is_numeric($x) && !is_string($x)){
-            throw new \Exception("Falscher Dateityp (".gettype($x).") number or string expected!");
+    public function addX($x) {
+        if(!is_numeric($x) && !\is_string($x)){
+            throw new \Exception("Falscher Dateityp (".\gettype($x).") number or string expected!");
         }
         $this->x[] = $x;
+
         return true;
     }
 
     // Fügt einen Y-Wert hinzu
-    public function addY($y){
+    public function addY($y) {
         if(!is_numeric($y)){
-            throw new \Exception("Falscher Dateityp (".gettype($y).") number expected!");
+            throw new \Exception("Falscher Dateityp (".\gettype($y).") number expected!");
         }
         $this->y[] = $y;
+
         return true;
     }
     // Fügt einen Y2-Wert hinzu
-    public function addY2($y2){
+    public function addY2($y2) {
         if(!is_numeric($y2)){
-            throw new \Exception("Falscher Dateityp (".gettype($y2).") number expected!");
+            throw new \Exception("Falscher Dateityp (".\gettype($y2).") number expected!");
         }
         $this->y2[] = $y2;
+
         return true;
     }
 
-    
-    public function checkValues(){
+    public function checkValues() {
         if(!isset($this->name)){
             throw new \Exception("Kein Diagrammname 1 vorhanden!");
         }
@@ -133,30 +138,32 @@ class ModuleVisitorCharts
         if(!isset($this->y2)){
             throw new \Exception("Keine Y2-Werte vorhanden!");
         }
-        if(count($this->x)!=count($this->y)){
+        if(\count($this->x)!=\count($this->y)){
             throw new \Exception("Anzahl der X- und Y-Werte stimmt nicht überein!");
         }
+
         return true;
     }
 
-    public function getRelation(){
+    public function getRelation() {
         $relation = array();
         foreach($this->y as $key => $wert)
             $relation[$key]['y'] = $wert/$this->getMaxValue2();
         foreach($this->y2 as $key => $wert)
             $relation[$key]['y2'] = $wert/$this->getMaxValue2();
+
         return $relation;
     }
 
-    public function getMaxValue(){
+    public function getMaxValue() {
         return max($this->y); //y
     }
-    public function getMaxValue2(){
+    public function getMaxValue2() {
         return max($this->y2); //y
     }
-	
-    public function getDataNumber(){
-        return count($this->y); //y
+
+    public function getDataNumber() {
+        return \count($this->y); //y
     }
 
     public function display($echo = false) {
@@ -207,6 +214,7 @@ class ModuleVisitorCharts
         $output .= "</table>\n";
         if($echo) {
             echo $output;
+
             return true;
         } else {
             return $output;
@@ -214,32 +222,32 @@ class ModuleVisitorCharts
     } 
 }
 /**
-  // Neues Objekt erzeugen
-  $a = new Diagramm();
-  // 'Versuche', die Konfiguration zu durchzuführen
-  try{
-      // Name setzen
-      $a->setName("Besucherzahlen");
-      // Höhe setzen
-      $a->setHeight(300);
-      // Breite setzen
-      $a->setWidth(280);
-      // Balkenhöhe setzen
-      $a->setMaxvalueHeight(190);
-      // X- und Y-Werte definieren
-      $x = array('01', '20', '03', '04', '05', '06');
-      $y = array(    5500,     6800,    5200,    4800,  7000,   5900);
-      // Werte im Diagrammobjekt speichern
-      foreach($x as $key => $value){
-          $a->addX($value);
-          $a->addY($y[$key]);
-      }
-      // Diagramm ausgeben
-      $mix = $a->display(false); // true gibt direkt aus
-  }
-  // Geworfene Exceptions auswerten
-  catch(Exception $e){ 
-      echo '<strong>Fehler: </strong>'.$e->getMessage();
-  }
-  var_dump($mix);
-**/
+ * // Neues Objekt erzeugen
+ * $a = new Diagramm();
+ * // 'Versuche', die Konfiguration zu durchzuführen
+ * try{
+ * // Name setzen
+ * $a->setName("Besucherzahlen");
+ * // Höhe setzen
+ * $a->setHeight(300);
+ * // Breite setzen
+ * $a->setWidth(280);
+ * // Balkenhöhe setzen
+ * $a->setMaxvalueHeight(190);
+ * // X- und Y-Werte definieren
+ * $x = array('01', '20', '03', '04', '05', '06');
+ * $y = array(    5500,     6800,    5200,    4800,  7000,   5900);
+ * // Werte im Diagrammobjekt speichern
+ * foreach($x as $key => $value){
+ * $a->addX($value);
+ * $a->addY($y[$key]);
+ * }
+ * // Diagramm ausgeben
+ * $mix = $a->display(false); // true gibt direkt aus
+ * }
+ * // Geworfene Exceptions auswerten
+ * catch(Exception $e){ 
+ * echo '<strong>Fehler: </strong>'.$e->getMessage();
+ * }
+ * var_dump($mix);
+ */
