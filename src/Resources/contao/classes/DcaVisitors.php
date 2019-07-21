@@ -47,7 +47,7 @@ class DcaVisitors extends \Backend
         } else {
             $startdate = date($GLOBALS['TL_CONFIG']['dateFormat'], $arrRow['visitors_startdate']);
         }
-        $output = '<div class="cte_type ' . $key . '"><strong>' . $arrRow['visitors_name'] . '</strong></div>';
+        $output = '<div class="cte_type ' . $key . '"><span class="tl_label">' . $arrRow['visitors_name'] . '</span></div>';
         $output.= '<div>'.$GLOBALS['TL_LANG']['tl_visitors']['visitors_startdate'][0].': ' . $startdate . '</div>';
         //Debug $output.= '<div>'.print_r($arrRow,true).'</div>';
         return $output;
