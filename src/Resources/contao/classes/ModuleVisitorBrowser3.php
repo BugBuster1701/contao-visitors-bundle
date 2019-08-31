@@ -1175,7 +1175,9 @@ class ModuleVisitorBrowser3
 			    $aversion = explode(' ', $aresult[1]);
 			    $this->setVersion($aversion[0]);
 		    }
-		    else {
+			elseif (preg_match('/(?:CPU OS|iPhone OS|iOS)[\s_]*([\d_]+)/i', $this->_agent, $foundVersion)) {
+					$this->setVersion = str_replace('_', '.', $foundVersion[1]);
+			} else {
 			    $this->setVersion(self::VERSION_UNKNOWN);
 		    }
 		    $this->setMobile(true);
