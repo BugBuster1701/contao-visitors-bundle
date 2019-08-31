@@ -695,6 +695,28 @@ class ModuleVisitorBrowser3
  
 			return true;
 		}
+
+		//Edge for iOS
+		elseif (stripos($this->_agent, 'EdgiOS') !== false) 
+		{
+			$aresult = explode('/', stristr($this->_agent, 'EdgiOS'));
+			$aversion = explode('.', $aresult[1]);
+			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setBrowser(self::BROWSER_MS_EDGE);
+
+			return true;
+		}
+
+		//Edge for Android
+		elseif (stripos($this->_agent, 'EdgA') !== false) 
+		{
+			$aresult = explode('/', stristr($this->_agent, 'EdgA'));
+			$aversion = explode('.', $aresult[1]);
+			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setBrowser(self::BROWSER_MS_EDGE);
+
+			return true;
+		}
 	}
 
 
