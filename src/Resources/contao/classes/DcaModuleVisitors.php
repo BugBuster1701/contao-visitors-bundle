@@ -28,6 +28,6 @@ class DcaModuleVisitors extends \Backend
 {
 	public function getVisitorsTemplates($dc)
 	{
-	    return $this->getTemplateGroup('mod_visitors_fe_', $dc->activeRecord->pid);
+	    return $this->getTemplateGroup('mod_visitors_fe_');
 	}  
 }
