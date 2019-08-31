@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
@@ -11,7 +11,6 @@
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
- * @package    GLVisitors
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
@@ -48,12 +47,12 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 			'panelLayout'             => 'filter;search,limit',
 			'headerFields'            => array('title', 'tstamp'), //, 'visitors_template'
 			'child_record_callback'   => array('BugBuster\Visitors\DcaVisitors', 'listVisitors')
-		),/**
+		), /**
 		'label' => array
 		(
 			'fields'                  => array(''),
 			'format'                  => '%s'
-		),**/
+		),*/
 		'global_operations' => array
 		(
 			'all' => array
@@ -109,10 +108,10 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 	),
 
 	// Subpalettes
-	/**'subpalettes' => array
+	/*'subpalettes' => array
 	(
 		''                            => ''
-	),**/
+	),*/
 
 	// Fields
 	'fields' => array
@@ -195,10 +194,11 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 		    'eval'                    => array('mandatory'=>false, 'maxlength'=>10, 'rgxp'=>'digit', 'helpwizard'=>false, 'tl_class'=>'w50 w50h'),
 		    'save_callback' => array
 		    (
-                function($varValue, DataContainer $dc) 
+                function ($varValue, DataContainer $dc) 
                 {
                     if ($varValue < 14) { $varValue = 14; }
                     if ($varValue > 99) { $varValue = 99; }
+
                     return $varValue;
                 }
 		    )

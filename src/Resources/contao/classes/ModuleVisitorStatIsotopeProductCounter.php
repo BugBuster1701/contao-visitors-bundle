@@ -7,7 +7,6 @@
  *
  * @copyright  Glen Langer 2009..2018 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    Visitors
  * @license    LGPL
  * @filesource
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -16,6 +15,7 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors;
 
 /**
@@ -23,46 +23,43 @@ namespace BugBuster\Visitors;
  *
  * @copyright  Glen Langer 2014..2018 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    Visitors
  */
 class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
 {
-    
+
     /**
      * Current object instance
      * @var object
      */
     protected static $instance = null;
-    
+
     protected $today;
     protected $yesterday;
     protected $isotopeExists = false;
-    
+
     const PAGE_TYPE_ISOTOPE    = 3;    //3   = Isotope
 
-    
     /**
      * Constructor
      */
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->today     = date('Y-m-d');
         $this->yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
-        
+
         if (\Database::getInstance()->tableExists('tl_iso_product'))
         {
             $this->setIsotopeTableExists(true);
         }
     }
-    
-    
+
     protected function compile()
     {
-    
+
     }
-    
+
     /**
      * Return the current object instance (Singleton)
      * @return ModuleVisitorStatIsotopeProductCounter
@@ -71,9 +68,9 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
     {
         if (self::$instance === null)
         {
-            self::$instance = new ModuleVisitorStatIsotopeProductCounter();
+            self::$instance = new self();
         }
-    
+
         return self::$instance;
     }
 
@@ -86,7 +83,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
     {
         return $this->isotopeExists;
     }
-    
+
     /**
      * @param boolean $isotopeExists
      */
@@ -94,13 +91,13 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
     {
         $this->isotopeExists = $IsotopeTableExists;
     }
-    
+
     //////////////////////////////////////////////////////////////
-    
+
     public function generateIsotopeVisitHitTop($VisitorsID, $limit = 20, $parse = true)
     {
         $arrIsotopeStatCount = false;
-        
+
         //Isotope Table exists?
         if (true === $this->getIsotopeTableExists())
         {
@@ -129,7 +126,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                                     ")
                             ->limit($limit)
                             ->execute($VisitorsID, self::PAGE_TYPE_ISOTOPE);
-            
+
             while ($objIsotopeStatCount->next())
             {
         	    $alias   = false;
@@ -139,7 +136,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         	       $alias = $aliases['PageAlias'] .'/'. $aliases['ProductAlias'];
         	       $title = $aliases['ProductTeaser'] .': '. $aliases['ProductName'];
         	    }
-                
+
                 if (false !== $alias) 
                 {
                     $arrIsotopeStatCount[] = array
@@ -152,24 +149,25 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                     );
                 }
             }
-            
+
             if ($parse === true)
             {
-                /* @var $TemplatePartial Template */
+                // @var $TemplatePartial Template
                 $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_isotopevisithittop');
                 $TemplatePartial->IsotopeVisitHitTop = $arrIsotopeStatCount;
+
                 return $TemplatePartial->parse();
             }
+
             return $arrIsotopeStatCount;
         }
-        
+
         return false;
     }
-    
+
     /**
-     * 
-     * @param unknown $visitors_page_id     Product ID
-     * @param unknown $visitors_page_pid    Contao Page ID
+     * @param  unknown $visitors_page_id  Product ID
+     * @param  unknown $visitors_page_pid Contao Page ID
      * @return array
      */
     public function getIsotopeAliases($visitors_page_id, $visitors_page_pid)
@@ -188,12 +186,12 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                                             ")
                                 ->limit(1)
                                 ->execute($visitors_page_pid);
-            
+
             while ($objIsotopePageAlias->next())
             {
                 $PageAlias = $objIsotopePageAlias->PageAlias;
             }            
-            
+
             $objIsotopeProduct= \Database::getInstance()
                                     ->prepare("SELECT
                                                 tl_iso_product.alias  AS 'ProductAlias',
@@ -206,7 +204,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                                             ")
                                     ->limit(1)
                                     ->execute($visitors_page_id);
-            
+
             while ($objIsotopeProduct->next())
             {
                 return array('PageAlias'     => $PageAlias,
@@ -222,6 +220,5 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                      'ProductName'     => false
         );
     }
-    
- 
+
 }

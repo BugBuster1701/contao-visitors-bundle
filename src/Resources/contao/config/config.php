@@ -1,27 +1,25 @@
-<?php 
+<?php
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2019 Leo Feyer
  * 
  * Modul Visitors Config File
  *
- * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2019 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
- * @package    GLVisitors
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
-define('VISITORS_VERSION', '1.4');
-define('VISITORS_BUILD'  , '0');
+\define('VISITORS_VERSION', '1.5');
+\define('VISITORS_BUILD', '4');
 
 /**
  * Backend css version number are added to style sheets files to make
  * the web browser reload those resources after a Visitors update.
- * 
  */
-define('VISITORS_BE_CSS', '1.1.0');
+\define('VISITORS_BE_CSS', '1.2.0');
 
 /**
  * -------------------------------------------------------------------------

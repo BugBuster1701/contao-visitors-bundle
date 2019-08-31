@@ -2,11 +2,12 @@
 require_once 'src/Resources/contao/classes/ModuleVisitorBrowser3.php';
 
 use BugBuster\Visitors\ModuleVisitorBrowser3;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ModuleVisitorBrowser3 test case.
  */
-class ModuleVisitorBrowser3Test extends PHPUnit_Framework_TestCase
+class ModuleVisitorBrowser3Test extends TestCase
 {
 
     /**

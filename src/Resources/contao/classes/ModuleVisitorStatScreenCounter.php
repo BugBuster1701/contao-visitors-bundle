@@ -7,7 +7,6 @@
  *
  * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    GLVisitors
  * @license    LGPL
  * @filesource
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -16,6 +15,7 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors;
 
 /**
@@ -23,18 +23,16 @@ namespace BugBuster\Visitors;
  *
  * @copyright  Glen Langer 2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    GLVisitors
  */
 class ModuleVisitorStatScreenCounter extends \BackendModule
 {
-    
+
     /**
      * Current object instance
      * @var object
      */
     protected static $instance = null;
 
-    
     /**
      * Constructor
      */
@@ -42,13 +40,12 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
     {
         parent::__construct();
     }
-    
-    
+
     protected function compile()
     {
-    
+
     }
-    
+
     /**
      * Return the current object instance (Singleton)
      * @return ModuleVisitorStatScreenCounter
@@ -57,20 +54,20 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
     {
         if (self::$instance === null)
         {
-            self::$instance = new ModuleVisitorStatScreenCounter();
+            self::$instance = new self();
         }
-    
+
         return self::$instance;
     }
 
     //////////////////////////////////////////////////////////////
-    
-    public function generateScreenTopResolution($VisitorsID,$limit=20)
+
+    public function generateScreenTopResolution($VisitorsID, $limit=20)
     {
         $arrScreenStatCount = false;
-        
+
         $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_screentopresolution');
-        
+
         $objScreenStatCount = \Database::getInstance()
                         ->prepare("SELECT 
                                         `v_s_w`,
@@ -99,17 +96,18 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
                 'v_screen_sum'  => $objScreenStatCount->v_screen_sum
             );
         }
-        $this->TemplatePartial->ScreenTopResolution = $arrScreenStatCount;        
+        $this->TemplatePartial->ScreenTopResolution = $arrScreenStatCount;
+        
         return $this->TemplatePartial->parse();
     }
-    
-    public function generateScreenTopResolutionDays($VisitorsID,$limit=20,$days=30)
+
+    public function generateScreenTopResolutionDays($VisitorsID, $limit=20, $days=30)
     {
         $arrScreenStatCount = false;
         $lastdays = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-$days, date("Y")));
-    
+
         $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
-    
+
         $objScreenStatCount = \Database::getInstance()
                         ->prepare("SELECT
                                         `v_s_w`,
@@ -127,7 +125,7 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
                                     ORDER BY v_screen_sum DESC
                                 ")
                         ->limit($limit)
-                        ->execute($VisitorsID,$lastdays);
+                        ->execute($VisitorsID, $lastdays);
 
         while ($objScreenStatCount->next())
         {
@@ -141,7 +139,8 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
             );
         }
         $this->TemplatePartial->ScreenTopResolutionDays = $arrScreenStatCount;
+
         return $this->TemplatePartial->parse();
     }
-    
+
 }

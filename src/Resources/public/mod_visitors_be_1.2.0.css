@@ -141,3 +141,11 @@
 	color: green;
 	font-weight: bold;
 }
+
+.visitors_stat_yes {
+  color: #589b0e;
+}
+
+.visitors_stat_no {
+  color: #c33;
+}

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
@@ -7,7 +7,6 @@
  * 
  * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    Visitors
  * @license    LGPL
  * @filesource
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -16,11 +15,12 @@
 /**
  * Run in a custom namespace, so the class can be replaced
  */
+
 namespace BugBuster\Visitors;
 
 use BugBuster\Visitors\ModuleVisitorCharts;
-use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use BugBuster\Visitors\ModuleVisitorStatNewsFaqCounter;
+use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
 use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
 
@@ -29,23 +29,22 @@ use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
  *
  * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @package    Visitors
  * @todo       Must be completely rewritten.
  */
 class ModuleVisitorStat extends \BackendModule
 {
-    /**
+	/**
 	 * Template
 	 * @var string
 	 */
 	protected $strTemplate = 'mod_visitors_be_stat';
-	
+
 	/**
 	 * Kat ID
 	 * @var int
 	 */
 	protected $intKatID;
-	
+
 	/**
 	 * is user allowed to reset the statistic
 	 * @var bool
@@ -59,15 +58,15 @@ class ModuleVisitorStat extends \BackendModule
 	{
 	    $this->import('BackendUser', 'User');
 	    parent::__construct();
-	    
+
 	    \System::loadLanguageFile('tl_visitors_stat_export');
 	    \System::loadLanguageFile('tl_visitors_referrer');
-	    
-	    if (\Input::post('act',true)=='export') //action Export
+
+	    if (\Input::post('act', true)=='export') //action Export
 	    {
 	        $this->generateExport();
 	    }
-	    
+
 	    if (\Input::post('id')>0) //Auswahl im Statistikmenü
 	    {
 	    	$this->intKatID = preg_replace('@\D@', '', \Input::post('id')); //  only digits
@@ -80,20 +79,20 @@ class ModuleVisitorStat extends \BackendModule
 	    {
 	    	$this->intKatID = 0;
 	    }
-	    
+
 	    $this->boolAllowReset = $this->isUserInVisitorStatisticResetGroups($this->intKatID);
-	    
-	    if (\Input::get('act',true) == 'zero')
+
+	    if (\Input::get('act', true) == 'zero')
 	    {
 	        $this->setZero();
 	    }
-	     
-	    if (\Input::get('act',true) == 'zerobrowser')
+
+	    if (\Input::get('act', true) == 'zerobrowser')
 	    {
 	        $this->setZeroBrowser();
 	    }
 	}
-	
+
 	/**
 	 * Generate module
 	 */
@@ -119,13 +118,13 @@ class ModuleVisitorStat extends \BackendModule
     	        $this->intKatID = $objVisitorsKatID->ANZ;
     	    }
 	    }*/
-	    
+
 	    //alle Kategorien holen die der User sehen darf
 	    $arrVisitorCategories = $this->getVisitorCategoriesByUsergroups();
 	    // no categories : array('id' => '0', 'title' => '---------');
 	    // empty array   : array('id' => '0', 'title' => '---------');
 	    // array[0..n]   : array(0, array('id' => '1', ....), 1, ....)
-	    
+
 	    if ($this->intKatID == 0) //direkter Aufruf ohne ID
 	    {
 	        $this->intKatID       = $this->getCatIdByCategories($arrVisitorCategories);
@@ -141,12 +140,12 @@ class ModuleVisitorStat extends \BackendModule
                     $intCatIdAllowed = true;
                 }
             }
-            if ( false === $intCatIdAllowed )
+            if (false === $intCatIdAllowed)
             {
             	$this->intKatID = $this->getCatIdByCategories($arrVisitorCategories);
             }
 	    }
-	    
+
 		// Alle Zähler je Kat holen, die Aktiven zuerst
 		$objVisitorsX = \Database::getInstance()
             		        ->prepare("SELECT 
@@ -169,44 +168,44 @@ class ModuleVisitorStat extends \BackendModule
 			$ModuleVisitorCharts->setHeight(270); // setMaxvalueHeight + 20 + 20 +10
 			$ModuleVisitorCharts->setWidth(330);
 			$ModuleVisitorCharts->setMaxvalueHeight(220); // Balkenhöhe setzen
-			
+
 			while ($objVisitorsX->next()) 
 			{
 		        // 14 Tages Stat [0..13] und Vorgabewerte [100,104,110] (ehemals 7)
-		        $arrVisitorsStatDays[$intAnzCounter]    = $this->getFourteenDays($this->intKatID,$objVisitorsX->id);
+		        $arrVisitorsStatDays[$intAnzCounter]    = $this->getFourteenDays($this->intKatID, $objVisitorsX->id);
 				$objVisitorsID = $arrVisitorsStatDays[$intAnzCounter][104]['VisitorsID'];
-		        
+
 				//Monat Stat
 				$arrVisitorsStatMonth[$intAnzCounter]   = $this->getMonth($objVisitorsID);
-				
+
 				//Other Monat Stat
 				$arrVisitorsStatOtherMonth[$intAnzCounter]   = $this->getOtherMonth($objVisitorsID);
-				
+
 				//Other Year Stat
 				$arrVisitorsStatOtherYears[$intAnzCounter]   = $this->getOtherYears($objVisitorsID);
-								
+
 				//Total Visits Hits
 				$arrVisitorsStatTotal[$intAnzCounter]   = $this->getTotal($objVisitorsID);
-				
+
 				// Durchschnittswerte
 			    $arrVisitorsStatAverage[$intAnzCounter] = $this->getAverage($objVisitorsID);
-			    
+
 				// Week Stat
 				$arrVisitorsStatWeek[$intAnzCounter]    = $this->getWeeks($objVisitorsID);
-				
+
 				// Online
 				$arrVisitorsStatOnline[$intAnzCounter]  = $this->getVisitorsOnline($objVisitorsID);
-				
+
 				//BestDay
 				$arrVisitorsStatBestDay[$intAnzCounter] = $this->getBestDay($objVisitorsID);
-				
+
 				//BadDay
 				$arrVisitorsStatBadDay[$intAnzCounter]  = $this->getBadDay($objVisitorsID);
-				
+
 				//Chart
 				//Debug log_message(print_r(array_reverse($arrVisitorsStatDays[$intAnzCounter]),true), 'debug.log');
 				$day  = 0;
-				$days = count($arrVisitorsStatDays[$intAnzCounter]);
+				$days = \count($arrVisitorsStatDays[$intAnzCounter]);
 				foreach (array_reverse($arrVisitorsStatDays[$intAnzCounter]) as $key => $valuexy)
 				{
 					if (isset($valuexy['visitors_date_ymd'])) 
@@ -217,43 +216,43 @@ class ModuleVisitorStat extends \BackendModule
     						//Debug log_message(print_r(substr($valuexy['visitors_date'],0,2),true), 'debug.log');
     						//Debug log_message(print_r($valuexy['visitors_visit'],true), 'debug.log');
     						// chart resetten, wie? fehlt noch
-    						$ModuleVisitorCharts->addX(substr($valuexy['visitors_date_ymd'],8,2).'<br>'.substr($valuexy['visitors_date_ymd'],5,2));
-    
-    						$ModuleVisitorCharts->addY(str_replace(array('.',',',' ','\''),array('','','',''),$valuexy['visitors_visit'])); // Formatierte Zahl wieder in reine Zahl
-    
-    						$ModuleVisitorCharts->addY2(str_replace(array('.',',',' ','\''),array('','','',''),$valuexy['visitors_hit'])); // Formatierte Zahl wieder in reine Zahl
+    						$ModuleVisitorCharts->addX(substr($valuexy['visitors_date_ymd'], 8, 2).'<br>'.substr($valuexy['visitors_date_ymd'], 5, 2));
+
+    						$ModuleVisitorCharts->addY(str_replace(array('.', ',', ' ', '\''), array('', '', '', ''), $valuexy['visitors_visit'])); // Formatierte Zahl wieder in reine Zahl
+
+    						$ModuleVisitorCharts->addY2(str_replace(array('.', ',', ' ', '\''), array('', '', '', ''), $valuexy['visitors_hit'])); // Formatierte Zahl wieder in reine Zahl
 					    }
 					}
 				}
 				$arrVisitorsChart[$intAnzCounter] = $ModuleVisitorCharts->display(false);
-				
+
 				//Page Hits
-				$arrVisitorsPageVisitHits[$intAnzCounter]          = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTop($objVisitorsID,20);
-				$arrVisitorsPageVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitDays($objVisitorsID,20,7);
-				$arrVisitorsPageVisitHitsToday[$intAnzCounter]     = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitToday($objVisitorsID,5);
-				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID,5);
-				
+				$arrVisitorsPageVisitHits[$intAnzCounter]          = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTop($objVisitorsID, 20);
+				$arrVisitorsPageVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitDays($objVisitorsID, 20, 7);
+				$arrVisitorsPageVisitHitsToday[$intAnzCounter]     = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitToday($objVisitorsID, 5);
+				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID, 5);
+
 				// News
-				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID,10,true);
+				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID, 10, true);
 				// Faq
-				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID,10,true);
-				
+				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID, 10, true);
+
 				// Isotope
-				$arrVisitorsIsotopeVisitHits[$intAnzCounter]       = ModuleVisitorStatIsotopeProductCounter::getInstance()->generateIsotopeVisitHitTop($objVisitorsID,20,true);
-				
+				$arrVisitorsIsotopeVisitHits[$intAnzCounter]       = ModuleVisitorStatIsotopeProductCounter::getInstance()->generateIsotopeVisitHitTop($objVisitorsID, 20, true);
+
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);
 				$arrVisitorsStatBrowser[$intAnzCounter] = $arrVSB['TOP'];
 				$arrVisitorsStatBrowser2[$intAnzCounter] = $arrVSB['TOP2'];
 				$arrVisitorsStatBrowserDefinition[$intAnzCounter] = $arrVSB['DEF'];
-				
+
 				//Referrer
 				$arrVisitorsStatReferrer[$intAnzCounter] = $this->getReferrerTop($objVisitorsID);
-				
+
 				//Screen Resolutions
-				$arrVisitorsScreenTopResolution[$intAnzCounter]     = ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolution($objVisitorsID,20);
-				$arrVisitorsScreenTopResolutionDays[$intAnzCounter] = ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolutionDays($objVisitorsID,20,30);
-				
+				$arrVisitorsScreenTopResolution[$intAnzCounter]     = ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolution($objVisitorsID, 20);
+				$arrVisitorsScreenTopResolutionDays[$intAnzCounter] = ModuleVisitorStatScreenCounter::getInstance()->generateScreenTopResolutionDays($objVisitorsID, 20, 30);
+
 				$intAnzCounter++;
 			} //while X next
 		} // if intRowsX >0
@@ -270,7 +269,6 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->theme0           = 'bundles/bugbustervisitors/flexible'; // for down0.gif
 		$this->Template->allow_reset      = $this->boolAllowReset;
 
-		
 		$this->Template->visitorsanzcounter   	   = $intAnzCounter;
 		$this->Template->visitorsstatDays     	   = $arrVisitorsStatDays;
 		$this->Template->visitorsstatWeeks    	   = $arrVisitorsStatWeek;
@@ -296,7 +294,7 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatReferrer      = $arrVisitorsStatReferrer;
 		$this->Template->visitorsstatScreenTop     = $arrVisitorsScreenTopResolution;
 		$this->Template->visitorsstatScreenTopDays = $arrVisitorsScreenTopResolutionDays;
-		
+
 		//Debug log_message(print_r($this->Template->visitorsstatBrowser,true), 'debug.log');
 		//Debug log_message(print_r($this->Template->visitorsstatAverages,true), 'debug.log');
 
@@ -306,10 +304,10 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatkat       = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'];
 		$this->Template->visitors_export_title = $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_button_title'];
 		$this->Template->visitors_exportfield  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'].' '.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'];
-		
+
         //ExportDays
         $this->Template->visitors_export_days   = (isset($_SESSION['VISITORS_EXPORT_DAYS'])) ? $_SESSION['VISITORS_EXPORT_DAYS'] : 365;
-        
+
 		//SearchEngines
 		$arrSE = $this->getSearchEngine($this->intKatID);
 		if ($arrSE !== false) 
@@ -322,10 +320,9 @@ class ModuleVisitorStat extends \BackendModule
 			$this->Template->visitorssearchengine = false;
 		}
 	}
-	
+
 	/**
 	 * 14 Tagesstat und Vorgabewerte
-	 * 
 	 */
 	protected function getFourteenDays($KatID, $VisitorsXid)
 	{
@@ -379,14 +376,14 @@ class ModuleVisitorStat extends \BackendModule
     		{
     		    if ($objVisitors->published == 1) 
     		    {
-    		        
+
     		        $objVisitors->published = '<span class="visitors_stat_yes">'.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes'].'</span>';
     		    } 
     		    else 
     		    {
     		    	$objVisitors->published = '<span class="visitors_stat_no">'.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'].'</span>';
     		    }
-    		    if (!strlen($objVisitors->visitors_startdate)) 
+    		    if (!\strlen($objVisitors->visitors_startdate)) 
     		    {
     		    	$visitors_startdate = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate_not_defined'];
     		    } 
@@ -395,8 +392,8 @@ class ModuleVisitorStat extends \BackendModule
     		        $visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
     		    }
     		    // day of the week prüfen
-    		    if (strpos($GLOBALS['TL_CONFIG']['dateFormat'],'D')===false  // day of the week short 
-    		     && strpos($GLOBALS['TL_CONFIG']['dateFormat'],'l')===false) // day of the week long
+    		    if (strpos($GLOBALS['TL_CONFIG']['dateFormat'], 'D')===false  // day of the week short 
+    		     && strpos($GLOBALS['TL_CONFIG']['dateFormat'], 'l')===false) // day of the week long
     		    {
     		        $visitors_day_of_week_prefix = 'D, ';
     		    }
@@ -408,8 +405,8 @@ class ModuleVisitorStat extends \BackendModule
     				'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
     				'visitors_date_ymd'     => $objVisitors->visitors_date,
     				'visitors_startdate'    => $visitors_startdate,
-    				'visitors_visit'        => $this->getFormattedNumber($objVisitors->visitors_visit,0),
-    				'visitors_hit'          => $this->getFormattedNumber($objVisitors->visitors_hit,0)
+    				'visitors_visit'        => $this->getFormattedNumber($objVisitors->visitors_visit, 0),
+    				'visitors_hit'          => $this->getFormattedNumber($objVisitors->visitors_hit, 0)
 	            );
 	            if ($objVisitors->visitors_date == date("Y-m-d")) 
 	            {
@@ -450,13 +447,13 @@ class ModuleVisitorStat extends \BackendModule
 		    {
 		    	$objVisitors->published = '<span class="visitors_stat_no">'.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'].'</span>';
 		    }
-		    if (!strlen($objVisitors->visitors_startdate)) 
+		    if (!\strlen($objVisitors->visitors_startdate)) 
 		    {
 		    	$visitors_startdate = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate_not_defined'];
 		    } 
 		    else 
 		    {
-		        $visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'],$objVisitors->visitors_startdate);
+		        $visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
 		    }
 		    $arrVisitorsStat[] = array
 			(
@@ -467,18 +464,18 @@ class ModuleVisitorStat extends \BackendModule
             );
 		    $arrVisitorsStat[104]['VisitorsID'] = 0;
 		}
-		$arrVisitorsStat[100]['visitors_today_visit']     = $this->getFormattedNumber($visitors_today_visit,0);
-	    $arrVisitorsStat[100]['visitors_today_hit']       = $this->getFormattedNumber($visitors_today_hit,0);
-	    $arrVisitorsStat[100]['visitors_yesterday_visit'] = $this->getFormattedNumber($visitors_yesterday_visit,0);
-	    $arrVisitorsStat[100]['visitors_yesterday_hit']   = $this->getFormattedNumber($visitors_yesterday_hit,0);
-	    $arrVisitorsStat[110]['visitors_visit_start']     = $this->getFormattedNumber($visitors_visit_start,0);
-		$arrVisitorsStat[110]['visitors_hit_start']       = $this->getFormattedNumber($visitors_hit_start,0);
+		$arrVisitorsStat[100]['visitors_today_visit']     = $this->getFormattedNumber($visitors_today_visit, 0);
+	    $arrVisitorsStat[100]['visitors_today_hit']       = $this->getFormattedNumber($visitors_today_hit, 0);
+	    $arrVisitorsStat[100]['visitors_yesterday_visit'] = $this->getFormattedNumber($visitors_yesterday_visit, 0);
+	    $arrVisitorsStat[100]['visitors_yesterday_hit']   = $this->getFormattedNumber($visitors_yesterday_hit, 0);
+	    $arrVisitorsStat[110]['visitors_visit_start']     = $this->getFormattedNumber($visitors_visit_start, 0);
+		$arrVisitorsStat[110]['visitors_hit_start']       = $this->getFormattedNumber($visitors_hit_start, 0);
+
 		return $arrVisitorsStat;
 	}
-	
+
 	/**
 	 * Monatswerte (Aktueller und Letzer)
-	 * 
 	 */
 	protected function getMonth($VisitorsID)
 	{
@@ -487,9 +484,9 @@ class ModuleVisitorStat extends \BackendModule
 	    $CurrentMonthVisits = 0;
 	    $CurrentMonthHits   = 0;
 	    $YearCurrentMonth   = date('Y-m-d');
-	    $YearLastMonth      = date('Y-m-d' ,mktime(0, 0, 0, date("m")-1, 1, date("Y")));
-	    $CurrentMonth   	= (int)date('m');
-	    $LastMonth			= (int)date('m',mktime(0, 0, 0, date("m")-1, 1, date("Y")));
+	    $YearLastMonth      = date('Y-m-d', mktime(0, 0, 0, date("m")-1, 1, date("Y")));
+	    $CurrentMonth   	= (int) date('m');
+	    $LastMonth			= (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")));
 	    $ORDER = ($CurrentMonth > $LastMonth) ? 'DESC' : 'ASC'; // damit immer eine absteigene Monatsreihenfolge kommt
 		if ($VisitorsID) 
 		{
@@ -504,7 +501,7 @@ class ModuleVisitorStat extends \BackendModule
                             GROUP BY M
                             ORDER BY M %s';
 		    $sqlMonth = sprintf($sqlMonth, $ORDER);
-		    
+
 			//Total je Monat (aktueller und letzter)
 			$objVisitorsToMo = \Database::getInstance()
             			        ->prepare($sqlMonth)
@@ -514,12 +511,12 @@ class ModuleVisitorStat extends \BackendModule
 			if ($intRows>0) 
 			{ 
 			    $objVisitorsToMo->next();
-			    if ( (int)$objVisitorsToMo->M == (int)date('m') ) 
+			    if ((int) $objVisitorsToMo->M == (int) date('m')) 
 			    {
 			    	$CurrentMonthVisits = $objVisitorsToMo->SUMV;
 			    	$CurrentMonthHits   = $objVisitorsToMo->SUMH;
 			    }
-			    if ( (int)$objVisitorsToMo->M == (int)date('m',mktime(0, 0, 0, date("m")-1, 1, date("Y"))) ) 
+			    if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")))) 
 			    {
 		            $LastMonthVisits = $objVisitorsToMo->SUMV;
 		            $LastMonthHits   = $objVisitorsToMo->SUMH;
@@ -527,7 +524,7 @@ class ModuleVisitorStat extends \BackendModule
 			    if ($intRows==2) 
 			    {
 	                $objVisitorsToMo->next();
-	                if ( (int)$objVisitorsToMo->M == (int)date('m',mktime(0, 0, 0, date("m")-1, 1, date("Y"))) ) 
+	                if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")))) 
 	                {
 		        	    $LastMonthVisits = $objVisitorsToMo->SUMV;
 		                $LastMonthHits   = $objVisitorsToMo->SUMH;
@@ -535,22 +532,22 @@ class ModuleVisitorStat extends \BackendModule
 			    }
 			}
 		}
-		return array('LastMonthVisits'    => $this->getFormattedNumber($LastMonthVisits,0),
-		             'LastMonthHits'      => $this->getFormattedNumber($LastMonthHits,0),
-		             'CurrentMonthVisits' => $this->getFormattedNumber($CurrentMonthVisits,0),
-		             'CurrentMonthHits'   => $this->getFormattedNumber($CurrentMonthHits,0)
+
+		return array('LastMonthVisits'    => $this->getFormattedNumber($LastMonthVisits, 0),
+		             'LastMonthHits'      => $this->getFormattedNumber($LastMonthHits, 0),
+		             'CurrentMonthVisits' => $this->getFormattedNumber($CurrentMonthVisits, 0),
+		             'CurrentMonthHits'   => $this->getFormattedNumber($CurrentMonthHits, 0)
 		             );
 
 	}
-	
+
 	/**
 	 * Monatswerte (Vorletzter und älter, max 10)
-	 * 
 	 */
 	protected function getOtherMonth($VisitorsID)
 	{
-	    $StartMonth = date('Y-m-d',mktime(0, 0, 0, date("m")-11, 1, date("Y"))); // aktueller Monat -11
-	    $EndMonth   = date('Y-m-d',mktime(0, 0, 0, date("m")-1 , 0, date("Y"))); // letzter Tag des vorletzten Monats
+	    $StartMonth = date('Y-m-d', mktime(0, 0, 0, date("m")-11, 1, date("Y"))); // aktueller Monat -11
+	    $EndMonth   = date('Y-m-d', mktime(0, 0, 0, date("m")-1, 0, date("Y"))); // letzter Tag des vorletzten Monats
 		if ($VisitorsID) 
 		{
 			//Total je Monat (aktueller und letzter)
@@ -566,7 +563,7 @@ class ModuleVisitorStat extends \BackendModule
                                     vid=? AND visitors_date BETWEEN ? AND ?
                                  GROUP BY Y, M
                                  ORDER BY Y DESC, M DESC')
-                    ->execute($VisitorsID,$StartMonth,$EndMonth);
+                    ->execute($VisitorsID, $StartMonth, $EndMonth);
 			$intRows = $objVisitorsToMo->numRows;
 			$arrOtherMonth = array();
 			if ($intRows>0) 
@@ -575,22 +572,22 @@ class ModuleVisitorStat extends \BackendModule
 				{
 					$arrOtherMonth[] = array($objVisitorsToMo->Y,
 					                         $GLOBALS['TL_LANG']['MONTHS'][($objVisitorsToMo->M - 1)],
-					                         $this->getFormattedNumber($objVisitorsToMo->SUMV,0),
-					                         $this->getFormattedNumber($objVisitorsToMo->SUMH,0)
+					                         $this->getFormattedNumber($objVisitorsToMo->SUMV, 0),
+					                         $this->getFormattedNumber($objVisitorsToMo->SUMH, 0)
 					                        );
 				}
 			}
 		}
+
 		return $arrOtherMonth;
 	}
-	
+
 	/**
 	 * Jahreswerte (Aktuelles und älter (10) = max 11)
-	 *
 	 */
 	protected function getOtherYears($VisitorsID)
 	{
-	    $StartYear = date('Y-m-d',mktime(0, 0, 0, 1, 1, date("Y")-11)); // aktuelles Jahr -11
+	    $StartYear = date('Y-m-d', mktime(0, 0, 0, 1, 1, date("Y")-11)); // aktuelles Jahr -11
 	    $EndYear   = date('Y-m-d'); // Aktuelles Datum
 	    if ($VisitorsID)
 	    {
@@ -606,7 +603,7 @@ class ModuleVisitorStat extends \BackendModule
                                                 vid=? AND visitors_date BETWEEN ? AND ?
                                              GROUP BY Y
                                              ORDER BY Y DESC')
-	                                 ->execute($VisitorsID,$StartYear,$EndYear);
+	                                 ->execute($VisitorsID, $StartYear, $EndYear);
 	        $intRows = $objVisitorsToYear->numRows;
 	        $arrOtherYear = array();
 	        if ($intRows>0)
@@ -614,18 +611,18 @@ class ModuleVisitorStat extends \BackendModule
 	            while ($objVisitorsToYear->next())
 	            {
 	                $arrOtherYear[] = array($objVisitorsToYear->Y,
-	                    $this->getFormattedNumber($objVisitorsToYear->SUMV,0),
-	                    $this->getFormattedNumber($objVisitorsToYear->SUMH,0)
+	                    $this->getFormattedNumber($objVisitorsToYear->SUMV, 0),
+	                    $this->getFormattedNumber($objVisitorsToYear->SUMH, 0)
 	                );
 	            }
 	        }
 	    }
+
 	    return $arrOtherYear;
 	}
-	
+
 	/**
 	 * Average Stat
-	 * 
 	 */
 	protected function getAverage($VisitorsID)
 	{
@@ -636,11 +633,11 @@ class ModuleVisitorStat extends \BackendModule
     	$VisitorsAverageVisits60 = 0;
     	$VisitorsAverageHits60   = 0;
     	$tmpTotalDays            = 0;
-    	
+
 		if ($VisitorsID) 
 		{
 			$today     = date('Y-m-d');
-			$yesterday = date('Y-m-d',mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+			$yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
     	    //Durchschnittswerte bis heute 00:00 Uhr, also bis einschließlich gestern
     	    $objVisitorsAverageCount = \Database::getInstance()
     	            ->prepare("SELECT 
@@ -651,25 +648,25 @@ class ModuleVisitorStat extends \BackendModule
                                     tl_visitors_counter
                                 WHERE 
                                     vid=? AND visitors_date<?")
-                    ->execute($VisitorsID,$today);
+                    ->execute($VisitorsID, $today);
             if ($objVisitorsAverageCount->numRows > 0) 
             {
                 $objVisitorsAverageCount->next();
-                $tmpTotalDays = floor(1+(strtotime($yesterday) - strtotime($objVisitorsAverageCount->MINDAY))/60/60/24 );
+                $tmpTotalDays = floor(1+(strtotime($yesterday) - strtotime($objVisitorsAverageCount->MINDAY))/60/60/24);
 
                 $VisitorsAverageVisitCount = ($objVisitorsAverageCount->SUMV === null) ? 0 : $objVisitorsAverageCount->SUMV;
                 $VisitorsAverageHitCount   = ($objVisitorsAverageCount->SUMH === null) ? 0 : $objVisitorsAverageCount->SUMH;
                 if ($tmpTotalDays >0) 
                 {
-	                $VisitorsAverageVisits = $this->getFormattedNumber($VisitorsAverageVisitCount / $tmpTotalDays , 2);
-	                $VisitorsAverageHits   = $this->getFormattedNumber($VisitorsAverageHitCount   / $tmpTotalDays , 2);
+	                $VisitorsAverageVisits = $this->getFormattedNumber($VisitorsAverageVisitCount / $tmpTotalDays, 2);
+	                $VisitorsAverageHits   = $this->getFormattedNumber($VisitorsAverageHitCount   / $tmpTotalDays, 2);
                 }
             }
             if ($tmpTotalDays > 30) 
             {
 	            //Durchschnittswerte der letzten 30 Tage
-	            $day30 = date('Y-m-d',mktime(0, 0, 0, date("m")-1 , date("d")-1 ,date("Y")));            
-			
+	            $day30 = date('Y-m-d', mktime(0, 0, 0, date("m")-1, date("d")-1, date("Y")));            
+
 	            $objVisitorsAverageCount = \Database::getInstance()
 	                    ->prepare("SELECT 
                                         SUM(visitors_visit) AS SUMV, 
@@ -678,21 +675,21 @@ class ModuleVisitorStat extends \BackendModule
                                         tl_visitors_counter
                                     WHERE 
                                         vid=? AND visitors_date BETWEEN ? AND ?")
-                        ->execute($VisitorsID,$day30,$yesterday);
+                        ->execute($VisitorsID, $day30, $yesterday);
 	            if ($objVisitorsAverageCount->numRows > 0) 
 	            {
 	                $objVisitorsAverageCount->next();
 	                $VisitorsAverageVisitCount = ($objVisitorsAverageCount->SUMV === null) ? 0 : $objVisitorsAverageCount->SUMV;
 	                $VisitorsAverageHitCount   = ($objVisitorsAverageCount->SUMH === null) ? 0 : $objVisitorsAverageCount->SUMH;
-	                $VisitorsAverageVisits30 = $this->getFormattedNumber($VisitorsAverageVisitCount / 30 , 2);
-	                $VisitorsAverageHits30   = $this->getFormattedNumber($VisitorsAverageHitCount   / 30 , 2);
+	                $VisitorsAverageVisits30 = $this->getFormattedNumber($VisitorsAverageVisitCount / 30, 2);
+	                $VisitorsAverageHits30   = $this->getFormattedNumber($VisitorsAverageHitCount   / 30, 2);
 	            }
             }
             if ($tmpTotalDays > 60) 
             {
 	            //Durchschnittswerte der letzten 60 Tage
-	            $day60 = date('Y-m-d',mktime(0, 0, 0, date("m")-2 , date("d")-1 ,date("Y")));
-	
+	            $day60 = date('Y-m-d', mktime(0, 0, 0, date("m")-2, date("d")-1, date("Y")));
+
 	            $objVisitorsAverageCount = \Database::getInstance()
 	                    ->prepare("SELECT 
                                         SUM(visitors_visit) AS SUMV, 
@@ -701,17 +698,18 @@ class ModuleVisitorStat extends \BackendModule
                                         tl_visitors_counter
                                     WHERE 
                                         vid=? AND visitors_date BETWEEN ? AND ?")
-                        ->execute($VisitorsID,$day60,$yesterday);
+                        ->execute($VisitorsID, $day60, $yesterday);
 	            if ($objVisitorsAverageCount->numRows > 0) 
 	            {
 	                $objVisitorsAverageCount->next();
 	                $VisitorsAverageVisitCount = ($objVisitorsAverageCount->SUMV === null) ? 0 : $objVisitorsAverageCount->SUMV;
 	                $VisitorsAverageHitCount   = ($objVisitorsAverageCount->SUMH === null) ? 0 : $objVisitorsAverageCount->SUMH;
-	                $VisitorsAverageVisits60 = $this->getFormattedNumber($VisitorsAverageVisitCount / 60 , 2);
-	                $VisitorsAverageHits60   = $this->getFormattedNumber($VisitorsAverageHitCount   / 60 , 2);
+	                $VisitorsAverageVisits60 = $this->getFormattedNumber($VisitorsAverageVisitCount / 60, 2);
+	                $VisitorsAverageHits60   = $this->getFormattedNumber($VisitorsAverageHitCount   / 60, 2);
 	            }
             }
 	    }
+
 	    return array('VisitorsAverageVisits'   => $VisitorsAverageVisits,
 	    			 'VisitorsAverageHits'     => $VisitorsAverageHits,
 	    			 'VisitorsAverageDays'     => "&nbsp;", //$tmpTotalDays,
@@ -723,7 +721,7 @@ class ModuleVisitorStat extends \BackendModule
 	    			 'VisitorsAverageDays60'   => ($VisitorsAverageHits60 === 0) ? '<span class="mod_visitors_be_average_nodata">(60)&nbsp;</span>' : '(60)&nbsp;',
 	                );
 	}
-	
+
 	/**
 	 * Wochenwerte
 	 */
@@ -735,16 +733,16 @@ class ModuleVisitorStat extends \BackendModule
 	     * (Current muss größer sein als Last)
 	     * daher muss PHP auch das ISO Jahr zurückgeben!
 	     */
-	    
+
 	    $LastWeekVisits    = 0;
 	    $LastWeekHits      = 0;
 	    $CurrentWeekVisits = 0;
 	    $CurrentWeekHits   = 0;
 	    $CurrentWeek       = date('W'); 
-	    $LastWeek          = date('W', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")) );
+	    $LastWeek          = date('W', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")));
         $YearCurrentWeek   = date('o');
-        $YearLastWeek      = date('o', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")) );
-	    
+        $YearLastWeek      = date('o', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")));
+
 	    if ($VisitorsID) 
 	    {
     		//Total je Woche (aktuelle und letzte)
@@ -760,7 +758,7 @@ class ModuleVisitorStat extends \BackendModule
                                 GROUP BY YW
                                 ORDER BY YW DESC')
                     ->limit(2)
-                    ->execute($VisitorsID,$YearLastWeek.$LastWeek,$YearCurrentWeek.$CurrentWeek);
+                    ->execute($VisitorsID, $YearLastWeek.$LastWeek, $YearCurrentWeek.$CurrentWeek);
     		$intRows = $objVisitorsToWe->numRows;
     		if ($intRows>0) 
     		{ 
@@ -786,13 +784,14 @@ class ModuleVisitorStat extends \BackendModule
     		    }
     		}
 	    }
-	    return array('LastWeekVisits'   => $this->getFormattedNumber($LastWeekVisits,0),
-	                 'LastWeekHits'     => $this->getFormattedNumber($LastWeekHits,0),
-	                 'CurrentWeekVisits'=> $this->getFormattedNumber($CurrentWeekVisits,0),
-	                 'CurrentWeekHits'  => $this->getFormattedNumber($CurrentWeekHits,0)
+
+	    return array('LastWeekVisits'   => $this->getFormattedNumber($LastWeekVisits, 0),
+	                 'LastWeekHits'     => $this->getFormattedNumber($LastWeekHits, 0),
+	                 'CurrentWeekVisits'=> $this->getFormattedNumber($CurrentWeekVisits, 0),
+	                 'CurrentWeekHits'  => $this->getFormattedNumber($CurrentWeekHits, 0)
 	                );
 	}
-	
+
 	/**
 	 * Total Hits und Visits
 	 */
@@ -819,11 +818,12 @@ class ModuleVisitorStat extends \BackendModule
                 $VisitorsTotalHitCount   = ($objVisitorsTotalCount->SUMH === null) ? 0 : $objVisitorsTotalCount->SUMH;
     	    }
 	    }
-	    return array('VisitorsTotalVisitCount' => $this->getFormattedNumber($VisitorsTotalVisitCount,0),
-	                 'VisitorsTotalHitCount'   => $this->getFormattedNumber($VisitorsTotalHitCount,0)
+
+	    return array('VisitorsTotalVisitCount' => $this->getFormattedNumber($VisitorsTotalVisitCount, 0),
+	                 'VisitorsTotalHitCount'   => $this->getFormattedNumber($VisitorsTotalHitCount, 0)
 	                );
 	}
-	
+
 	/**
 	 * Statistic, set on zero
 	 */
@@ -831,7 +831,7 @@ class ModuleVisitorStat extends \BackendModule
 	{
 	    if (false === $this->boolAllowReset)
 	    {
-	        return ;
+	        return;
 	    }
 	    $intCID = preg_replace('@\D@', '', \Input::get('zid')); //  only digits 
 	    if ($intCID>0) 
@@ -846,7 +846,7 @@ class ModuleVisitorStat extends \BackendModule
                                     id=?")
                     ->execute($intCID);
     	    $objVisitorsDate->next();
-    	    if (0 < (int)$objVisitorsDate->visitors_startdate) 
+    	    if (0 < (int) $objVisitorsDate->visitors_startdate) 
     	    {
     	        // ok es war eins gesetzt, dann setzen wir es wieder
                 \Database::getInstance()
@@ -856,7 +856,7 @@ class ModuleVisitorStat extends \BackendModule
                                         visitors_startdate=? 
                                     WHERE 
                                         id=?")
-                        ->execute( time(), strtotime(date('Y-m-d')), $intCID );
+                        ->execute(time(), strtotime(date('Y-m-d')), $intCID);
     	    }
     	    // und nun die eigendlichen counter
     	    \Database::getInstance()
@@ -875,9 +875,10 @@ class ModuleVisitorStat extends \BackendModule
                     ->prepare("DELETE FROM tl_visitors_screen_counter WHERE vid=?")
                     ->execute($intCID);
 	    }
-	    return ;
+
+	    return;
 	}
-	
+
 	/**
 	 * Statistic, set on zero
 	 */
@@ -885,7 +886,7 @@ class ModuleVisitorStat extends \BackendModule
 	{
 	    if (false === $this->boolAllowReset)
 	    {
-	        return ;
+	        return;
 	    }
 	    $intCID = preg_replace('@\D@', '', \Input::get('zid')); //  only digits 
 	    if ($intCID>0) 
@@ -895,9 +896,10 @@ class ModuleVisitorStat extends \BackendModule
                     ->prepare("DELETE FROM tl_visitors_browser WHERE vid=?")
                     ->execute($intCID);
 	    }
-	    return ;
+
+	    return;
 	}
-	
+
 	/**
 	 * TOP Browser
 	 */
@@ -923,7 +925,7 @@ class ModuleVisitorStat extends \BackendModule
                                 GROUP BY `visitors_browser`
                                 ORDER BY SUMBV DESC, visitors_browser ASC")
                     ->limit($topNo)
-                    ->execute($VisitorsID,'Unknown','Mozilla');
+                    ->execute($VisitorsID, 'Unknown', 'Mozilla');
     	    if ($objVisitorsBrowserVersion->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserVersion->next()) 
@@ -949,7 +951,7 @@ class ModuleVisitorStat extends \BackendModule
                                 GROUP BY `visitors_browser`
                                 ORDER BY SUMBV DESC, visitors_browser ASC")
                     ->limit(10)
-                    ->execute($VisitorsID,'Unknown','Mozilla');
+                    ->execute($VisitorsID, 'Unknown', 'Mozilla');
     	    if ($objVisitorsBrowserVersion2->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserVersion2->next()) 
@@ -972,7 +974,7 @@ class ModuleVisitorStat extends \BackendModule
                                 //GROUP BY `visitors_browser`
                                 //ORDER BY SUMBV DESC, visitors_browser ASC"
                     ->limit(1)
-                    ->execute($VisitorsID,'Unknown','Unknown'); // ,'Mozilla'
+                    ->execute($VisitorsID, 'Unknown', 'Unknown'); // ,'Mozilla'
     	    if ($objVisitorsBrowserVersion->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserVersion->next()) 
@@ -991,7 +993,7 @@ class ModuleVisitorStat extends \BackendModule
                                     AND visitors_browser !=?
                                     AND SUBSTRING_INDEX(`visitors_browser`,' ',1) !=?")
                     ->limit(1)
-                    ->execute($VisitorsID,'Unknown','Mozilla');
+                    ->execute($VisitorsID, 'Unknown', 'Mozilla');
     	    if ($objVisitorsBrowserVersion->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserVersion->next()) 
@@ -1012,7 +1014,7 @@ class ModuleVisitorStat extends \BackendModule
                                 GROUP BY `visitors_lang`
                                 ORDER BY SUMBL DESC, `visitors_lang` ASC")
                     ->limit($topNo)
-                    ->execute($VisitorsID,'Unknown','Mozilla');
+                    ->execute($VisitorsID, 'Unknown', 'Mozilla');
     	    if ($objVisitorsBrowserLang->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserLang->next()) 
@@ -1034,7 +1036,7 @@ class ModuleVisitorStat extends \BackendModule
                                 GROUP BY `visitors_os`
                                 ORDER BY SUMBOS DESC, visitors_os ASC")
                     ->limit($topNo)
-                    ->execute($VisitorsID,'Unknown','Mozilla');
+                    ->execute($VisitorsID, 'Unknown', 'Mozilla');
     	    if ($objVisitorsBrowserOS->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserOS->next()) 
@@ -1053,7 +1055,7 @@ class ModuleVisitorStat extends \BackendModule
                                     vid=? AND visitors_os !=?
                                     AND SUBSTRING_INDEX(`visitors_browser`,' ',1) !=?")
                     ->limit(1)
-                    ->execute($VisitorsID,'Unknown','Mozilla');
+                    ->execute($VisitorsID, 'Unknown', 'Mozilla');
     	    if ($objVisitorsBrowserOS->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserOS->next()) 
@@ -1065,40 +1067,38 @@ class ModuleVisitorStat extends \BackendModule
 	    for ($BT=0; $BT<$topNo; $BT++)
 	    {
 	    	$VisitorsBrowserVersion[$BT] = (isset($VisitorsBrowserVersion[$BT][0])) ? $VisitorsBrowserVersion[$BT] : '0';
-	    	$VisitorsBrowserLang[$BT]    = (isset($VisitorsBrowserLang[$BT][0]))    ? $VisitorsBrowserLang[$BT]    : '0';
-	    	$VisitorsBrowserOS[$BT]      = (isset($VisitorsBrowserOS[$BT][0]))      ? $VisitorsBrowserOS[$BT]      : '0';
+	    	$VisitorsBrowserLang[$BT]    = (isset($VisitorsBrowserLang[$BT][0])) ? $VisitorsBrowserLang[$BT] : '0';
+	    	$VisitorsBrowserOS[$BT]      = (isset($VisitorsBrowserOS[$BT][0])) ? $VisitorsBrowserOS[$BT] : '0';
 			//Platz 1-20 [0..19]
 	    	$arrBrowserTop[$BT] = array($VisitorsBrowserVersion[$BT],
-                                        $VisitorsBrowserLang[$BT],$VisitorsBrowserOS[$BT]);
+                                        $VisitorsBrowserLang[$BT], $VisitorsBrowserOS[$BT]);
 	    }
 		$VisitorsBrowserVersionUNK = (isset($VisitorsBrowserVersionUNK)) ? $VisitorsBrowserVersionUNK : 0;
 		$VisitorsBrowserVersionKNO = (isset($VisitorsBrowserVersionKNO)) ? $VisitorsBrowserVersionKNO : 0;
-		$VisitorsBrowserOSALL      = (isset($VisitorsBrowserOSALL))      ? $VisitorsBrowserOSALL      : 0;
+		$VisitorsBrowserOSALL      = (isset($VisitorsBrowserOSALL)) ? $VisitorsBrowserOSALL : 0;
 		//Version without number
 		for ($BT=0; $BT<10; $BT++)
 		{
-			$VisitorsBrowserVersion2[$BT] = (isset($VisitorsBrowserVersion2[$BT][0])) ? $VisitorsBrowserVersion2[$BT] : array(0,0);
+			$VisitorsBrowserVersion2[$BT] = (isset($VisitorsBrowserVersion2[$BT][0])) ? $VisitorsBrowserVersion2[$BT] : array(0, 0);
 		}
 		//Debug log_message(print_r($VisitorsBrowserVersion2,true), 'debug.log');
-	    return array('TOP' =>$arrBrowserTop
-	    		    ,'TOP2'=>$VisitorsBrowserVersion2
-	    		    ,'DEF' =>array('UNK'  => $VisitorsBrowserVersionUNK,
+	    return array('TOP' =>$arrBrowserTop, 'TOP2'=>$VisitorsBrowserVersion2, 'DEF' =>array('UNK'  => $VisitorsBrowserVersionUNK,
                                    'KNO'  => $VisitorsBrowserVersionKNO,
                                    'OSALL'=> $VisitorsBrowserOSALL));
 	}
-	
+
 	/**
 	 * TOP 20 SearchEngine
 	 * 
-	 * @param	integer	$VisitorsID	Category-ID des Zählers
-	 * @return	array
+	 * @param  integer $VisitorsID Category-ID des Zählers
+	 * @return array
 	 */
 	protected function getSearchEngine($VisitorsKatID)
 	{
 		$VisitorsSearchEngines        = array(); // only searchengines
 		$VisitorsSearchEngineKeywords = array(); //searchengine - keywords, order by keywords
-		$day60 = mktime(0, 0, 0, date("m")-2 , date("d") ,date("Y"));
-		
+		$day60 = mktime(0, 0, 0, date("m")-2, date("d"), date("Y"));
+
 		$objVisitors = \Database::getInstance()
 		        ->prepare("SELECT 
                                 tl_visitors.id AS id
@@ -1110,12 +1110,12 @@ class ModuleVisitorStat extends \BackendModule
                                 tl_visitors.pid=? AND published=?
                             ORDER BY id")
                 ->limit(1)
-                ->execute($VisitorsKatID,1);
+                ->execute($VisitorsKatID, 1);
 		if ($objVisitors->numRows > 0) 
 		{
 			$objVisitors->next();
 			$VisitorsID = $objVisitors->id;
-			
+
 			$objVisitorsSearchEngines = \Database::getInstance()
 			        ->prepare("SELECT 
                                     `visitors_searchengine`,
@@ -1127,7 +1127,7 @@ class ModuleVisitorStat extends \BackendModule
                                 GROUP BY 1 
                                 ORDER BY anz DESC")
                     ->limit(20)
-                    ->execute($VisitorsID,$day60);
+                    ->execute($VisitorsID, $day60);
 			if ($objVisitorsSearchEngines->numRows > 0) 
 			{
 			    while ($objVisitorsSearchEngines->next()) 
@@ -1140,7 +1140,7 @@ class ModuleVisitorStat extends \BackendModule
                                                      $objVisitorsSearchEngines->anz);
 			    }
 		    }
-		    
+
 		    $objVisitorsSearchEngineKeywords = \Database::getInstance()
 		            ->prepare("SELECT 
                                     `visitors_searchengine`, 
@@ -1153,7 +1153,7 @@ class ModuleVisitorStat extends \BackendModule
                                 GROUP BY 1,2 
                                 ORDER BY anz DESC")
                     ->limit(20)
-                    ->execute($VisitorsID,$day60);
+                    ->execute($VisitorsID, $day60);
 			if ($objVisitorsSearchEngineKeywords->numRows > 0) 
 			{
 			    while ($objVisitorsSearchEngineKeywords->next()) 
@@ -1173,19 +1173,20 @@ class ModuleVisitorStat extends \BackendModule
 			    }
 		    }
 	    }
-	    if (0 == count($VisitorsSearchEngines) && 0 == count($VisitorsSearchEngineKeywords)) 
+	    if (0 == \count($VisitorsSearchEngines) && 0 == \count($VisitorsSearchEngineKeywords)) 
 	    { 
 	        return false;
 	    }
+
 	    return array('SearchEngines' => $VisitorsSearchEngines, 
                      'SearchEngineKeywords' =>$VisitorsSearchEngineKeywords);
 	}
-	
+
 	/**
 	 * TOP 30 Referrer
 	 *
-	 * @param	integer	$VisitorsID	ID des Zählers
-	 * @return	array
+	 * @param  integer $VisitorsID ID des Zählers
+	 * @return array
 	 */
 	protected function getReferrerTop($VisitorsID)
 	{
@@ -1218,19 +1219,20 @@ class ModuleVisitorStat extends \BackendModule
     		    	{
     		    		$VisitorsReferrerTop[] = array('- ('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_direct'].')', $objVisitorsReferrerTop->SUMRT, 0);
     		    	}
-    		    	
+
     		    }
     	    }
 		}
+
 		return $VisitorsReferrerTop;
 	}
-	
+
 	/**
 	 * Timestamp nach Datum in deutscher oder internationaler Schreibweise
 	 *
-	 * @param	string		$language
-	 * @param	insteger	$intTstamp
-	 * @return	string
+	 * @param  string   $language
+	 * @param  insteger $intTstamp
+	 * @return string
 	 */
 	protected function parseDateVisitors($language='en', $intTstamp=null, $prefix='')
 	{
@@ -1242,11 +1244,11 @@ class ModuleVisitorStat extends \BackendModule
 	        case 'en':
 	            $strModified = $prefix . 'Y-m-d';
 	            break;
-	        default :
+	        default:
 	            $strModified = $prefix . $GLOBALS['TL_CONFIG']['dateFormat'];
 	            break;
 	    }
-        if (is_null($intTstamp))
+        if (\is_null($intTstamp))
 		{
 			$strDate = date($strModified);
 		}
@@ -1258,14 +1260,15 @@ class ModuleVisitorStat extends \BackendModule
 		{
 			$strDate = \Date::parse($strModified, $intTstamp);
 		}
+
 		return $strDate;
 	}
-	
+
 	/**
 	 * Get VisitorsOnline
 	 *
-	 * @param	integer	$VisitorsID	ID des Zählers
-	 * @return 	integer
+	 * @param  integer $VisitorsID ID des Zählers
+	 * @return integer
 	 */
 	protected function getVisitorsOnline($VisitorsID)
 	{
@@ -1276,16 +1279,17 @@ class ModuleVisitorStat extends \BackendModule
                                 tl_visitors_blocker
                             WHERE 
                                 vid=? AND visitors_type=?")
-                ->execute($VisitorsID,'v');
+                ->execute($VisitorsID, 'v');
 		$objVisitorsOnlineCount->next();
+
 		return ($objVisitorsOnlineCount->VOC === null) ? 0 : $objVisitorsOnlineCount->VOC;
 	}
-	
+
 	/**
 	 * Get Best Day Data (most Visitors on this day)
 	 *
-	 * @param integer $VisitorsID	ID des Zählers
-	 * @return array	Date,Visits,Hits
+	 * @param  integer $VisitorsID ID des Zählers
+	 * @return array   Date,Visits,Hits
 	 */
 	protected function getBestDay($VisitorsID)
 	{
@@ -1304,9 +1308,9 @@ class ModuleVisitorStat extends \BackendModule
 		if ($objVisitorsBestday->numRows > 0) 
 		{
         	$objVisitorsBestday->next();
-        	$visitors_date   = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'],strtotime($objVisitorsBestday->visitors_date));
-        	$visitors_visits = $this->getFormattedNumber($objVisitorsBestday->visitors_visit,0);
-        	$visitors_hits   = $this->getFormattedNumber($objVisitorsBestday->visitors_hit,0);
+        	$visitors_date   = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitorsBestday->visitors_date));
+        	$visitors_visits = $this->getFormattedNumber($objVisitorsBestday->visitors_visit, 0);
+        	$visitors_hits   = $this->getFormattedNumber($objVisitorsBestday->visitors_hit, 0);
 		} 
 		else 
 		{
@@ -1314,17 +1318,18 @@ class ModuleVisitorStat extends \BackendModule
 			$visitors_visits = 0;
 			$visitors_hits   = 0;
 		}
+
 		return array('VisitorsBestDayDate'   => $visitors_date,
 					 'VisitorsBestDayVisits' => $visitors_visits,
 					 'VisitorsBestDayHits'   => $visitors_hits
 					);
 	}
-	
+
 	/**
 	 * Get Bad Day Data (fewest Visitors on this day)
 	 *
-	 * @param	integer	$VisitorsID	ID des Zählers
-	 * @return 	array	Date,Visits,Hits
+	 * @param  integer $VisitorsID ID des Zählers
+	 * @return array   Date,Visits,Hits
 	 */
 	protected function getBadDay($VisitorsID)
 	{
@@ -1343,9 +1348,9 @@ class ModuleVisitorStat extends \BackendModule
 		if ($objVisitorsBadday->numRows > 0) 
 		{
         	$objVisitorsBadday->next();
-        	$visitors_date   = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'],strtotime($objVisitorsBadday->visitors_date));
-        	$visitors_visits = $this->getFormattedNumber($objVisitorsBadday->visitors_visit,0);
-        	$visitors_hits   = $this->getFormattedNumber($objVisitorsBadday->visitors_hit,0);
+        	$visitors_date   = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitorsBadday->visitors_date));
+        	$visitors_visits = $this->getFormattedNumber($objVisitorsBadday->visitors_visit, 0);
+        	$visitors_hits   = $this->getFormattedNumber($objVisitorsBadday->visitors_hit, 0);
 		} 
 		else 
 		{
@@ -1353,28 +1358,30 @@ class ModuleVisitorStat extends \BackendModule
 			$visitors_visits = 0;
 			$visitors_hits   = 0;
 		}
+
 		return array('VisitorsBadDayDate'   => $visitors_date,
 					 'VisitorsBadDayVisits' => $visitors_visits,
 					 'VisitorsBadDayHits'   => $visitors_hits
 					);
 	}
-	
+
 	/**
 	 * Get first category id by arrVisitorCategories
 	 *
-	 * @param   array   $arrVisitorCategories
-	 * @return  number  CatID
+	 * @param  array  $arrVisitorCategories
+	 * @return number CatID
 	 */
 	protected function getCatIdByCategories($arrVisitorCategories)
 	{
 	    $arrFirstCat = array_shift($arrVisitorCategories);
+
 	    return $arrFirstCat['id'];
 	}
-	
+
 	/**
 	 * Get visitor categories by usergroups
 	 *
-	 * @param array $Usergroups
+	 * @param  array $Usergroups
 	 * @return array
 	 */
 	protected function getVisitorCategoriesByUsergroups()
@@ -1395,8 +1402,8 @@ class ModuleVisitorStat extends \BackendModule
                             ->execute();
 	    while ($objVisitorCat->next())
 	    {
-	        if ( true === $this->isUserInVisitorStatGroups($objVisitorCat->visitors_stat_groups,
-                                                    (bool) $objVisitorCat->visitors_stat_protected) )
+	        if (true === $this->isUserInVisitorStatGroups($objVisitorCat->visitors_stat_groups,
+                                                    (bool) $objVisitorCat->visitors_stat_protected))
 	        {
 	            $arrVisitorCats[] = array
 	            (
@@ -1405,14 +1412,15 @@ class ModuleVisitorStat extends \BackendModule
 	            );
 	        }
 	    }
-	
-	    if (0 == count($arrVisitorCats))
+
+	    if (0 == \count($arrVisitorCats))
 	    {
 	        $arrVisitorCats[] = array('id' => '0', 'title' => '---------');
 	    }
+
 	    return $arrVisitorCats;
 	}
-	
+
 	protected function isUserInVisitorStatisticResetGroups($visitor_category_id)
 	{
 	    $arrVisitorGroups = array();
@@ -1427,25 +1435,25 @@ class ModuleVisitorStat extends \BackendModule
                                 ->execute($visitor_category_id);
         while ($objVisitorGroups->next())
         {
-            if ( true === $this->isUserInVisitorStatGroups($objVisitorGroups->visitors_statreset_groups,
-                                                    (bool) $objVisitorGroups->visitors_statreset_protected) )
+            if (true === $this->isUserInVisitorStatGroups($objVisitorGroups->visitors_statreset_groups,
+                                                    (bool) $objVisitorGroups->visitors_statreset_protected))
             {
                 return true;
             }
         }
-	    
+
         return false;
 	}
-	
+
 	/**
 	 * Check if User member of group in visitor statistik groups
 	 *
 	 * @param   string  DB Field "visitors_stat_groups", serialized array
-	 * @return  bool    true / false
+	 * @return bool true / false
 	 */
 	protected function isUserInVisitorStatGroups($visitors_stat_groups, $visitors_stat_protected)
 	{
-	    if ( true === $this->User->isAdmin )
+	    if (true === $this->User->isAdmin)
 	    {
 	        //Debug log_message('Ich bin Admin', 'visitors_debug.log');
 	        return true; // Admin darf immer
@@ -1456,18 +1464,18 @@ class ModuleVisitorStat extends \BackendModule
 	        //Debug log_message('Schutz nicht aktiviert', 'visitors_debug.log');
 	    	return true; 
 	    }
-	    
+
 	    //Schutz aktiviert, Einschränkungen vorhanden?
-	    if (0 == strlen($visitors_stat_groups))
+	    if (0 == \strlen($visitors_stat_groups))
 	    {
 	        //Debug log_message('visitor_stat_groups ist leer', 'visitors_debug.log');
 	        return false; // nicht gefiltert, also darf keiner außer Admin
 	    }
-	     
+
 	    //mit isMemberOf ermitteln, ob user Member einer der Cat Groups ist
 	    foreach (deserialize($visitors_stat_groups) as $id => $groupid)
 	    {
-	        if ( true === $this->User->isMemberOf($groupid) )
+	        if (true === $this->User->isMemberOf($groupid))
 	        {
 	            //Debug log_message('Ich bin in der richtigen Gruppe', 'visitors_debug.log');
 	            return true; // User is Member of visitor_stat_group
@@ -1476,11 +1484,12 @@ class ModuleVisitorStat extends \BackendModule
 	    //Debug log_message('Ich bin in der falschen Gruppe', 'visitors_debug.log');
 	    return false;
 	}
-	
+
 	protected function generateExport()
 	{
-	    $export = new VisitorsStatExport;
+	    $export = new VisitorsStatExport();
+
 	    return $export->run();
 	}
-	
+
 }
