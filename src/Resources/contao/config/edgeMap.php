@@ -1,22 +1,22 @@
 <?php
 
-/**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2019 Leo Feyer
- * 
- * Modul Visitors Edge Map File
- *
- * @copyright  Glen Langer 2009..2019 <http://contao.ninja>
- * @author     Glen Langer (BugBuster)
- * @licence    LGPL
- * @filesource
- * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
- */
+ /**
+  * Extension for Contao Open Source CMS, Copyright (C) 2005-2019 Leo Feyer
+  * 
+  * Modul Visitors Edge Map File
+  *
+  * @copyright  Glen Langer 2009..2019 <http://contao.ninja>
+  * @author     Glen Langer (BugBuster)
+  * @licence    LGPL
+  * @filesource
+  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
+  */
 
  /**
   * Map generiert aus: https://en.wikipedia.org/wiki/Microsoft_Edge#EdgeHTML_(2014%E2%80%932019)_2
   * @var array
   */
- $arrEdgeMap = [
+ $arrEdgeMap = array(
     '12.10049' => '0.10.10049',
     '12.10051' => '0.11.10051',
     '12.10052' => '0.11.10052',
@@ -87,4 +87,4 @@
     '17.17134' => '42.17134',
     '18.17763' => '44.17763',
     '18.18362' => '44.18362'
- ];
+ );

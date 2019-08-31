@@ -659,7 +659,7 @@ class ModuleVisitorBrowser3
 			$aresult = explode('/', stristr($this->_agent, 'Edge'));
 			$aversion = explode('.', $aresult[1]);
 			require __DIR__ . '/../config/edgeMap.php';
-			if ( array_key_exists($aversion[0].'.'.$aversion[1], $arrEdgeMap) )
+			if (\array_key_exists($aversion[0].'.'.$aversion[1], $arrEdgeMap))
 			{
 				$this->setVersion($arrEdgeMap[$aversion[0].'.'.$aversion[1]]);
 			}
@@ -692,7 +692,7 @@ class ModuleVisitorBrowser3
 			$this->setBrowser(self::BROWSER_MS_EDGE_MOBILE);
 			$this->setPlatform(self::PLATFORM_WINDOWS_PHONE);
 			$this->setMobile(true);
- 
+
 			return true;
 		}
 
@@ -718,7 +718,6 @@ class ModuleVisitorBrowser3
 			return true;
 		}
 	}
-
 
     /**
      * Determine if the browser is Opera or not (last updated 1.7)

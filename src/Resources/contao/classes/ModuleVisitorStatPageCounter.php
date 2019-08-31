@@ -139,7 +139,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         {
             $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_pagevisithittop');        
             $this->TemplatePartial->PageVisitHitTop = $arrPageStatCount;
-        
+
             return $this->TemplatePartial->parse();
         }
         else 
