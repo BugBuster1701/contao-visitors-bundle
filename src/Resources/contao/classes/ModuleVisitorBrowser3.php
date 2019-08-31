@@ -45,6 +45,7 @@ class ModuleVisitorBrowser3
 	const BROWSER_OPERA_MINI = 'Opera Mini';                  // http://www.opera.com/mini/
 	const BROWSER_WEBTV = 'WebTV';                            // http://www.webtv.net/pc/
 	const BROWSER_MS_EDGE = 'Edge';                           // https://msdn.microsoft.com/en-us/library/hh869301%28v=vs.85%29.aspx
+	const BROWSER_MS_EDG  = 'Edge (Chromium)';                // https://blogs.windows.com/msedgedev/2019/04/08/microsoft-edge-preview-channel-details/#V4Ej54tpiEQIL7lp.97
 	const BROWSER_MS_EDGE_MOBILE = 'Edge Mobile';
 	const BROWSER_IE = 'IE';    //modified for compatibility  // http://www.microsoft.com/ie/
 	const BROWSER_IE_MOBILE = 'IE Mobile';
@@ -368,6 +369,7 @@ class ModuleVisitorBrowser3
 			$this->checkBrowserWebTv() ||
 		    $this->checkBrowserMaxthon()    ||  //add BugBuster, must be before IE, (Dual Engine: Webkit and Trident)
 			$this->checkBrowserInternetExplorer() ||
+			$this->checkBrowserEdge() ||		//add BugBuster
 			$this->checkBrowserGaleon() ||
 			$this->checkBrowserNetscapeNavigator9Plus() ||
 			$this->checkBrowserFirefox()    ||
@@ -591,30 +593,6 @@ class ModuleVisitorBrowser3
 
 	    	return true;
 	    }
-	    // Test for versions for Edge
-	    elseif (stripos($this->_agent, 'Edge')          !== false 
-	    	   && stripos($this->_agent, 'windows phone') === false) 
-	    {
-	        $aresult = explode('/', stristr($this->_agent, 'Edge'));
-	        $aversion = explode('.', $aresult[1]);
-	        $this->setVersion($aversion[0]);
-	        $this->setBrowser(self::BROWSER_MS_EDGE);
-
-	        return true;
-	    }
-	    // Test for versions for Edge mobile
-	    elseif (stripos($this->_agent, 'Edge')          !== false
-	           && stripos($this->_agent, 'windows phone') !== false)
-	    {
-	        $aresult = explode('/', stristr($this->_agent, 'Edge'));
-	        $aversion = explode('.', $aresult[1]);
-	        $this->setVersion($aversion[0]);
-	        $this->setBrowser(self::BROWSER_MS_EDGE_MOBILE);
-	        $this->setPlatform(self::PLATFORM_WINDOWS_PHONE);
-	        $this->setMobile(true);
-
-	        return true;
-	    }
 
 	    // Test for versions > 10
 	    elseif (preg_match('/Trident\/[0-9\.]+/', $this->_agent) 
@@ -667,6 +645,58 @@ class ModuleVisitorBrowser3
 
 		return false;
     }
+
+    /**
+     * Determine if the browser is MS Edge or Edg (Edge Chromium)
+     * @return boolean True if the browser is MS Edge otherwise false
+     */
+    protected function checkBrowserEdge() 
+    {
+		// Test for versions for Edge
+		if (stripos($this->_agent, 'Edge') !== false 
+			&& stripos($this->_agent, 'windows phone') === false) 
+		{
+			$aresult = explode('/', stristr($this->_agent, 'Edge'));
+			$aversion = explode('.', $aresult[1]);
+			require __DIR__ . '/../config/edgeMap.php';
+			if ( array_key_exists($aversion[0].'.'.$aversion[1], $arrEdgeMap) )
+			{
+				$this->setVersion($arrEdgeMap[$aversion[0].'.'.$aversion[1]]);
+			}
+			else {
+				$this->setVersion($aversion[0]);
+			}
+			$this->setBrowser(self::BROWSER_MS_EDGE);
+
+			return true;
+		}
+
+		//Edg = Edge on basis of chromium
+		elseif (stripos($this->_agent, 'Edg/') !== false) 
+		{
+			$aresult = explode('/', stristr($this->_agent, 'Edg'));
+			$aversion = explode('.', $aresult[1]);
+			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setBrowser(self::BROWSER_MS_EDG);
+
+			return true;
+		}
+
+		// Test for versions for Edge mobile
+		elseif (stripos($this->_agent, 'Edge')          !== false
+			&& stripos($this->_agent, 'windows phone') !== false)
+		{
+			$aresult = explode('/', stristr($this->_agent, 'Edge'));
+			$aversion = explode('.', $aresult[1]);
+			$this->setVersion($aversion[0]);
+			$this->setBrowser(self::BROWSER_MS_EDGE_MOBILE);
+			$this->setPlatform(self::PLATFORM_WINDOWS_PHONE);
+			$this->setMobile(true);
+ 
+			return true;
+		}
+	}
+
 
     /**
      * Determine if the browser is Opera or not (last updated 1.7)
