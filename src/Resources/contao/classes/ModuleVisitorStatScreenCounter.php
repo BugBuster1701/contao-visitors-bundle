@@ -97,7 +97,7 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
             );
         }
         $this->TemplatePartial->ScreenTopResolution = $arrScreenStatCount;
-        
+
         return $this->TemplatePartial->parse();
     }
 
