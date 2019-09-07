@@ -92,6 +92,13 @@ class ModuleVisitorBrowser3
 	const BROWSER_GALAXY_S6_EDGE   = 'Galaxy S6 Edge';
 	const BROWSER_GALAXY_S6_EDGE_P = 'Galaxy S6 Edge Plus';
 	const BROWSER_GALAXY_S6_MINI   = 'Galaxy S6 Mini';
+	const BROWSER_GALAXY_S7        = 'Galaxy S7';
+	const BROWSER_GALAXY_S7_EDGE   = 'Galaxy S7 Edge';
+	const BROWSER_GALAXY_S8        = 'Galaxy S8';
+	const BROWSER_GALAXY_S9        = 'Galaxy S9';
+	const BROWSER_GALAXY_S9_PLUS   = 'Galaxy S9 Plus';
+	const BROWSER_GALAXY_S10       = 'Galaxy S10';
+	const BROWSER_GALAXY_S10_PLUS  = 'Galaxy S10 Plus';
 	const BROWSER_GALAXY_ACE      = 'Galaxy Ace';
 	const BROWSER_GALAXY_ACE_2    = 'Galaxy Ace 2';
 	const BROWSER_GALAXY_ACE_PLUS = 'Galaxy Ace Plus';
@@ -1329,6 +1336,56 @@ class ModuleVisitorBrowser3
 	        $this->setVersion(self::VERSION_UNKNOWN);
 	        $this->setMobile(true);
 
+			//S7
+			if(stripos($this->_agent, 'SM-G930') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S7);
+
+			    return true;
+			}
+			if(stripos($this->_agent, 'SM-G935') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S7_EDGE);
+
+			    return true;
+			}
+
+			//S8
+			if(stripos($this->_agent, 'SM-G892') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S8);
+
+			    return true;
+			}
+
+			//S9
+			if(stripos($this->_agent, 'SM-G960') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S9);
+
+			    return true;
+			}
+			if(stripos($this->_agent, 'SM-G965') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S9_PLUS);
+
+			    return true;
+			}
+
+			//S10
+			if(stripos($this->_agent, 'SM-G973') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S10);
+
+			    return true;
+			}
+			if(stripos($this->_agent, 'SM-G975') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S10_PLUS);
+
+			    return true;
+	    	}
+
 	    	if(stripos($this->_agent, 'GT-I9000') !== false) 
 	    	{
     		    $this->setBrowser(self::BROWSER_GALAXY_S);
@@ -1487,7 +1544,10 @@ class ModuleVisitorBrowser3
 	    		stripos($this->_agent, 'GT-P7300') !== false ||
 	    		stripos($this->_agent, 'GT-P7510') !== false ||
 	    		stripos($this->_agent, 'GT-P6200') !== false ||
-	    		stripos($this->_agent, 'GT-P6210') !== false)
+				stripos($this->_agent, 'GT-P6210') !== false ||
+				stripos($this->_agent, 'SM-T530') !== false ||
+				stripos($this->_agent, 'SM-T533') !== false ||
+				stripos($this->_agent, 'SM-T535') !== false)
 	    	{
 			    $this->setBrowser(self::BROWSER_GALAXY_TAB);
 
