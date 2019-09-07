@@ -823,7 +823,7 @@ class ModuleVisitorBrowser3
     protected function checkBrowserQtWebBrowser() {
         if(stripos($this->_agent, 'QtWebEngine') !== false) {
             $aresult  = explode('/', stristr($this->_agent, 'QtWebEngine'));
-            $aversion = explode('.', $aresult[1]);
+            $aversion = explode(' ', $aresult[1]);
             $this->setVersion($aversion[0]);
             $this->setBrowser(self::BROWSER_QTWEB);
 
@@ -1044,7 +1044,7 @@ class ModuleVisitorBrowser3
      * @return boolean True if the browser is Firefox otherwise false
      */
     protected function checkBrowserFirefox() {
-	    if(stripos($this->_agent, 'safari') === false) {
+	    if (stripos($this->_agent, 'safari') === false) {
 			if(preg_match("/Firefox[\\/ \\(]([^ ;\\)]+)/i", $this->_agent, $matches)) {
 				$this->setVersion($matches[1]);
 				$this->setBrowser(self::BROWSER_FIREFOX);
@@ -1057,6 +1057,15 @@ class ModuleVisitorBrowser3
 
 				return true;
 			}
+		} elseif (stripos($this->_agent, 'FxiOS') !== false) {
+			$aresult = explode('/', stristr($this->_agent, 'FxiOS'));
+			if (isset($aresult[1])) {
+                $aversion = explode(' ', $aresult[1]);
+				$this->setVersion($aversion[0]);
+				$this->setBrowser(self::BROWSER_FIREFOX);
+
+				return true;
+            }
 		}
 
 	    return false;

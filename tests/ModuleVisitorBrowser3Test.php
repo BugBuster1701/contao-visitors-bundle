@@ -58,7 +58,8 @@ class ModuleVisitorBrowser3Test extends TestCase
             array('Edge',           'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'),
             array('Edge (Chromium)','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.48 Safari/537.36 Edg/74.1.96.24'),
             array('Edge',           'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4(KHTML, like Gecko) Mobile/14F89 Safari/603.2.4 EdgiOS/41.1.35.1'),
-            array('Edge',           'Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/OPP3.170518.006) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.0 Mobile Safari/537.36 EdgA/41.1.35.1')
+            array('Edge',           'Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/OPP3.170518.006) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.0 Mobile Safari/537.36 EdgA/41.1.35.1'),
+            array('Firefox',    'Mozilla/5.0 (iPad; CPU OS 10_0_2 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) FxiOS/7.5b3349 Mobile/14A456 Safari/602.1.50')
         );
     }
     
@@ -122,15 +123,37 @@ class ModuleVisitorBrowser3Test extends TestCase
         $this->moduleVisitorBrowser3->setPlatform(/* parameters */);
     }
 
+
+    public function providerAgentVersions()
+    {
+        return array(//result,host
+            array('8.0',  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12'),
+            array('41.0', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'),
+            array('4.0',  'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.28.3 (KHTML, like Gecko) Version/3.2.3 ChromePlus/4.0.222.3 Chrome/4.0.222.3 Safari/525.28.3'),
+            array('40.1', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1'),
+            array('10.0', 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)'),
+            array('1.0',  'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.89 Vivaldi/1.0.94.2 Safari/537.36'),
+            array('0.0',  'Dooble/0.07 (de_DE) WebKit'),
+            array('5.9',  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) QtWebEngine/5.9.3 Chrome/56.0.2924.122 Safari/537.36'),
+            array('42.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134'),
+            array('74.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.48 Safari/537.36 Edg/74.1.96.24'),
+            array('41.1', 'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4(KHTML, like Gecko) Mobile/14F89 Safari/603.2.4 EdgiOS/41.1.35.1'),
+            array('41.1', 'Mozilla/5.0 (Linux; Android 8.0; Pixel XL Build/OPP3.170518.006) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.0 Mobile Safari/537.36 EdgA/41.1.35.1'),
+            array('7.5',  'Mozilla/5.0 (iPad; CPU OS 10_0_2 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) FxiOS/7.5b3349 Mobile/14A456 Safari/602.1.50')
+        );
+    }
+
+
     /**
      * Tests ModuleVisitorBrowser3->getVersion()
+     * 
+     * @dataProvider providerAgentVersions
      */
-    public function testGetVersion()
+    public function testGetVersion($result, $host)
     {
-        // TODO Auto-generated ModuleVisitorBrowser3Test->testGetVersion()
-        $this->markTestIncomplete("getVersion test not implemented");
+        $this->moduleVisitorBrowser3->initBrowser($host);
         
-        $this->moduleVisitorBrowser3->getVersion(/* parameters */);
+        $this->assertEquals($result,$this->moduleVisitorBrowser3->getVersion());
     }
 
     /**
