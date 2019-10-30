@@ -13,11 +13,11 @@ A Contao 4 counter extension for hits and visits
 
 Installation Guide (EN): [INSTALLATION_EN.md](INSTALLATION_EN.md)
 
-__Attention__: Users of Contao 4.4 - 4.6 use `^1.0` as version number! 
+__Attention__: Users of Contao 4.4 - 4.6, use `^1.0` as version number! 
 
 Installationsanleitung (DE): [INSTALLATION_DE.md](INSTALLATION_DE.md)
 
-__Achtung__: Nutzer von Contao 4.4 - 4.6 benutzen als Versionsangabe `^1.0`!
+__Achtung__: Nutzer von Contao 4.4 - 4.6, verwenden `^1.0` als Versionsangabe!
 
 
 ## User guide
