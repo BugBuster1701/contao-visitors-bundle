@@ -387,7 +387,7 @@ class ModuleVisitorsTag extends \Frontend
 			    if ($objVisitors->visitors_average) 
 			    {
 			    	$today     = date('Y-m-d');
-					$yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+					$yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
 	                $objVisitorsAverageCount = \Database::getInstance()
 	                        ->prepare("SELECT 
                                             SUM(visitors_visit)  AS SUMV, 
@@ -1012,7 +1012,7 @@ class ModuleVisitorsTag extends \Frontend
                         ->set($arrSet)
                         ->execute();
 			    // Delete old entries
-			    $CleanTime = mktime(0, 0, 0, date("m")-3, date("d"), date("Y")); // Einträge >= 90 Tage werden gelöscht
+			    $CleanTime = mktime(0, 0, 0, (int) date("m")-3, (int) date("d"), (int) date("Y")); // Einträge >= 90 Tage werden gelöscht
 			    \Database::getInstance()
 			            ->prepare("DELETE FROM tl_visitors_searchengines WHERE tstamp < ? AND vid = ?")
                         ->execute($CleanTime, $vid);
@@ -1055,7 +1055,7 @@ class ModuleVisitorsTag extends \Frontend
                             ->set($arrSet)
                             ->execute();
 				    // Delete old entries
-				    $CleanTime = mktime(0, 0, 0, date("m")-4, date("d"), date("Y")); // Einträge >= 120 Tage werden gelöscht
+				    $CleanTime = mktime(0, 0, 0, (int) date("m")-4, (int) date("d"), (int) date("Y")); // Einträge >= 120 Tage werden gelöscht
 				    \Database::getInstance()
                             ->prepare("DELETE FROM tl_visitors_referrer WHERE tstamp < ? AND vid = ?")
                             ->execute($CleanTime, $vid);
