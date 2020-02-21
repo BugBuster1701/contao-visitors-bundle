@@ -5,7 +5,7 @@
  * 
  * Modul Visitors Config File
  *
- * @copyright  Glen Langer 2009..2019 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2020 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -13,7 +13,7 @@
  */
 
 \define('VISITORS_VERSION', '1.6');
-\define('VISITORS_BUILD', '1');
+\define('VISITORS_BUILD', '2');
 
 /**
  * Backend css version number are added to style sheets files to make
