@@ -8,7 +8,7 @@
  var sWidth  = screen.width;
  var sHeight = screen.height;
  
- document.write('<img class="invisible" src="<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'">');  
+ document.write('<img class="invisible" alt="" src="<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'">');  
 </script>
 <?php endforeach; ?>
 <!-- indexer::continue -->
