@@ -12,22 +12,20 @@
 <div class="visitor_average"    ><?php if ($visitor['AverageVisits']): ?><div id="AverageVisitsLegend"><?= $visitor['AverageVisitsLegend']; ?>&nbsp;&Oslash;</div><div id="AverageVisits">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::averagevisits}}</div><?php endif; ?></div>
 <?php if ($visitor['VisitorsStartDate']): ?><div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $visitor['VisitorsStartDateLegend']; ?></div><div id="VisitorsStartDate">&nbsp;{{visitors::<?= $visitor['VisitorsKatID']; ?>::start}}</div></div><?php endif; ?>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-    try {
-        var xmlhttp = new XMLHttpRequest();
-    } catch (r) {
-        return;
-    }
+document.addEventListener('DOMContentLoaded', function () {
     var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth); 
     var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
     var sWidth  = screen.width;
     var sHeight = screen.height;
     var visitorurl = '<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'';
+    try {
+		fetch( visitorurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
+	    .catch( error => console.error('error:', error) );
+    } catch (r) {
+        return;
+    }
     
-    xmlhttp.open("GET", visitorurl, true);
-    xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xmlhttp.send(null);
-    });
+});
 </script>
 <?php endforeach; ?>
 </section>
