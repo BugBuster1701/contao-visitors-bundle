@@ -120,10 +120,8 @@ class FrontendVisitors extends \Frontend
 	                     array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 	    }
 
-	    //Pixel und raus hier
-	    $objResponse = new Response(base64_decode('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='));
-	    $objResponse->headers->set('Content-type', 'image/gif');
-	    $objResponse->headers->set('Content-length', 43);
+	    //raus hier
+	    $objResponse = new Response();
 
 		return $objResponse;
 	}
