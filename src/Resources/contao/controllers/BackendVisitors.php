@@ -9,8 +9,8 @@
 
 namespace BugBuster\Visitors;
 
-use Symfony\Component\HttpFoundation\Response;
 use Contao\CoreBundle\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Back end visitors wizard.
