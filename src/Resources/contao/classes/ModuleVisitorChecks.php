@@ -145,14 +145,20 @@ class ModuleVisitorChecks extends \Frontend
 	        return false;
 	    }
 		//Contao <4.5.0
-	    $strCookie = 'BE_USER_AUTH';
-		$hash = sha1(session_id() . (!\Config::get('privacyAnonymizeIp') ? \Environment::get('ip') : '') . $strCookie);
-		if (\Input::cookie($strCookie) == $hash)
+		$strCookie = 'BE_USER_AUTH';
+		$cookie = \Input::cookie($strCookie);
+		if ($cookie === null)
+		{
+			ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': False' );
+			return false;
+		}
+		$hash = \System::getSessionHash($strCookie);
+		if ($cookie == $hash)
 		{
 			// Try to find the session
 			$objSession = \SessionModel::findByHashAndName($hash, $strCookie);
 			// Validate the session ID and timeout
-			if ($objSession !== null && $objSession->sessionID == session_id() && (\Config::get('privacyAnonymizeIp') || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + $GLOBALS['TL_CONFIG']['sessionTimeout']) > time())
+			if ($objSession !== null && $objSession->sessionID == \System::getContainer()->get('session')->getId() && (\System::getContainer()->getParameter('contao.security.disable_ip_check') || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + \Config::get('sessionTimeout')) > time())
 			{
 			    ModuleVisitorLog::writeLog( __METHOD__ , __LINE__ , ': True' );
 				return true;
