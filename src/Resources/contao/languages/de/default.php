@@ -93,7 +93,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']               
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']            = 'Bildschirmauflösungen TOP 20 (der letzten 30 Tage)';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']               = 'Besucher an diesem Tag';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                            = 'Besucher pro Tag:';
-$GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']                             = 'Seitenzugriffe';
+$GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']                             = 'Seitenzugriffe:';
 $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend']                            = 'Zugriffe heute:';
 $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend']                          = 'Besucher heute:';
 $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend']                            = 'Zugriffe gesamt:';
