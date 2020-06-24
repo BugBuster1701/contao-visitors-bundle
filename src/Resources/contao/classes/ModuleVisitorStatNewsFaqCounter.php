@@ -70,7 +70,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
 
     /**
      * Return the current object instance (Singleton)
-     * @return ModuleVisitorStatPageCounter
+     * @return ModuleVisitorStatNewsFaqCounter
      */
     public static function getInstance()
     {
