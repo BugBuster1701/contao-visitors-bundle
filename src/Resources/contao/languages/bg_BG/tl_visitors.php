@@ -8,9 +8,8 @@
  * @link https://www.transifex.com/signup/
  * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/bg_BG/
  *
- * last-updated: 2017-10-21T01:05:51+02:00
+ * last-updated: 2017-12-18T23:54:17+01:00
  */
-
 
 $GLOBALS['TL_LANG']['tl_visitors']['average_legend']                                   = 'Средно и блок-време';
 $GLOBALS['TL_LANG']['tl_visitors']['copy']['0']                                        = 'Направи копие на брояча';
@@ -43,19 +42,19 @@ $GLOBALS['TL_LANG']['tl_visitors']['visitors_block_time']['0']                  
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_block_time']['1']                         = 'След посоченото време за прекратяване на заявките, достъпът се брои като за нов посетител.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['0']                = 'Режим за отстраняване на грешки за класа за проверка на посетители';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['1']                = 'След активация - записва информацията за изчистване на грешки в log файла
-(<em>system/logs/visitors_debug.log</em>)';
+(<em>var/logs/prod-дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['0']              = 'Режим за остраняване на грешки за класа за препоръчител на посетителя';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['1']              = 'След активация - записва информацията за остраняване на грешки в log файла
-(<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['1']              = 'След активация - записва информацията за изчистване на грешки в log файла
+(<em>var/logs/prod-дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['0'] = 'Режим за отстраняване на грешки за класа за броене по разделителна способност (на екрана) на посетителя';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['1'] = 'След активация - записва информацията за остраняване на грешки в log файла
-(<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['1'] = 'След активация - записва информацията за изчистване на грешки в log файла
+(<em>var/logs/prod-дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['0']          = 'Режим за отстраняване на грешки за класа за търсачката, използвана от посетителя';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['1']          = 'След активация - записва информацията за остраняване на грешки в log файла
-(<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['1']          = 'След активация - записва информацията за изчистване на грешки в log файла
+(<em>var/logs/prod-дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['0']                   = 'Режим за отстраняване на грешки за класа за етикет на посетителя';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['1']                   = 'След активация - записва информацията за остраняване на грешки в log файла
-(<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['1']                   = 'След активация - записва информацията за изчистване на грешки в log файла
+(<em>var/logs/prod-дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_legend']                           = 'Настройки за напреднали';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['0']                          = 'Първоначална стойност на попаденията';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['1']                          = 'Цифрата се прибавя към общия сбор от брояча.';

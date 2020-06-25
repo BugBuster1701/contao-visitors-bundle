@@ -4,11 +4,11 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/ru/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/ru/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2016-03-04T20:58:03+01:00
+ * last-updated: 2020-06-26T00:29:40+02:00
  */
 
 $GLOBALS['TL_LANG']['tl_visitors']['average_legend']                                   = 'Среднее и время блокировки';
@@ -41,15 +41,15 @@ $GLOBALS['TL_LANG']['tl_visitors']['visitors_average']['1']                     
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_block_time']['0']                         = 'Время блокировки';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_block_time']['1']                         = 'Время в секундах. После этого интервала времени доступ засчитывается в качестве еще одного посещения.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['0']                = 'Режим отладки для класса "Проверка посетителей"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['1']                = 'При активации, записывать отладочную информацию в журнал  (<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['1']                = 'При активации, записывать отладочную информацию в журнал  (<em>var/logs/prod-Дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['0']              = 'Режим отладки для класса "Реферер посетителя"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['1']              = 'При активации, записывать отладочную информацию в журнал (<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['1']              = 'При активации, записывать отладочную информацию в журнал  (<em>var/logs/prod-Дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['0'] = 'Отладочный режим работы для класса "Счетчик разрешений экрана посетителей"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['1'] = 'При активации, записывать отладочную информацию в журнал (<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['1'] = 'При активации, записывать отладочную информацию в журнал  (<em>var/logs/prod-Дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['0']          = 'Отладочный режим работы для класса "Посетители поисковой системы"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['1']          = 'При активации, записывать отладочную информацию в журнал (<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['1']          = 'При активации, записывать отладочную информацию в журнал  (<em>var/logs/prod-Дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['0']                   = 'Режим отладки для класса "Тег посетителей"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['1']                   = 'При активации, записывать отладочную информацию в журнал (<em>system/logs/visitors_debug.log</em>)';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['1']                   = 'При активации, записывать отладочную информацию в журнал  (<em>var/logs/prod-Дата-visitors_debug.log</em>)';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_legend']                           = 'Экспертные настройки';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['0']                          = 'Начальные значения просмотров';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['1']                          = 'Введенное число добавляется к счетчику.';
