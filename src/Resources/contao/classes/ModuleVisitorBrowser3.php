@@ -99,6 +99,13 @@ class ModuleVisitorBrowser3
 	const BROWSER_GALAXY_S9_PLUS   = 'Galaxy S9 Plus';
 	const BROWSER_GALAXY_S10       = 'Galaxy S10';
 	const BROWSER_GALAXY_S10_PLUS  = 'Galaxy S10 Plus';
+	const BROWSER_GALAXY_S10_E     = 'Galaxy S10e';
+	const BROWSER_GALAXY_S20       = 'Galaxy S20';
+	const BROWSER_GALAXY_A5        = 'Galaxy A5';
+	const BROWSER_GALAXY_A20       = 'Galaxy A20';
+	const BROWSER_GALAXY_A40       = 'Galaxy A40';
+	const BROWSER_GALAXY_A50       = 'Galaxy A50';
+	const BROWSER_GALAXY_A80       = 'Galaxy A80';
 	const BROWSER_GALAXY_ACE      = 'Galaxy Ace';
 	const BROWSER_GALAXY_ACE_2    = 'Galaxy Ace 2';
 	const BROWSER_GALAXY_ACE_PLUS = 'Galaxy Ace Plus';
@@ -1384,7 +1391,57 @@ class ModuleVisitorBrowser3
     		    $this->setBrowser(self::BROWSER_GALAXY_S10_PLUS);
 
 			    return true;
-	    	}
+			}
+			if(stripos($this->_agent, 'SM-G970') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S10_E);
+
+			    return true;
+			}
+			
+			//S20
+			if(stripos($this->_agent, 'SM-G981') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S20);
+
+			    return true;
+			}
+
+			//A5
+			if(stripos($this->_agent, 'SM-A500') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A5);
+
+			    return true;
+			}
+			//A20
+			if(stripos($this->_agent, 'SM-A205') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A20);
+
+			    return true;
+			}
+			//A40
+			if(stripos($this->_agent, 'SM-A405') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A40);
+
+			    return true;
+			}
+			//A50
+			if(stripos($this->_agent, 'SM-A505') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A50);
+
+			    return true;
+			}
+			//A80
+			if(stripos($this->_agent, 'SM-A805') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A80);
+
+			    return true;
+			}
 
 	    	if(stripos($this->_agent, 'GT-I9000') !== false) 
 	    	{
@@ -1547,7 +1604,9 @@ class ModuleVisitorBrowser3
 				stripos($this->_agent, 'GT-P6210') !== false ||
 				stripos($this->_agent, 'SM-T530') !== false ||
 				stripos($this->_agent, 'SM-T533') !== false ||
-				stripos($this->_agent, 'SM-T535') !== false)
+				stripos($this->_agent, 'SM-T535') !== false ||
+				stripos($this->_agent, 'SM-T827') !== false ||
+				stripos($this->_agent, 'SM-T550') !== false)
 	    	{
 			    $this->setBrowser(self::BROWSER_GALAXY_TAB);
 

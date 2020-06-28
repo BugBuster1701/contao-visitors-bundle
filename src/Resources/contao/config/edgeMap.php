@@ -14,6 +14,7 @@
 
  /**
   * Map generiert aus: https://en.wikipedia.org/wiki/Microsoft_Edge#EdgeHTML_(2014%E2%80%932019)_2
+  *                    https://en.wikipedia.org/wiki/EdgeHTML
   * @var array
   */
  $arrEdgeMap = array(
