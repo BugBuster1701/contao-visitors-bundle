@@ -1398,7 +1398,7 @@ class ModuleVisitorBrowser3
 
 			    return true;
 			}
-			
+
 			//S20
 			if(stripos($this->_agent, 'SM-G981') !== false) 
 	    	{
