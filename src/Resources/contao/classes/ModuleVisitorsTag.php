@@ -430,6 +430,16 @@ class ModuleVisitorsTag extends \Frontend
 		            $objPage = $this->visitorGetPageObj();
 
 		        } //$objPage->id == 0
+				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID '. $objPage->id);
+				//#80, bei Readerseite den Beitrags-Alias beachten
+				//0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
+				//1 = Nachrichten/News
+				//2 = FAQ
+				//3 = Isotope
+				//403 = Forbidden
+				$visitors_page_type = $this->visitorGetPageType($objPage);
+				//bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
+				$objPageId    = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
 		        $objPageStatCount = \Database::getInstance()
                         ->prepare("SELECT
@@ -438,9 +448,12 @@ class ModuleVisitorsTag extends \Frontend
                                         tl_visitors_pages
                                     WHERE
                                         vid = ?
-                                    AND visitors_page_id = ?
+                                    AND 
+										visitors_page_id = ?
+									AND
+										visitors_page_type = ?
                                   ")
-                        ->execute($objVisitors->id, $objPage->id);
+                        ->execute($objVisitors->id, $objPageId, $visitors_page_type);
                 if ($objPageStatCount->numRows > 0)
                 {
                     $objPageStatCount->next();
@@ -451,7 +464,7 @@ class ModuleVisitorsTag extends \Frontend
                     $VisitorsPageHits = 0;
                 }
 
-		        return ($boolSeparator) ? $this->getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
+		        return ($boolSeparator) ? \System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
 		        break;
 		    case "bestday":
 		    	//Day with the most visitors
