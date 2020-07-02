@@ -227,7 +227,7 @@ class ModuleVisitorsTag extends \Frontend
                         ->execute($objVisitors->id,'v');
 	            $objVisitorsOnlineCount->next();
 	            $VisitorsOnlineCount = ($objVisitorsOnlineCount->VOC === null) ? 0 : $objVisitorsOnlineCount->VOC;
-				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsOnlineCount,0) : $VisitorsOnlineCount;
+				return ($boolSeparator) ? \System::getFormattedNumber($VisitorsOnlineCount,0) : $VisitorsOnlineCount;
 				break;
 		    case "start":
 		    	//VisitorsStartDate
@@ -260,7 +260,7 @@ class ModuleVisitorsTag extends \Frontend
 	    		    $objVisitorsTotalCount->next();
 	                $VisitorsTotalVisitCount += ($objVisitorsTotalCount->SUMV === null) ? 0 : $objVisitorsTotalCount->SUMV;
 			    }
-				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsTotalVisitCount,0) : $VisitorsTotalVisitCount;
+				return ($boolSeparator) ? \System::getFormattedNumber($VisitorsTotalVisitCount,0) : $VisitorsTotalVisitCount;
 				break;
 		    case "totalhit":
 	    		//TotalHitCount
@@ -279,7 +279,7 @@ class ModuleVisitorsTag extends \Frontend
 	    		    $objVisitorsTotalCount->next();
 	                $VisitorsTotalHitCount += ($objVisitorsTotalCount->SUMH === null) ? 0 : $objVisitorsTotalCount->SUMH;
 			    }
-				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsTotalHitCount,0) : $VisitorsTotalHitCount;
+				return ($boolSeparator) ? \System::getFormattedNumber($VisitorsTotalHitCount,0) : $VisitorsTotalHitCount;
 				break;
 		    case "todayvisit":
 				//TodaysVisitCount
@@ -301,7 +301,7 @@ class ModuleVisitorsTag extends \Frontend
 	    		    $objVisitorsTodaysCount->next();
 	    		    $VisitorsTodaysVisitCount = ($objVisitorsTodaysCount->visitors_visit === null) ? 0 : $objVisitorsTodaysCount->visitors_visit;
 			    }
-				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsTodaysVisitCount,0) : $VisitorsTodaysVisitCount;
+				return ($boolSeparator) ? \System::getFormattedNumber($VisitorsTodaysVisitCount,0) : $VisitorsTodaysVisitCount;
 				break;
 		    case "todayhit":
 				//TodaysHitCount
@@ -323,7 +323,7 @@ class ModuleVisitorsTag extends \Frontend
 	    		    $objVisitorsTodaysCount->next();
 	    		    $VisitorsTodaysHitCount = ($objVisitorsTodaysCount->visitors_hit === null) ? 0 : $objVisitorsTodaysCount->visitors_hit;
 			    }
-				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsTodaysHitCount,0) : $VisitorsTodaysHitCount;
+				return ($boolSeparator) ? \System::getFormattedNumber($VisitorsTodaysHitCount,0) : $VisitorsTodaysHitCount;
 				break;
 			case "yesterdayvisit":
 				    //YesterdayVisitCount
@@ -345,7 +345,7 @@ class ModuleVisitorsTag extends \Frontend
                         $objVisitorsYesterdayCount->next();
                         $VisitorsYesterdayVisitCount = ($objVisitorsYesterdayCount->visitors_visit === null) ? 0 : $objVisitorsYesterdayCount->visitors_visit;
                     }
-                    return ($boolSeparator) ? $this->getFormattedNumber($VisitorsYesterdayVisitCount,0) : $VisitorsYesterdayVisitCount;
+                    return ($boolSeparator) ? \System::getFormattedNumber($VisitorsYesterdayVisitCount,0) : $VisitorsYesterdayVisitCount;
                     break;
             case "yesterdayhit":
                     //YesterdayHitCount
@@ -367,7 +367,7 @@ class ModuleVisitorsTag extends \Frontend
                         $objVisitorsYesterdayCount->next();
                         $VisitorsYesterdayHitCount = ($objVisitorsYesterdayCount->visitors_hit === null) ? 0 : $objVisitorsYesterdayCount->visitors_hit;
                     }
-                    return ($boolSeparator) ? $this->getFormattedNumber($VisitorsYesterdayHitCount,0) : $VisitorsYesterdayHitCount;
+                    return ($boolSeparator) ? \System::getFormattedNumber($VisitorsYesterdayHitCount,0) : $VisitorsYesterdayHitCount;
                     break;
 		    case "averagevisits":
 				// Average Visits
@@ -404,7 +404,7 @@ class ModuleVisitorsTag extends \Frontend
 			    {
 	                $VisitorsAverageVisits = 0;
 	            }
-				return ($boolSeparator) ? $this->getFormattedNumber($VisitorsAverageVisits,0) : $VisitorsAverageVisits;
+				return ($boolSeparator) ? \System::getFormattedNumber($VisitorsAverageVisits,0) : $VisitorsAverageVisits;
 				break;
 		    case "pagehits":
 		        // Page Hits
@@ -417,17 +417,30 @@ class ModuleVisitorsTag extends \Frontend
 		            $objPage = $this->visitorGetPageObj();
 		             
 		        } //$objPage->id == 0
+				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID '. $objPage->id);
+				//#80, bei Readerseite den Beitrags-Alias beachten
+				//0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
+				//1 = Nachrichten/News
+				//2 = FAQ
+				//3 = Isotope
+				//403 = Forbidden
+				$visitors_page_type = $this->visitorGetPageType($objPage);
+				//bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
+				$objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
-		        $objPageStatCount = \Database::getInstance()
+				$objPageStatCount = \Database::getInstance()
                         ->prepare("SELECT
                                         SUM(visitors_page_hit)   AS visitors_page_hits
                                     FROM
                                         tl_visitors_pages
                                     WHERE
                                         vid = ?
-                                    AND visitors_page_id = ?
+                                    AND 
+										visitors_page_id = ?
+									AND
+										visitors_page_type = ?
                                   ")
-                        ->execute($objVisitors->id, $objPage->id);
+                        ->execute($objVisitors->id, $objPageId, $visitors_page_type);
                 if ($objPageStatCount->numRows > 0)
                 {
                     $objPageStatCount->next();
@@ -437,7 +450,7 @@ class ModuleVisitorsTag extends \Frontend
                 {
                     $VisitorsPageHits = 0;
                 }
-		        return ($boolSeparator) ? $this->getFormattedNumber($VisitorsPageHits,0) : $VisitorsPageHits;
+		        return ($boolSeparator) ? \System::getFormattedNumber($VisitorsPageHits,0) : $VisitorsPageHits;
 		        break;
 		    case "bestday":
 		    	//Day with the most visitors
@@ -483,11 +496,11 @@ class ModuleVisitorsTag extends \Frontend
 						break;
 					case "visits":
 					    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2].'::'.$arrTag[3] );
-						return ($boolSeparator) ? $this->getFormattedNumber($objVisitorsBestday->visitors_visit,0) : $objVisitorsBestday->visitors_visit;
+						return ($boolSeparator) ? \System::getFormattedNumber($objVisitorsBestday->visitors_visit,0) : $objVisitorsBestday->visitors_visit;
 						break;
 					case "hits":
 					    ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$arrTag[2].'::'.$arrTag[3] );
-						return ($boolSeparator) ? $this->getFormattedNumber($objVisitorsBestday->visitors_hit,0) : $objVisitorsBestday->visitors_hit;
+						return ($boolSeparator) ? \System::getFormattedNumber($objVisitorsBestday->visitors_hit,0) : $objVisitorsBestday->visitors_hit;
 						break;
 					default:
 						return false;
