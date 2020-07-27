@@ -12,6 +12,12 @@
 			"role":"Developer"
 		}
 	],
+	"funding": [
+		{
+			"type": "other",
+			"url": "https://www.amazon.de/wishlist/26HHEJOU03G76"
+		}
+	],
 	"support":{
 		"issues":"https://github.com/BugBuster1701/contao-visitors-bundle/issues",
 		"irc":"irc://irc.freenode.org/contao.dev",
