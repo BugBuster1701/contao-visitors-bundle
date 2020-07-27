@@ -29,8 +29,6 @@
 		"php": "^7.1",
 		"contao/core-bundle": "~4.7",
 		"bugbuster/contao-botdetection-bundle": ">=0.2.1,<2",
-		"composer/semver": "^1.0",
-		"jean85/pretty-package-versions": "^1.0",
 		"phpoffice/phpspreadsheet": "~1.0"
 	},
 	"require-dev": {
