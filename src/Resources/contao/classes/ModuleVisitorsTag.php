@@ -5,7 +5,7 @@
  * 
  * Modul Visitors Tag - Frontend for InsertTags
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2020 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -17,6 +17,7 @@
  */
 
 namespace BugBuster\Visitors;
+
 use BugBuster\Visitors\ModuleVisitorBrowser3;
 use BugBuster\Visitors\ModuleVisitorChecks;
 use BugBuster\Visitors\ModuleVisitorLog;
@@ -101,7 +102,7 @@ class ModuleVisitorsTag extends \Frontend
 		    $this->visitorSetDebugSettings($visitors_category_id);
 		}
 
-		if (false === self::$_BackendUser && true === $this->isContao45()) 
+		if (false === self::$_BackendUser )
 		{
     		$objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
     		if ($objTokenChecker->hasBackendUser())
@@ -243,6 +244,7 @@ class ModuleVisitorsTag extends \Frontend
 			    } 
 			    else 
 			    {
+					/** @var PageModel $objPage */
 			        global $objPage;
 			        $VisitorsStartDate = \Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
 			    }
@@ -401,7 +403,7 @@ class ModuleVisitorsTag extends \Frontend
 	    		    {
 	                    $objVisitorsAverageCount->next();
 	                    $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount->MINDAY))/60/60/24);
-	                    $VisitorsAverageVisitCount = ($objVisitorsAverageCount->SUMV === null) ? 0 : $objVisitorsAverageCount->SUMV;
+	                    $VisitorsAverageVisitCount = ($objVisitorsAverageCount->SUMV === null) ? 0 : (int) $objVisitorsAverageCount->SUMV;
 	                    if ($tmpTotalDays > 0) 
 	                    {
 	                    	$VisitorsAverageVisits = round($VisitorsAverageVisitCount / $tmpTotalDays, 0);
@@ -421,8 +423,9 @@ class ModuleVisitorsTag extends \Frontend
 				break;
 		    case "pagehits":
 		        // Page Hits
-		        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
-		        //Page Data
+				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+				
+		        /** @var PageModel $objPage */
 		        global $objPage;
 		        //if page from cache, we have no page-id
 		        if ($objPage->id == 0)
@@ -734,6 +737,7 @@ class ModuleVisitorsTag extends \Frontend
 	    //Page Counter 
 	    if ($this->_HitCounted === true || $this->_VisitCounted === true) 
 	    {
+			/** @var PageModel $objPage */
     	    global $objPage;
     	    //if page from cache, we have no page-id
     	    if ($objPage->id == 0) 
@@ -1179,7 +1183,7 @@ class ModuleVisitorsTag extends \Frontend
 			}
 		}
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Request.3: '. $strRequest);
-		
+
 		$arrFragments = null;
 
 		// Use folder-style URLs
@@ -1537,8 +1541,9 @@ class ModuleVisitorsTag extends \Frontend
 	}
 
 	/**
-	 * Check if contao/cor-bundle >= 4.5.0
-	 *
+	 * Check if contao/core-bundle >= 4.5.0
+	 * @deprecated
+	 * 
 	 * @return boolean
 	 */
 	protected function isContao45()
