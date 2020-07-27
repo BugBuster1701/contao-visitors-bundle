@@ -1541,27 +1541,6 @@ class ModuleVisitorsTag extends \Frontend
 	}
 
 	/**
-	 * Check if contao/core-bundle >= 4.5.0
-	 * @deprecated
-	 * 
-	 * @return boolean
-	 */
-	protected function isContao45()
-	{
-	    $packages = \System::getContainer()->getParameter('kernel.packages');
-	    $coreVersion = $packages['contao/core-bundle']; //a.b.c
-	    if (version_compare($coreVersion, '4.5.0', '>='))
-	    {
-	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
-
-	        return true;
-	    }
-	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
-
-	    return false;
-	}
-
-	/**
 	 * From ArrayUtil::arrayInsert (Contao 4.10)
 	 *
 	 * @param [type] $arrCurrent

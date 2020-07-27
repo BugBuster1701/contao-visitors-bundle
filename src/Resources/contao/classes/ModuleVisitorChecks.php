@@ -197,28 +197,6 @@ class ModuleVisitorChecks extends \Frontend
 	}
 
 	/**
-	 * Check if contao/cor-bundle >= 4.5.0
-	 * 
-	 * @return boolean
-	 */
-	public function isContao45()
-	{
-	    //Thanks fritzmg for this hint
-	    // get the Contao version
-	    $version = PrettyVersions::getVersion('contao/core-bundle');
-	    // check for Contao >=4.5
-	    if (\Composer\Semver\Semver::satisfies($version->getShortVersion(), '>=4.5'))
-	    {
-	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
-
-	        return true;
-	    }
-	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
-
-	    return false;
-	}
-
-	/**
 	 * Get User IP
 	 *
 	 * @return string
