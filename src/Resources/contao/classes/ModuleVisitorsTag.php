@@ -926,7 +926,8 @@ class ModuleVisitorsTag extends \Frontend
 	    $objPage = null;
 	    $pageId  = null;
 
-	    $pageId = $this->getPageIdFromUrl(); // Alias, not ID :-(
+	    $pageId = $this->visitorGetPageIdFromUrl(); // Alias, not ID :-(
+
 	    // Load a website root page object if there is no page ID
 	    if ($pageId === null)
 	    {
@@ -1107,6 +1108,214 @@ class ModuleVisitorsTag extends \Frontend
 	        $GLOBALS['visitors']['debug']['searchengine'] = (bool) $objVisitors->visitors_expert_debug_searchengine;
 	        ModuleVisitorLog::writeLog('## START ##', '## DEBUG ##', 'T'.(int) $GLOBALS['visitors']['debug']['tag'] .'#C'. (int) $GLOBALS['visitors']['debug']['checks'] .'#R'.(int) $GLOBALS['visitors']['debug']['referrer'] .'#S'.(int) $GLOBALS['visitors']['debug']['searchengine']);
 	    }
+	}
+
+	/**
+	 * Fork from Page::getPageIdFromUrl
+	 *
+	 * @return void
+	 */
+	protected function visitorGetPageIdFromUrl()
+	{
+		$strRequest = \Environment::get('relativeRequest');
+
+		if ($strRequest == '')
+		{
+			return null;
+		}
+		
+		// Get the request without the query string
+		list($strRequest) = explode('?', $strRequest, 2);
+
+		// URL decode here (see #6232)
+		$strRequest = rawurldecode($strRequest);
+
+		// The request string must not contain "auto_item" (see #4012)
+		if (strpos($strRequest, '/auto_item/') !== false)
+		{
+			return false;
+		}
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Request.1: '. $strRequest);
+
+		// Extract the language
+		if (\Config::get('addLanguageToUrl'))
+		{
+			$arrMatches = array();
+
+			// Use the matches instead of substr() (thanks to Mario Müller)
+			if (preg_match('@^([a-z]{2}(-[A-Z]{2})?)/(.*)$@', $strRequest, $arrMatches))
+			{
+				\Input::setGet('language', $arrMatches[1]);
+
+				// Trigger the root page if only the language was given
+				if ($arrMatches[3] == '')
+				{
+					return null;
+				}
+
+				$strRequest = $arrMatches[3];
+			}
+			else
+			{
+				return false; // Language not provided
+			}
+		}
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Request.2: '. $strRequest);
+
+		// Remove the URL suffix if not just a language root (e.g. en/) is requested
+		if ($strRequest != '' && (!\Config::get('addLanguageToUrl') || !preg_match('@^[a-z]{2}(-[A-Z]{2})?/$@', $strRequest)))
+		{
+			$intSuffixLength = \strlen(\Config::get('urlSuffix'));
+
+			// Return false if the URL suffix does not match (see #2864)
+			if ($intSuffixLength > 0)
+			{
+				if (substr($strRequest, -$intSuffixLength) != \Config::get('urlSuffix'))
+				{
+					return false;
+				}
+
+				$strRequest = substr($strRequest, 0, -$intSuffixLength);
+			}
+		}
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Request.3: '. $strRequest);
+		
+		$arrFragments = null;
+
+		// Use folder-style URLs
+		if (strpos($strRequest, '/') !== false)
+		{
+			$strAlias = $strRequest;
+			$arrOptions = array($strAlias);
+
+			// Compile all possible aliases by applying dirname() to the request (e.g. news/archive/item, news/archive, news)
+			while ($strAlias != '/' && strpos($strAlias, '/') !== false)
+			{
+				$strAlias = \dirname($strAlias);
+				$arrOptions[] = $strAlias;
+			}
+
+			/** @var PageModel $objPageModel */
+			$objPageModel = \System::getContainer()->get('contao.framework')->getAdapter(\PageModel::class);
+
+			// Check if there are pages with a matching alias
+			$objPages = $objPageModel->findByAliases($arrOptions);
+
+			if ($objPages !== null)
+			{
+				$arrPages = array();
+
+				// Order by domain and language
+				while ($objPages->next())
+				{
+					/** @var PageModel $objModel */
+					$objModel = $objPages->current();
+					$objPage  = $objModel->loadDetails();
+
+					$domain = $objPage->domain ?: '*';
+					$arrPages[$domain][$objPage->rootLanguage][] = $objPage;
+
+					// Also store the fallback language
+					if ($objPage->rootIsFallback)
+					{
+						$arrPages[$domain]['*'][] = $objPage;
+					}
+				}
+
+				$arrAliases = array();
+				$strHost = \Environment::get('host');
+
+				// Look for a root page whose domain name matches the host name
+				$arrLangs = $arrPages[$strHost] ?? $arrPages['*'] ?? array();
+
+				// Use the first result (see #4872)
+				if (!\Config::get('addLanguageToUrl'))
+				{
+					$arrAliases = current($arrLangs);
+				}
+				// Try to find a page matching the language parameter
+				elseif (($lang = \Input::get('language')) && isset($arrLangs[$lang]))
+				{
+					$arrAliases = $arrLangs[$lang];
+				}
+
+				// Return if there are no matches
+				if (empty($arrAliases))
+				{
+					return false;
+				}
+
+				$objPage = $arrAliases[0];
+
+				// The request consists of the alias only
+				if ($strRequest == $objPage->alias)
+				{
+					$arrFragments = array($strRequest);
+				}
+				// Remove the alias from the request string, explode it and then re-insert the alias at the beginning
+				else
+				{
+					$arrFragments = explode('/', substr($strRequest, \strlen($objPage->alias) + 1));
+					array_unshift($arrFragments, $objPage->alias);
+				}
+			}
+		}
+
+		// If folderUrl is deactivated or did not find a matching page
+		if ($arrFragments === null)
+		{
+			if ($strRequest == '/')
+			{
+				return false;
+			}
+
+			$arrFragments = explode('/', $strRequest);
+		}
+
+		// Add the second fragment as auto_item if the number of fragments is even
+		if (\count($arrFragments) % 2 == 0)
+		{
+			if (!\Config::get('useAutoItem'))
+			{
+				return false; // see #264
+			}
+
+			$this->visitorArrayInsert($arrFragments, 1, array('auto_item'));
+		}
+
+		// Return if the alias is empty (see #4702 and #4972)
+		if ($arrFragments[0] == '' && \count($arrFragments) > 1)
+		{
+			return false;
+		}
+
+		// Add the fragments to the $_GET array
+		for ($i=1, $c=\count($arrFragments); $i<$c; $i+=2)
+		{
+			// Return false if the key is empty (see #4702 and #263)
+			if ($arrFragments[$i] == '')
+			{
+				return false;
+			}
+
+			// Return false if there is a duplicate parameter (duplicate content) (see #4277)
+			if (isset($_GET[$arrFragments[$i]]))
+			{
+				return false;
+			}
+
+			// Return false if the request contains an auto_item keyword (duplicate content) (see #4012)
+			if (\Config::get('useAutoItem') && \in_array($arrFragments[$i], $GLOBALS['TL_AUTO_ITEM']))
+			{
+				return false;
+			}
+
+			\Input::setGet($arrFragments[$i], $arrFragments[$i+1], true);
+		}
+		$url = $arrFragments[0] ?: null;
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Fragment: '. $url);
+
+		return $url;
 	}
 
 	protected function visitorGetRootPageFromUrl($next=true)
@@ -1345,6 +1554,34 @@ class ModuleVisitorsTag extends \Frontend
 	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
 
 	    return false;
+	}
+
+	/**
+	 * From ArrayUtil::arrayInsert (Contao 4.10)
+	 *
+	 * @param [type] $arrCurrent
+	 * @param [type] $intIndex
+	 * @param [type] $arrNew
+	 * @return void
+	 */
+	protected function visitorArrayInsert(&$arrCurrent, $intIndex, $arrNew): void
+	{
+		if (!\is_array($arrCurrent))
+		{
+			$arrCurrent = $arrNew;
+
+			return;
+		}
+
+		if (\is_array($arrNew))
+		{
+			$arrBuffer = array_splice($arrCurrent, 0, $intIndex);
+			$arrCurrent = array_merge_recursive($arrBuffer, $arrNew, $arrCurrent);
+
+			return;
+		}
+
+		array_splice($arrCurrent, $intIndex, 0, $arrNew);
 	}
 
 } // class
