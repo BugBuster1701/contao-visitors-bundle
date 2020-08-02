@@ -102,7 +102,7 @@ class ModuleVisitorsTag extends \Frontend
 		    $this->visitorSetDebugSettings($visitors_category_id);
 		}
 
-		if (false === self::$_BackendUser )
+		if (false === self::$_BackendUser)
 		{
     		$objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
     		if ($objTokenChecker->hasBackendUser())
@@ -244,7 +244,7 @@ class ModuleVisitorsTag extends \Frontend
 			    } 
 			    else 
 			    {
-					/** @var PageModel $objPage */
+			        /** @var PageModel $objPage */
 			        global $objPage;
 			        $VisitorsStartDate = \Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
 			    }
@@ -424,7 +424,7 @@ class ModuleVisitorsTag extends \Frontend
 		    case "pagehits":
 		        // Page Hits
 				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
-				
+
 		        /** @var PageModel $objPage */
 		        global $objPage;
 		        //if page from cache, we have no page-id
@@ -737,7 +737,7 @@ class ModuleVisitorsTag extends \Frontend
 	    //Page Counter 
 	    if ($this->_HitCounted === true || $this->_VisitCounted === true) 
 	    {
-			/** @var PageModel $objPage */
+    	    /** @var PageModel $objPage */
     	    global $objPage;
     	    //if page from cache, we have no page-id
     	    if ($objPage->id == 0) 
@@ -1127,7 +1127,7 @@ class ModuleVisitorsTag extends \Frontend
 		{
 			return null;
 		}
-		
+
 		// Get the request without the query string
 		list($strRequest) = explode('?', $strRequest, 2);
 
@@ -1543,9 +1543,9 @@ class ModuleVisitorsTag extends \Frontend
 	/**
 	 * From ArrayUtil::arrayInsert (Contao 4.10)
 	 *
-	 * @param [type] $arrCurrent
-	 * @param [type] $intIndex
-	 * @param [type] $arrNew
+	 * @param  [type] $arrCurrent
+	 * @param  [type] $intIndex
+	 * @param  [type] $arrNew
 	 * @return void
 	 */
 	protected function visitorArrayInsert(&$arrCurrent, $intIndex, $arrNew): void
