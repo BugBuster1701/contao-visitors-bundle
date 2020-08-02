@@ -45,10 +45,7 @@ $GLOBALS['BE_MOD']['system']['visitorstat'] = array
  * FRONT END MODULES
  * -------------------------------------------------------------------------
  */
-array_insert($GLOBALS['FE_MOD']['miscellaneous'], 0, array
-(
-	'visitors' => 'BugBuster\Visitors\ModuleVisitors',
-));
+$GLOBALS['FE_MOD']['miscellaneous']['visitors'] = 'BugBuster\Visitors\ModuleVisitors';
 
 /**
  * -------------------------------------------------------------------------
