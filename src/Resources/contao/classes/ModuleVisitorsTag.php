@@ -558,6 +558,7 @@ class ModuleVisitorsTag extends \Frontend
 	    if ($ModuleVisitorChecks->checkUserAgent($visitors_category_id) === true) 
 	    {
 	    	$this->_PF = true; // Bad but functionally
+
 	    	return; //User Agent Filterung
 	    }
 	    //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
@@ -586,6 +587,7 @@ class ModuleVisitorsTag extends \Frontend
 	    if ($ModuleVisitorChecks->checkBE() === true) 
 	    {
 	    	$this->_PF = true; // Bad but functionally
+
 			return; // Backend eingeloggt, nicht zaehlen (Feature: #197)
 		}
 
