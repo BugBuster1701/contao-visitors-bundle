@@ -45,7 +45,7 @@ $GLOBALS['BE_MOD']['system']['visitorstat'] = array
  * FRONT END MODULES
  * -------------------------------------------------------------------------
  */
-$GLOBALS['FE_MOD']['miscellaneous']['visitors'] = 'BugBuster\Visitors\ModuleVisitors';
+//$GLOBALS['FE_MOD']['miscellaneous']['visitors'] = 'BugBuster\Visitors\ModuleVisitors';
 
 /**
  * -------------------------------------------------------------------------
