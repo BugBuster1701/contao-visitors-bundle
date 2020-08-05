@@ -8,7 +8,7 @@ services:
                 name: contao.frontend_module
                 category: miscellaneous
                 type: visitors
-                template: mod_visitors_frontend_all
+                template: mod_visitors_fe_all
                 renderer: esi
             -
                 name: container.service_subscriber

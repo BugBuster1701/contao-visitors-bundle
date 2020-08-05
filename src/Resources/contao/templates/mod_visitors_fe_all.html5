@@ -1,38 +1,9 @@
-<!-- indexer::stop -->
-<section class="<?= $this->class; ?> block"<?= $this->cssID; ?><?php if ($this->style): ?> style="<?= $this->style; ?>"<?php endif; ?>>
-<?php if ($this->headline): ?>
-<<?= $this->hl; ?>><?= $this->headline; ?></<?= $this->hl; ?>>
-<?php endif; ?>
-<?php foreach ($this->visitors as $visitor): ?>
-<span class="visitor_count invisible">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::count}}</span>
-<div class="visitor_name"       ><div id="VisitorsNameLegend"><?= $visitor['VisitorsNameLegend'];               ?></div><div id="VisitorsName"       >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::name}}</div></div>
-<div class="visitor_useronline" ><div id="VisitorsOnlineCountLegend"><?= $visitor['VisitorsOnlineCountLegend']; ?></div><div id="VisitorsOnlineCount">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::online}}</div></div>
-<div class="visitor_visitstoday"><div id="TodayVisitCountLegend"><?= $visitor['TodayVisitCountLegend'];         ?></div><div id="TodayVisitCount"    >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::todayvisit}}</div></div>
-<div class="visitor_visitstotal"><div id="TotalVisitCountLegend"><?= $visitor['TotalVisitCountLegend'];         ?></div><div id="TotalVisitCount"    >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::totalvisit}}</div></div>
-<div class="visitor_hitstoday"  ><div id="TodayHitCountLegend"><?= $visitor['TodayHitCountLegend'];             ?></div><div id="TodayHitCount"      >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::todayhit}}</div></div>
-<div class="visitor_hitstotal"  ><div id="TotalHitCountLegend"><?= $visitor['TotalHitCountLegend'];             ?></div><div id="TotalHitCount"      >{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::totalhit}}</div></div>
-<div class="visitor_visitsyesterday"><div id="YesterdayVisitCountLegend"><?= $visitor['YesterdayVisitCountLegend'];?></div><div id="YesterdayVisitCount">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::yesterdayvisit}}</div></div>
-<div class="visitor_hitsyesterday"><div id="YesterdayHitCountLegend"><?= $visitor['YesterdayHitCountLegend'];?></div><div id="YesterdayHitCount">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::yesterdayhit}}</div></div>
-<div class="visitor_pagehits"><div id="PageHitCountLegend"><?= $visitor['PageHitCountLegend'];?></div><div id="PageHitCount">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::pagehits}}</div></div>
-<div class="visitor_average" ><?php if ($visitor['AverageVisits']): ?><div id="AverageVisitsLegend"><?= $visitor['AverageVisitsLegend']; ?>&nbsp;&Oslash;</div><div id="AverageVisits">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::averagevisits}}</div><?php endif; ?></div>
-<?php if ($visitor['VisitorsStartDate']): ?><div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $visitor['VisitorsStartDateLegend']; ?></div><div id="VisitorsStartDate">&nbsp;{{visitors::<?= $visitor['VisitorsKatID']; ?>::start}}</div></div>
-<?php endif; ?>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth); 
-    var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
-    var sWidth  = screen.width;
-    var sHeight = screen.height;
-    var visitorurl = '<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'';
-    try {
-		fetch( visitorurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
-	    .catch( error => console.error('error:', error) );
-    } catch (r) {
-        return;
-    }
-    
-});
-</script>
-<?php endforeach; ?>
-</section>
-<!-- indexer::continue -->
+<?php $this->extend("block_searchable"); ?>
+
+<?php $this->block("content"); ?>
+
+    <h3><?= $this->helloTitle ?></h3>
+    <p><?= $this->helloText ?></p>
+
+
+<?php $this->endblock(); ?>
