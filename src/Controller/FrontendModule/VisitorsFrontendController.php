@@ -59,6 +59,9 @@ dump($template);
         $this->useragent_filter  = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
 
+        /** @var PageModel $objPage */
+        global $objPage;
+
         if (!is_numeric($this->visitors_category))
         {
             $this->strTemplate = 'mod_visitors_error';
@@ -77,7 +80,7 @@ dump($template);
         {
             // invisible, but counting!
             //@todo Aufruf Zählmethode
-            $arrVisitors[] = array('VisitorsKatID' => $this->visitors_categories[0]);
+            $arrVisitors[] = array('VisitorsKatID' => $this->visitors_category);
             $template->visitors = $arrVisitors;
 
             return $template->getResponse();
@@ -89,7 +92,10 @@ dump($template);
                             tl_visitors.id AS id, 
                             visitors_name, 
                             visitors_startdate, 
-                            visitors_average
+                            visitors_visit_start, 
+                            visitors_hit_start,
+                            visitors_average,
+                            visitors_thousands_separator
                         FROM 
                             tl_visitors 
                         LEFT JOIN 
@@ -119,18 +125,19 @@ dump($template);
 
         while (false !== ($objVisitors = $stmt->fetch(\PDO::FETCH_OBJ))) 
         {
-            $VisitorsStartDate      = true;
+            $VisitorsStartDate      = false;
             $VisitorsAverageVisits  = false;
-            if (!\strlen($objVisitors->visitors_startdate)) 
+            if (\strlen($objVisitors->visitors_startdate)) 
             {
-                $VisitorsStartDate = false;
+                $VisitorsStartDate = Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
             } 
             
             if ($objVisitors->visitors_average) 
             {
-                $VisitorsAverageVisits = true;
+                $VisitorsAverageVisits = true; 
+                $VisitorsAverageVisitsValue = $this->getAverageVisits($objVisitors->id);
             } 
-dump($GLOBALS['TL_LANG']['visitors']);
+
             if (!isset($GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'])) 
             {
                 $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'] = '';
@@ -142,6 +149,7 @@ dump($GLOBALS['TL_LANG']['visitors']);
                 'VisitorsKatID'       => $this->visitors_category, //$this->visitors_categories[0],
                 'VisitorsStartDate'   => $VisitorsStartDate, 
                 'AverageVisits'       => $VisitorsAverageVisits, 
+                'AverageVisitsValue'  => $VisitorsAverageVisitsValue,
                 'VisitorsNameLegend'        => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
                 'VisitorsOnlineCountLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend'],
                 'VisitorsStartDateLegend'   => $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend'],
@@ -192,4 +200,41 @@ dump($GLOBALS['TL_LANG']['visitors']);
 
         return $template->getResponse();
     }
+
+    protected function getAverageVisits($VisitorsId)
+    {
+        $VisitorsAverageVisits = 0;
+        $today     = date('Y-m-d');
+        $yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
+
+        $stmt = $this->get('database_connection')
+                ->prepare(
+                    'SELECT 
+                        SUM(visitors_visit) AS SUMV, 
+                        MIN( visitors_date) AS MINDAY
+                    FROM 
+                        tl_visitors_counter
+                    WHERE 
+                        vid = :vid AND visitors_date < :vdate
+
+                    ');
+        $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
+        $stmt->bindValue('vdate', $today, \PDO::PARAM_STR);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) 
+        {
+            $objVisitorsAverageCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount->MINDAY))/60/60/24);
+            $VisitorsAverageVisitCount = ($objVisitorsAverageCount->SUMV === null) ? 0 : (int) $objVisitorsAverageCount->SUMV;
+            if ($tmpTotalDays > 0) 
+            {
+                $VisitorsAverageVisits = round($VisitorsAverageVisitCount / $tmpTotalDays, 0);
+            } 
+        }
+
+        return $VisitorsAverageVisits;
+    }
+
+
 }
