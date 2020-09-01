@@ -24,11 +24,11 @@ use Contao\ModuleModel;
 use Contao\System;
 use Contao\Template;
 use Doctrine\DBAL\Connection;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Psr\Log\LogLevel;
 
 class VisitorsFrontendController extends AbstractFrontendModuleController
 {
@@ -54,38 +54,35 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
-dump($model);
-dump($template);
+        dump($model);
+        dump($template);
 
-        $this->useragent_filter  = $model->visitors_useragent;
+        $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
 
-        /** @var PageModel $objPage */
+        /* @var PageModel $objPage */
         global $objPage;
 
-        if (!is_numeric($this->visitors_category))
-        {
+        if (!is_numeric($this->visitors_category)) {
             $this->strTemplate = 'mod_visitors_error';
-            $template = new \Contao\FrontendTemplate($this->strTemplate); 
+            $template = new \Contao\FrontendTemplate($this->strTemplate);
 
             return $template->getResponse();
         }
 
-        if ($this->strTemplate != $model->visitors_template && $model->visitors_template !='')
-        {
+        if ($this->strTemplate !== $model->visitors_template && '' !== $model->visitors_template) {
             $this->strTemplate = $model->visitors_template;
             $template = new \Contao\FrontendTemplate($this->strTemplate);
         }
 
-        if ($this->strTemplate == 'mod_visitors_fe_invisible')
-        {
+        if ('mod_visitors_fe_invisible' === $this->strTemplate) {
             // invisible, but counting!
             //@todo Aufruf Zählmethode
-            $arrVisitors[] = array('VisitorsKatID' => $this->visitors_category);
+            $arrVisitors[] = ['VisitorsKatID' => $this->visitors_category];
             $template->visitors = $arrVisitors;
 
             return $template->getResponse();
-        } 
+        }
 
         $stmt = $this->get('database_connection')
                     ->prepare(
@@ -104,73 +101,69 @@ dump($template);
                         WHERE 
                             pid = :pid AND published = :published
                         ORDER BY id, visitors_name
-                        LIMIT :limit');
-        $stmt->bindValue('pid',$this->visitors_category, \PDO::PARAM_INT);
-        $stmt->bindValue('published',1,\PDO::PARAM_INT);
-        $stmt->bindValue('limit',1, \PDO::PARAM_INT);
+                        LIMIT :limit')
+        ;
+        $stmt->bindValue('pid', $this->visitors_category, \PDO::PARAM_INT);
+        $stmt->bindValue('published', 1, \PDO::PARAM_INT);
+        $stmt->bindValue('limit', 1, \PDO::PARAM_INT);
         $stmt->execute();
-        
-        if ($stmt->rowCount() < 1)
-        {
+
+        if ($stmt->rowCount() < 1) {
             \Contao\System::getContainer()
-			     ->get('monolog.logger.contao')
-			     ->log(LogLevel::ERROR,
-			           'VisitorsFrontendController User Error: no published counter found.',
-                       array('contao' => new ContaoContext('VisitorsFrontendController getResponse ', TL_ERROR)));
-                       
+                 ->get('monolog.logger.contao')
+                 ->log(LogLevel::ERROR,
+                       'VisitorsFrontendController User Error: no published counter found.',
+                       ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', TL_ERROR)])
+        ;
+
             $this->strTemplate = 'mod_visitors_error';
-            $template = new \Contao\FrontendTemplate($this->strTemplate); 
+            $template = new \Contao\FrontendTemplate($this->strTemplate);
 
             return $template->getResponse();
         }
 
-        while (false !== ($objVisitors = $stmt->fetch(\PDO::FETCH_OBJ))) 
-        {
-            $VisitorsStartDate      = false;
-            $VisitorsAverageVisits  = false;
-            $boolSeparator = ($objVisitors->visitors_thousands_separator == 1) ? true : false;
+        while (false !== ($objVisitors = $stmt->fetch(\PDO::FETCH_OBJ))) {
+            $VisitorsStartDate = false;
+            $VisitorsAverageVisits = false;
+            $boolSeparator = (1 === $objVisitors->visitors_thousands_separator) ? true : false;
 
-            if (\strlen($objVisitors->visitors_startdate)) 
-            {
+            if (\strlen($objVisitors->visitors_startdate)) {
                 $VisitorsStartDate = Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
-            } 
-            
-            if ($objVisitors->visitors_average) 
-            {
-                $VisitorsAverageVisits = true; 
-                $VisitorsAverageVisitsValue = $this->getAverageVisits($objVisitors->id);
-            } 
+            }
 
-            if (!isset($GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'])) 
-            {
+            if ($objVisitors->visitors_average) {
+                $VisitorsAverageVisits = true;
+                $VisitorsAverageVisitsValue = $this->getAverageVisits($objVisitors->id, $boolSeparator);
+            }
+
+            if (!isset($GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'])) {
                 $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'] = '';
             }
 
-            $arrVisitors[] = array
-            (
-                'VisitorsNameLegend'  => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
-                'VisitorsName'        => trim($objVisitors->visitors_name),
-                
-                'VisitorsKatID'       => $this->visitors_category,
-                'VisitorsStartDate'   => $VisitorsStartDate, //false|value - ugly - i know
+            $arrVisitors[] = [
+                'VisitorsNameLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
+                'VisitorsName' => trim($objVisitors->visitors_name),
+
+                'VisitorsKatID' => $this->visitors_category,
+                'VisitorsStartDate' => $VisitorsStartDate, //false|value - ugly - i know
 
                 'AverageVisitsLegend' => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend'],
-                'AverageVisits'       => $VisitorsAverageVisits,  //bool
-                'AverageVisitsValue'  => $VisitorsAverageVisitsValue,
-                
-                'VisitorsOnlineCountLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend'],
-                'VisitorsOnlineCountValue'  => $this->getVisitorsOnlineCount($objVisitors->id,$boolSeparator),
+                'AverageVisits' => $VisitorsAverageVisits,  //bool
+                'AverageVisitsValue' => $VisitorsAverageVisitsValue,
 
-                'VisitorsStartDateLegend'   => $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend'],
-                'TotalVisitCountLegend'     => $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend'],
-                'TotalHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend'],
-                'TodayVisitCountLegend'     => $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend'],
-                'TodayHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend'],
-                
-                'YesterdayHitCountLegend'   => $GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend'],
+                'VisitorsOnlineCountLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend'],
+                'VisitorsOnlineCountValue' => $this->getVisitorsOnlineCount($objVisitors->id, $boolSeparator),
+
+                'VisitorsStartDateLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend'],
+                'TotalVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend'],
+                'TotalHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend'],
+                'TodayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend'],
+                'TodayHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend'],
+
+                'YesterdayHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend'],
                 'YesterdayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend'],
-                'PageHitCountLegend'        => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']
-            );
+                'PageHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend'],
+            ];
 
             //@todo weitermachen
         }
@@ -210,11 +203,11 @@ dump($template);
         return $template->getResponse();
     }
 
-    protected function getAverageVisits($VisitorsId): int
+    protected function getAverageVisits($VisitorsId, $boolSeparator)
     {
         $VisitorsAverageVisits = 0;
-        $today     = date('Y-m-d');
-        $yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
+        $today = date('Y-m-d');
+        $yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date('m'), (int) date('d') - 1, (int) date('Y')));
 
         $stmt = $this->get('database_connection')
                 ->prepare(
@@ -226,26 +219,25 @@ dump($template);
                     WHERE 
                         vid = :vid AND visitors_date < :vdate
 
-                    ');
+                    ')
+        ;
         $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
         $stmt->bindValue('vdate', $today, \PDO::PARAM_STR);
         $stmt->execute();
 
-        if ($stmt->rowCount() > 0) 
-        {
+        if ($stmt->rowCount() > 0) {
             $objVisitorsAverageCount = $stmt->fetch(\PDO::FETCH_OBJ);
-            $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount->MINDAY))/60/60/24);
-            $VisitorsAverageVisitCount = ($objVisitorsAverageCount->SUMV === null) ? 0 : (int) $objVisitorsAverageCount->SUMV;
-            if ($tmpTotalDays > 0) 
-            {
+            $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount->MINDAY)) / 60 / 60 / 24);
+            $VisitorsAverageVisitCount = (null === $objVisitorsAverageCount->SUMV) ? 0 : (int) $objVisitorsAverageCount->SUMV;
+            if ($tmpTotalDays > 0) {
                 $VisitorsAverageVisits = round($VisitorsAverageVisitCount / $tmpTotalDays, 0);
-            } 
+            }
         }
 
-        return $VisitorsAverageVisits;
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsAverageVisits, 0) : $VisitorsAverageVisits;
     }
 
-    protected function getVisitorsOnlineCount($VisitorsId,$boolSeparator)
+    protected function getVisitorsOnlineCount($VisitorsId, $boolSeparator)
     {
         //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
         $stmt = $this->get('database_connection')
@@ -256,13 +248,14 @@ dump($template);
                         tl_visitors_blocker
                     WHERE 
                         vid = :vid AND visitors_type = :vtype
-                    ');
+                    ')
+        ;
         $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
         $stmt->execute();
 
         $objVisitorsOnlineCount = $stmt->fetch(\PDO::FETCH_OBJ);
-        $VisitorsOnlineCount = ($objVisitorsOnlineCount->VOC === null) ? 0 : $objVisitorsOnlineCount->VOC;
+        $VisitorsOnlineCount = (null === $objVisitorsOnlineCount->VOC) ? 0 : $objVisitorsOnlineCount->VOC;
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsOnlineCount, 0) : $VisitorsOnlineCount;
     }
