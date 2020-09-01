@@ -8,7 +8,7 @@
     <?php foreach ($this->visitors as $visitor): ?>
         <span class="visitor_count invisible">Zählung folgt <?= $visitor['VisitorsKatID']; ?></span>
         <div class="visitor_name"       ><div id="VisitorsNameLegend"><?= $visitor['VisitorsNameLegend'];               ?></div><div id="VisitorsName"       ><?= $visitor['VisitorsName']; ?></div></div>
-        <div class="visitor_useronline" ><div id="VisitorsOnlineCountLegend"><?= $visitor['VisitorsOnlineCountLegend']; ?></div><div id="VisitorsOnlineCount">folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_useronline" ><div id="VisitorsOnlineCountLegend"><?= $visitor['VisitorsOnlineCountLegend']; ?></div><div id="VisitorsOnlineCount"><?= $visitor['VisitorsOnlineCountValue']; ?></div></div>
         <div class="visitor_visitstoday"><div id="TodayVisitCountLegend"><?= $visitor['TodayVisitCountLegend'];         ?></div><div id="TodayVisitCount"    >folgt <?= $visitor['VisitorsKatID']; ?></div></div>
         <div class="visitor_visitstotal"><div id="TotalVisitCountLegend"><?= $visitor['TotalVisitCountLegend'];         ?></div><div id="TotalVisitCount"    >folgt <?= $visitor['VisitorsKatID']; ?></div></div>
         <div class="visitor_hitstoday"  ><div id="TodayHitCountLegend"><?= $visitor['TodayHitCountLegend'];             ?></div><div id="TodayHitCount"      >folgt <?= $visitor['VisitorsKatID']; ?></div></div>

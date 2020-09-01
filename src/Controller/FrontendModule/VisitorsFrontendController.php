@@ -21,6 +21,7 @@ use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Date;
 use Contao\FrontendUser;
 use Contao\ModuleModel;
+use Contao\System;
 use Contao\Template;
 use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\Request;
@@ -127,6 +128,8 @@ dump($template);
         {
             $VisitorsStartDate      = false;
             $VisitorsAverageVisits  = false;
+            $boolSeparator = ($objVisitors->visitors_thousands_separator == 1) ? true : false;
+
             if (\strlen($objVisitors->visitors_startdate)) 
             {
                 $VisitorsStartDate = Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
@@ -145,19 +148,25 @@ dump($template);
 
             $arrVisitors[] = array
             (
+                'VisitorsNameLegend'  => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
                 'VisitorsName'        => trim($objVisitors->visitors_name),
-                'VisitorsKatID'       => $this->visitors_category, //$this->visitors_categories[0],
-                'VisitorsStartDate'   => $VisitorsStartDate, 
-                'AverageVisits'       => $VisitorsAverageVisits, 
+                
+                'VisitorsKatID'       => $this->visitors_category,
+                'VisitorsStartDate'   => $VisitorsStartDate, //false|value - ugly - i know
+
+                'AverageVisitsLegend' => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend'],
+                'AverageVisits'       => $VisitorsAverageVisits,  //bool
                 'AverageVisitsValue'  => $VisitorsAverageVisitsValue,
-                'VisitorsNameLegend'        => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
+                
                 'VisitorsOnlineCountLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend'],
+                'VisitorsOnlineCountValue'  => $this->getVisitorsOnlineCount($objVisitors->id,$boolSeparator),
+
                 'VisitorsStartDateLegend'   => $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend'],
                 'TotalVisitCountLegend'     => $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend'],
                 'TotalHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend'],
                 'TodayVisitCountLegend'     => $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend'],
                 'TodayHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend'],
-                'AverageVisitsLegend'       => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend'],
+                
                 'YesterdayHitCountLegend'   => $GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend'],
                 'YesterdayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend'],
                 'PageHitCountLegend'        => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']
@@ -201,7 +210,7 @@ dump($template);
         return $template->getResponse();
     }
 
-    protected function getAverageVisits($VisitorsId)
+    protected function getAverageVisits($VisitorsId): int
     {
         $VisitorsAverageVisits = 0;
         $today     = date('Y-m-d');
@@ -236,5 +245,25 @@ dump($template);
         return $VisitorsAverageVisits;
     }
 
+    protected function getVisitorsOnlineCount($VisitorsId,$boolSeparator)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        $stmt = $this->get('database_connection')
+                ->prepare(
+                    'SELECT 
+                        COUNT(id) AS VOC 
+                    FROM 
+                        tl_visitors_blocker
+                    WHERE 
+                        vid = :vid AND visitors_type = :vtype
+                    ');
+        $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
+        $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
+        $stmt->execute();
 
+        $objVisitorsOnlineCount = $stmt->fetch(\PDO::FETCH_OBJ);
+        $VisitorsOnlineCount = ($objVisitorsOnlineCount->VOC === null) ? 0 : $objVisitorsOnlineCount->VOC;
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsOnlineCount, 0) : $VisitorsOnlineCount;
+    }
 }
