@@ -5,5 +5,21 @@
     <h3><?= $this->helloTitle ?></h3>
     <p><?= $this->helloText ?></p>
 
+    <?php foreach ($this->visitors as $visitor): ?>
+        <span class="visitor_count invisible">Zählung folgt <?= $visitor['VisitorsKatID']; ?></span>
+        <div class="visitor_name"       ><div id="VisitorsNameLegend"><?= $visitor['VisitorsNameLegend'];               ?></div><div id="VisitorsName"       >folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_useronline" ><div id="VisitorsOnlineCountLegend"><?= $visitor['VisitorsOnlineCountLegend']; ?></div><div id="VisitorsOnlineCount">folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_visitstoday"><div id="TodayVisitCountLegend"><?= $visitor['TodayVisitCountLegend'];         ?></div><div id="TodayVisitCount"    >folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_visitstotal"><div id="TotalVisitCountLegend"><?= $visitor['TotalVisitCountLegend'];         ?></div><div id="TotalVisitCount"    >folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_hitstoday"  ><div id="TodayHitCountLegend"><?= $visitor['TodayHitCountLegend'];             ?></div><div id="TodayHitCount"      >folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_hitstotal"  ><div id="TotalHitCountLegend"><?= $visitor['TotalHitCountLegend'];             ?></div><div id="TotalHitCount"      >folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_visitsyesterday"><div id="YesterdayVisitCountLegend"><?= $visitor['YesterdayVisitCountLegend'];?></div><div id="YesterdayVisitCount">folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_hitsyesterday"><div id="YesterdayHitCountLegend"><?= $visitor['YesterdayHitCountLegend'];?></div><div id="YesterdayHitCount">folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_pagehits"><div id="PageHitCountLegend"><?= $visitor['PageHitCountLegend'];?></div><div id="PageHitCount">folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <div class="visitor_average" ><?php if ($visitor['AverageVisits']): ?><div id="AverageVisitsLegend"><?= $visitor['AverageVisitsLegend']; ?>&nbsp;&Oslash;</div><div id="AverageVisits">folgt <?= $visitor['VisitorsKatID']; ?></div><?php endif; ?></div>
+        <?php if ($visitor['VisitorsStartDate']): ?>
+            <div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $visitor['VisitorsStartDateLegend']; ?></div><div id="VisitorsStartDate">&nbsp;folgt <?= $visitor['VisitorsKatID']; ?></div></div>
+        <?php endif; ?>
+    <?php endforeach; ?>
 
 <?php $this->endblock(); ?>

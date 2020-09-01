@@ -16,6 +16,7 @@ namespace BugBuster\VisitorsBundle\Controller\FrontendModule;
 
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Date;
 use Contao\FrontendUser;
@@ -26,9 +27,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Psr\Log\LogLevel;
 
 class VisitorsFrontendController extends AbstractFrontendModuleController
 {
+    protected $strTemplate = 'mod_visitors_fe_all';
+    protected $useragent_filter = '';
+    protected $visitors_category = false;
+
     /**
      * Lazyload some services.
      */
@@ -47,6 +53,113 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
     {
+dump($model);
+dump($template);
+
+        $this->useragent_filter  = $model->visitors_useragent;
+        $this->visitors_category = $model->visitors_categories;
+
+        if (!is_numeric($this->visitors_category))
+        {
+            $this->strTemplate = 'mod_visitors_error';
+            $template = new \Contao\FrontendTemplate($this->strTemplate); 
+
+            return $template->getResponse();
+        }
+
+        if ($this->strTemplate != $model->visitors_template && $model->visitors_template !='')
+        {
+            $this->strTemplate = $model->visitors_template;
+            $template = new \Contao\FrontendTemplate($this->strTemplate);
+        }
+
+        if ($this->strTemplate == 'mod_visitors_fe_invisible')
+        {
+            // invisible, but counting!
+            //@todo Aufruf Zählmethode
+            $arrVisitors[] = array('VisitorsKatID' => $this->visitors_categories[0]);
+            $template->visitors = $arrVisitors;
+
+            return $template->getResponse();
+        } 
+
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            tl_visitors.id AS id, 
+                            visitors_name, 
+                            visitors_startdate, 
+                            visitors_average
+                        FROM 
+                            tl_visitors 
+                        LEFT JOIN 
+                            tl_visitors_category ON (tl_visitors_category.id = tl_visitors.pid)
+                        WHERE 
+                            pid = :pid AND published = :published
+                        ORDER BY id, visitors_name
+                        LIMIT :limit');
+        $stmt->bindValue('pid',$this->visitors_category, \PDO::PARAM_INT);
+        $stmt->bindValue('published',1,\PDO::PARAM_INT);
+        $stmt->bindValue('limit',1, \PDO::PARAM_INT);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() < 1)
+        {
+            \Contao\System::getContainer()
+			     ->get('monolog.logger.contao')
+			     ->log(LogLevel::ERROR,
+			           'VisitorsFrontendController User Error: no published counter found.',
+                       array('contao' => new ContaoContext('VisitorsFrontendController getResponse ', TL_ERROR)));
+                       
+            $this->strTemplate = 'mod_visitors_error';
+            $template = new \Contao\FrontendTemplate($this->strTemplate); 
+
+            return $template->getResponse();
+        }
+
+        while (false !== ($objVisitors = $stmt->fetch(\PDO::FETCH_OBJ))) 
+        {
+            $VisitorsStartDate      = true;
+            $VisitorsAverageVisits  = false;
+            if (!\strlen($objVisitors->visitors_startdate)) 
+            {
+                $VisitorsStartDate = false;
+            } 
+            
+            if ($objVisitors->visitors_average) 
+            {
+                $VisitorsAverageVisits = true;
+            } 
+dump($GLOBALS['TL_LANG']['visitors']);
+            if (!isset($GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'])) 
+            {
+                $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'] = '';
+            }
+
+            $arrVisitors[] = array
+            (
+                'VisitorsName'        => trim($objVisitors->visitors_name),
+                'VisitorsKatID'       => $this->visitors_category, //$this->visitors_categories[0],
+                'VisitorsStartDate'   => $VisitorsStartDate, 
+                'AverageVisits'       => $VisitorsAverageVisits, 
+                'VisitorsNameLegend'        => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
+                'VisitorsOnlineCountLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend'],
+                'VisitorsStartDateLegend'   => $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend'],
+                'TotalVisitCountLegend'     => $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend'],
+                'TotalHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend'],
+                'TodayVisitCountLegend'     => $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend'],
+                'TodayHitCountLegend'       => $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend'],
+                'AverageVisitsLegend'       => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend'],
+                'YesterdayHitCountLegend'   => $GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend'],
+                'YesterdayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend'],
+                'PageHitCountLegend'        => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend']
+            );
+
+            //@todo weitermachen
+        }
+
+        $template->visitors = $arrVisitors;
+
         $userFirstname = 'DUDE';
         $user = $this->get('security.helper')->getUser();
         if ($user instanceof FrontendUser) {
