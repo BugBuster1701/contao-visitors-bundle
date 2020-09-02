@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 namespace BugBuster\VisitorsBundle\Controller\FrontendModule;
 
+use BugBuster\Visitors\ModuleVisitorLog;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
@@ -35,6 +36,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected $strTemplate = 'mod_visitors_fe_all';
     protected $useragent_filter = '';
     protected $visitors_category = false;
+
+    private static $_BackendUser  = false;
+
+    const PAGE_TYPE_NORMAL     = 0;    //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
+	const PAGE_TYPE_NEWS       = 1;    //1   = Nachrichten/News
+	const PAGE_TYPE_FAQ        = 2;    //2   = FAQ
+	const PAGE_TYPE_ISOTOPE    = 3;    //3   = Isotope
+	const PAGE_TYPE_FORBIDDEN  = 403;  //403 = Forbidden Page
 
     /**
      * Lazyload some services.
@@ -69,7 +78,22 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
             return $template->getResponse();
         }
+        $this->visitorSetDebugSettings($this->visitors_category);
 
+        if (false === self::$_BackendUser)
+		{
+    		$objTokenChecker = System::getContainer()->get('contao.security.token_checker');
+    		if ($objTokenChecker->hasBackendUser())
+    		{
+    		    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': BackendUser: Yes');
+    		    self::$_BackendUser = true;
+    		} 
+    		else 
+    		{
+    		    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': BackendUser: No');
+    		}
+        }
+        
         if ($this->strTemplate !== $model->visitors_template && '' !== $model->visitors_template) {
             $this->strTemplate = $model->visitors_template;
             $template = new \Contao\FrontendTemplate($this->strTemplate);
@@ -83,6 +107,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
             return $template->getResponse();
         }
+
+        /* ____  __  ____________  __  ________
+		  / __ \/ / / /_  __/ __ \/ / / /_  __/
+		 / / / / / / / / / / /_/ / / / / / /   
+		/ /_/ / /_/ / / / / ____/ /_/ / / /    
+		\____/\____/ /_/ /_/    \____/ /_/ 
+		*/
 
         $stmt = $this->get('database_connection')
                     ->prepare(
@@ -447,4 +478,341 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsYesterdayHitCount, 0) : $VisitorsYesterdayHitCount;
     }
+
+    protected function getPageHits($objVisitors, $boolSeparator, $objPage)
+    {
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':start');
+
+        //if page from cache, we have no page-id
+        /*
+        if ($objPage->id == 0)
+        {
+            $objPage = $this->visitorGetPageObj();
+
+        } //$objPage->id == 0
+        */
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID '. $objPage->id);
+        //#80, bei Readerseite den Beitrags-Alias beachten
+        //0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
+        //1 = Nachrichten/News
+        //2 = FAQ
+        //3 = Isotope
+        //403 = Forbidden
+        $visitors_page_type = $this->visitorGetPageType($objPage);
+        //bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
+        $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
+
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            SUM(visitors_page_hit)   AS visitors_page_hits
+                        FROM 
+                        tl_visitors_pages
+                        WHERE 
+                            vid = :vid
+                        AND 
+                            visitors_page_id = :vpageid
+                        AND
+                            visitors_page_type = :vpagetype
+                        ')
+                    ;
+        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
+        $stmt->bindValue('vpagetype', $visitors_page_type, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $VisitorsPageHits = 0;
+        if ($stmt->rowCount() > 0)
+        {
+            $objPageStatCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $VisitorsPageHits = $objPageStatCount->visitors_page_hits;
+        }
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
+    }
+
+    ////////////////////////////////// INTERNAL /////////////////////////////////////////////7
+
+    protected function visitorSetDebugSettings($visitors_category_id)
+	{
+	    $GLOBALS['visitors']['debug']['tag']          = false; 
+	    $GLOBALS['visitors']['debug']['checks']       = false;
+	    $GLOBALS['visitors']['debug']['referrer']     = false;
+	    $GLOBALS['visitors']['debug']['searchengine'] = false;
+
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT
+                            visitors_expert_debug_tag,
+                            visitors_expert_debug_checks,
+                            visitors_expert_debug_referrer,
+                            visitors_expert_debug_searchengine
+                        FROM
+                            tl_visitors
+                        LEFT JOIN
+                            tl_visitors_category ON (tl_visitors_category.id=tl_visitors.pid)
+                        WHERE
+                            pid = :pid AND published = :published
+                        ORDER BY tl_visitors.id, visitors_name
+                        ')
+                    ->limit(1)
+                    ;
+        $stmt->bindValue('pid', $visitors_category_id, \PDO::PARAM_INT);
+        $stmt->bindValue('published', 1, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        while (false !== ($objVisitors = $stmt->fetch(\PDO::FETCH_OBJ))) 
+        {
+	        $GLOBALS['visitors']['debug']['tag']          = (bool) $objVisitors->visitors_expert_debug_tag;
+	        $GLOBALS['visitors']['debug']['checks']       = (bool) $objVisitors->visitors_expert_debug_checks;
+	        $GLOBALS['visitors']['debug']['referrer']     = (bool) $objVisitors->visitors_expert_debug_referrer;
+	        $GLOBALS['visitors']['debug']['searchengine'] = (bool) $objVisitors->visitors_expert_debug_searchengine;
+	        ModuleVisitorLog::writeLog('## START ##', '## DEBUG ##', 'T'.(int) $GLOBALS['visitors']['debug']['tag'] .'#C'. (int) $GLOBALS['visitors']['debug']['checks'] .'#R'.(int) $GLOBALS['visitors']['debug']['referrer'] .'#S'.(int) $GLOBALS['visitors']['debug']['searchengine']);
+	    }
+	}
+
+
+
+    /**
+	 * Get Page-Type
+	 * 
+	 * @param  object $objPage
+	 * @return integer 0 = reale Seite, 1 = News, 2 = FAQ, 403 = Forbidden
+	 */
+	protected function visitorGetPageType($objPage)
+	{
+	    $PageId = $objPage->id;
+	    //Return:
+	    //0 = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
+	    //1 = Nachrichten/News
+	    //2 = FAQ
+	    //403 = Forbidden
+
+	    $page_type = self::PAGE_TYPE_NORMAL;
+
+	    if ($objPage->protected == 1) 
+	    {
+            //protected Seite. user 
+            $user = $this->get('security.helper')->getUser();
+
+            if (!$user instanceof FrontendUser) 
+            {
+                $page_type = self::PAGE_TYPE_FORBIDDEN;
+	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '. $page_type);
+
+	            return $page_type;
+            }
+	    }
+
+        //Set the item from the auto_item parameter
+        //from class ModuleNewsReader#L57
+        if (!isset($_GET['items']) && \Contao\Config::get('useAutoItem') && isset($_GET['auto_item']))
+        {
+        	\Contao\Input::setGet('items', \Contao\Input::get('auto_item'));
+        }
+        if (!\Contao\Input::get('items'))
+        {
+            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '. $page_type);
+
+            return $page_type;
+        }
+
+        $dbconnection = $this->get('database_connection');
+
+	    //News Table exists?
+        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_news')) 
+	    {
+            //News Reader?
+            $stmt = $dbconnection->prepare(
+                        'SELECT id 
+                        FROM tl_news_archive 
+                        WHERE jumpTo = :jumpto
+                        ')
+                        ->limit(1)
+                    ;
+            $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+            $stmt->execute();
+
+
+    	    if ($stmt->rowCount() > 0)
+    	    {
+    	        //News Reader
+                $page_type = self::PAGE_TYPE_NEWS;
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '. $page_type);
+
+                return $page_type;
+    	    }
+	    }
+
+	    //FAQ Table exists?
+	    if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tableExists('tl_faq_category'))
+	    {
+            //FAQ Reader?
+            $stmt = $dbconnection->prepare(
+                        'SELECT id 
+                        FROM tl_faq_category 
+                        WHERE jumpTo = :jumpto
+                        ')
+                        ->limit(1)
+                    ;
+            $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+            $stmt->execute();
+
+	        if ($stmt->rowCount > 0)
+	        {
+	            //FAQ Reader
+                $page_type = self::PAGE_TYPE_FAQ;
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '. $page_type);
+
+                return $page_type;
+	        }
+	    }
+
+	    //Isotope Table tl_iso_product exists?
+	    if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tableExists('tl_iso_product'))
+	    {
+			$strAlias = \Contao\Input::get('items');
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Get items: '. print_r($strAlias, true));			
+
+            $stmt = $dbconnection->prepare(
+                        'SELECT id 
+                        FROM tl_iso_product 
+                        WHERE alias = :alias
+                        ')
+                        ->limit(1)
+                    ;
+            $stmt->bindValue('alias', $strAlias, \PDO::PARAM_STR);
+            $stmt->execute();
+
+			if ($stmt->rowCount > 0)
+			{
+	            //Isotope Reader
+                $page_type = self::PAGE_TYPE_ISOTOPE;
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '. $page_type);
+
+                return $page_type;
+	        }
+	    }
+
+	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '. $page_type);
+
+	    return $page_type;
+    }
+    
+    /**
+	 * Get Page-ID by Page-Type
+	 * 
+	 * @param  integer $PageId
+	 * @param  integer $PageType
+	 * @param  string  $PageAlias
+	 * @return integer
+	 */
+	protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias)
+	{
+	    if ($PageType == self::PAGE_TYPE_NORMAL) 
+	    {
+	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNormal: '. $PageId);
+
+	    	return $PageId;
+	    }
+
+	    if ($PageType == self::PAGE_TYPE_FORBIDDEN)
+	    {
+	        //Page ID von der 403 Seite ermitteln - nicht mehr
+	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNormal over 403: '. $PageId);
+
+	        return $PageId; 
+	    }
+
+        //Reader mit Parameter oder ohne?
+        $uri = $_SERVER['REQUEST_URI']; // /news/james-wilson-returns.html
+        $alias = '';
+        //steht suffix (html) am Ende?
+        $urlSuffix = System::getContainer()->getParameter('contao.url_suffix'); // default: .html
+        if (substr($uri, -\strlen($urlSuffix)) == $urlSuffix)
+        {
+            //Alias nehmen
+            $alias = substr($uri, strrpos($uri, '/')+1, -\strlen($urlSuffix));
+            if (false === $alias) 
+            {
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '. $PageId);
+
+            	return $PageId; // kein Parameter, Readerseite selbst
+            }
+        }
+        else 
+        {
+            $alias = substr($uri, strrpos($uri, '/')+1);
+        }
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '. $alias);
+
+        $dbconnection = $this->get('database_connection');
+
+        if ($PageType == self::PAGE_TYPE_NEWS)
+        {
+            //alias = james-wilson-returns
+            $stmt = $dbconnection->prepare(
+                        'SELECT id 
+                        FROM tl_news 
+                        WHERE alias = :alias
+                        ')
+                        ->limit(1)
+                    ;
+            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount > 0)
+            {
+                $objNews = $stmt->fetch(\PDO::FETCH_OBJ);
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNews: '. $objNews->id);
+
+                return $objNews->id;
+            } 
+
+	    }
+	    if ($PageType == self::PAGE_TYPE_FAQ)
+	    {
+            //alias = are-there-exams-how-do-they-work
+            $stmt = $dbconnection->prepare(
+                        'SELECT id 
+                        FROM tl_faq 
+                        WHERE alias = :alias
+                        ')
+                        ->limit(1)
+                    ;
+            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount > 0)
+	        {
+                $objFaq = $stmt->fetch(\PDO::FETCH_OBJ);
+	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdFaq: '. $objFaq->id);
+
+	            return $objFaq->id;
+	        }
+	    }
+	    if ($PageType == self::PAGE_TYPE_ISOTOPE)
+	    {
+            //alias = a-perfect-circle-thirteenth-step
+            $stmt = $dbconnection->prepare(
+                        'SELECT id 
+                        FROM tl_iso_product 
+                        WHERE alias = :alias
+                        ')
+                        ->limit(1)
+                    ;
+            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($stmt->rowCount > 0)
+	        {
+                $objIsotope = $stmt->fetch(\PDO::FETCH_OBJ);
+	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdIsotope: '. $objIsotope->id);
+
+	            return $objIsotope->id;
+	        }
+	    }
+
+	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unknown PageType: '. $PageType);
+	}
 }
