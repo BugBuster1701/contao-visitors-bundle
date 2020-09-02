@@ -155,13 +155,26 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 'VisitorsOnlineCountValue' => $this->getVisitorsOnlineCount($objVisitors->id, $boolSeparator),
 
                 'VisitorsStartDateLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend'],
+                'VisitorsStartDateValue' => $this->getVisitorsStartDate($objVisitors->visitors_startdate, $objPage),
+
                 'TotalVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend'],
+                'TotalVisitCountValue' => $this->getTotalVisitCount($objVisitors, $boolSeparator),
+
                 'TotalHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TotalHitCountLegend'],
+                'TotalHitCountValue' => $this->getTotalHitCount($objVisitors, $boolSeparator),
+
                 'TodayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TodayVisitCountLegend'],
+                'TodayVisitCountValue' => $this->getTodaysVisitCount($objVisitors, $boolSeparator),
+
                 'TodayHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TodayHitCountLegend'],
+                'TodayHitCountValue' => $this->getTodaysHitCount($objVisitors, $boolSeparator),
+
+                'YesterdayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend'],
+                'YesterdayVisitCountValue' => $this->getYesterdayVisitCount($objVisitors, $boolSeparator),
 
                 'YesterdayHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend'],
-                'YesterdayVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend'],
+                'YesterdayHitCountValue' => $this->getYesterdayHitCount($objVisitors, $boolSeparator),
+
                 'PageHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend'],
             ];
 
@@ -258,5 +271,180 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $VisitorsOnlineCount = (null === $objVisitorsOnlineCount->VOC) ? 0 : $objVisitorsOnlineCount->VOC;
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsOnlineCount, 0) : $VisitorsOnlineCount;
+    }
+
+    protected function getVisitorsStartDate($VisitorsStartdate, $objPage)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        if (\strlen($VisitorsStartdate)) 
+        {
+            $VisitorsStartDate = Date::parse($objPage->dateFormat, $VisitorsStartdate);
+        }
+        else
+        {
+            $VisitorsStartDate = '';
+        }
+
+        return $VisitorsStartDate;
+    }
+
+    protected function getTotalVisitCount($objVisitors, $boolSeparator)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            SUM(visitors_visit) AS SUMV
+                        FROM 
+                            tl_visitors_counter
+                        WHERE 
+                            vid = :vid
+                        ')
+                    ;
+        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $VisitorsTotalVisitCount = $objVisitors->visitors_visit_start; //Startwert
+        if ($stmt->rowCount() > 0) 
+        {
+            $objVisitorsTotalCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $VisitorsTotalVisitCount += ($objVisitorsTotalCount->SUMV === null) ? 0 : $objVisitorsTotalCount->SUMV;
+        }
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTotalVisitCount, 0) : $VisitorsTotalVisitCount;
+    }
+
+    protected function getTotalHitCount($objVisitors, $boolSeparator)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            SUM(visitors_hit) AS visitors_hit
+                        FROM 
+                            tl_visitors_counter
+                        WHERE 
+                            vid = :vid
+                        ')
+                    ;
+        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $VisitorsTotalHitCount   = $objVisitors->visitors_hit_start;   //Startwert
+        if ($stmt->rowCount() > 0) 
+        {
+            $objVisitorsTotalCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $VisitorsTotalHitCount += ($objVisitorsTotalCount->SUMH === null) ? 0 : $objVisitorsTotalCount->SUMH;
+        }
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTotalHitCount, 0) : $VisitorsTotalHitCount;
+    }
+
+    protected function getTodaysVisitCount($objVisitors, $boolSeparator)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            visitors_visit
+                        FROM 
+                            tl_visitors_counter
+                        WHERE 
+                            vid = :vid AND visitors_date = :vdate
+                        ')
+                    ;
+        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
+        $stmt->execute();
+
+        $VisitorsTodaysVisitCount = 0;
+        if ($stmt->rowCount() > 0) 
+        {
+            $objVisitorsTodaysCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $VisitorsTodaysVisitCount = ($objVisitorsTodaysCount->visitors_visit === null) ? 0 : $objVisitorsTodaysCount->visitors_visit;
+        }
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTodaysVisitCount, 0) : $VisitorsTodaysVisitCount;
+    }
+
+    protected function getTodaysHitCount($objVisitors, $boolSeparator)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            visitors_hit
+                        FROM 
+                            tl_visitors_counter
+                        WHERE 
+                            vid = :vid AND visitors_date = :vdate
+                        ')
+                    ;
+        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
+        $stmt->execute();
+
+        $VisitorsTodaysHitCount = 0;
+        if ($stmt->rowCount() > 0) 
+        {
+            $objVisitorsTodaysCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $VisitorsTodaysHitCount = ($objVisitorsTodaysCount->visitors_hit === null) ? 0 : $objVisitorsTodaysCount->visitors_hit;
+        }
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTodaysHitCount, 0) : $VisitorsTodaysHitCount;
+    }
+
+    protected function getYesterdayVisitCount($objVisitors, $boolSeparator)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            visitors_visit
+                        FROM 
+                            tl_visitors_counter
+                        WHERE 
+                            vid = :vid AND visitors_date = :vdate
+                        ')
+                    ;
+        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
+        $stmt->execute();
+
+        $VisitorsYesterdayVisitCount = 0;
+        if ($stmt->rowCount() > 0)
+        {
+            $objVisitorsYesterdayCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $VisitorsYesterdayVisitCount = ($objVisitorsYesterdayCount->visitors_visit === null) ? 0 : $objVisitorsYesterdayCount->visitors_visit;
+        }
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsYesterdayVisitCount, 0) : $VisitorsYesterdayVisitCount;
+    }
+
+    protected function getYesterdayHitCount($objVisitors, $boolSeparator)
+    {
+        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            visitors_hit
+                        FROM 
+                            tl_visitors_counter
+                        WHERE 
+                            vid = :vid AND visitors_date = :vdate
+                        ')
+                    ;
+        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
+        $stmt->execute();
+
+        $VisitorsYesterdayHitCount = 0;
+        if ($stmt->rowCount() > 0)
+        {
+            $objVisitorsYesterdayCount = $stmt->fetch(\PDO::FETCH_OBJ);
+            $VisitorsYesterdayHitCount = ($objVisitorsYesterdayCount->visitors_hit === null) ? 0 : $objVisitorsYesterdayCount->visitors_hit;
+        }
+
+        return ($boolSeparator) ? System::getFormattedNumber($VisitorsYesterdayHitCount, 0) : $VisitorsYesterdayHitCount;
     }
 }
