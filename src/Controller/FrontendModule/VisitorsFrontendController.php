@@ -554,9 +554,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         WHERE
                             pid = :pid AND published = :published
                         ORDER BY tl_visitors.id, visitors_name
+                        LIMIT 1
                         ')
                     ;
-        $stmt->limit(1);
         $stmt->bindValue('pid', $visitors_category_id, \PDO::PARAM_INT);
         $stmt->bindValue('published', 1, \PDO::PARAM_INT);
         $stmt->execute();
@@ -627,9 +627,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'SELECT id 
                         FROM tl_news_archive 
                         WHERE jumpTo = :jumpto
+                        LIMIT 1
                         ')
                     ;
-            $stmt->limit(1);
             $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
             $stmt->execute();
 
@@ -652,9 +652,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'SELECT id 
                         FROM tl_faq_category 
                         WHERE jumpTo = :jumpto
+                        LIMIT 1
                         ')
                     ;
-            $stmt->limit(1);
             $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
             $stmt->execute();
 
@@ -678,9 +678,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'SELECT id 
                         FROM tl_iso_product 
                         WHERE alias = :alias
+                        LIMIT 1
                         ')
                     ;
-            $stmt->limit(1);
             $stmt->bindValue('alias', $strAlias, \PDO::PARAM_STR);
             $stmt->execute();
 
@@ -755,9 +755,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'SELECT id 
                         FROM tl_news 
                         WHERE alias = :alias
+                        LIMIT 1
                         ')
                     ;
-            $stmt->limit(1);
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->execute();
 
@@ -777,9 +777,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'SELECT id 
                         FROM tl_faq 
                         WHERE alias = :alias
+                        LIMIT 1
                         ')
                     ;
-            $stmt->limit(1);
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->execute();
 
@@ -798,9 +798,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'SELECT id 
                         FROM tl_iso_product 
                         WHERE alias = :alias
+                        LIMIT 1
                         ')
                     ;
-            $stmt->limit(1);
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->execute();
 
