@@ -207,6 +207,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 'YesterdayHitCountValue' => $this->getYesterdayHitCount($objVisitors, $boolSeparator),
 
                 'PageHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend'],
+                'PageHitCountValue' => $this->getPageHits($objVisitors, $boolSeparator, $objPage)
             ];
 
             //@todo weitermachen
@@ -283,7 +284,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getVisitorsOnlineCount($VisitorsId, $boolSeparator)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$VisitorsId);
         $stmt = $this->get('database_connection')
                 ->prepare(
                     'SELECT 
@@ -306,7 +307,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getVisitorsStartDate($VisitorsStartdate, $objPage)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$VisitorsStartdate);
         if (\strlen($VisitorsStartdate)) 
         {
             $VisitorsStartDate = Date::parse($objPage->dateFormat, $VisitorsStartdate);
@@ -321,7 +322,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTotalVisitCount($objVisitors, $boolSeparator)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT 
@@ -347,7 +348,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTotalHitCount($objVisitors, $boolSeparator)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT 
@@ -373,7 +374,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTodaysVisitCount($objVisitors, $boolSeparator)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT 
@@ -400,7 +401,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTodaysHitCount($objVisitors, $boolSeparator)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT 
@@ -427,7 +428,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getYesterdayVisitCount($objVisitors, $boolSeparator)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT 
@@ -454,7 +455,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getYesterdayHitCount($objVisitors, $boolSeparator)
     {
-        //ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT 
@@ -481,7 +482,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getPageHits($objVisitors, $boolSeparator, $objPage)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':start');
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id.':'.$objPage->id);
 
         //if page from cache, we have no page-id
         /*
