@@ -98,6 +98,12 @@ class ModuleVisitorLog
                     self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
+            case "VisitorsFrontendController":
+                if ($GLOBALS['visitors']['debug']['tag']) //@todo temporär, eigene Regel notwendig  
+                {
+                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                }
+                break;
             default:
                 self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, '('.$vclass.')'.$value), 'visitors_debug');
                 break;

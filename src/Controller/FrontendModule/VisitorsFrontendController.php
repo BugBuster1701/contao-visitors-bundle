@@ -14,7 +14,11 @@ declare(strict_types=1);
 
 namespace BugBuster\VisitorsBundle\Controller\FrontendModule;
 
+use BugBuster\Visitors\ModuleVisitorBrowser3;
+use BugBuster\Visitors\ModuleVisitorChecks;
 use BugBuster\Visitors\ModuleVisitorLog;
+use BugBuster\Visitors\ModuleVisitorReferrer;
+use BugBuster\Visitors\ModuleVisitorSearchEngine;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
@@ -37,6 +41,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected $useragent_filter = '';
     protected $visitors_category = false;
 
+    private $_BOT = false;	// Bot
+
+	private $_SE  = false;	// Search Engine
+
+	private $_PF  = false;	// Prefetch found
+
+	private $_VB  = false;	// Visit Blocker
+
+	private $_VisitCounted = false;
+
+    private $_HitCounted   = false;
+    
     private static $_BackendUser  = false;
 
     const PAGE_TYPE_NORMAL     = 0;    //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
@@ -72,12 +88,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         /* @var PageModel $objPage */
         global $objPage;
 
+        System::loadLanguageFile('tl_visitors');
+
         if (!is_numeric($this->visitors_category)) {
             $this->strTemplate = 'mod_visitors_error';
             $template = new \Contao\FrontendTemplate($this->strTemplate);
 
             return $template->getResponse();
         }
+
         $this->visitorSetDebugSettings($this->visitors_category);
 
         if (false === self::$_BackendUser)
@@ -99,10 +118,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $template = new \Contao\FrontendTemplate($this->strTemplate);
         }
 
+        $counting = ($this->setCounters($objPage)) ? '<!-- counted -->' : '<!-- not counted -->';
+
         if ('mod_visitors_fe_invisible' === $this->strTemplate) {
             // invisible, but counting!
-            //@todo Aufruf Zählmethode
-            $arrVisitors[] = ['VisitorsKatID' => $this->visitors_category];
+            $arrVisitors[] = ['VisitorsKatID' => $this->visitors_category, 'VisitorsCounting' => $counting];
             $template->visitors = $arrVisitors;
 
             return $template->getResponse();
@@ -532,6 +552,54 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
     }
 
+    protected function setCounters($objPage)
+    {
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objPage->id);
+        $stmt = $this->get('database_connection')
+                    ->prepare(
+                        'SELECT 
+                            tl_visitors.id AS id, 
+                            visitors_block_time
+                        FROM 
+                            tl_visitors 
+                        LEFT JOIN 
+                            tl_visitors_category ON (tl_visitors_category.id = tl_visitors.pid)
+                        WHERE 
+                            pid = :pid AND published = :published
+                        ORDER BY id, visitors_name
+                        LIMIT 1
+                        ')
+                    ;
+        $stmt->bindValue('pid', $this->visitors_category, \PDO::PARAM_INT);
+        $stmt->bindValue('published', 1, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        if ($stmt->rowCount() < 1)
+        {
+            System::getContainer()
+                    ->get('monolog.logger.contao')
+                    ->log(LogLevel::ERROR,
+                        $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+                        array('contao' => new ContaoContext('VisitorsFrontendController setCounters '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+
+            return false;
+        }
+        while (false !== ($objVisitors = $stmt->fetch(\PDO::FETCH_OBJ))) 
+        {
+            $this->visitorCountUpdate($objVisitors->id, $objVisitors->visitors_block_time, $this->visitors_category, self::$_BackendUser);
+            $this->visitorCheckSearchEngine($objVisitors->id);
+            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'BOT: '.(int) $this->_BOT);
+            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'SE : '.(int) $this->_SE);
+            if ($this->_BOT === false && $this->_SE === false) 
+            {
+                $this->visitorCheckReferrer($objVisitors->id);
+            }
+        }
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Counted Server: True');
+
+        return true; 
+    }
+
     ////////////////////////////////// INTERNAL /////////////////////////////////////////////7
 
     protected function visitorSetDebugSettings($visitors_category_id)
@@ -659,7 +727,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
             $stmt->execute();
 
-	        if ($stmt->rowCount > 0)
+	        if ($stmt->rowCount() > 0)
 	        {
 	            //FAQ Reader
                 $page_type = self::PAGE_TYPE_FAQ;
@@ -685,7 +753,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('alias', $strAlias, \PDO::PARAM_STR);
             $stmt->execute();
 
-			if ($stmt->rowCount > 0)
+			if ($stmt->rowCount() > 0)
 			{
 	            //Isotope Reader
                 $page_type = self::PAGE_TYPE_ISOTOPE;
@@ -762,7 +830,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->execute();
 
-            if ($stmt->rowCount > 0)
+            if ($stmt->rowCount() > 0)
             {
                 $objNews = $stmt->fetch(\PDO::FETCH_OBJ);
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNews: '. $objNews->id);
@@ -784,7 +852,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->execute();
 
-            if ($stmt->rowCount > 0)
+            if ($stmt->rowCount() > 0)
 	        {
                 $objFaq = $stmt->fetch(\PDO::FETCH_OBJ);
 	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdFaq: '. $objFaq->id);
@@ -805,7 +873,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->execute();
 
-            if ($stmt->rowCount > 0)
+            if ($stmt->rowCount() > 0)
 	        {
                 $objIsotope = $stmt->fetch(\PDO::FETCH_OBJ);
 	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdIsotope: '. $objIsotope->id);
@@ -815,5 +883,627 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 	    }
 
 	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unknown PageType: '. $PageType);
-	}
+    }
+    
+    /**
+	 * Insert/Update Counter
+	 */
+	protected function visitorCountUpdate($vid, $BlockTime, $visitors_category_id, $BackendUser = false)
+	{
+		$ModuleVisitorChecks = new ModuleVisitorChecks($BackendUser);
+		if (!isset($GLOBALS['TL_CONFIG']['mod_visitors_bot_check']) || $GLOBALS['TL_CONFIG']['mod_visitors_bot_check'] !== false) 
+		{
+			if ($ModuleVisitorChecks->checkBot() === true) 
+			{
+				$this->_BOT = true;
+
+		    	return; //Bot / IP gefunden, wird nicht gezaehlt
+		    }
+		}
+	    if ($ModuleVisitorChecks->checkUserAgent($visitors_category_id) === true) 
+	    {
+	    	$this->_PF = true; // Bad but functionally
+
+	    	return; //User Agent Filterung
+	    }
+	    //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
+	    $ClientIP = bin2hex(sha1($visitors_category_id . $ModuleVisitorChecks->visitorGetUserIP(), true)); // sha1 20 Zeichen, bin2hex 40 zeichen
+	    $BlockTime = ($BlockTime == '') ? 1800 : $BlockTime; //Sekunden
+        $CURDATE = date('Y-m-d');
+        
+        $dbconnection = $this->get('database_connection');
+
+        //Visitor Blocker
+        $stmt = $dbconnection->prepare(
+                                'DELETE FROM tl_visitors_blocker 
+                                WHERE CURRENT_TIMESTAMP - INTERVAL :blocktime SECOND > visitors_tstamp
+                                AND vid = :vid 
+                                AND visitors_type = :vtype
+                                ')
+                            ;
+        $stmt->bindValue('blocktime', $BlockTime, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
+        $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
+        $stmt->execute();
+
+        //Hit Blocker for IE8 Bullshit and Browser Counting
+        // 3 Sekunden Blockierung zw. Zählung per Tag und Zählung per Browser
+        $stmt = $dbconnection->prepare(
+                                'DELETE FROM tl_visitors_blocker 
+                                WHERE CURRENT_TIMESTAMP - INTERVAL :blocktime SECOND > visitors_tstamp
+                                AND vid = :vid 
+                                AND visitors_type = :vtype
+                                ')
+                            ;
+        $stmt->bindValue('blocktime', 3, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
+        $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
+        $stmt->execute();
+        
+        if ($ModuleVisitorChecks->checkBE() === true) 
+	    {
+	    	$this->_PF = true; // Bad but functionally
+
+			return; // Backend eingeloggt, nicht zaehlen (Feature: #197)
+		}
+
+        //Test ob Hits gesetzt werden muessen (IE8 Bullshit and Browser Counting)
+        $objHitIP = $dbconnection->prepare(
+                            'SELECT 
+                                id, 
+                                visitors_ip
+                            FROM 
+                                tl_visitors_blocker
+                            WHERE 
+                                visitors_ip = :vip
+                            AND vid = :vid
+                            AND visitors_type = :vtype
+                            ')
+                        ;
+        $objHitIP->bindValue('vip', $ClientIP   , \PDO::PARAM_STR);
+        $objHitIP->bindValue('vid', $vid        , \PDO::PARAM_INT);
+        $objHitIP->bindValue('vtype', 'h'       , \PDO::PARAM_STR);
+        $objHitIP->execute();
+
+        //Hits und Visits lesen
+        $objHitCounter = $dbconnection->prepare(
+                            'SELECT 
+                                id, 
+                                visitors_hit, 
+                                visitors_visit
+                            FROM 
+                                tl_visitors_counter
+                            WHERE 
+                                visitors_date = :vdate AND vid = :vid
+                            ')
+                        ;
+        $objHitCounter->bindValue('vdate', $CURDATE , \PDO::PARAM_STR);
+        $objHitCounter->bindValue('vid', $vid       , \PDO::PARAM_INT);
+        $objHitCounter->execute();
+
+        //Hits setzen
+	    if ($objHitCounter->rowCount() < 1) 
+	    {
+	    	if ($objHitIP->rowCount() < 1) 
+	    	{
+                //at first: block
+                $stmt = $dbconnection->prepare(
+                                    'INSERT INTO 
+                                        tl_visitors_blocker
+                                    SET 
+                                        vid = :vid, 
+                                        visitors_tstamp = CURRENT_TIMESTAMP, 
+                                        visitors_ip = :vip, 
+                                        visitors_type = :vtype
+                                    ')
+                                ;
+                $stmt->bindValue('vid', $vid        , \PDO::PARAM_INT);
+                $stmt->bindValue('vip', $ClientIP   , \PDO::PARAM_INT);
+                $stmt->bindValue('vtype', 'h'       , \PDO::PARAM_STR);
+                $stmt->execute();
+                
+                // Insert
+                $stmt = $dbconnection->prepare(
+                                'INSERT IGNORE INTO 
+                                    tl_visitors_counter
+                                SET 
+                                    vid = :vid, 
+                                    visitors_date = :vdate, 
+                                    visitors_visit = :vv, 
+                                    visitors_hit = :vh
+                                ')
+                            ;
+                $stmt->bindValue('vid', $vid        , \PDO::PARAM_INT);
+                $stmt->bindValue('vdate', $CURDATE  , \PDO::PARAM_STR);
+                $stmt->bindValue('vv', 1            , \PDO::PARAM_INT);
+                $stmt->bindValue('vh', 1            , \PDO::PARAM_INT);
+                $stmt->execute();
+                /*
+		        $arrSet = array
+	            (
+	                'vid'               => $vid,
+	                'visitors_date'     => $CURDATE,
+	                'visitors_visit'    => 1,
+	                'visitors_hit'      => 1
+                ); 
+                
+			    \Database::getInstance()
+			            ->prepare("INSERT IGNORE INTO tl_visitors_counter %s")
+                        ->set($arrSet)
+                        ->execute();
+                */
+			    //for page counter
+			    $this->_HitCounted = true;
+	    	} 
+	    	else 
+	    	{
+	    		$this->_PF = true; // Prefetch found
+	    	}
+		    $visitors_hits = 1;
+		    $visitors_visit = 1;
+	    } 
+	    else 
+	    {
+            $objHitCounterResult = $objHitCounter->fetch(\PDO::FETCH_OBJ);
+	        $visitors_hits = $objHitCounterResult->visitors_hit +1;
+	        $visitors_visit= $objHitCounterResult->visitors_visit +1; 
+			if ($objHitIP->rowCount() < 1) 
+			{
+                // Update
+                $stmt = $dbconnection->prepare(
+                                    'INSERT INTO 
+                                        tl_visitors_blocker
+                                    SET 
+                                        vid = :vid, 
+                                        visitors_tstamp = CURRENT_TIMESTAMP, 
+                                        visitors_ip = :vip, 
+                                        visitors_type = :vtype
+                                    ')
+                                ;
+                $stmt->bindValue('vid', $vid        , \PDO::PARAM_INT);
+                $stmt->bindValue('vip', $ClientIP   , \PDO::PARAM_INT);
+                $stmt->bindValue('vtype', 'h'       , \PDO::PARAM_STR);
+                $stmt->execute();
+
+                $stmt = $dbconnection->prepare(
+                                'UPDATE 
+                                    tl_visitors_counter 
+                                SET 
+                                    visitors_hit = :vhit 
+                                WHERE 
+                                    id = :vid
+                                ')
+                            ;
+                $stmt->bindValue('vhit', $visitors_hits         , \PDO::PARAM_INT);
+                $stmt->bindValue('vid', $objHitCounterResult->id, \PDO::PARAM_INT);
+                $stmt->execute();
+
+                //for page counter
+		    	$this->_HitCounted = true;
+			} 
+			else 
+			{
+	    		$this->_PF = true; // Prefetch found
+	    	}
+	    }
+
+        //Visits / IP setzen
+        $objVisitIP = $dbconnection->prepare(
+                    'SELECT 
+                        id, 
+                        visitors_ip
+                    FROM 
+                        tl_visitors_blocker
+                    WHERE 
+                        visitors_ip = :vip 
+                    AND vid = :vid
+                    AND visitors_type = :vtype
+                    ')
+                ;
+        $objVisitIP->bindValue('vip', $ClientIP   , \PDO::PARAM_INT);
+        $objVisitIP->bindValue('vid', $vid        , \PDO::PARAM_INT);        
+        $objVisitIP->bindValue('vtype', 'v'       , \PDO::PARAM_STR);
+        $objVisitIP->execute();
+
+	    if ($objVisitIP->rowCount() < 1) 
+	    {
+            // not blocked: Insert IP + Update Visits
+            $stmt = $dbconnection->prepare(
+                            'INSERT INTO 
+                                tl_visitors_blocker
+                            SET 
+                                vid = :vid, 
+                                visitors_tstamp = CURRENT_TIMESTAMP, 
+                                visitors_ip = :vip, 
+                                visitors_type = :vtype
+                            ')
+                        ;
+            $stmt->bindValue('vid', $vid        , \PDO::PARAM_INT);
+            $stmt->bindValue('vip', $ClientIP   , \PDO::PARAM_INT);
+            $stmt->bindValue('vtype', 'v'       , \PDO::PARAM_STR);
+            $stmt->execute();
+
+            $stmt = $dbconnection->prepare(
+                            'UPDATE 
+                                tl_visitors_counter 
+                            SET 
+                                visitors_visit = :vvis 
+                            WHERE 
+                                vid = :vid
+                            AND 
+                                visitors_date = :vdate
+                            ')
+                        ;
+            $stmt->bindValue('vvis', $visitors_visit, \PDO::PARAM_INT);
+            $stmt->bindValue('vid', $vid            , \PDO::PARAM_INT);
+            $stmt->bindValue('vdate', $CURDATE      , \PDO::PARAM_STR);
+            $stmt->execute();
+            
+            //for page counter
+	        $this->_VisitCounted = true;
+	    } 
+	    else 
+	    {
+            // blocked: Update tstamp
+            $stmt = $dbconnection->prepare(
+                            'UPDATE 
+                                tl_visitors_blocker
+                            SET 
+                                visitors_tstamp = CURRENT_TIMESTAMP 
+                            WHERE
+                                vid = :vid
+                            AND
+                                visitors_ip = :vip
+                            AND
+                                visitors_type = :vtype
+                            ')
+                        ;
+            $stmt->bindValue('vid', $vid        , \PDO::PARAM_INT);
+            $stmt->bindValue('vip', $ClientIP   , \PDO::PARAM_INT);
+            $stmt->bindValue('vtype', 'v'       , \PDO::PARAM_STR);
+            $stmt->execute();
+
+            $this->_VB = true;
+	    }
+
+	    //Page Counter 
+	    if ($this->_HitCounted === true || $this->_VisitCounted === true) 
+	    {
+    	    /** @var PageModel $objPage */
+    	    global $objPage;
+    	    //if page from cache, we have no page-id
+    	    //if ($objPage->id == 0) 
+    	    //{
+    	    //    $objPage = $this->visitorGetPageObj();
+            //} //$objPage->id == 0
+            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID / Lang in Object: '. $objPage->id .' / '.$objPage->language);
+
+	 	    //#102, bei Readerseite den Beitrags-Alias zählen (Parameter vorhanden)
+	 	    //0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
+            //1 = Nachrichten/News
+            //2 = FAQ
+            //3 = Isotope
+            //403 = Forbidden
+	 	    $visitors_page_type = $this->visitorGetPageType($objPage);
+	 	    //bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
+	 	    //Fixed #211, Duplicate entry in tl_search
+	 	    $objPageIdOrg = $objPage->id;
+	 	    $objPageId    = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
+
+	 	    if (self::PAGE_TYPE_ISOTOPE != $visitors_page_type) {
+	 	        $objPageIdOrg = 0; //backward compatibility
+	 	    }
+    	    $objPageHitVisit = $dbconnection->prepare(
+                                            'SELECT
+                                                id,
+                                                visitors_page_visit,
+                                                visitors_page_hit
+                                            FROM
+                                                tl_visitors_pages
+                                            WHERE
+                                                visitors_page_date = :vpagedate
+                                            AND
+                                                vid = :vid
+                                            AND
+                                                visitors_page_id = :vpageid
+                                            AND
+                                                visitors_page_pid = :vpagepid
+                                            AND
+                                                visitors_page_lang = :vpagelang
+                                            AND
+                                                visitors_page_type = :vpagetype
+                                            ')
+                                    ;
+            $objPageHitVisit->bindValue('vpagedate', $CURDATE           , \PDO::PARAM_STR);
+            $objPageHitVisit->bindValue('vid', $vid                     , \PDO::PARAM_INT);
+            $objPageHitVisit->bindValue('vpageid', $objPageId           , \PDO::PARAM_INT);
+            $objPageHitVisit->bindValue('vpagepid', $objPageIdOrg       , \PDO::PARAM_INT);
+            $objPageHitVisit->bindValue('vpagelang', $objPage->language , \PDO::PARAM_STR);
+            $objPageHitVisit->bindValue('vpagetype', $visitors_page_type, \PDO::PARAM_INT);
+            $objPageHitVisit->execute();
+
+    	    // eventuell $GLOBALS['TL_LANGUAGE']
+    	    // oder      $objPage->rootLanguage; // Sprache der Root-Seite
+    	    if ($objPageHitVisit->rowCount() < 1)
+    	    {
+    	        if ($objPageId > 0) 
+    	        {
+                    //Page Counter Insert
+                    $stmt = $dbconnection->prepare(
+                                    'INSERT IGNORE INTO 
+                                        tl_visitors_pages
+                                    SET 
+                                        vid = :vid, 
+                                        visitors_page_date  = :vpagedate,
+                                        visitors_page_id    = :vpageid,
+                                        visitors_page_pid   = :vpagepid,
+                                        visitors_page_type  = :vpagetype,
+                                        visitors_page_visit = :vpagevis,
+                                        visitors_page_hit   = :vpagehit,
+                                        visitors_page_lang  = :vpagelang
+                                    ')
+                                ;
+                    $stmt->bindValue('vid', $vid                        , \PDO::PARAM_INT);
+                    $stmt->bindValue('vpagedate', $CURDATE              , \PDO::PARAM_STR);
+                    $stmt->bindValue('vpageid', $objPageId              , \PDO::PARAM_INT);
+                    $stmt->bindValue('vpagepid', $objPageIdOrg          , \PDO::PARAM_INT);
+                    $stmt->bindValue('vpagetype', $visitors_page_type   , \PDO::PARAM_INT);
+                    $stmt->bindValue('vpagevis', 1                      , \PDO::PARAM_INT);
+                    $stmt->bindValue('vpagehit', 1                      , \PDO::PARAM_INT);
+                    $stmt->bindValue('vpagelang', $objPage->language    , \PDO::PARAM_STR);
+                    $stmt->execute();
+                    /*
+        	        $arrSet = array
+        	        (
+        	            'vid'                 => $vid,
+        	            'visitors_page_date'  => $CURDATE,
+        	            'visitors_page_id'    => $objPageId,
+        	            'visitors_page_pid'   => $objPageIdOrg,
+        	            'visitors_page_type'  => $visitors_page_type,
+        	            'visitors_page_visit' => 1,
+        	            'visitors_page_hit'   => 1,
+        	            'visitors_page_lang'  => $objPage->language
+        	        );
+        	        \Database::getInstance()
+                    	        ->prepare("INSERT IGNORE INTO tl_visitors_pages %s")
+                    	        ->set($arrSet)
+                                ->execute();
+                    */
+    	        }
+    	    }
+    	    else
+    	    {
+                $objPageHitVisitResult = $objPageHitVisit->fetch(\PDO::FETCH_OBJ);
+    	        $visitors_page_hits   = $objPageHitVisitResult->visitors_page_hit;
+    	        $visitors_page_visits = $objPageHitVisitResult->visitors_page_visit;
+
+    	        if ($this->_HitCounted === true)
+    	        {
+        	        //Update Hit
+    	            $visitors_page_hits += 1;
+    	        }
+    	        if ($this->_VisitCounted === true)
+    	        {
+    	            //Update Visit
+    	            $visitors_page_visits += 1;    	            
+                }
+                $stmt = $dbconnection->prepare(
+                                'UPDATE 
+                                    tl_visitors_pages 
+                                SET 
+                                    visitors_page_hit = :vpagehit,
+                                    visitors_page_visit = :vpagevis
+                                WHERE 
+                                    id = :vid
+                                ')
+                            ;
+                $stmt->bindValue('vpagehit', $visitors_page_hits  , \PDO::PARAM_INT);
+                $stmt->bindValue('vpagevis', $visitors_page_visits, \PDO::PARAM_INT);
+                $stmt->bindValue('vid', $objPageHitVisitResult->id, \PDO::PARAM_INT);
+                $stmt->execute();
+    	    }
+	    }
+	    //Page Counter End
+
+	    if ($objVisitIP->rowCount() < 1) 
+	    { //Browser Check wenn nicht geblockt
+		    //Only counting if User Agent is set.
+		    if (\strlen(\Contao\Environment::get('httpUserAgent'))>0) 
+		    {
+			    // Variante 3
+				$ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
+				$ModuleVisitorBrowser3->initBrowser(\Contao\Environment::get('httpUserAgent'), implode(",", \Contao\Environment::get('httpAcceptLanguage')));
+				if ($ModuleVisitorBrowser3->getLang() === null) 
+				{
+    		    	System::getContainer()
+    	                   ->get('monolog.logger.contao')
+			    	        ->log(LogLevel::ERROR,
+			    	              'ModuleVisitorBrowser3 Systemerror',
+			    	              array('contao' => new ContaoContext('ModulVisitors', TL_ERROR)));
+				} 
+				else 
+				{
+					$arrBrowser['Browser']  = $ModuleVisitorBrowser3->getBrowser();
+					$arrBrowser['Version']  = $ModuleVisitorBrowser3->getVersion();
+					$arrBrowser['Platform'] = $ModuleVisitorBrowser3->getPlatformVersion();
+					$arrBrowser['lang']     = $ModuleVisitorBrowser3->getLang();
+				    //Anpassen an Version 1 zur Weiterverarbeitung
+				    if ($arrBrowser['Browser'] == 'unknown') 
+				    {
+				    	$arrBrowser['Browser'] = 'Unknown';
+				    }
+				    if ($arrBrowser['Version'] == 'unknown') 
+				    {
+				    	$arrBrowser['brversion'] = $arrBrowser['Browser'];
+				    } 
+				    else 
+				    {
+				    	$arrBrowser['brversion'] = $arrBrowser['Browser'] . ' ' . $arrBrowser['Version'];
+				    }
+				    if ($arrBrowser['Platform'] == 'unknown') 
+				    {
+				    	$arrBrowser['Platform'] = 'Unknown';
+				    }
+				    //Debug if ( $arrBrowser['Platform'] == 'Unknown' || $arrBrowser['Platform'] == 'Mozilla' || $arrBrowser['Version'] == 'unknown' ) {
+				    //Debug 	log_message("Unbekannter User Agent: ".$this->Environment->httpUserAgent."", 'unknown.log');
+				    //Debug }
+				    $objBrowserCounter = $dbconnection->prepare(
+				                        'SELECT 
+                                            id,
+                                            visitors_counter
+                                        FROM 
+                                            tl_visitors_browser
+                                        WHERE 
+                                            vid = :vid 
+                                            AND visitors_browser = :vbrowser
+                                            AND visitors_os = :vos
+                                            AND visitors_lang = :vlang
+                                            ')
+                                    ;
+                    $objBrowserCounter->bindValue('vid', $vid                           , \PDO::PARAM_INT);
+                    $objBrowserCounter->bindValue('vbrowser', $arrBrowser['brversion']  , \PDO::PARAM_STR);
+                    $objBrowserCounter->bindValue('vos', $arrBrowser['Platform']        , \PDO::PARAM_STR);
+                    $objBrowserCounter->bindValue('vlang', $arrBrowser['lang']          , \PDO::PARAM_STR);
+                    $objBrowserCounter->execute();
+
+				    //setzen
+				    if ($objBrowserCounter->rowCount() < 1) 
+				    {
+				        // Insert
+				        $arrSet = array
+			            (
+			                'vid'               => $vid,
+			                'visitors_browser'  => $arrBrowser['brversion'], // version
+			                'visitors_os'		=> $arrBrowser['Platform'],  // os
+			                'visitors_lang'		=> $arrBrowser['lang'],
+			                'visitors_counter'  => 1
+                        );
+                        $dbconnection->insert('tl_visitors_browser', $arrSet);
+                        /*
+					    \Database::getInstance()
+					            ->prepare("INSERT INTO tl_visitors_browser %s")
+                                ->set($arrSet)
+                                ->execute();
+                        */
+				    } 
+				    else 
+				    {
+                        //Update
+                        $objBrowserCounterResult = $objBrowserCounter->fetch(\PDO::FETCH_OBJ);
+				        $visitors_counter = $objBrowserCounterResult->visitors_counter +1;
+                        // Update
+                        $stmt = $dbconnection->prepare(
+                                        'UPDATE 
+                                            tl_visitors_browser 
+                                        SET 
+                                            visitors_counter = :vcounter
+                                        WHERE 
+                                            id = :vid
+                                        ')
+                                    ;
+                        $stmt->bindValue('vcounter', $visitors_counter  , \PDO::PARAM_INT);
+                        $stmt->bindValue('vid', $objBrowserCounterResult->id, \PDO::PARAM_INT);
+                        $stmt->execute();
+				    }
+			    } // else von NULL
+			} // if strlen
+	    } //VisitIP numRows
+    } //visitorCountUpdate
+    
+    protected function visitorCheckSearchEngine($vid)
+	{
+		$ModuleVisitorSearchEngine = new ModuleVisitorSearchEngine();
+		$ModuleVisitorSearchEngine->checkEngines();
+		$SearchEngine = $ModuleVisitorSearchEngine->getEngine();
+		$Keywords     = $ModuleVisitorSearchEngine->getKeywords();
+		if ($SearchEngine !== 'unknown') 
+		{
+			$this->_SE = true;
+			if ($Keywords !== 'unknown') 
+			{
+				// Insert
+		        $arrSet = array
+		        (
+		            'vid'                   => $vid,
+		            'tstamp'                => time(),
+		            'visitors_searchengine' => $SearchEngine,
+		            'visitors_keywords'		=> $Keywords
+                );
+                $this->get('database_connection')
+                        ->insert('tl_visitors_searchengines', $arrSet);
+			    //\Database::getInstance()
+			    //      ->prepare("INSERT INTO tl_visitors_searchengines %s")
+                //      ->set($arrSet)
+                //      ->execute();
+			    // Delete old entries
+                $CleanTime = mktime(0, 0, 0, (int) date("m")-3, (int) date("d"), (int) date("Y")); // Einträge >= 90 Tage werden gelöscht
+                $stmt = $this->get('database_connection')
+                            ->prepare(
+                                'DELETE FROM 
+                                    tl_visitors_searchengines
+                                WHERE 
+                                    vid = :vid AND tstamp < :tstamp
+                                ')
+                            ;
+                $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
+                $stmt->bindValue('tstamp', $CleanTime, \PDO::PARAM_INT);
+                $stmt->execute(); 
+			} //keywords
+		} //searchengine
+		//Debug log_message('visitorCheckSearchEngine $SearchEngine: ' . $SearchEngine,'debug.log');
+	} //visitorCheckSearchEngine
+
+	/**
+	 * Check for Referrer
+	 *
+	 * @param integer $vid Visitors ID
+	 */
+	protected function visitorCheckReferrer($vid)
+	{
+		if ($this->_HitCounted === true) 
+		{
+			if ($this->_PF === false) 
+			{
+				$ModuleVisitorReferrer = new ModuleVisitorReferrer();
+				$ModuleVisitorReferrer->checkReferrer();
+				$ReferrerDNS = $ModuleVisitorReferrer->getReferrerDNS();
+				$ReferrerFull= $ModuleVisitorReferrer->getReferrerFull();
+				//Debug log_message('visitorCheckReferrer $ReferrerDNS:'.print_r($ReferrerDNS,true), 'debug.log');
+				//Debug log_message('visitorCheckReferrer Host:'.print_r($this->ModuleVisitorReferrer->getHost(),true), 'debug.log');
+				if ($ReferrerDNS != 'o' && $ReferrerDNS != 'w') 
+				{ 	// not the own, not wrong
+					// Insert
+			        $arrSet = array
+			        (
+			            'vid'                   => $vid,
+			            'tstamp'                => time(),
+			            'visitors_referrer_dns' => $ReferrerDNS,
+			            'visitors_referrer_full'=> $ReferrerFull
+			        );
+			        //Referrer setzen
+                    //Debug log_message('visitorCheckReferrer Referrer setzen', 'debug.log');
+                    $this->get('database_connection')
+                            ->insert('tl_visitors_referrer', $arrSet);
+			        //\Database::getInstance()
+			        //      ->prepare("INSERT INTO tl_visitors_referrer %s")
+                    //      ->set($arrSet)
+                    //      ->execute();
+				    // Delete old entries
+                    $CleanTime = mktime(0, 0, 0, (int) date("m")-4, (int) date("d"), (int) date("Y")); // Einträge >= 120 Tage werden gelöscht
+
+                    $stmt = $this->get('database_connection')
+                                ->prepare(
+                                    'DELETE FROM 
+                                        tl_visitors_referrer
+                                    WHERE 
+                                        vid = :vid AND tstamp < :tstamp
+                                    ')
+                                ;
+                    $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
+                    $stmt->bindValue('tstamp', $CleanTime, \PDO::PARAM_INT);
+                    $stmt->execute();        
+		    	}
+		    } //if PF
+	    } //if VB
+	} // visitorCheckReferrer
 }
