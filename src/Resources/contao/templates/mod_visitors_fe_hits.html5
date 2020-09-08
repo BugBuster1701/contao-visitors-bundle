@@ -6,13 +6,8 @@
         <span class="visitor_count invisible"><?= $visitor['VisitorsCounting']; ?></span>
         <div class="visitor_name"       ><div id="VisitorsNameLegend"><?= $visitor['VisitorsNameLegend'];               ?></div><div id="VisitorsName"       ><?= $visitor['VisitorsName']; ?></div></div>
         <div class="visitor_useronline" ><div id="VisitorsOnlineCountLegend"><?= $visitor['VisitorsOnlineCountLegend']; ?></div><div id="VisitorsOnlineCount"><?= $visitor['VisitorsOnlineCountValue']; ?></div></div>
-        <div class="visitor_visitstoday"><div id="TodayVisitCountLegend"><?= $visitor['TodayVisitCountLegend'];         ?></div><div id="TodayVisitCount"    ><?= $visitor['TodayVisitCountValue']; ?></div></div>
-        <div class="visitor_visitstotal"><div id="TotalVisitCountLegend"><?= $visitor['TotalVisitCountLegend'];         ?></div><div id="TotalVisitCount"    ><?= $visitor['TotalVisitCountValue']; ?></div></div>
         <div class="visitor_hitstoday"  ><div id="TodayHitCountLegend"><?= $visitor['TodayHitCountLegend'];             ?></div><div id="TodayHitCount"      ><?= $visitor['TotalHitCountValue']; ?></div></div>
         <div class="visitor_hitstotal"  ><div id="TotalHitCountLegend"><?= $visitor['TotalHitCountLegend'];             ?></div><div id="TotalHitCount"      ><?= $visitor['TodayHitCountValue']; ?></div></div>
-        <div class="visitor_visitsyesterday"><div id="YesterdayVisitCountLegend"><?= $visitor['YesterdayVisitCountLegend'];?></div><div id="YesterdayVisitCount"><?= $visitor['YesterdayVisitCountValue']; ?></div></div>
-        <div class="visitor_hitsyesterday"><div id="YesterdayHitCountLegend"><?= $visitor['YesterdayHitCountLegend'];      ?></div><div id="YesterdayHitCount"><?= $visitor['YesterdayHitCountValue']; ?></div></div>
-        <div class="visitor_pagehits"><div id="PageHitCountLegend"><?= $visitor['PageHitCountLegend'];?></div><div id="PageHitCount"><?= $visitor['PageHitCountValue']; ?></div></div>
         <div class="visitor_average" ><?php if ($visitor['AverageVisits']): ?><div id="AverageVisitsLegend"><?= $visitor['AverageVisitsLegend']; ?>&nbsp;&Oslash;</div><div id="AverageVisits"><?= $visitor['AverageVisitsValue']; ?></div><?php endif; ?></div>
         <?php if ($visitor['VisitorsStartDate']): ?>
             <div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $visitor['VisitorsStartDateLegend']; ?></div><div id="VisitorsStartDate">&nbsp;<?= $visitor['VisitorsStartDateValue']; ?></div></div>

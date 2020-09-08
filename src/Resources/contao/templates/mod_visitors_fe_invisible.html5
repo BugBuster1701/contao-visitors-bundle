@@ -1,7 +1,6 @@
-<?php $this->extend("block_searchable"); ?>
+<?php $this->extend("block_unsearchable"); ?>
 
 <?php $this->block("content"); ?>
-    <!-- indexer::stop -->
     <!-- Template for "only counting", no display in Frontend. -->
     <?php foreach ($this->visitors as $visitor): ?>
     <span class="visitor_count invisible"><?= $visitor['VisitorsCounting']; ?></span>
@@ -22,6 +21,5 @@
     });
     </script>
     <?php endforeach; ?>
-    <!-- indexer::continue -->
 
 <?php $this->endblock(); ?>
