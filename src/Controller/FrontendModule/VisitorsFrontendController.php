@@ -933,7 +933,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                     ')
                                 ;
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
-                $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_INT);
+                $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
                 $stmt->execute();
 
@@ -991,7 +991,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                     ')
                                 ;
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
-                $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_INT);
+                $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
                 $stmt->execute();
 
@@ -1028,7 +1028,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     AND visitors_type = :vtype
                     ')
                 ;
-        $objVisitIP->bindValue('vip', $ClientIP, \PDO::PARAM_INT);
+        $objVisitIP->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
         $objVisitIP->bindValue('vid', $vid, \PDO::PARAM_INT);
         $objVisitIP->bindValue('vtype', 'v', \PDO::PARAM_STR);
         $objVisitIP->execute();
@@ -1046,7 +1046,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             ')
                         ;
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
-            $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_INT);
+            $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
             $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
             $stmt->execute();
 
@@ -1084,7 +1084,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             ')
                         ;
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
-            $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_INT);
+            $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
             $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
             $stmt->execute();
 
