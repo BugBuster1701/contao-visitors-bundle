@@ -27,7 +27,7 @@
 	},
 	"require":{
 		"php": "^7.1",
-		"contao/core-bundle": "~4.9",
+		"contao/core-bundle": "~4.10",
 		"bugbuster/contao-botdetection-bundle": ">=1.5.3,<2",
 		"phpoffice/phpspreadsheet": "~1.0"
 	},
@@ -63,7 +63,7 @@
 			}
 		},
 		"branch-alias": {
-			"dev-develop": "1.6.x-dev"
+			"dev-develop": "1.8.x-dev"
 		},
 		"contao-manager-plugin": "BugBuster\\VisitorsBundle\\ContaoManager\\Plugin"
 	}

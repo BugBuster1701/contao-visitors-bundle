@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2020 Leo Feyer
  * 
  * Modul Visitors Referrer - Frontend
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2020 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -23,7 +23,7 @@ use BugBuster\Visitors\ModuleVisitorLog;
 /**
  * Class ModuleVisitorReferrer
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2020 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @license    LGPL 
  */
@@ -54,8 +54,7 @@ class ModuleVisitorReferrer	extends \System
 	 * !!! DON'T REMOVE THIS !!!
 	 *
 	 * If you remove this you get the following error message:
-	 * Fatal error: Call to protected System::__construct() from invalid
-	 * context
+	 * Fatal error: Call to protected System::__construct() from invalid context
 	 *
 	 * @param	void
 	 * @return	void
