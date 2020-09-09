@@ -59,7 +59,7 @@ class ModuleVisitorLog
 
         $arrNamespace = StringUtil::trimsplit('::', $method);
         $arrClass =  StringUtil::trimsplit('\\', $arrNamespace[0]);
-        $vclass = $arrClass[2]; // class that will write the log
+        $vclass = $arrClass[count($arrClass)-1]; // class that will write the log
 
         if (\is_array($value))
         {
