@@ -339,7 +339,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT 
-                            SUM(visitors_hit) AS visitors_hit
+                            SUM(visitors_hit) AS SUMH
                         FROM 
                             tl_visitors_counter
                         WHERE 
