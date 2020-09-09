@@ -32,7 +32,7 @@ class ModuleVisitorReferrer	extends \System
 	/**
 	 * Current version of the class.
 	 */
-	const VERSION          = '3.2';
+	const VERSION          = '3.3';
 
     private $_http_referrer = '';
 
@@ -47,6 +47,24 @@ class ModuleVisitorReferrer	extends \System
     const REFERRER_OWN      = 'o';
 
     const REFERRER_WRONG    = 'w';
+
+	/**
+	 * Call the parent constructor.
+	 *
+	 * !!! DON'T REMOVE THIS !!!
+	 *
+	 * If you remove this you get the following error message:
+	 * Fatal error: Call to protected System::__construct() from invalid
+	 * context
+	 *
+	 * @param	void
+	 * @return	void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 
 	/**
 	 * Reset all properties
