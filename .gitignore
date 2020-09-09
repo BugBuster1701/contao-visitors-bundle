@@ -10,6 +10,7 @@ composer.lock
 .buildpath
 .project
 .settings/
+.phpunit.result.cache
 #Cache
 src/cache/largebrowscap_*/largebrowscap.iniparts.*
 src/cache/largebrowscap_*/largebrowscap.patterns.*
