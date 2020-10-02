@@ -143,4 +143,33 @@ class ModuleVisitorLog
 
         error_log(sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage), 3, $strLogsDir . '/' . $strLog);
     }
+
+    /**
+    * Triggers a silenced warning notice.
+    *
+    * @param string $package The name of the Composer package that is triggering the deprecation
+    * @param string $version The version of the package that introduced the deprecation
+    * @param string $message The message of the deprecation
+    * @param mixed  ...$args Values to insert in the message using printf() formatting
+    *
+    * @author Nicolas Grekas <p@tchwork.com> (original was trigger_deprecation)
+    */
+    public static function triggerWarning(string $package, string $version, string $message, ...$args)
+    {
+       @trigger_error(($package || $version ? "Since $package $version: " : '').($args ? vsprintf($message, $args) : $message), E_USER_WARNING);
+    }
+
+    /**
+     * Triggers a silenced deprecation notice.
+     *
+     * @param string $package The name of the Composer package that is triggering the deprecation
+     * @param string $version The version of the package that introduced the deprecation
+     * @param string $message The message of the deprecation
+     * @param mixed  ...$args Values to insert in the message using printf() formatting
+     *
+     */
+    function triggerDeprecation(string $package, string $version, string $message, ...$args)
+    {
+        trigger_deprecation($package, $version, $message, ...$args);
+    }
 }
