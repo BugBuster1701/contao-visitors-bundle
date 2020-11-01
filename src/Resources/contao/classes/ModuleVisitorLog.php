@@ -120,13 +120,15 @@ class ModuleVisitorLog
      */
     public static function logMessage($strMessage, $strLog=null)
     {
+        $env = $_SERVER['APP_ENV'] ?? 'prod';
+        
         if ($strLog === null)
         {
-            $strLog = 'prod-' . date('Y-m-d') . '.log';
+            $strLog = $env . '-' . date('Y-m-d') . '.log';
         }
         else 
         {
-            $strLog = 'prod-' . date('Y-m-d') . '-' . $strLog . '.log';
+            $strLog = $env . '-' . date('Y-m-d') . '-' . $strLog . '.log';
         }
 
         $strLogsDir = null;
