@@ -140,7 +140,7 @@ class ModuleVisitorsTag extends \Frontend
 
 			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
 			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': Do not using the Vistors Insert-Tag "cache_visitors::<id>::count" anymore. The Front end module and the template has been changed.');
-			
+
 			$objVisitors = \Database::getInstance()
 			        ->prepare("SELECT 
                                     tl_visitors.id AS id, 
