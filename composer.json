@@ -12,6 +12,12 @@
 			"role":"Developer"
 		}
 	],
+	"funding": [
+		{
+			"type": "other",
+			"url": "https://www.amazon.de/wishlist/26HHEJOU03G76"
+		}
+	],
 	"support":{
 		"issues":"https://github.com/BugBuster1701/contao-visitors-bundle/issues",
 		"irc":"irc://irc.freenode.org/contao.dev",
@@ -21,16 +27,15 @@
 	},
 	"require":{
 		"php": "^7.1",
-		"contao/core-bundle": "~4.7",
-		"bugbuster/contao-botdetection-bundle": ">=0.2.1,<2",
-		"composer/semver": "^1.0",
-		"jean85/pretty-package-versions": "^1.0",
-		"phpoffice/phpspreadsheet": "~1.0"
+		"contao/core-bundle": "~4.10",
+		"bugbuster/contao-botdetection-bundle": ">=1.5.3,<2",
+		"phpoffice/phpspreadsheet": "~1.0",
+		"symfony/deprecation-contracts": "^2.1"
 	},
 	"require-dev": {
 			"contao/manager-plugin": "^2.0",
 			"friendsofphp/php-cs-fixer": "^2.12",
-			"phpunit/phpunit": "^7.0"
+			"phpunit/phpunit": "^8.4"
 	},
 	"conflict": {
 			"contao/manager-plugin": "<2.0 || >=3.0"
@@ -59,7 +64,7 @@
 			}
 		},
 		"branch-alias": {
-			"dev-develop": "1.6.x-dev"
+			"dev-develop": "1.8.x-dev"
 		},
 		"contao-manager-plugin": "BugBuster\\VisitorsBundle\\ContaoManager\\Plugin"
 	}

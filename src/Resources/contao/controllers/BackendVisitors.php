@@ -9,6 +9,7 @@
 
 namespace BugBuster\Visitors;
 
+use Contao\CoreBundle\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -33,7 +34,11 @@ class BackendVisitors extends \Backend
 		$this->import('BackendUser', 'User');
 		parent::__construct();
 
-		$this->User->authenticate();
+		//$this->User->authenticate(); //deprecated
+		if (false === \System::getContainer()->get('contao.security.token_checker')->hasBackendUser()) 
+		{
+			throw new AccessDeniedException('Access denied');
+		}
 
 		\System::loadLanguageFile('default');
 		\System::loadLanguageFile('modules');
@@ -48,7 +53,7 @@ class BackendVisitors extends \Backend
 	public function run()
 	{
 		/** @var BackendTemplate|object $objTemplate */
-		$objTemplate = new \BackendTemplate('mod_visitors_be_stat_details_referrer');
+		$objTemplate                = new \BackendTemplate('mod_visitors_be_stat_details_referrer');
 		$objTemplate->theme         = \Backend::getTheme();
 		$objTemplate->base          = \Environment::get('base');
 		$objTemplate->language      = $GLOBALS['TL_LANGUAGE'];

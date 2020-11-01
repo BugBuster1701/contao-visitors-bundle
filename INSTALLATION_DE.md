@@ -13,11 +13,19 @@ Es gibt zwei Arten der Installation.
 * Klick auf "Install Tool"
 * Anmelden und Datenbank Update durchführen
 
+__Achtung__: Nutzer von Contao 4.4 - 4.9, verwenden `^1.5` als Versionsangabe!
+
 
 ## Installation über die Kommandozeile
 
-Installation in einer Composer-basierenden Contao 4.7+ Managed-Edition:
+Installation in einer Composer-basierenden Contao 4.10+ Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle"`
+* Aufruf https://deinedomain/contao/install
+* Datenbank Update durchführen
+
+Installation in einer Composer-basierenden Contao 4.4 - 4.9 Managed-Edition:
+
+* `composer require "bugbuster/contao-visitors-bundle=^1.5"`
 * Aufruf https://deinedomain/contao/install
 * Datenbank Update durchführen

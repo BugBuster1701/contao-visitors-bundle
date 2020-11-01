@@ -92,6 +92,20 @@ class ModuleVisitorBrowser3
 	const BROWSER_GALAXY_S6_EDGE   = 'Galaxy S6 Edge';
 	const BROWSER_GALAXY_S6_EDGE_P = 'Galaxy S6 Edge Plus';
 	const BROWSER_GALAXY_S6_MINI   = 'Galaxy S6 Mini';
+	const BROWSER_GALAXY_S7        = 'Galaxy S7';
+	const BROWSER_GALAXY_S7_EDGE   = 'Galaxy S7 Edge';
+	const BROWSER_GALAXY_S8        = 'Galaxy S8';
+	const BROWSER_GALAXY_S9        = 'Galaxy S9';
+	const BROWSER_GALAXY_S9_PLUS   = 'Galaxy S9 Plus';
+	const BROWSER_GALAXY_S10       = 'Galaxy S10';
+	const BROWSER_GALAXY_S10_PLUS  = 'Galaxy S10 Plus';
+	const BROWSER_GALAXY_S10_E     = 'Galaxy S10e';
+	const BROWSER_GALAXY_S20       = 'Galaxy S20';
+	const BROWSER_GALAXY_A5        = 'Galaxy A5';
+	const BROWSER_GALAXY_A20       = 'Galaxy A20';
+	const BROWSER_GALAXY_A40       = 'Galaxy A40';
+	const BROWSER_GALAXY_A50       = 'Galaxy A50';
+	const BROWSER_GALAXY_A80       = 'Galaxy A80';
 	const BROWSER_GALAXY_ACE      = 'Galaxy Ace';
 	const BROWSER_GALAXY_ACE_2    = 'Galaxy Ace 2';
 	const BROWSER_GALAXY_ACE_PLUS = 'Galaxy Ace Plus';
@@ -823,7 +837,7 @@ class ModuleVisitorBrowser3
     protected function checkBrowserQtWebBrowser() {
         if(stripos($this->_agent, 'QtWebEngine') !== false) {
             $aresult  = explode('/', stristr($this->_agent, 'QtWebEngine'));
-            $aversion = explode('.', $aresult[1]);
+            $aversion = explode(' ', $aresult[1]);
             $this->setVersion($aversion[0]);
             $this->setBrowser(self::BROWSER_QTWEB);
 
@@ -1044,7 +1058,7 @@ class ModuleVisitorBrowser3
      * @return boolean True if the browser is Firefox otherwise false
      */
     protected function checkBrowserFirefox() {
-	    if(stripos($this->_agent, 'safari') === false) {
+	    if (stripos($this->_agent, 'safari') === false) {
 			if(preg_match("/Firefox[\\/ \\(]([^ ;\\)]+)/i", $this->_agent, $matches)) {
 				$this->setVersion($matches[1]);
 				$this->setBrowser(self::BROWSER_FIREFOX);
@@ -1057,6 +1071,15 @@ class ModuleVisitorBrowser3
 
 				return true;
 			}
+		} elseif (stripos($this->_agent, 'FxiOS') !== false) {
+			$aresult = explode('/', stristr($this->_agent, 'FxiOS'));
+			if (isset($aresult[1])) {
+                $aversion = explode(' ', $aresult[1]);
+				$this->setVersion($aversion[0]);
+				$this->setBrowser(self::BROWSER_FIREFOX);
+
+				return true;
+            }
 		}
 
 	    return false;
@@ -1320,6 +1343,106 @@ class ModuleVisitorBrowser3
 	        $this->setVersion(self::VERSION_UNKNOWN);
 	        $this->setMobile(true);
 
+			//S7
+			if(stripos($this->_agent, 'SM-G930') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S7);
+
+			    return true;
+			}
+			if(stripos($this->_agent, 'SM-G935') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S7_EDGE);
+
+			    return true;
+			}
+
+			//S8
+			if(stripos($this->_agent, 'SM-G892') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S8);
+
+			    return true;
+			}
+
+			//S9
+			if(stripos($this->_agent, 'SM-G960') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S9);
+
+			    return true;
+			}
+			if(stripos($this->_agent, 'SM-G965') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S9_PLUS);
+
+			    return true;
+			}
+
+			//S10
+			if(stripos($this->_agent, 'SM-G973') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S10);
+
+			    return true;
+			}
+			if(stripos($this->_agent, 'SM-G975') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S10_PLUS);
+
+			    return true;
+			}
+			if(stripos($this->_agent, 'SM-G970') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S10_E);
+
+			    return true;
+			}
+
+			//S20
+			if(stripos($this->_agent, 'SM-G981') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_S20);
+
+			    return true;
+			}
+
+			//A5
+			if(stripos($this->_agent, 'SM-A500') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A5);
+
+			    return true;
+			}
+			//A20
+			if(stripos($this->_agent, 'SM-A205') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A20);
+
+			    return true;
+			}
+			//A40
+			if(stripos($this->_agent, 'SM-A405') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A40);
+
+			    return true;
+			}
+			//A50
+			if(stripos($this->_agent, 'SM-A505') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A50);
+
+			    return true;
+			}
+			//A80
+			if(stripos($this->_agent, 'SM-A805') !== false) 
+	    	{
+    		    $this->setBrowser(self::BROWSER_GALAXY_A80);
+
+			    return true;
+			}
+
 	    	if(stripos($this->_agent, 'GT-I9000') !== false) 
 	    	{
     		    $this->setBrowser(self::BROWSER_GALAXY_S);
@@ -1478,7 +1601,12 @@ class ModuleVisitorBrowser3
 	    		stripos($this->_agent, 'GT-P7300') !== false ||
 	    		stripos($this->_agent, 'GT-P7510') !== false ||
 	    		stripos($this->_agent, 'GT-P6200') !== false ||
-	    		stripos($this->_agent, 'GT-P6210') !== false)
+				stripos($this->_agent, 'GT-P6210') !== false ||
+				stripos($this->_agent, 'SM-T530') !== false ||
+				stripos($this->_agent, 'SM-T533') !== false ||
+				stripos($this->_agent, 'SM-T535') !== false ||
+				stripos($this->_agent, 'SM-T827') !== false ||
+				stripos($this->_agent, 'SM-T550') !== false)
 	    	{
 			    $this->setBrowser(self::BROWSER_GALAXY_TAB);
 

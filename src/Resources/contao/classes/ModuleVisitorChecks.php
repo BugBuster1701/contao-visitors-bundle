@@ -138,32 +138,11 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function checkBE()
 	{
-	    if ($this->isContao45()) 
-	    {
-	        if ($this->_BackendUser)
-	        {
-                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
-
-                return true;
-	        }
-	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
-
-	        return false;
-	    }
-		//Contao <4.5.0
-	    $strCookie = 'BE_USER_AUTH';
-		$hash = sha1(session_id() . (!\Config::get('privacyAnonymizeIp') ? \Environment::get('ip') : '') . $strCookie);
-		if (\Input::cookie($strCookie) == $hash)
+		if ($this->_BackendUser)
 		{
-			// Try to find the session
-			$objSession = \SessionModel::findByHashAndName($hash, $strCookie);
-			// Validate the session ID and timeout
-			if ($objSession !== null && $objSession->sessionID == session_id() && (\Config::get('privacyAnonymizeIp') || $objSession->ip == \Environment::get('ip')) && ($objSession->tstamp + $GLOBALS['TL_CONFIG']['sessionTimeout']) > time())
-			{
-			    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
 
-				return true;
-			}
+			return true;
 		}
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
 
@@ -181,8 +160,8 @@ class ModuleVisitorChecks extends \Frontend
 	    $dnsResult = false;
 	    //$this->_vhost :  Host.TLD
 	    //idn_to_ascii
-	    $dnsResult = @dns_get_record(\Idna::encode($host), DNS_ANY);
-	    if ($dnsResult)
+	    $dnsResult = @dns_get_record(\Idna::encode($host), DNS_A + DNS_AAAA);
+	    if ((bool)$dnsResult)
 	    {
 	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
 
@@ -215,28 +194,6 @@ class ModuleVisitorChecks extends \Frontend
 	public function isIP4($ip4)
 	{
 	    return filter_var($ip4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) ? true : false;
-	}
-
-	/**
-	 * Check if contao/cor-bundle >= 4.5.0
-	 * 
-	 * @return boolean
-	 */
-	public function isContao45()
-	{
-	    //Thanks fritzmg for this hint
-	    // get the Contao version
-	    $version = PrettyVersions::getVersion('contao/core-bundle');
-	    // check for Contao >=4.5
-	    if (\Composer\Semver\Semver::satisfies($version->getShortVersion(), '>=4.5'))
-	    {
-	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
-
-	        return true;
-	    }
-	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
-
-	    return false;
 	}
 
 	/**

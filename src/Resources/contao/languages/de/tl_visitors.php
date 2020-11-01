@@ -4,11 +4,11 @@
  * or to help to maintain an existing one, please register at transifex.com.
  *
  * @link http://help.transifex.com/intro/translating.html
- * @link https://www.transifex.com/projects/p/contao-visitors/language/de/
+ * @link https://www.transifex.com/projects/p/contao-visitors-bundle/language/de/
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2017-01-24T01:40:47+01:00
+ * last-updated: 2020-06-26T00:29:40+02:00
  */
 
 $GLOBALS['TL_LANG']['tl_visitors']['average_legend']                                   = 'Durchschnitt und Blockzeit';
@@ -41,15 +41,15 @@ $GLOBALS['TL_LANG']['tl_visitors']['visitors_average']['1']                     
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_block_time']['0']                         = 'Blockzeit';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_block_time']['1']                         = 'Zeit in Sekunden. Nach Zugriffspause dieser Zeit wird ein Zugriff als weiterer Besucher gezählt.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['0']                = 'Debugmodus für die Klasse "Visitor Check"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['1']                = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>system/logs/visitors_debug.log</em>) geschrieben.';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks']['1']                = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>var/logs/prod-Datum-visitors_debug.log</em>) geschrieben.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['0']              = 'Debugmodus für die Klasse "Visitor Referrer"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['1']              = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>system/logs/visitors_debug.log</em>) geschrieben.';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer']['1']              = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>var/logs/prod-Datum-visitors_debug.log</em>) geschrieben.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['0'] = 'Debugmodus für die Klasse "Visitor Screen Count (Resolution)"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['1'] = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>system/logs/visitors_debug.log</em>) geschrieben.';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount']['1'] = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>var/logs/prod-Datum-visitors_debug.log</em>) geschrieben.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['0']          = 'Debugmodus für die Klasse "Visitor SearchEngine"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['1']          = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>system/logs/visitors_debug.log</em>) geschrieben.';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine']['1']          = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>var/logs/prod-Datum-visitors_debug.log</em>) geschrieben.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['0']                   = 'Debugmodus für die Klasse "Visitors Tag"';
-$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['1']                   = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>system/logs/visitors_debug.log</em>) geschrieben.';
+$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag']['1']                   = 'Bei Aktivierung werden Laufzeitinformationen in die Logdatei (<em>var/logs/prod-Datum-visitors_debug.log</em>) geschrieben.';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_legend']                           = 'Experteneinstellungen';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['0']                          = 'Startwert Zugriffe';
 $GLOBALS['TL_LANG']['tl_visitors']['visitors_hit_start']['1']                          = 'Die eingegebene Zahl wird zu den Zählungen addiert.';

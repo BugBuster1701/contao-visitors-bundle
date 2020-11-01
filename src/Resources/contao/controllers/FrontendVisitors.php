@@ -57,7 +57,7 @@ class FrontendVisitors extends \Frontend
 	{
 	    $logger = \System::getContainer()->get('monolog.logger.contao');
 
-	    if (false === self::$_BackendUser && true === $this->isContao45())
+	    if (false === self::$_BackendUser)
 	    {
 	        $objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
 	        if ($objTokenChecker->hasBackendUser())
@@ -120,10 +120,8 @@ class FrontendVisitors extends \Frontend
 	                     array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
 	    }
 
-	    //Pixel und raus hier
-	    $objResponse = new Response(base64_decode('R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=='));
-	    $objResponse->headers->set('Content-type', 'image/gif');
-	    $objResponse->headers->set('Content-length', 43);
+	    //raus hier
+	    $objResponse = new Response();
 
 		return $objResponse;
 	}
@@ -349,26 +347,6 @@ class FrontendVisitors extends \Frontend
 	        $GLOBALS['visitors']['debug']['screenresolutioncount'] = (bool) $objVisitors->visitors_expert_debug_screenresolutioncount;
 	        ModuleVisitorLog::writeLog('## START ##', '## SCREEN DEBUG ##', '#S'.(int) $GLOBALS['visitors']['debug']['screenresolutioncount']);
 	    }
-	}
-
-	/**
-	 * Check if contao/cor-bundle >= 4.5.0
-	 *
-	 * @return boolean
-	 */
-	protected function isContao45()
-	{
-	    $packages = \System::getContainer()->getParameter('kernel.packages');
-	    $coreVersion = $packages['contao/core-bundle']; //a.b.c
-	    if (version_compare($coreVersion, '4.5.0', '>='))
-	    {
-	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
-
-	        return true;
-	    }
-	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
-
-	    return false;
 	}
 
 }

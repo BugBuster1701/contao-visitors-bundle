@@ -5,14 +5,14 @@
  * 
  * Modul Visitors Config File
  *
- * @copyright  Glen Langer 2009..2019 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2020 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
-\define('VISITORS_VERSION', '1.6');
+\define('VISITORS_VERSION', '1.7');
 \define('VISITORS_BUILD', '0');
 
 /**
@@ -45,10 +45,7 @@ $GLOBALS['BE_MOD']['system']['visitorstat'] = array
  * FRONT END MODULES
  * -------------------------------------------------------------------------
  */
-array_insert($GLOBALS['FE_MOD']['miscellaneous'], 0, array
-(
-	'visitors' => 'BugBuster\Visitors\ModuleVisitors',
-));
+//$GLOBALS['FE_MOD']['miscellaneous']['visitors'] = 'BugBuster\Visitors\ModuleVisitors';
 
 /**
  * -------------------------------------------------------------------------

@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['visitors_categories'] = array
 $GLOBALS['TL_DCA']['tl_module']['fields']['visitors_template'] = array
 (
     'label'                   => &$GLOBALS['TL_LANG']['tl_module']['visitors_template'],
-    'default'                 => 'mod_visitors_fe_all',
+    'default'                 => 'mod_visitors_fe_invisible', 
     'exclude'                 => true,
     'inputType'               => 'select',
     'options_callback'        => array('BugBuster\Visitors\DcaModuleVisitors', 'getVisitorsTemplates'),
