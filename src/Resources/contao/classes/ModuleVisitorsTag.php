@@ -129,6 +129,8 @@ class ModuleVisitorsTag extends \Frontend
 
 		if ($arrTag[2] == 'count') 
 		{
+			ModuleVisitorLog::triggerWarning('bugbuster/contao-visitors-bundle', '1.7', 'Do not using the Vistors Insert-Tag "cache_visitors::<id>::count" anymore. The Front end module and the template has been changed.');
+
 			/* __________  __  ___   _____________   ________
 			  / ____/ __ \/ / / / | / /_  __/  _/ | / / ____/
 			 / /   / / / / / / /  |/ / / /  / //  |/ / / __  
@@ -136,7 +138,9 @@ class ModuleVisitorsTag extends \Frontend
 			\____/\____/\____/_/ |_/ /_/ /___/_/ |_/\____/ only
 			*/
 
-		    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': Do not using the Vistors Insert-Tag "cache_visitors::<id>::count" anymore. The Front end module and the template has been changed.');
+			
 			$objVisitors = \Database::getInstance()
 			        ->prepare("SELECT 
                                     tl_visitors.id AS id, 
@@ -558,6 +562,7 @@ class ModuleVisitorsTag extends \Frontend
 	    if ($ModuleVisitorChecks->checkUserAgent($visitors_category_id) === true) 
 	    {
 	    	$this->_PF = true; // Bad but functionally
+
 	    	return; //User Agent Filterung
 	    }
 	    //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
@@ -586,6 +591,7 @@ class ModuleVisitorsTag extends \Frontend
 	    if ($ModuleVisitorChecks->checkBE() === true) 
 	    {
 	    	$this->_PF = true; // Bad but functionally
+
 			return; // Backend eingeloggt, nicht zaehlen (Feature: #197)
 		}
 

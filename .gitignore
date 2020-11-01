@@ -14,5 +14,7 @@ composer.lock
 #Cache
 src/cache/largebrowscap_*/largebrowscap.iniparts.*
 src/cache/largebrowscap_*/largebrowscap.patterns.*
+#phpunit
+.phpunit.result.cache
 
 todo.txt

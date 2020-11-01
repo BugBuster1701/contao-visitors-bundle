@@ -12,8 +12,8 @@
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
-\define('VISITORS_VERSION', '1.6');
-\define('VISITORS_BUILD', '5');
+\define('VISITORS_VERSION', '1.7');
+\define('VISITORS_BUILD', '0');
 
 /**
  * Backend css version number are added to style sheets files to make
@@ -45,7 +45,7 @@ $GLOBALS['BE_MOD']['system']['visitorstat'] = array
  * FRONT END MODULES
  * -------------------------------------------------------------------------
  */
-$GLOBALS['FE_MOD']['miscellaneous']['visitors'] = 'BugBuster\Visitors\ModuleVisitors';
+//$GLOBALS['FE_MOD']['miscellaneous']['visitors'] = 'BugBuster\Visitors\ModuleVisitors';
 
 /**
  * -------------------------------------------------------------------------

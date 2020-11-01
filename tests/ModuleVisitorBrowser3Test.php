@@ -19,7 +19,7 @@ class ModuleVisitorBrowser3Test extends TestCase
     /**
      * Prepares the environment before running a test.
      */
-    protected function setUp()
+    protected function setUp() : void
     {
         parent::setUp();
         
@@ -31,7 +31,7 @@ class ModuleVisitorBrowser3Test extends TestCase
     /**
      * Cleans up the environment after running a test.
      */
-    protected function tearDown()
+    protected function tearDown() : void
     {
         // TODO Auto-generated ModuleVisitorBrowser3Test::tearDown()
         $this->moduleVisitorBrowser3 = null;

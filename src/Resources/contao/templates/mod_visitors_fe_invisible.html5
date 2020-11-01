@@ -1,22 +1,25 @@
-<!-- indexer::stop -->
-<!-- Template for "only counting", no display in Frontend. -->
-<?php foreach ($this->visitors as $visitor): ?>
-<span class="visitor_count invisible">{{cache_visitors::<?= $visitor['VisitorsKatID']; ?>::count}}</span>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth); 
-    var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
-    var sWidth  = screen.width;
-    var sHeight = screen.height;
-    var visitorurl = '<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'';
-    try {
-		fetch( visitorurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
-	    .catch( error => console.error('error:', error) );
-    } catch (r) {
-        return;
-    }
-    
-});
-</script>
-<?php endforeach; ?>
-<!-- indexer::continue -->
+<?php $this->extend("block_unsearchable"); ?>
+
+<?php $this->block("content"); ?>
+    <!-- Template for "only counting", no display in Frontend. -->
+    <?php foreach ($this->visitors as $visitor): ?>
+    <span class="visitor_count invisible"><?= $visitor['VisitorsCounting']; ?></span>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth); 
+        var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
+        var sWidth  = screen.width;
+        var sHeight = screen.height;
+        var visitorurl = '<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'';
+        try {
+            fetch( visitorurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
+            .catch( error => console.error('error:', error) );
+        } catch (r) {
+            return;
+        }
+        
+    });
+    </script>
+    <?php endforeach; ?>
+
+<?php $this->endblock(); ?>

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+ * Extension for Contao Open Source CMS, Copyright (C) 2005-2020 Leo Feyer
  * 
  * Modul Visitors Referrer - Frontend
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2020 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -23,7 +23,7 @@ use BugBuster\Visitors\ModuleVisitorLog;
 /**
  * Class ModuleVisitorReferrer
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2020 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @license    LGPL 
  */
@@ -32,7 +32,7 @@ class ModuleVisitorReferrer	extends \System
 	/**
 	 * Current version of the class.
 	 */
-	const VERSION          = '3.2';
+	const VERSION          = '3.3';
 
     private $_http_referrer = '';
 
@@ -47,6 +47,23 @@ class ModuleVisitorReferrer	extends \System
     const REFERRER_OWN      = 'o';
 
     const REFERRER_WRONG    = 'w';
+
+	/**
+	 * Call the parent constructor.
+	 *
+	 * !!! DON'T REMOVE THIS !!!
+	 *
+	 * If you remove this you get the following error message:
+	 * Fatal error: Call to protected System::__construct() from invalid context
+	 *
+	 * @param	void
+	 * @return	void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
 
 	/**
 	 * Reset all properties
@@ -145,6 +162,7 @@ class ModuleVisitorReferrer	extends \System
 	            //Debug log_message('detect: loopback True','debug.log');
 	            $this->_wrong_detail = 'Referrer DNS was loopback IP: '.$this->_referrer_DNS;
 	            $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was loopback IP
+
 	            return;
 	        }
 	        //remove IPv6 [] (comes from parse_url) 
@@ -161,6 +179,7 @@ class ModuleVisitorReferrer	extends \System
     	        //Debug log_message('detect: Domain (not dot in Host) True','debug.log');
     	        $this->_wrong_detail = 'Referrer DNS was local (not domain): '.$this->_referrer_DNS;
     	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was local (not domain)
+
     	        return;
     	    }
 	    }
@@ -200,6 +219,7 @@ class ModuleVisitorReferrer	extends \System
 	        //Debug log_message('detect: Domain (not valid Domain) True','debug.log');
 	        $this->_wrong_detail = 'Referrer DNS was not a valid Domain: '.$this->_referrer_DNS;
 	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was not a valid Domain
+
 	        return;
 	    }
 	}
