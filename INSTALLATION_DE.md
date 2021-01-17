@@ -16,7 +16,7 @@ Es gibt zwei Arten der Installation.
 
 ## Installation über die Kommandozeile
 
-Installation in einer Composer-basierenden Contao 4.7+ Managed-Edition:
+Installation in einer Composer-basierenden Contao 4.9+ Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle"`
 * Aufruf https://deinedomain/contao/install

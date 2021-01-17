@@ -213,10 +213,10 @@ class VisitorsStatExport extends \System
             $objVisitorExcel->getActiveSheet()->setCellValue('A'.$row, $objStatistic->category_title);
             $objVisitorExcel->getActiveSheet()->setCellValue('B'.$row, $objStatistic->visitors_id);
             $objVisitorExcel->getActiveSheet()->setCellValue('C'.$row, $objStatistic->visitors_name);
-            $objVisitorExcel->getActiveSheet()->setCellValue('D'.$row, $objStatistic->published=='' ? $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] : $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes']);
+            $objVisitorExcel->getActiveSheet()->setCellValue('D'.$row, empty($objStatistic->published) ? $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] : $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes']);
             $objVisitorExcel->getActiveSheet()->setCellValue('E'.$row, date($GLOBALS['TL_CONFIG']['dateFormat'], strtotime($objStatistic->visitors_date)));
-            $objVisitorExcel->getActiveSheet()->setCellValue('F'.$row, $objStatistic->visitors_visit=='' ? '0' : $objStatistic->visitors_visit);
-            $objVisitorExcel->getActiveSheet()->setCellValue('G'.$row, $objStatistic->visitors_hit  =='' ? '0' : $objStatistic->visitors_hit);
+            $objVisitorExcel->getActiveSheet()->setCellValue('F'.$row, empty($objStatistic->visitors_visit) ? '0' : $objStatistic->visitors_visit);
+            $objVisitorExcel->getActiveSheet()->setCellValue('G'.$row, empty($objStatistic->visitors_hit) ? '0' : $objStatistic->visitors_hit);
 
             $objVisitorExcel->getActiveSheet()->getStyle('B'.$row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $objVisitorExcel->getActiveSheet()->getStyle('D'.$row)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);

@@ -562,7 +562,7 @@ class ModuleVisitorsTag extends \Frontend
 	    }
 	    //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
 	    $ClientIP = bin2hex(sha1($visitors_category_id . $ModuleVisitorChecks->visitorGetUserIP(), true)); // sha1 20 Zeichen, bin2hex 40 zeichen
-	    $BlockTime = ($BlockTime == '') ? 1800 : $BlockTime; //Sekunden
+	    $BlockTime = (empty($BlockTime)) ? 1800 : $BlockTime; //Sekunden
 	    $CURDATE = date('Y-m-d');
 	    //Visitor Blocker
 	    \Database::getInstance()
@@ -1123,7 +1123,7 @@ class ModuleVisitorsTag extends \Frontend
 	{
 		$strRequest = \Environment::get('relativeRequest');
 
-		if ($strRequest == '')
+		if (empty($strRequest))
 		{
 			return null;
 		}
@@ -1152,7 +1152,7 @@ class ModuleVisitorsTag extends \Frontend
 				\Input::setGet('language', $arrMatches[1]);
 
 				// Trigger the root page if only the language was given
-				if ($arrMatches[3] == '')
+				if (empty($arrMatches[3]))
 				{
 					return null;
 				}
@@ -1288,7 +1288,7 @@ class ModuleVisitorsTag extends \Frontend
 		}
 
 		// Return if the alias is empty (see #4702 and #4972)
-		if ($arrFragments[0] == '' && \count($arrFragments) > 1)
+		if (empty($arrFragments[0]) && \count($arrFragments) > 1)
 		{
 			return false;
 		}
@@ -1297,7 +1297,7 @@ class ModuleVisitorsTag extends \Frontend
 		for ($i=1, $c=\count($arrFragments); $i<$c; $i+=2)
 		{
 			// Return false if the key is empty (see #4702 and #263)
-			if ($arrFragments[$i] == '')
+			if (empty($arrFragments[$i]))
 			{
 				return false;
 			}

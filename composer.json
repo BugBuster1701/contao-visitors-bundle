@@ -26,15 +26,15 @@
 		"forum":"https://community.contao.org/de/forumdisplay.php?28-visitors"
 	},
 	"require":{
-		"php": "^7.1",
-		"contao/core-bundle": "~4.7",
-		"bugbuster/contao-botdetection-bundle": ">=0.2.1,<2",
-		"phpoffice/phpspreadsheet": "~1.0"
+		"php": "^7.2 || ^8.0",
+		"contao/core-bundle": "~4.9",
+		"bugbuster/contao-botdetection-bundle":">=1.7.0,<2",
+		"phpoffice/phpspreadsheet": "^1.16"
 	},
 	"require-dev": {
 			"contao/manager-plugin": "^2.0",
-			"friendsofphp/php-cs-fixer": "^2.12",
-			"phpunit/phpunit": "^7.0"
+			"friendsofphp/php-cs-fixer": "^2.17",
+			"phpunit/phpunit": "^8.5 || ^9.3"
 	},
 	"conflict": {
 			"contao/manager-plugin": "<2.0 || >=3.0"
@@ -63,7 +63,7 @@
 			}
 		},
 		"branch-alias": {
-			"dev-develop": "1.6.x-dev"
+			"dev-develop": "1.7.x-dev"
 		},
 		"contao-manager-plugin": "BugBuster\\VisitorsBundle\\ContaoManager\\Plugin"
 	}
