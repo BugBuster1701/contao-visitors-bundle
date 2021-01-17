@@ -57,13 +57,12 @@ class ModuleVisitorReferrer	extends \System
 	 * Fatal error: Call to protected System::__construct() from invalid context
 	 *
 	 * @param	void
-	 * @return	void
+	 * @return void
 	 */
 	public function __construct()
 	{
 		parent::__construct();
 	}
-
 
 	/**
 	 * Reset all properties

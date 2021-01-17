@@ -231,7 +231,6 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 'PageHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend'],
                 'PageHitCountValue' => $this->getPageHits($objVisitors, $boolSeparator, $objPage),
             ];
-
         }
 
         $template->visitors = $arrVisitors;
