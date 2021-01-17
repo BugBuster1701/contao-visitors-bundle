@@ -83,7 +83,7 @@ class ModuleVisitorReferrer	extends \System
 	    $this->_http_referrer = Encoding::toUTF8(urldecode($this->_http_referrer));
 
 	    $this->_referrer_DNS = self::REFERRER_UNKNOWN;
-	    if ($this->_http_referrer == '' || 
+	    if (empty($this->_http_referrer) || 
 	        $this->_http_referrer == '-') 
 	    {
 	    	//ungueltiger Referrer
