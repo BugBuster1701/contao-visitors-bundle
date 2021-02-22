@@ -33,7 +33,7 @@ class ModuleVisitorSearchEngine// extends Frontend
     private $_http_referer  = '';
     private $_search_engine = '';
     private $_keywords      = '';
-    private $_parse_result  = '';
+    private $_parse_result  = array();
 
     const REFERER_UNKNOWN         = 'unknown';
     const SEARCH_ENGINE_UNKNOWN   = 'unknown';
@@ -134,7 +134,7 @@ class ModuleVisitorSearchEngine// extends Frontend
 	{
 	    parse_str(parse_url($this->_http_referer, PHP_URL_QUERY), $this->_parse_result);
 
-	    return 
+		return 
 	    	$this->checkEngineGoogleUserContent() ||
 			$this->checkEngineGoogle()    ||
 			$this->checkEngineBing()      ||
@@ -864,7 +864,11 @@ class ModuleVisitorSearchEngine// extends Frontend
 
 	public function getEngine() { return $this->_search_engine; }
 
-	public function getKeywords() { return $this->_keywords; }
+	public function getKeywords() { 
+
+		//XSS Fix
+		return htmlspecialchars($this->_keywords, ENT_QUOTES); 
+	}
 
 	public function __toString() 
 	{

@@ -1,0 +1,6 @@
+services:
+    BugBuster\VisitorsBundle\Migration\Version167Update:
+        arguments:
+            - '@database_connection'
+        tags:
+            - { name: contao.migration, priority: 0 }
