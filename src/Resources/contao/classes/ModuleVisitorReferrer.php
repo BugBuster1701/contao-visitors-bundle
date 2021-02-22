@@ -145,6 +145,7 @@ class ModuleVisitorReferrer	extends \System
 	            //Debug log_message('detect: loopback True','debug.log');
 	            $this->_wrong_detail = 'Referrer DNS was loopback IP: '.$this->_referrer_DNS;
 	            $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was loopback IP
+
 	            return;
 	        }
 	        //remove IPv6 [] (comes from parse_url) 
@@ -161,6 +162,7 @@ class ModuleVisitorReferrer	extends \System
     	        //Debug log_message('detect: Domain (not dot in Host) True','debug.log');
     	        $this->_wrong_detail = 'Referrer DNS was local (not domain): '.$this->_referrer_DNS;
     	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was local (not domain)
+
     	        return;
     	    }
 	    }
@@ -200,6 +202,7 @@ class ModuleVisitorReferrer	extends \System
 	        //Debug log_message('detect: Domain (not valid Domain) True','debug.log');
 	        $this->_wrong_detail = 'Referrer DNS was not a valid Domain: '.$this->_referrer_DNS;
 	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was not a valid Domain
+
 	        return;
 	    }
 	}
