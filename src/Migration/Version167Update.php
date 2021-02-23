@@ -63,7 +63,7 @@ class Version167Update extends AbstractMigration
 
         $columns = $schemaManager->listTableColumns('tl_visitors_searchengines');
 
-        return !isset($columns['visitors_keywords']);
+        return isset($columns['visitors_keywords']);
     }
 
     /**
