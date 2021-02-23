@@ -62,8 +62,19 @@ class Version167Update extends AbstractMigration
         }
 
         $columns = $schemaManager->listTableColumns('tl_visitors_searchengines');
-
-        return isset($columns['visitors_keywords']);
+        if (isset($columns['visitors_keywords'])) {
+            $result = $this->connection->query("
+                    SELECT id FROM 
+                        tl_visitors_searchengines
+                    WHERE
+                        visitors_keywords LIKE '%testing-xss%'
+            ")->fetch();
+            
+            if (count($result) > 0) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
