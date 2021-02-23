@@ -5,7 +5,7 @@
  * 
  * Modul Visitors Config File
  *
- * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2021 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -58,3 +58,4 @@ array_insert($GLOBALS['FE_MOD']['miscellaneous'], 0, array
  * -------------------------------------------------------------------------
  */
 $GLOBALS['TL_HOOKS']['replaceInsertTags'][] = array('BugBuster\Visitors\ModuleVisitorsTag', 'replaceInsertTagsVisitors');
+$GLOBALS['TL_HOOKS']['sqlCompileCommands'][] = array('BugBuster\VisitorsBundle\Runonce\CompileCommands', 'runMigration');
