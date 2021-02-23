@@ -52,6 +52,7 @@ class Version167Update extends AbstractMigration
      * Must only run if:
      * - the Visitors tables are present and
      * - the column visitors_keywords.
+     * - visitors_keywords LIKE testing-xss.
      */
     public function shouldRun(): bool
     {
@@ -64,16 +65,17 @@ class Version167Update extends AbstractMigration
         $columns = $schemaManager->listTableColumns('tl_visitors_searchengines');
         if (isset($columns['visitors_keywords'])) {
             $result = $this->connection->query("
-                    SELECT id FROM 
+                    SELECT id FROM
                         tl_visitors_searchengines
                     WHERE
                         visitors_keywords LIKE '%testing-xss%'
             ")->fetch();
-            
-            if (count($result) > 0) {
+
+            if (false !== $result) {
                 return true;
             }
         }
+
         return false;
     }
 
