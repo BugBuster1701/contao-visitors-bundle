@@ -89,7 +89,7 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
                 'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['delete'],
                 'href'                => 'act=delete',
                 'icon'                => 'delete.gif',
-                'attributes'          => 'onclick="if (!confirm(\'' . $GLOBALS['TL_LANG']['tl_visitors_category']['deleteConfirm'] . '\')) return false; Backend.getScrollOffset();"'
+                'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['tl_visitors_category']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
             ),
             'show' => array
             (
