@@ -103,6 +103,10 @@
   width: 90%;
 }
 
+.mod_visitors_be_table .bct {
+  background-color: transparent !important;
+} 
+
 .mod_visitors_be_folder 
 {
 	padding:1px 0;
