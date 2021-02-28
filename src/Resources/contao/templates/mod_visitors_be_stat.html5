@@ -5,7 +5,7 @@
 	<!-- Kategorie Zeile //-->
 	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
 	<div class="tl_submit_panel tl_subpanel">
-		<input type="image" alt="<?= \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" title="<?= \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" class="tl_img_submit" src="system/themes/<?= $this->theme ?>/icons/sync.svg" width="16" height="16" value="statistics" id="filter" name="filter">
+		<input type="image" alt="<?= \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" title="<?= \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" class="tl_img_submit mod_visitors_be_reset" src="system/themes/<?= $this->theme ?>/icons/sync.svg" width="16" height="16" value="statistics" id="filter" name="filter">
 	</div>
 	<div class="tl_limit tl_subpanel">
 		<strong><?= $this->visitorsstatkat ?>:</strong>
@@ -230,7 +230,7 @@
 			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits60']; ?></td>
 			</tr>
 			<tr>
-				<td colspan="4" style="width: 330px; text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_tipp']; ?></td>
+				<td colspan="4" style="width: 330px; text-align: center; font-size: 0.75rem;" class="bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_tipp']; ?></td>
 			</tr>
 			</tbody>
 			</table>
@@ -428,20 +428,20 @@
 				</tr>
 <?php if ($this->visitorsstatBrowserDefinition[$vcid]['KNO']>0) : ?>
 				<tr>
-					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_known'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version'].' ('. $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'] .')'; ?></td>
-					<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatBrowserDefinition[$vcid]['KNO']; ?></td>
+					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_known'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version'].' ('. $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'] .')'; ?></td>
+					<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['KNO']; ?></td>
 				</tr>
 				<tr>
-					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_unknown'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></td>
-					<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatBrowserDefinition[$vcid]['UNK']; ?></td>
+					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_unknown'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></td>
+					<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['UNK']; ?></td>
 				</tr>
 				<tr>
-					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_os'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'] .')'; ?></td>
-					<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatBrowserDefinition[$vcid]['OSALL']; ?></td>
+					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_os'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'] .')'; ?></td>
+					<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['OSALL']; ?></td>
 				</tr>
 <?php else : ?>
 				<tr>
-			    	<td colspan="2"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
+			    	<td colspan="2"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
 				</tr>
 <?php endif; ?>
 	            </tbody>

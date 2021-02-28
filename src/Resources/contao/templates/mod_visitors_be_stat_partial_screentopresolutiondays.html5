@@ -3,12 +3,12 @@
 <table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left:auto;">
 			<tbody>
 			<tr>
-				<td colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']; ?></td>
+				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']; ?></th>
 			</tr>
 			<tr>
-				<td style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']; ?></td>
-				<td style="padding-left: 2px; text-align: center;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']; ?></td>
-				<td style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></td>
+				<th style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']; ?></th>
+				<th style="padding-left: 2px; text-align: center;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']; ?></th>
+				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
 			</tr>
 <?php if ($this->ScreenTopResolutionDays !== false) : ?>
 	<?php foreach ($this->ScreenTopResolutionDays AS $ScreenTopResolutionDaysRow) : ?>

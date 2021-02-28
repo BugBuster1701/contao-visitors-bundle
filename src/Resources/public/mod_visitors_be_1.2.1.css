@@ -1,4 +1,8 @@
 /* Style sheet visitors backend */
+.mod_visitors_be_reset {
+  border: 0 none !important;
+}
+
 .mod_visitors_be_statistics {
   width:50%;
   float:left;
