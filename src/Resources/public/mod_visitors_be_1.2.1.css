@@ -145,6 +145,14 @@
 	padding: 0;
 }
 
+.visitors_toggler .limit_toggler {
+  background-color: transparent !important;
+}
+
+.visitors_toggler .limit_toggler button {
+  border: 0 none !important;
+}
+
 .visitors_toggler .limit_toggler button span {
 	color: green;
 	font-weight: bold;

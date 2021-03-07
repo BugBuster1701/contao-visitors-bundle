@@ -173,6 +173,7 @@
 <?php endforeach; ?>
 			</tbody>
 			</table>
+			<br>
 			<table summary="Table lists statistik" class="mod_visitors_be_table">
 			<tbody>
 			<tr>
