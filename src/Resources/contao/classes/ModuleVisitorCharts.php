@@ -177,7 +177,7 @@ class ModuleVisitorCharts
         $relation = $this->getRelation();
 
         // Tabelle erzeugen
-        $output .= "<table class=\"mod_visitors_be_table\" cellpadding=\"0\" style=\"margin-left: auto; height:".$this->getHeight()."px; text-align:center; border:solid 1px #E9E9E9; \">\n";
+        $output .= "<table class=\"mod_visitors_be_table\" cellpadding=\"0\" style=\"margin-left: auto; height:".$this->getHeight()."px; text-align:center; \">\n";
         // Diagrammname ausgeben
         $output .= "<tr>\n".
                    "<th colspan=\"".$this->getDataNumber()."\" class=\"tl_folder_tlist\">".$this->getName()."</th>".
