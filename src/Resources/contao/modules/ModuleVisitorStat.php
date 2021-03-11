@@ -302,7 +302,6 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorskats          = $arrVisitorCategories;
 		$this->Template->visitorskatid         = $this->intKatID;
 		$this->Template->visitorsstatkat       = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'];
-		$this->Template->visitors_export_title = $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_button_title'];
 		$this->Template->visitors_exportfield  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'].' '.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'];
 
         //ExportDays
