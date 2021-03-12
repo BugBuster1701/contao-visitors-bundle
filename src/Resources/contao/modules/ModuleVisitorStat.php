@@ -483,9 +483,9 @@ class ModuleVisitorStat extends \BackendModule
 	    $CurrentMonthVisits = 0;
 	    $CurrentMonthHits   = 0;
 	    $YearCurrentMonth   = date('Y-m-d');
-	    $YearLastMonth      = date('Y-m-d', mktime(0, 0, 0, date("m")-1, 1, date("Y")));
+	    $YearLastMonth      = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")));
 	    $CurrentMonth   	= (int) date('m');
-	    $LastMonth			= (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")));
+	    $LastMonth			= (int) date('m', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")));
 	    $ORDER = ($CurrentMonth > $LastMonth) ? 'DESC' : 'ASC'; // damit immer eine absteigene Monatsreihenfolge kommt
 		if ($VisitorsID) 
 		{
@@ -515,7 +515,7 @@ class ModuleVisitorStat extends \BackendModule
 			    	$CurrentMonthVisits = $objVisitorsToMo->SUMV;
 			    	$CurrentMonthHits   = $objVisitorsToMo->SUMH;
 			    }
-			    if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")))) 
+			    if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")))) 
 			    {
 		            $LastMonthVisits = $objVisitorsToMo->SUMV;
 		            $LastMonthHits   = $objVisitorsToMo->SUMH;
@@ -523,7 +523,7 @@ class ModuleVisitorStat extends \BackendModule
 			    if ($intRows==2) 
 			    {
 	                $objVisitorsToMo->next();
-	                if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")))) 
+	                if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")))) 
 	                {
 		        	    $LastMonthVisits = $objVisitorsToMo->SUMV;
 		                $LastMonthHits   = $objVisitorsToMo->SUMH;
@@ -545,8 +545,8 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function getOtherMonth($VisitorsID)
 	{
-	    $StartMonth = date('Y-m-d', mktime(0, 0, 0, date("m")-11, 1, date("Y"))); // aktueller Monat -11
-	    $EndMonth   = date('Y-m-d', mktime(0, 0, 0, date("m")-1, 0, date("Y"))); // letzter Tag des vorletzten Monats
+	    $StartMonth = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-11, 1, (int) date("Y"))); // aktueller Monat -11
+	    $EndMonth   = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-1, 0, (int) date("Y"))); // letzter Tag des vorletzten Monats
 		if ($VisitorsID) 
 		{
 			//Total je Monat (aktueller und letzter)
@@ -586,7 +586,7 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function getOtherYears($VisitorsID)
 	{
-	    $StartYear = date('Y-m-d', mktime(0, 0, 0, 1, 1, date("Y")-11)); // aktuelles Jahr -11
+	    $StartYear = date('Y-m-d', mktime(0, 0, 0, 1, 1, (int) date("Y")-11)); // aktuelles Jahr -11
 	    $EndYear   = date('Y-m-d'); // Aktuelles Datum
 	    if ($VisitorsID)
 	    {
@@ -636,7 +636,7 @@ class ModuleVisitorStat extends \BackendModule
 		if ($VisitorsID) 
 		{
 			$today     = date('Y-m-d');
-			$yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+			$yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
     	    //Durchschnittswerte bis heute 00:00 Uhr, also bis einschließlich gestern
     	    $objVisitorsAverageCount = \Database::getInstance()
     	            ->prepare("SELECT 
@@ -664,7 +664,7 @@ class ModuleVisitorStat extends \BackendModule
             if ($tmpTotalDays > 30) 
             {
 	            //Durchschnittswerte der letzten 30 Tage
-	            $day30 = date('Y-m-d', mktime(0, 0, 0, date("m")-1, date("d")-1, date("Y")));            
+	            $day30 = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-1, (int) date("d")-1, (int) date("Y")));            
 
 	            $objVisitorsAverageCount = \Database::getInstance()
 	                    ->prepare("SELECT 
@@ -687,7 +687,7 @@ class ModuleVisitorStat extends \BackendModule
             if ($tmpTotalDays > 60) 
             {
 	            //Durchschnittswerte der letzten 60 Tage
-	            $day60 = date('Y-m-d', mktime(0, 0, 0, date("m")-2, date("d")-1, date("Y")));
+	            $day60 = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-2, (int) date("d")-1, (int) date("Y")));
 
 	            $objVisitorsAverageCount = \Database::getInstance()
 	                    ->prepare("SELECT 
@@ -738,9 +738,9 @@ class ModuleVisitorStat extends \BackendModule
 	    $CurrentWeekVisits = 0;
 	    $CurrentWeekHits   = 0;
 	    $CurrentWeek       = date('W'); 
-	    $LastWeek          = date('W', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")));
+	    $LastWeek          = date('W', mktime(0, 0, 0, (int) date("m"), (int) date("d")-7, (int) date("Y")));
         $YearCurrentWeek   = date('o');
-        $YearLastWeek      = date('o', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")));
+        $YearLastWeek      = date('o', mktime(0, 0, 0, (int) date("m"), (int) date("d")-7, (int) date("Y")));
 
 	    if ($VisitorsID) 
 	    {
@@ -1096,7 +1096,7 @@ class ModuleVisitorStat extends \BackendModule
 	{
 		$VisitorsSearchEngines        = array(); // only searchengines
 		$VisitorsSearchEngineKeywords = array(); //searchengine - keywords, order by keywords
-		$day60 = mktime(0, 0, 0, date("m")-2, date("d"), date("Y"));
+		$day60 = mktime(0, 0, 0, (int) date("m")-2, (int) date("d"), (int) date("Y"));
 
 		$objVisitors = \Database::getInstance()
 		        ->prepare("SELECT 

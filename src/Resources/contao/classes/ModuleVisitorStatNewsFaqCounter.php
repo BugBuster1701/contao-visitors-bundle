@@ -49,7 +49,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         parent::__construct();
 
         $this->today     = date('Y-m-d');
-        $this->yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+        $this->yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
 
         if (\Database::getInstance()->tableExists('tl_news') &&
             \Database::getInstance()->tableExists('tl_news_archive'))

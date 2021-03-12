@@ -104,7 +104,7 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
     public function generateScreenTopResolutionDays($VisitorsID, $limit=20, $days=30)
     {
         $arrScreenStatCount = false;
-        $lastdays = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-$days, date("Y")));
+        $lastdays = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
 
