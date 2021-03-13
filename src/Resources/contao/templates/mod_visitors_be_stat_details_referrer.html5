@@ -14,7 +14,8 @@
   <link rel="stylesheet" href="<?= TL_ASSETS_URL ?>system/themes/<?= $this->theme ?>/main.css">
   <link rel="stylesheet" href="bundles/bugbustervisitors/mod_visitors_be_<?= $this->visitorsbecss ?>.css">
   <?= $this->stylesheets ?>
-
+  <script><?= $this->getLocaleString() ?></script>
+  <?= $this->javascripts ?>
 </head>
 <body class="<?= $this->ua ?> popup">
 
