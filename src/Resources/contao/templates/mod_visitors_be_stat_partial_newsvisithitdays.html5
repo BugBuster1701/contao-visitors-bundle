@@ -14,10 +14,10 @@
 <?php if ($this->NewsVisitHitDays !== false) : ?>
 	<?php foreach ($this->NewsVisitHitDays AS $NewsVisitHitDaysRow) : ?>
 		<tr>
-			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($NewsVisitHitTopRow['title']) ? $NewsVisitHitTopRow['title']  : ''); ?></td>
-			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($NewsVisitHitTopRow['alias']) ? $NewsVisitHitTopRow['alias'] .' ('.(isset($NewsVisitHitDaysRow['lang']) ? $NewsVisitHitDaysRow['lang'] .')' : '') : ''); ?></td>
-			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($NewsVisitHitTopRow['hits'])  ? $NewsVisitHitTopRow['visits'] : ''); ?></td>
-			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($NewsVisitHitTopRow['hits'])  ? $NewsVisitHitTopRow['hits']   : ''); ?></td>
+			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($NewsVisitHitDaysRow['title']) ? $NewsVisitHitDaysRow['title']  : ''); ?></td>
+			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($NewsVisitHitDaysRow['alias']) ? $NewsVisitHitDaysRow['alias'] .' ('.(isset($NewsVisitHitDaysRow['lang']) ? $NewsVisitHitDaysRow['lang'] .')' : '') : ''); ?></td>
+			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($NewsVisitHitDaysRow['hits'])  ? $NewsVisitHitDaysRow['visits'] : ''); ?></td>
+			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($NewsVisitHitDaysRow['hits'])  ? $NewsVisitHitDaysRow['hits']   : ''); ?></td>
 		</tr>
 	<?php endforeach; ?>
 <?php endif; ?>
