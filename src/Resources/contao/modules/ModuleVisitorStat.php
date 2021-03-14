@@ -233,9 +233,9 @@ class ModuleVisitorStat extends \BackendModule
 				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID, 5);
 
 				// News
-				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID, 10, true);
+				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID, 20, true);
 				// Faq
-				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID, 10, true);
+				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID, 20, true);
 
 				// Isotope
 				$arrVisitorsIsotopeVisitHits[$intAnzCounter]       = ModuleVisitorStatIsotopeProductCounter::getInstance()->generateIsotopeVisitHitTop($objVisitorsID, 20, true);

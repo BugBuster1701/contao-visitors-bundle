@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2018-12-17T00:00:48+01:00
+ * last-updated: 2021-02-23T23:03:20+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Aktiv';
@@ -76,12 +76,12 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']                  
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']                     = 'Browserstatistik löschen für diesen Zähler.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']             = 'Browserstatistik wirklich löschen für diesen Zähler?';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']                = 'Derzeit online';
-$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ-Statistik TOP 10';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ-Statistik TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']                 = 'Tag mit den wenigsten Besuchern';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']                   = 'Zugriffe an diesem Tag';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']        = 'Isotope-Statistik TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']                   = 'Tag mit den meisten Besuchern';
-$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'Nachrichtenstatistik TOP 10';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'Nachrichtenstatistik TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']                      = 'Seitenalias';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language']                   = 'Sprache';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop']           = 'Seitenstatistik TOP 20';
