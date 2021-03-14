@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2021-03-14T21:19:03+01:00
+ * last-updated: 2021-03-14T22:10:57+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Aktiv';
@@ -77,6 +77,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']                   
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']             = 'Browserstatistik wirklich löschen für diesen Zähler?';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']                = 'Derzeit online';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ-Statistik TOP 20';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop_days']       = 'FAQ-Statistik TOP 20: die letzten 7 Tage';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']                 = 'Tag mit den wenigsten Besuchern';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']                   = 'Zugriffe an diesem Tag';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']        = 'Isotope-Statistik TOP 20';

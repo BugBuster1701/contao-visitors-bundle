@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2021-03-14T21:19:03+01:00
+ * last-updated: 2021-03-14T22:10:57+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Активные';
@@ -77,6 +77,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']                   
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']             = 'Вы действительно хотите удалить статистику браузера?';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']                = 'В настоящее время онлайн';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ Статистика TOP 20';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop_days']       = 'FAQ Статистика TOP 20: за последние 7 дней';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']                 = 'День с наименьшим количеством посетителей';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']                   = 'Просмотров за день';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']        = 'Статистика Isotope ТОП 20';

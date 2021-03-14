@@ -86,6 +86,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday'
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'News Statistic TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop_days']      = 'News Statistic TOP 20: the last 7 days';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ Statistic TOP 20';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop_days']       = 'FAQ Statistic TOP 20: the last 7 days';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']        = 'Isotope Statistic TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['news_title']                      = 'News Archive';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']                       = 'FAQ Archive';
