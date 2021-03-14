@@ -331,7 +331,6 @@
 			<?= $this->visitorsstatNewsVisitHitsDays[$vcid]; ?>
 		</div>
 	</div>
-	<div style="clear:left;"></div>
 <?php endif; ?>
 <?php if (false !== $this->visitorsstatFaqVisitHits[$vcid]) : ?>
 	<div class="tl_content tl_listing_container list_view visitors_toggler">
@@ -339,7 +338,6 @@
 			<?= $this->visitorsstatFaqVisitHits[$vcid]; ?>
 		</div>
 	</div>
-	<div style="clear:left;"></div>
 <?php endif; ?>
 <?php if (false !== $this->visitorsstatIsotopeVisitHits[$vcid]) : ?>
 	<div class="tl_content tl_listing_container list_view visitors_toggler">
