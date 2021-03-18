@@ -1,0 +1,27 @@
+<div class="mod_visitors_be_faq_visit_hit_days">
+<!-- FaqHitDays::start -->
+<table summary="Table lists countings" class="mod_visitors_be_table" style="width: 100%;">
+	<tbody>
+		<tr>
+			<th colspan="4"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop_days']; ?></th>
+		</tr>
+		<tr>
+			<th style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']; ?></th>
+			<th style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></th>
+			<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+			<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
+		</tr>
+<?php if ($this->FaqVisitHitDays !== false) : ?>
+	<?php foreach ($this->FaqVisitHitDays AS $FaqVisitHitDaysRow) : ?>
+		<tr>
+			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($FaqVisitHitDaysRow['title']) ? $FaqVisitHitDaysRow['title']  : ''); ?></td>
+			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($FaqVisitHitDaysRow['alias']) ? $FaqVisitHitDaysRow['alias'] .' ('.(isset($FaqVisitHitDaysRow['lang']) ? $FaqVisitHitDaysRow['lang'] .')' : '') : ''); ?></td>
+			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($FaqVisitHitDaysRow['hits'])  ? $FaqVisitHitDaysRow['visits'] : ''); ?></td>
+			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($FaqVisitHitDaysRow['hits'])  ? $FaqVisitHitDaysRow['hits']   : ''); ?></td>
+		</tr>
+	<?php endforeach; ?>
+<?php endif; ?>
+	</tbody>
+</table>
+<!-- FaqHitDays::stop -->
+</div>

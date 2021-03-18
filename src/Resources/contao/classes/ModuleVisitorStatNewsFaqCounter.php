@@ -321,6 +321,77 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
 
     }
 
+    public function generateFaqVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
+    {
+        $arrFaqStatCount = false;
+        $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
+
+        //FAQ Tables exists?
+        if (true === $this->getFaqtableexists())
+        {
+            $objFaqStatCount = \Database::getInstance()
+                            ->prepare("SELECT
+                                            visitors_page_id,
+                                            visitors_page_lang,
+                                            SUM(visitors_page_visit) AS visitors_page_visits,
+                                            SUM(visitors_page_hit)   AS visitors_page_hits
+                                        FROM
+                                            tl_visitors_pages
+                                        WHERE
+                                            vid = ?
+                                        AND 
+                                            visitors_page_type = ?
+                                        AND
+                                            visitors_page_date >= ?
+                                        GROUP BY
+                                            visitors_page_id,
+                                            visitors_page_lang
+                                        ORDER BY
+                                            visitors_page_visits DESC,
+                                            visitors_page_hits DESC,
+                                            visitors_page_id,
+                                            visitors_page_lang
+                                    ")
+                            ->limit($limit)
+                            ->execute($VisitorsID, self::PAGE_TYPE_FAQ, $week);
+
+            while ($objFaqStatCount->next())
+            {
+                $alias   = false;
+                $aliases = $this->getFaqAliases($objFaqStatCount->visitors_page_id);
+                if (false !== $aliases['PageAlias'])
+                {
+                    $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
+                }
+
+                if (false !== $alias)
+                {
+                    $arrFaqStatCount[] = array
+                    (
+                        'title'         => $aliases['FaqArchivTitle'],
+                        'alias'         => $alias,
+                        'lang'          => $objFaqStatCount->visitors_page_lang,
+                        'visits'        => $objFaqStatCount->visitors_page_visits,
+                        'hits'          => $objFaqStatCount->visitors_page_hits
+                    );
+                }
+            }
+            if ($parse === true)
+            {
+                // @var $TemplatePartial Template
+                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithitdays');
+                $TemplatePartial->FaqVisitHitDays = $arrFaqStatCount;
+
+                return $TemplatePartial->parse();
+            }
+
+            return $arrFaqStatCount;
+        }
+
+        return false;
+
+    }
+
     public function getNewsAliases($visitors_page_id)
     {
         //News Tables exists?
