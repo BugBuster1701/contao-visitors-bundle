@@ -234,6 +234,8 @@ class ModuleVisitorStat extends \BackendModule
 
 				// News
 				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID, 20, true);
+				$arrVisitorsNewsVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitDays($objVisitorsID, 20, true, 7);
+
 				// Faq
 				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID, 20, true);
 
@@ -286,6 +288,7 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatPageVisitHitsToday     = $arrVisitorsPageVisitHitsToday;
 		$this->Template->visitorsstatPageVisitHitsYesterday = $arrVisitorsPageVisitHitsYesterday;
 		$this->Template->visitorsstatNewsVisitHits     = $arrVisitorsNewsVisitHits;
+		$this->Template->visitorsstatNewsVisitHitsDays = $arrVisitorsNewsVisitHitsDays;
 		$this->Template->visitorsstatFaqVisitHits      = $arrVisitorsFaqVisitHits;
 		$this->Template->visitorsstatIsotopeVisitHits  = $arrVisitorsIsotopeVisitHits;
 		$this->Template->visitorsstatBrowser  	   = $arrVisitorsStatBrowser;

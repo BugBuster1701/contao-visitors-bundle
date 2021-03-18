@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2021-02-23T23:03:20+01:00
+ * last-updated: 2021-03-14T21:19:03+01:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Aktiv';
@@ -82,6 +82,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']                 
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']        = 'Isotope-Statistik TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']                   = 'Tag mit den meisten Besuchern';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'Nachrichtenstatistik TOP 20';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop_days']      = 'Nachrichtenstatistik TOP 20: die letzten 7 Tage';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']                      = 'Seitenalias';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language']                   = 'Sprache';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop']           = 'Seitenstatistik TOP 20';
