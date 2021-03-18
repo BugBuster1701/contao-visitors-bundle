@@ -102,7 +102,7 @@ class BackendVisitors extends \Backend
 				$objTemplate->messages .= '
                     <tr>
                         <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.rawurldecode(htmlspecialchars(\Idna::decode($objDetails->visitors_referrer_full))).'</td>
-                        <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.date($GLOBALS['TL_CONFIG']['datimFormat'], $objDetails->maxtstamp).'</td>
+                        <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.date(\Contao\Config::get('datimFormat'), $objDetails->maxtstamp).'</td>
                         <td class="tl_file_list" style="text-align: center;">'.$objDetails->ANZ.'</td>
                     </tr>';
 	        }

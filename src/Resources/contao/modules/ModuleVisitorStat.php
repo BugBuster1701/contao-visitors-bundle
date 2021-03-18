@@ -396,8 +396,8 @@ class ModuleVisitorStat extends \BackendModule
     		        $visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
     		    }
     		    // day of the week prüfen
-    		    if (strpos($GLOBALS['TL_CONFIG']['dateFormat'], 'D')===false  // day of the week short 
-    		     && strpos($GLOBALS['TL_CONFIG']['dateFormat'], 'l')===false) // day of the week long
+    		    if (strpos(\Contao\Config::get('dateFormat'), 'D')===false  // day of the week short 
+    		     && strpos(\Contao\Config::get('dateFormat'), 'l')===false) // day of the week long
     		    {
     		        $visitors_day_of_week_prefix = 'D, ';
     		    }
@@ -1249,7 +1249,7 @@ class ModuleVisitorStat extends \BackendModule
 	            $strModified = $prefix . 'Y-m-d';
 	            break;
 	        default:
-	            $strModified = $prefix . $GLOBALS['TL_CONFIG']['dateFormat'];
+	            $strModified = $prefix . \Contao\Config::get('dateFormat');
 	            break;
 	    }
         if (\is_null($intTstamp))

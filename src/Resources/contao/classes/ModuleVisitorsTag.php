@@ -509,7 +509,7 @@ class ModuleVisitorsTag extends \Frontend
 					    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2].'::'.$arrTag[3]);
 						if (!isset($arrTag[4])) 
 						{
-							return date($GLOBALS['TL_CONFIG']['dateFormat'], strtotime($objVisitorsBestday->visitors_date));
+							return date(\Contao\Config::get('dateFormat'), strtotime($objVisitorsBestday->visitors_date));
 						} 
 						else 
 						{
