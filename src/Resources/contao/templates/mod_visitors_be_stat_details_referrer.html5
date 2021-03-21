@@ -24,11 +24,10 @@
 
 </head>
 <body class="<?= $this->ua ?> popup">
-
-  <div id="container" class="cf">
-	<div id="tl_messages">
-	  <?= $this->messages ?>
-	</div>
+  <div id="main" class="cf">
+    <div id="tl_messages">
+      <?= $this->messages ?>
+	  </div>
   </div>
 
 </body>
