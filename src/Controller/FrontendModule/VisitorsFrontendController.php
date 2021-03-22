@@ -670,7 +670,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //FAQ Table exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tableExists('tl_faq_category')) {
+        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_faq_category')) {
             //FAQ Reader?
             $stmt = $dbconnection->prepare(
                         'SELECT id
@@ -692,7 +692,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //Isotope Table tl_iso_product exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tableExists('tl_iso_product')) {
+        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_iso_product')) {
             $strAlias = \Contao\Input::get('items');
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Get items: '.print_r($strAlias, true));
 
