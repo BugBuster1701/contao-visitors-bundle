@@ -864,7 +864,11 @@ class ModuleVisitorSearchEngine// extends Frontend
 
 	public function getEngine() { return $this->_search_engine; }
 
-	public function getKeywords() { return $this->_keywords; }
+	public function getKeywords() { 
+		
+		//XSS Fix
+		return htmlspecialchars($this->_keywords, ENT_QUOTES); 
+	 }
 
 	public function __toString() 
 	{
