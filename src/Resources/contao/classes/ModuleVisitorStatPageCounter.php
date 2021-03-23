@@ -109,7 +109,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -196,7 +196,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -274,7 +274,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -353,7 +353,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -563,7 +563,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
             	    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-            	    if (!is_null($objPage))
+            	    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
