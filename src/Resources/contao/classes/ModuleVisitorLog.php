@@ -35,11 +35,11 @@ class ModuleVisitorLog
         {
             if (!isset($GLOBALS['visitors']['debug']['first'])) 
             {
-                if ((bool) $GLOBALS['visitors']['debug']['tag']          ||
-                    (bool) $GLOBALS['visitors']['debug']['checks']       ||
-                    (bool) $GLOBALS['visitors']['debug']['referrer']     ||
-                    (bool) $GLOBALS['visitors']['debug']['searchengine'] ||
-                    (bool) $GLOBALS['visitors']['debug']['screenresolutioncount']
+                if ((bool) ($GLOBALS['visitors']['debug']['tag'] ?? false)          ||
+                    (bool) ($GLOBALS['visitors']['debug']['checks'] ?? false)       ||
+                    (bool) ($GLOBALS['visitors']['debug']['referrer'] ?? false)     ||
+                    (bool) ($GLOBALS['visitors']['debug']['searchengine'] ?? false) ||
+                    (bool) ($GLOBALS['visitors']['debug']['screenresolutioncount'] ?? false)
                    )
                 {
                     $arrUniqid = StringUtil::trimsplit('.', uniqid('c0n7a0', true));
