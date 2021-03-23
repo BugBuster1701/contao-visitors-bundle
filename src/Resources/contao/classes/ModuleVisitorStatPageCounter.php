@@ -109,7 +109,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias   = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -188,7 +196,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias   = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -258,7 +274,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias   = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -329,7 +353,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -531,7 +563,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
             	    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-            	    $alias   = $objPage->alias;
+            	    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
             	    break;
             	case self::PAGE_TYPE_NEWS:
             	    $alias   = false;
