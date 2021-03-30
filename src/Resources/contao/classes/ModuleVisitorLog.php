@@ -31,15 +31,16 @@ class ModuleVisitorLog
      */
     public static function writeLog($method, $line, $value)
     {
+        $GLOBALS['visitors']['debug']['tag'] = (bool) ($GLOBALS['visitors']['debug']['tag'] ?? false);
+        $GLOBALS['visitors']['debug']['checks'] = (bool) ($GLOBALS['visitors']['debug']['checks'] ?? false);
+        $GLOBALS['visitors']['debug']['referrer'] = (bool) ($GLOBALS['visitors']['debug']['referrer'] ?? false);
+        $GLOBALS['visitors']['debug']['searchengine'] = (bool) ($GLOBALS['visitors']['debug']['searchengine'] ?? false);
+        $GLOBALS['visitors']['debug']['screenresolutioncount'] = (bool) ($GLOBALS['visitors']['debug']['screenresolutioncount'] ?? false);
+        
         if ($method == '## START ##') 
         {
             if (!isset($GLOBALS['visitors']['debug']['first'])) 
             {
-                $GLOBALS['visitors']['debug']['tag'] = (bool) ($GLOBALS['visitors']['debug']['tag'] ?? false);
-                $GLOBALS['visitors']['debug']['checks'] = (bool) ($GLOBALS['visitors']['debug']['checks'] ?? false);
-                $GLOBALS['visitors']['debug']['referrer'] = (bool) ($GLOBALS['visitors']['debug']['referrer'] ?? false);
-                $GLOBALS['visitors']['debug']['searchengine'] = (bool) ($GLOBALS['visitors']['debug']['searchengine'] ?? false);
-                $GLOBALS['visitors']['debug']['screenresolutioncount'] = (bool) ($GLOBALS['visitors']['debug']['screenresolutioncount'] ?? false);
 
                 if ($GLOBALS['visitors']['debug']['tag']          ||
                     $GLOBALS['visitors']['debug']['checks']       ||
