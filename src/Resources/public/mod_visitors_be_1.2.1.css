@@ -1,4 +1,8 @@
 /* Style sheet visitors backend */
+.mod_visitors_be_reset {
+  border: 0 none !important;
+}
+
 .mod_visitors_be_statistics {
   width:50%;
   float:left;
@@ -71,12 +75,18 @@
 
 .mod_visitors_be_news_visit_hit_top {
   width:100%;
-  float:left;
+}
+
+.mod_visitors_be_news_visit_hit_days {
+  margin-top: 20px;
 }
 
 .mod_visitors_be_faq_visit_hit_top {
   width:100%;
-  float:left;
+}
+
+.mod_visitors_be_faq_visit_hit_days {
+  margin-top: 20px;
 }
 
 .mod_visitors_be_referrer {
@@ -102,6 +112,10 @@
   padding: 0;
   width: 90%;
 }
+
+.mod_visitors_be_table .bct {
+  background-color: transparent !important;
+} 
 
 .mod_visitors_be_folder 
 {
@@ -135,6 +149,14 @@
 .visitors_toggler {
 	border-bottom: 0 none;
 	padding: 0;
+}
+
+.visitors_toggler .limit_toggler {
+  background-color: transparent !important;
+}
+
+.visitors_toggler .limit_toggler button {
+  border: 0 none !important;
 }
 
 .visitors_toggler .limit_toggler button span {

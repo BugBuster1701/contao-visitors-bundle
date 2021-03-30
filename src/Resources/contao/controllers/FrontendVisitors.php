@@ -178,7 +178,7 @@ class FrontendVisitors extends \Frontend
 	    }
 	    //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
 	    $ClientIP = bin2hex(sha1($visitors_category_id . $ModuleVisitorChecks->visitorGetUserIP(), true)); // sha1 20 Zeichen, bin2hex 40 zeichen
-	    $BlockTime = ($BlockTime == '') ? 1800 : $BlockTime; //Sekunden
+	    $BlockTime = (empty($BlockTime)) ? 1800 : $BlockTime; //Sekunden
 	    $CURDATE = date('Y-m-d');
 
 	    //Visitor Screen Blocker

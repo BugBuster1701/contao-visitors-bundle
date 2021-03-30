@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle
  *
- * @copyright  Glen Langer 2020 <http://contao.ninja>
+ * @copyright  Glen Langer 2021 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @license    LGPL-3.0-or-later
@@ -138,19 +138,19 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
-                            tl_visitors.id AS id, 
-                            visitors_name, 
-                            visitors_startdate, 
-                            visitors_visit_start, 
+                        'SELECT
+                            tl_visitors.id AS id,
+                            visitors_name,
+                            visitors_startdate,
+                            visitors_visit_start,
                             visitors_hit_start,
                             visitors_average,
                             visitors_thousands_separator
-                        FROM 
-                            tl_visitors 
-                        LEFT JOIN 
+                        FROM
+                            tl_visitors
+                        LEFT JOIN
                             tl_visitors_category ON (tl_visitors_category.id = tl_visitors.pid)
-                        WHERE 
+                        WHERE
                             pid = :pid AND published = :published
                         ORDER BY id, visitors_name
                         LIMIT :limit')
@@ -246,12 +246,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         $stmt = $this->get('database_connection')
                 ->prepare(
-                    'SELECT 
-                        SUM(visitors_visit) AS SUMV, 
+                    'SELECT
+                        SUM(visitors_visit) AS SUMV,
                         MIN( visitors_date) AS MINDAY
-                    FROM 
+                    FROM
                         tl_visitors_counter
-                    WHERE 
+                    WHERE
                         vid = :vid AND visitors_date < :vdate
 
                     ')
@@ -277,11 +277,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$VisitorsId);
         $stmt = $this->get('database_connection')
                 ->prepare(
-                    'SELECT 
-                        COUNT(id) AS VOC 
-                    FROM 
+                    'SELECT
+                        COUNT(id) AS VOC
+                    FROM
                         tl_visitors_blocker
-                    WHERE 
+                    WHERE
                         vid = :vid AND visitors_type = :vtype
                     ')
         ;
@@ -312,11 +312,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
+                        'SELECT
                             SUM(visitors_visit) AS SUMV
-                        FROM 
+                        FROM
                             tl_visitors_counter
-                        WHERE 
+                        WHERE
                             vid = :vid
                         ')
                     ;
@@ -337,11 +337,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
+                        'SELECT
                             SUM(visitors_hit) AS SUMH
-                        FROM 
+                        FROM
                             tl_visitors_counter
-                        WHERE 
+                        WHERE
                             vid = :vid
                         ')
                     ;
@@ -362,11 +362,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
+                        'SELECT
                             visitors_visit
-                        FROM 
+                        FROM
                             tl_visitors_counter
-                        WHERE 
+                        WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
@@ -388,11 +388,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
+                        'SELECT
                             visitors_hit
-                        FROM 
+                        FROM
                             tl_visitors_counter
-                        WHERE 
+                        WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
@@ -414,11 +414,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
+                        'SELECT
                             visitors_visit
-                        FROM 
+                        FROM
                             tl_visitors_counter
-                        WHERE 
+                        WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
@@ -440,11 +440,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
+                        'SELECT
                             visitors_hit
-                        FROM 
+                        FROM
                             tl_visitors_counter
-                        WHERE 
+                        WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
@@ -486,13 +486,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
+                        'SELECT
                             SUM(visitors_page_hit)   AS visitors_page_hits
-                        FROM 
+                        FROM
                         tl_visitors_pages
-                        WHERE 
+                        WHERE
                             vid = :vid
-                        AND 
+                        AND
                             visitors_page_id = :vpageid
                         AND
                             visitors_page_type = :vpagetype
@@ -524,14 +524,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objPage->id);
         $stmt = $this->get('database_connection')
                     ->prepare(
-                        'SELECT 
-                            tl_visitors.id AS id, 
+                        'SELECT
+                            tl_visitors.id AS id,
                             visitors_block_time
-                        FROM 
-                            tl_visitors 
-                        LEFT JOIN 
+                        FROM
+                            tl_visitors
+                        LEFT JOIN
                             tl_visitors_category ON (tl_visitors_category.id = tl_visitors.pid)
-                        WHERE 
+                        WHERE
                             pid = :pid AND published = :published
                         ORDER BY id, visitors_name
                         LIMIT 1
@@ -651,8 +651,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_news')) {
             //News Reader?
             $stmt = $dbconnection->prepare(
-                        'SELECT id 
-                        FROM tl_news_archive 
+                        'SELECT id
+                        FROM tl_news_archive
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ')
@@ -670,11 +670,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //FAQ Table exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tableExists('tl_faq_category')) {
+        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_faq_category')) {
             //FAQ Reader?
             $stmt = $dbconnection->prepare(
-                        'SELECT id 
-                        FROM tl_faq_category 
+                        'SELECT id
+                        FROM tl_faq_category
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ')
@@ -692,13 +692,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //Isotope Table tl_iso_product exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tableExists('tl_iso_product')) {
+        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_iso_product')) {
             $strAlias = \Contao\Input::get('items');
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Get items: '.print_r($strAlias, true));
 
             $stmt = $dbconnection->prepare(
-                        'SELECT id 
-                        FROM tl_iso_product 
+                        'SELECT id
+                        FROM tl_iso_product
                         WHERE alias = :alias
                         LIMIT 1
                         ')
@@ -767,8 +767,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_NEWS === $PageType) {
             //alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
-                        'SELECT id 
-                        FROM tl_news 
+                        'SELECT id
+                        FROM tl_news
                         WHERE alias = :alias
                         LIMIT 1
                         ')
@@ -786,8 +786,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_FAQ === $PageType) {
             //alias = are-there-exams-how-do-they-work
             $stmt = $dbconnection->prepare(
-                        'SELECT id 
-                        FROM tl_faq 
+                        'SELECT id
+                        FROM tl_faq
                         WHERE alias = :alias
                         LIMIT 1
                         ')
@@ -805,8 +805,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_ISOTOPE === $PageType) {
             //alias = a-perfect-circle-thirteenth-step
             $stmt = $dbconnection->prepare(
-                        'SELECT id 
-                        FROM tl_iso_product 
+                        'SELECT id
+                        FROM tl_iso_product
                         WHERE alias = :alias
                         LIMIT 1
                         ')
@@ -852,9 +852,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         //Visitor Blocker
         $stmt = $dbconnection->prepare(
-                                'DELETE FROM tl_visitors_blocker 
+                                'DELETE FROM tl_visitors_blocker
                                 WHERE CURRENT_TIMESTAMP - INTERVAL :blocktime SECOND > visitors_tstamp
-                                AND vid = :vid 
+                                AND vid = :vid
                                 AND visitors_type = :vtype
                                 ')
                             ;
@@ -866,9 +866,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         //Hit Blocker for IE8 Bullshit and Browser Counting
         // 3 Sekunden Blockierung zw. Zählung per Tag und Zählung per Browser
         $stmt = $dbconnection->prepare(
-                                'DELETE FROM tl_visitors_blocker 
+                                'DELETE FROM tl_visitors_blocker
                                 WHERE CURRENT_TIMESTAMP - INTERVAL :blocktime SECOND > visitors_tstamp
-                                AND vid = :vid 
+                                AND vid = :vid
                                 AND visitors_type = :vtype
                                 ')
                             ;
@@ -885,12 +885,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         //Test ob Hits gesetzt werden muessen (IE8 Bullshit and Browser Counting)
         $objHitIP = $dbconnection->prepare(
-                            'SELECT 
-                                id, 
+                            'SELECT
+                                id,
                                 visitors_ip
-                            FROM 
+                            FROM
                                 tl_visitors_blocker
-                            WHERE 
+                            WHERE
                                 visitors_ip = :vip
                             AND vid = :vid
                             AND visitors_type = :vtype
@@ -903,13 +903,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         //Hits und Visits lesen
         $objHitCounter = $dbconnection->prepare(
-                            'SELECT 
-                                id, 
-                                visitors_hit, 
+                            'SELECT
+                                id,
+                                visitors_hit,
                                 visitors_visit
-                            FROM 
+                            FROM
                                 tl_visitors_counter
-                            WHERE 
+                            WHERE
                                 visitors_date = :vdate AND vid = :vid
                             ')
                         ;
@@ -922,12 +922,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             if ($objHitIP->rowCount() < 1) {
                 //at first: block
                 $stmt = $dbconnection->prepare(
-                                    'INSERT INTO 
+                                    'INSERT INTO
                                         tl_visitors_blocker
-                                    SET 
-                                        vid = :vid, 
-                                        visitors_tstamp = CURRENT_TIMESTAMP, 
-                                        visitors_ip = :vip, 
+                                    SET
+                                        vid = :vid,
+                                        visitors_tstamp = CURRENT_TIMESTAMP,
+                                        visitors_ip = :vip,
                                         visitors_type = :vtype
                                     ')
                                 ;
@@ -938,12 +938,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                 // Insert
                 $stmt = $dbconnection->prepare(
-                                'INSERT IGNORE INTO 
+                                'INSERT IGNORE INTO
                                     tl_visitors_counter
-                                SET 
-                                    vid = :vid, 
-                                    visitors_date = :vdate, 
-                                    visitors_visit = :vv, 
+                                SET
+                                    vid = :vid,
+                                    visitors_date = :vdate,
+                                    visitors_visit = :vv,
                                     visitors_hit = :vh
                                 ')
                             ;
@@ -980,12 +980,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             if ($objHitIP->rowCount() < 1) {
                 // Update
                 $stmt = $dbconnection->prepare(
-                                    'INSERT INTO 
+                                    'INSERT INTO
                                         tl_visitors_blocker
-                                    SET 
-                                        vid = :vid, 
-                                        visitors_tstamp = CURRENT_TIMESTAMP, 
-                                        visitors_ip = :vip, 
+                                    SET
+                                        vid = :vid,
+                                        visitors_tstamp = CURRENT_TIMESTAMP,
+                                        visitors_ip = :vip,
                                         visitors_type = :vtype
                                     ')
                                 ;
@@ -995,11 +995,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $stmt->execute();
 
                 $stmt = $dbconnection->prepare(
-                                'UPDATE 
-                                    tl_visitors_counter 
-                                SET 
-                                    visitors_hit = :vhit 
-                                WHERE 
+                                'UPDATE
+                                    tl_visitors_counter
+                                SET
+                                    visitors_hit = :vhit
+                                WHERE
                                     id = :vid
                                 ')
                             ;
@@ -1016,13 +1016,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         //Visits / IP setzen
         $objVisitIP = $dbconnection->prepare(
-                    'SELECT 
-                        id, 
+                    'SELECT
+                        id,
                         visitors_ip
-                    FROM 
+                    FROM
                         tl_visitors_blocker
-                    WHERE 
-                        visitors_ip = :vip 
+                    WHERE
+                        visitors_ip = :vip
                     AND vid = :vid
                     AND visitors_type = :vtype
                     ')
@@ -1035,12 +1035,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if ($objVisitIP->rowCount() < 1) {
             // not blocked: Insert IP + Update Visits
             $stmt = $dbconnection->prepare(
-                            'INSERT INTO 
+                            'INSERT INTO
                                 tl_visitors_blocker
-                            SET 
-                                vid = :vid, 
-                                visitors_tstamp = CURRENT_TIMESTAMP, 
-                                visitors_ip = :vip, 
+                            SET
+                                vid = :vid,
+                                visitors_tstamp = CURRENT_TIMESTAMP,
+                                visitors_ip = :vip,
                                 visitors_type = :vtype
                             ')
                         ;
@@ -1050,13 +1050,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->execute();
 
             $stmt = $dbconnection->prepare(
-                            'UPDATE 
-                                tl_visitors_counter 
-                            SET 
-                                visitors_visit = :vvis 
-                            WHERE 
+                            'UPDATE
+                                tl_visitors_counter
+                            SET
+                                visitors_visit = :vvis
+                            WHERE
                                 vid = :vid
-                            AND 
+                            AND
                                 visitors_date = :vdate
                             ')
                         ;
@@ -1070,10 +1070,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         } else {
             // blocked: Update tstamp
             $stmt = $dbconnection->prepare(
-                            'UPDATE 
+                            'UPDATE
                                 tl_visitors_blocker
-                            SET 
-                                visitors_tstamp = CURRENT_TIMESTAMP 
+                            SET
+                                visitors_tstamp = CURRENT_TIMESTAMP
                             WHERE
                                 vid = :vid
                             AND
@@ -1151,10 +1151,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 if ($objPageId > 0) {
                     //Page Counter Insert
                     $stmt = $dbconnection->prepare(
-                                    'INSERT IGNORE INTO 
+                                    'INSERT IGNORE INTO
                                         tl_visitors_pages
-                                    SET 
-                                        vid = :vid, 
+                                    SET
+                                        vid = :vid,
                                         visitors_page_date  = :vpagedate,
                                         visitors_page_id    = :vpageid,
                                         visitors_page_pid   = :vpagepid,
@@ -1205,12 +1205,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     ++$visitors_page_visits;
                 }
                 $stmt = $dbconnection->prepare(
-                                'UPDATE 
-                                    tl_visitors_pages 
-                                SET 
+                                'UPDATE
+                                    tl_visitors_pages
+                                SET
                                     visitors_page_hit = :vpagehit,
                                     visitors_page_visit = :vpagevis
-                                WHERE 
+                                WHERE
                                     id = :vid
                                 ')
                             ;
@@ -1256,13 +1256,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     //Debug 	log_message("Unbekannter User Agent: ".$this->Environment->httpUserAgent."", 'unknown.log');
                     //Debug }
                     $objBrowserCounter = $dbconnection->prepare(
-                                        'SELECT 
+                                        'SELECT
                                             id,
                                             visitors_counter
-                                        FROM 
+                                        FROM
                                             tl_visitors_browser
-                                        WHERE 
-                                            vid = :vid 
+                                        WHERE
+                                            vid = :vid
                                             AND visitors_browser = :vbrowser
                                             AND visitors_os = :vos
                                             AND visitors_lang = :vlang
@@ -1297,11 +1297,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         $visitors_counter = $objBrowserCounterResult->visitors_counter + 1;
                         // Update
                         $stmt = $dbconnection->prepare(
-                                        'UPDATE 
-                                            tl_visitors_browser 
-                                        SET 
+                                        'UPDATE
+                                            tl_visitors_browser
+                                        SET
                                             visitors_counter = :vcounter
-                                        WHERE 
+                                        WHERE
                                             id = :vid
                                         ')
                                     ;
@@ -1343,9 +1343,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $CleanTime = mktime(0, 0, 0, (int) date('m') - 3, (int) date('d'), (int) date('Y')); // Einträge >= 90 Tage werden gelöscht
                 $stmt = $this->get('database_connection')
                             ->prepare(
-                                'DELETE FROM 
+                                'DELETE FROM
                                     tl_visitors_searchengines
-                                WHERE 
+                                WHERE
                                     vid = :vid AND tstamp < :tstamp
                                 ')
                             ;
@@ -1396,9 +1396,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                     $stmt = $this->get('database_connection')
                                 ->prepare(
-                                    'DELETE FROM 
+                                    'DELETE FROM
                                         tl_visitors_referrer
-                                    WHERE 
+                                    WHERE
                                         vid = :vid AND tstamp < :tstamp
                                     ')
                                 ;

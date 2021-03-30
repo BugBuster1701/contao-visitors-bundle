@@ -70,13 +70,13 @@ class BackendVisitors extends \Backend
 		// <h1 class="main_headline">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for'].': '.\Idna::decode(str_rot13($this->Input->get('tl_referrer',true))).'</h1>
 		$objTemplate->messages = '
     	<div class="tl_listing_container list_view">
-		  <table cellpadding="0" cellspacing="0" summary="Table lists records" class="mod_visitors_be_table_version">
-		  <tbody>
-		  <tr>
-		      <td style="padding-left: 2px;" class="tl_folder_tlist">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['visitor_referrer'].'</td>
-		      <td style="width: 145px; padding-left: 2px;" class="tl_folder_tlist">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['visitor_referrer_last_seen'].'</td>
-		      <td style="width: 80px; padding-left: 2px; text-align: center;" class="tl_folder_tlist">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['number'].'</td>
-		  </tr>';
+            <table cellpadding="0" cellspacing="0" summary="Table lists records" class="mod_visitors_be_table_version">
+                <tbody>
+                    <tr>
+                        <th style="padding-left: 2px;" class="tl_folder_tlist">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['visitor_referrer'].'</th>
+                        <th style="width: 145px; padding-left: 2px;" class="tl_folder_tlist">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['visitor_referrer_last_seen'].'</th>
+                        <th style="width: 80px; padding-left: 2px; text-align: center;" class="tl_folder_tlist">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['number'].'</th>
+                    </tr>';
 		/*$objDetails = \Database::getInstance()->prepare("SELECT `visitors_referrer_full`, count(id) as ANZ"
 						                     . " FROM `tl_visitors_referrer`"
 						                     . " WHERE `visitors_referrer_dns` = ?"
@@ -100,25 +100,25 @@ class BackendVisitors extends \Backend
 	        while ($objDetails->next())
 	        {
 				$objTemplate->messages .= '
-            <tr>
-                <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.rawurldecode(htmlspecialchars(\Idna::decode($objDetails->visitors_referrer_full))).'</td>
-                <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.date($GLOBALS['TL_CONFIG']['datimFormat'], $objDetails->maxtstamp).'</td>
-                <td class="tl_file_list" style="text-align: center;">'.$objDetails->ANZ.'</td>
-            </tr>';
+                    <tr>
+                        <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.rawurldecode(htmlspecialchars(\Idna::decode($objDetails->visitors_referrer_full))).'</td>
+                        <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.date(\Contao\Config::get('datimFormat'), $objDetails->maxtstamp).'</td>
+                        <td class="tl_file_list" style="text-align: center;">'.$objDetails->ANZ.'</td>
+                    </tr>';
 	        }
         }
         else
         {
         	$objTemplate->messages .= '
-            <tr>
-                <td colspan="3">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['no_data'].'</td>
-            </tr>';
+                    <tr>
+                        <td colspan="3">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['no_data'].'</td>
+                    </tr>';
         }
 	    $objTemplate->messages .= '
-            <tr>
-                <td colspan="3">&nbsp;</td>
-            </tr>
-            </tbody>
+                    <tr>
+                        <td colspan="3">&nbsp;</td>
+                    </tr> 
+                </tbody>
             </table>
         </div>';
 

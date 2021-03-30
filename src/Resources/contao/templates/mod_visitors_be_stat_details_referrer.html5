@@ -14,21 +14,15 @@
   <link rel="stylesheet" href="<?= TL_ASSETS_URL ?>system/themes/<?= $this->theme ?>/main.css">
   <link rel="stylesheet" href="bundles/bugbustervisitors/mod_visitors_be_<?= $this->visitorsbecss ?>.css">
   <?= $this->stylesheets ?>
-
   <script><?= $this->getLocaleString() ?></script>
-  <script src="<?= TL_ASSETS_URL ?>assets/mootools/js/mootools.min.js"></script>
-  <script src="<?= TL_ASSETS_URL ?>bundles/contaocore/mootao.min.js"></script>
-  <script src="<?= TL_ASSETS_URL ?>bundles/contaocore/core.min.js"></script>
-  <script><?= $this->getDateString() ?></script>
   <?= $this->javascripts ?>
 
 </head>
 <body class="<?= $this->ua ?> popup">
-
-  <div id="container" class="cf">
-	<div id="tl_messages">
-	  <?= $this->messages ?>
-	</div>
+  <div id="main" class="cf">
+    <div id="tl_messages">
+      <?= $this->messages ?>
+	  </div>
   </div>
 
 </body>

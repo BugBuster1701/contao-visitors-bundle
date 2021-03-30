@@ -50,7 +50,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         parent::__construct();
 
         $this->today     = date('Y-m-d');
-        $this->yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+        $this->yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
     }
 
     protected function compile()
@@ -109,7 +109,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias   = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -188,7 +196,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias   = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -258,7 +274,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias   = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -291,7 +315,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     public function generatePageVisitHitDays($VisitorsID, $limit=20, $days=7)
     {
         $arrPageStatCount = false;
-        $week = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-$days, date("Y")));
+        $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_pagevisithitdays');
 
@@ -329,7 +353,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    $alias = $objPage->alias;
+                    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
@@ -495,7 +527,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
      */
     public function generatePageVisitHitTopDays($VisitorsID, $days = 365, $parse = false)
     {
-        $STARTDATE = date("Y-m-d", mktime(0, 0, 0, date("m"), date("d")-$days, date("Y"))); 
+        $STARTDATE = date("Y-m-d", mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y"))); 
         $arrPageStatCount = false;
         $objPageStatCount = \Database::getInstance()
                             ->prepare("SELECT
@@ -531,7 +563,15 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
             	    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-            	    $alias   = $objPage->alias;
+            	    if (!is_null($objPage))
+                    {
+                        $alias = $objPage->alias;
+                    } 
+                    else 
+                    {
+                        //Seite in der Statistik existiert nicht mehr in der Seitenstruktur
+                        $alias = '-/-';    
+                    }
             	    break;
             	case self::PAGE_TYPE_NEWS:
             	    $alias   = false;

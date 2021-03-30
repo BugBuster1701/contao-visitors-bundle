@@ -49,7 +49,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         parent::__construct();
 
         $this->today     = date('Y-m-d');
-        $this->yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+        $this->yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
 
         if (\Database::getInstance()->tableExists('tl_news') &&
             \Database::getInstance()->tableExists('tl_news_archive'))
@@ -184,6 +184,76 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         return false;
     }
 
+    public function generateNewsVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
+    {
+        $arrNewsStatCount = false;
+        $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
+
+        //News Tables exists?
+        if (true === $this->getNewstableexists())
+        {
+            $objNewsStatCount = \Database::getInstance()
+                            ->prepare("SELECT 
+                                            visitors_page_id,
+                                            visitors_page_lang,
+                                            SUM(visitors_page_visit) AS visitors_page_visits,
+                                            SUM(visitors_page_hit)   AS visitors_page_hits
+                                        FROM
+                                            tl_visitors_pages
+                                        WHERE
+                                            vid = ?
+                                        AND 
+                                            visitors_page_type = ?
+                                        AND
+                                            visitors_page_date >= ?
+                                        GROUP BY 
+                                            visitors_page_id, 
+                                            visitors_page_lang
+                                        ORDER BY 
+                                            visitors_page_visits DESC,
+                                            visitors_page_hits DESC,
+                                            visitors_page_id,
+                                            visitors_page_lang
+                                    ")
+                            ->limit($limit)
+                            ->execute($VisitorsID, self::PAGE_TYPE_NEWS, $week);
+
+            while ($objNewsStatCount->next())
+            {
+        	    $alias   = false;
+        	    $aliases = $this->getNewsAliases($objNewsStatCount->visitors_page_id);
+        	    if (false !== $aliases['PageAlias'])
+        	    {
+        	       $alias = $aliases['PageAlias'] .'/'. $aliases['NewsAlias'];
+        	    }
+
+                if (false !== $alias) 
+                {
+                    $arrNewsStatCount[] = array
+                    (
+                        'title'         => $aliases['NewsArchivTitle'],
+                        'alias'         => $alias,
+                        'lang'          => $objNewsStatCount->visitors_page_lang,
+                        'visits'        => $objNewsStatCount->visitors_page_visits,
+                        'hits'          => $objNewsStatCount->visitors_page_hits
+                    );
+                }
+            }
+            if ($parse === true)
+            {
+                // @var $TemplatePartial Template
+                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_newsvisithitdays');
+                $TemplatePartial->NewsVisitHitDays = $arrNewsStatCount;
+
+                return $TemplatePartial->parse();
+            }
+
+            return $arrNewsStatCount;
+        }
+
+        return false;
+    }
+
     public function generateFaqVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
         $arrFaqStatCount = false;
@@ -240,6 +310,77 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
                 // @var $TemplatePartial Template
                 $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithittop');
                 $TemplatePartial->FaqVisitHitTop = $arrFaqStatCount;
+
+                return $TemplatePartial->parse();
+            }
+
+            return $arrFaqStatCount;
+        }
+
+        return false;
+
+    }
+
+    public function generateFaqVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
+    {
+        $arrFaqStatCount = false;
+        $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
+
+        //FAQ Tables exists?
+        if (true === $this->getFaqtableexists())
+        {
+            $objFaqStatCount = \Database::getInstance()
+                            ->prepare("SELECT
+                                            visitors_page_id,
+                                            visitors_page_lang,
+                                            SUM(visitors_page_visit) AS visitors_page_visits,
+                                            SUM(visitors_page_hit)   AS visitors_page_hits
+                                        FROM
+                                            tl_visitors_pages
+                                        WHERE
+                                            vid = ?
+                                        AND 
+                                            visitors_page_type = ?
+                                        AND
+                                            visitors_page_date >= ?
+                                        GROUP BY
+                                            visitors_page_id,
+                                            visitors_page_lang
+                                        ORDER BY
+                                            visitors_page_visits DESC,
+                                            visitors_page_hits DESC,
+                                            visitors_page_id,
+                                            visitors_page_lang
+                                    ")
+                            ->limit($limit)
+                            ->execute($VisitorsID, self::PAGE_TYPE_FAQ, $week);
+
+            while ($objFaqStatCount->next())
+            {
+                $alias   = false;
+                $aliases = $this->getFaqAliases($objFaqStatCount->visitors_page_id);
+                if (false !== $aliases['PageAlias'])
+                {
+                    $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
+                }
+
+                if (false !== $alias)
+                {
+                    $arrFaqStatCount[] = array
+                    (
+                        'title'         => $aliases['FaqArchivTitle'],
+                        'alias'         => $alias,
+                        'lang'          => $objFaqStatCount->visitors_page_lang,
+                        'visits'        => $objFaqStatCount->visitors_page_visits,
+                        'hits'          => $objFaqStatCount->visitors_page_hits
+                    );
+                }
+            }
+            if ($parse === true)
+            {
+                // @var $TemplatePartial Template
+                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithitdays');
+                $TemplatePartial->FaqVisitHitDays = $arrFaqStatCount;
 
                 return $TemplatePartial->parse();
             }

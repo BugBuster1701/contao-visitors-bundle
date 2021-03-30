@@ -233,9 +233,12 @@ class ModuleVisitorStat extends \BackendModule
 				$arrVisitorsPageVisitHitsYesterday[$intAnzCounter] = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitYesterday($objVisitorsID, 5);
 
 				// News
-				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID, 10, true);
+				$arrVisitorsNewsVisitHits[$intAnzCounter]          = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitTop($objVisitorsID, 20, true);
+				$arrVisitorsNewsVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatNewsFaqCounter::getInstance()->generateNewsVisitHitDays($objVisitorsID, 20, true, 7);
+
 				// Faq
-				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID, 10, true);
+				$arrVisitorsFaqVisitHits[$intAnzCounter]           = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitTop($objVisitorsID, 20, true);
+				$arrVisitorsFaqVisitHitsDays[$intAnzCounter]       = ModuleVisitorStatNewsFaqCounter::getInstance()->generateFaqVisitHitDays($objVisitorsID, 20, true, 7);
 
 				// Isotope
 				$arrVisitorsIsotopeVisitHits[$intAnzCounter]       = ModuleVisitorStatIsotopeProductCounter::getInstance()->generateIsotopeVisitHitTop($objVisitorsID, 20, true);
@@ -286,7 +289,9 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorsstatPageVisitHitsToday     = $arrVisitorsPageVisitHitsToday;
 		$this->Template->visitorsstatPageVisitHitsYesterday = $arrVisitorsPageVisitHitsYesterday;
 		$this->Template->visitorsstatNewsVisitHits     = $arrVisitorsNewsVisitHits;
+		$this->Template->visitorsstatNewsVisitHitsDays = $arrVisitorsNewsVisitHitsDays;
 		$this->Template->visitorsstatFaqVisitHits      = $arrVisitorsFaqVisitHits;
+		$this->Template->visitorsstatFaqVisitHitsDays  = $arrVisitorsFaqVisitHitsDays;
 		$this->Template->visitorsstatIsotopeVisitHits  = $arrVisitorsIsotopeVisitHits;
 		$this->Template->visitorsstatBrowser  	   = $arrVisitorsStatBrowser;
 		$this->Template->visitorsstatBrowser2  	   = $arrVisitorsStatBrowser2;
@@ -302,7 +307,6 @@ class ModuleVisitorStat extends \BackendModule
 		$this->Template->visitorskats          = $arrVisitorCategories;
 		$this->Template->visitorskatid         = $this->intKatID;
 		$this->Template->visitorsstatkat       = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'];
-		$this->Template->visitors_export_title = $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_button_title'];
 		$this->Template->visitors_exportfield  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'].' '.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'];
 
         //ExportDays
@@ -392,8 +396,8 @@ class ModuleVisitorStat extends \BackendModule
     		        $visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
     		    }
     		    // day of the week prüfen
-    		    if (strpos($GLOBALS['TL_CONFIG']['dateFormat'], 'D')===false  // day of the week short 
-    		     && strpos($GLOBALS['TL_CONFIG']['dateFormat'], 'l')===false) // day of the week long
+    		    if (strpos(\Contao\Config::get('dateFormat'), 'D')===false  // day of the week short 
+    		     && strpos(\Contao\Config::get('dateFormat'), 'l')===false) // day of the week long
     		    {
     		        $visitors_day_of_week_prefix = 'D, ';
     		    }
@@ -484,9 +488,9 @@ class ModuleVisitorStat extends \BackendModule
 	    $CurrentMonthVisits = 0;
 	    $CurrentMonthHits   = 0;
 	    $YearCurrentMonth   = date('Y-m-d');
-	    $YearLastMonth      = date('Y-m-d', mktime(0, 0, 0, date("m")-1, 1, date("Y")));
+	    $YearLastMonth      = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")));
 	    $CurrentMonth   	= (int) date('m');
-	    $LastMonth			= (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")));
+	    $LastMonth			= (int) date('m', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")));
 	    $ORDER = ($CurrentMonth > $LastMonth) ? 'DESC' : 'ASC'; // damit immer eine absteigene Monatsreihenfolge kommt
 		if ($VisitorsID) 
 		{
@@ -516,7 +520,7 @@ class ModuleVisitorStat extends \BackendModule
 			    	$CurrentMonthVisits = $objVisitorsToMo->SUMV;
 			    	$CurrentMonthHits   = $objVisitorsToMo->SUMH;
 			    }
-			    if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")))) 
+			    if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")))) 
 			    {
 		            $LastMonthVisits = $objVisitorsToMo->SUMV;
 		            $LastMonthHits   = $objVisitorsToMo->SUMH;
@@ -524,7 +528,7 @@ class ModuleVisitorStat extends \BackendModule
 			    if ($intRows==2) 
 			    {
 	                $objVisitorsToMo->next();
-	                if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, date("m")-1, 1, date("Y")))) 
+	                if ((int) $objVisitorsToMo->M == (int) date('m', mktime(0, 0, 0, (int) date("m")-1, 1, (int) date("Y")))) 
 	                {
 		        	    $LastMonthVisits = $objVisitorsToMo->SUMV;
 		                $LastMonthHits   = $objVisitorsToMo->SUMH;
@@ -546,8 +550,8 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function getOtherMonth($VisitorsID)
 	{
-	    $StartMonth = date('Y-m-d', mktime(0, 0, 0, date("m")-11, 1, date("Y"))); // aktueller Monat -11
-	    $EndMonth   = date('Y-m-d', mktime(0, 0, 0, date("m")-1, 0, date("Y"))); // letzter Tag des vorletzten Monats
+	    $StartMonth = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-11, 1, (int) date("Y"))); // aktueller Monat -11
+	    $EndMonth   = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-1, 0, (int) date("Y"))); // letzter Tag des vorletzten Monats
 		if ($VisitorsID) 
 		{
 			//Total je Monat (aktueller und letzter)
@@ -587,7 +591,7 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function getOtherYears($VisitorsID)
 	{
-	    $StartYear = date('Y-m-d', mktime(0, 0, 0, 1, 1, date("Y")-11)); // aktuelles Jahr -11
+	    $StartYear = date('Y-m-d', mktime(0, 0, 0, 1, 1, (int) date("Y")-11)); // aktuelles Jahr -11
 	    $EndYear   = date('Y-m-d'); // Aktuelles Datum
 	    if ($VisitorsID)
 	    {
@@ -637,7 +641,7 @@ class ModuleVisitorStat extends \BackendModule
 		if ($VisitorsID) 
 		{
 			$today     = date('Y-m-d');
-			$yesterday = date('Y-m-d', mktime(0, 0, 0, date("m"), date("d")-1, date("Y")));
+			$yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
     	    //Durchschnittswerte bis heute 00:00 Uhr, also bis einschließlich gestern
     	    $objVisitorsAverageCount = \Database::getInstance()
     	            ->prepare("SELECT 
@@ -665,7 +669,7 @@ class ModuleVisitorStat extends \BackendModule
             if ($tmpTotalDays > 30) 
             {
 	            //Durchschnittswerte der letzten 30 Tage
-	            $day30 = date('Y-m-d', mktime(0, 0, 0, date("m")-1, date("d")-1, date("Y")));            
+	            $day30 = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-1, (int) date("d")-1, (int) date("Y")));            
 
 	            $objVisitorsAverageCount = \Database::getInstance()
 	                    ->prepare("SELECT 
@@ -688,7 +692,7 @@ class ModuleVisitorStat extends \BackendModule
             if ($tmpTotalDays > 60) 
             {
 	            //Durchschnittswerte der letzten 60 Tage
-	            $day60 = date('Y-m-d', mktime(0, 0, 0, date("m")-2, date("d")-1, date("Y")));
+	            $day60 = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-2, (int) date("d")-1, (int) date("Y")));
 
 	            $objVisitorsAverageCount = \Database::getInstance()
 	                    ->prepare("SELECT 
@@ -739,9 +743,9 @@ class ModuleVisitorStat extends \BackendModule
 	    $CurrentWeekVisits = 0;
 	    $CurrentWeekHits   = 0;
 	    $CurrentWeek       = date('W'); 
-	    $LastWeek          = date('W', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")));
+	    $LastWeek          = date('W', mktime(0, 0, 0, (int) date("m"), (int) date("d")-7, (int) date("Y")));
         $YearCurrentWeek   = date('o');
-        $YearLastWeek      = date('o', mktime(0, 0, 0, date("m"), date("d")-7, date("Y")));
+        $YearLastWeek      = date('o', mktime(0, 0, 0, (int) date("m"), (int) date("d")-7, (int) date("Y")));
 
 	    if ($VisitorsID) 
 	    {
@@ -1097,7 +1101,7 @@ class ModuleVisitorStat extends \BackendModule
 	{
 		$VisitorsSearchEngines        = array(); // only searchengines
 		$VisitorsSearchEngineKeywords = array(); //searchengine - keywords, order by keywords
-		$day60 = mktime(0, 0, 0, date("m")-2, date("d"), date("Y"));
+		$day60 = mktime(0, 0, 0, (int) date("m")-2, (int) date("d"), (int) date("Y"));
 
 		$objVisitors = \Database::getInstance()
 		        ->prepare("SELECT 
@@ -1245,7 +1249,7 @@ class ModuleVisitorStat extends \BackendModule
 	            $strModified = $prefix . 'Y-m-d';
 	            break;
 	        default:
-	            $strModified = $prefix . $GLOBALS['TL_CONFIG']['dateFormat'];
+	            $strModified = $prefix . \Contao\Config::get('dateFormat');
 	            break;
 	    }
         if (\is_null($intTstamp))
