@@ -35,11 +35,17 @@ class ModuleVisitorLog
         {
             if (!isset($GLOBALS['visitors']['debug']['first'])) 
             {
-                if ((bool) ($GLOBALS['visitors']['debug']['tag'] ?? false)          ||
-                    (bool) ($GLOBALS['visitors']['debug']['checks'] ?? false)       ||
-                    (bool) ($GLOBALS['visitors']['debug']['referrer'] ?? false)     ||
-                    (bool) ($GLOBALS['visitors']['debug']['searchengine'] ?? false) ||
-                    (bool) ($GLOBALS['visitors']['debug']['screenresolutioncount'] ?? false)
+                $GLOBALS['visitors']['debug']['tag'] = (bool) ($GLOBALS['visitors']['debug']['tag'] ?? false);
+                $GLOBALS['visitors']['debug']['checks'] = (bool) ($GLOBALS['visitors']['debug']['checks'] ?? false);
+                $GLOBALS['visitors']['debug']['referrer'] = (bool) ($GLOBALS['visitors']['debug']['referrer'] ?? false);
+                $GLOBALS['visitors']['debug']['searchengine'] = (bool) ($GLOBALS['visitors']['debug']['searchengine'] ?? false);
+                $GLOBALS['visitors']['debug']['screenresolutioncount'] = (bool) ($GLOBALS['visitors']['debug']['screenresolutioncount'] ?? false);
+
+                if ($GLOBALS['visitors']['debug']['tag']          ||
+                    $GLOBALS['visitors']['debug']['checks']       ||
+                    $GLOBALS['visitors']['debug']['referrer']     ||
+                    $GLOBALS['visitors']['debug']['searchengine'] ||
+                    $GLOBALS['visitors']['debug']['screenresolutioncount']
                    )
                 {
                     $arrUniqid = StringUtil::trimsplit('.', uniqid('c0n7a0', true));
