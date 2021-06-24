@@ -1,5 +1,11 @@
 services:
-    _defaults: { autowire: true, autoconfigure: true, public: true }
+    _defaults: { autowire: true, autoconfigure: true, public: false }
+
+    BugBuster\VisitorsBundle\Controller\VisitorsFeController:
+        public: true
+        calls:
+            - method: setContainer
+              arguments: [ '@service_container' ]
 
     BugBuster\VisitorsBundle\Controller\FrontendModule\VisitorsFrontendController:
         public: true
@@ -12,5 +18,3 @@ services:
                 renderer: esi
             -
                 name: container.service_subscriber
-
-        
