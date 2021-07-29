@@ -7,6 +7,12 @@ services:
             - method: setContainer
               arguments: [ '@service_container' ]
 
+    BugBuster\VisitorsBundle\Controller\VisitorsController:
+        public: true
+        calls:
+            - method: setContainer
+              arguments: [ '@service_container' ]
+
     BugBuster\VisitorsBundle\Controller\FrontendModule\VisitorsFrontendController:
         public: true
         tags:
