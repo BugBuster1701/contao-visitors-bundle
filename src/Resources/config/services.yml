@@ -1,6 +1,22 @@
 services:
+    _defaults: { autowire: true, autoconfigure: true, public: false }
+
     BugBuster\VisitorsBundle\Migration\Version167Update:
+        public: true
         arguments:
             - '@database_connection'
         tags:
             - { name: contao.migration, priority: 0 }
+
+
+    BugBuster\VisitorsBundle\Controller\VisitorsFeController:
+        public: true
+        calls:
+            - method: setContainer
+              arguments: [ '@service_container' ]
+
+    BugBuster\VisitorsBundle\Controller\VisitorsController:
+        public: true
+        calls:
+            - method: setContainer
+              arguments: [ '@service_container' ]
