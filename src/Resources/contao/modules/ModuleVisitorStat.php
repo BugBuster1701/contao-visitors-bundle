@@ -583,7 +583,7 @@ class ModuleVisitorStat extends \BackendModule
 			}
 		}
 
-		return $arrOtherMonth;
+		return $arrOtherMonth ?? array();
 	}
 
 	/**
@@ -622,7 +622,7 @@ class ModuleVisitorStat extends \BackendModule
 	        }
 	    }
 
-	    return $arrOtherYear;
+	    return $arrOtherYear ?? array();
 	}
 
 	/**
