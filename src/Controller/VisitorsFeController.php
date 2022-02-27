@@ -33,9 +33,9 @@ class VisitorsFeController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/screencount", name="visitors_frontend_screencount")
+     * @Route("/scco", name="visitors_frontend_screencount")
      */
-    public function screencountAction()
+    public function sccoAction()
     {
         $this->get('contao.framework')->initialize();
 
