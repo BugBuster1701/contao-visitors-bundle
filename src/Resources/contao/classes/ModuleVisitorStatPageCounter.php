@@ -31,7 +31,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
      * Current object instance
      * @var object
      */
-    protected static $instance = null;
+    protected static $instance;
 
     protected $today;
     protected $yesterday;
@@ -109,7 +109,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -122,8 +122,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-    	            $alias403 = $this->getForbiddenAlias($objPageStatCount->visitors_page_id,
-    	                                              $objPageStatCount->visitors_page_lang);
+    	            $alias403 = $this->getForbiddenAlias(
+    	                $objPageStatCount->visitors_page_id,
+    	                $objPageStatCount->visitors_page_lang
+    	            );
     	            $alias = $alias403 .' ['.$objPage->alias.']';
     	            break;
             	default:
@@ -196,7 +198,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -209,8 +211,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-    	            $alias403 = $this->getForbiddenAlias($objPageStatCount->visitors_page_id,
-    	                                              $objPageStatCount->visitors_page_lang);
+    	            $alias403 = $this->getForbiddenAlias(
+    	                $objPageStatCount->visitors_page_id,
+    	                $objPageStatCount->visitors_page_lang
+    	            );
     	            $alias = $alias403 .' ['.$objPage->alias.']';
             	default:
             		$alias = '-/-';
@@ -274,7 +278,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -287,8 +291,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-    	            $alias403 = $this->getForbiddenAlias($objPageStatCount->visitors_page_id,
-    	                                              $objPageStatCount->visitors_page_lang);
+    	            $alias403 = $this->getForbiddenAlias(
+    	                $objPageStatCount->visitors_page_id,
+    	                $objPageStatCount->visitors_page_lang
+    	            );
     	            $alias = $alias403 .' ['.$objPage->alias.']';
             	default:
             		$alias = '-/-';
@@ -353,7 +359,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
                     $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-                    if (!is_null($objPage))
+                    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -366,8 +372,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
     	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-    	            $alias403 = $this->getForbiddenAlias($objPageStatCount->visitors_page_id,
-    	                                              $objPageStatCount->visitors_page_lang);
+    	            $alias403 = $this->getForbiddenAlias(
+    	                $objPageStatCount->visitors_page_id,
+    	                $objPageStatCount->visitors_page_lang
+    	            );
     	            $alias = $alias403 .' ['.$objPage->alias.']';
             	default:
             		$alias = '-/-';
@@ -520,9 +528,9 @@ class ModuleVisitorStatPageCounter extends \BackendModule
      * generatePageVisitHitTopDays speziell für den Export
      * Filterung nach Anzahl Tagen
      * 
-     * @param  integer                 $VisitorsID
-     * @param  number                  $days
-     * @param  string                  $parse
+     * @param integer $VisitorsID
+     * @param number  $days
+     * @param string  $parse
      * @return string|multitype:string NULL
      */
     public function generatePageVisitHitTopDays($VisitorsID, $days = 365, $parse = false)
@@ -563,7 +571,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             {
             	case self::PAGE_TYPE_NORMAL:
             	    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-            	    if (!is_null($objPage))
+            	    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
                     } 
@@ -600,8 +608,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             	case self::PAGE_TYPE_FORBIDDEN:
             	    $alias   = false;
             	    $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
-            	    $alias403 = $this->getForbiddenAlias($objPageStatCount->visitors_page_id,
-            	        $objPageStatCount->visitors_page_lang);
+            	    $alias403 = $this->getForbiddenAlias(
+            	        $objPageStatCount->visitors_page_id,
+            	        $objPageStatCount->visitors_page_lang
+            	    );
             	    $alias = $alias403 .' ['.$objPage->alias.']';
             	    break;
             	default:

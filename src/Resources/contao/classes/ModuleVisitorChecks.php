@@ -63,9 +63,11 @@ class ModuleVisitorChecks extends \Frontend
 			//BugBusterBotdetectionBundle Modul fehlt, Abbruch
 			\System::getContainer()
 			     ->get('monolog.logger.contao')
-			     ->log(LogLevel::ERROR,
-			           'contao-botdetection-bundle extension required for extension: Visitors!',
-			           array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', TL_ERROR)));
+			     ->log(
+			         LogLevel::ERROR,
+			         'contao-botdetection-bundle extension required for extension: Visitors!',
+			         array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', TL_ERROR))
+			     );
 			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, print_r($bundles, true));
 
 			return false;

@@ -45,7 +45,7 @@ class DcaVisitors extends \Backend
         if (!\strlen($arrRow['visitors_startdate'])) {
             $startdate = $GLOBALS['TL_LANG']['tl_visitors']['not_defined'];
         } else {
-            $startdate = date ( \Contao\Config::get('dateFormat'), $arrRow['visitors_startdate']);
+            $startdate = date (\Contao\Config::get('dateFormat'), $arrRow['visitors_startdate']);
         }
         $output = '<div class="cte_type ' . $key . '"><span class="tl_label">' . $arrRow['visitors_name'] . '</span></div>';
         $output.= '<div>'.$GLOBALS['TL_LANG']['tl_visitors']['visitors_startdate'][0].': ' . $startdate . '</div>';
@@ -99,9 +99,11 @@ class DcaVisitors extends \Backend
         {
             \System::getContainer()
                 ->get('monolog.logger.contao')
-                ->log(LogLevel::ERROR, 
-                      'Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"',
-                      array('contao' => new ContaoContext('tl_visitors toggleVisibility', TL_ERROR)));
+                ->log(
+                    LogLevel::ERROR,
+                    'Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"',
+                    array('contao' => new ContaoContext('tl_visitors toggleVisibility', TL_ERROR))
+                );
 
             $this->redirect('contao/main.php?act=error');
         }

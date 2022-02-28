@@ -36,7 +36,7 @@ class ModuleVisitorLog
         $GLOBALS['visitors']['debug']['referrer'] = (bool) ($GLOBALS['visitors']['debug']['referrer'] ?? false);
         $GLOBALS['visitors']['debug']['searchengine'] = (bool) ($GLOBALS['visitors']['debug']['searchengine'] ?? false);
         $GLOBALS['visitors']['debug']['screenresolutioncount'] = (bool) ($GLOBALS['visitors']['debug']['screenresolutioncount'] ?? false);
-        
+
         if ($method == '## START ##') 
         {
             if (!isset($GLOBALS['visitors']['debug']['first'])) 

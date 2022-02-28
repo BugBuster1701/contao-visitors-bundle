@@ -99,9 +99,11 @@ class FrontendVisitors extends \Frontend
                                 ->execute($visitors_category_id, 1);
 	            if ($objVisitors->numRows < 1)
 	            {
-	                $logger->log(LogLevel::ERROR, 
-	                             $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
-	                             array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+	                $logger->log(
+	                    LogLevel::ERROR,
+	                    $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
+	                    array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+	                );
 	            }
 	            else
 	            {
@@ -115,9 +117,11 @@ class FrontendVisitors extends \Frontend
 	    }
 	    else
 	    {
-	        $logger->log(LogLevel::ERROR,
-	                     $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
-	                     array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+	        $logger->log(
+	            LogLevel::ERROR,
+	            $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
+	            array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+	        );
 	    }
 
 	    //raus hier
@@ -142,14 +146,15 @@ class FrontendVisitors extends \Frontend
 	        (int) \Input::get('scrih') == 0
 	    )
 	    {
-	        ModuleVisitorLog::writeLog(__METHOD__,
-                            	        __LINE__,
-                            	        'ERR: '.print_r(array("scrw"  => \Input::get('scrw'),
+	        ModuleVisitorLog::writeLog(
+	            __METHOD__,
+	            __LINE__,
+	            'ERR: '.print_r(array("scrw"  => \Input::get('scrw'),
                                                     	       "scrh"  => \Input::get('scrh'),
                                                     	       "scriw" => \Input::get('scriw'),
                                                     	       "scrih" => \Input::get('scrih')
                                                 	        ), true)
-                        	        );
+	        );
 	        $this->_SCREEN = false;
 	    }
 	}
@@ -297,14 +302,15 @@ class FrontendVisitors extends \Frontend
                                             AND vid = ?
                                             AND v_s_w = ?
                                             AND v_s_h = ?")
-                                ->execute($this->_SCREEN['scriw'],
-	                                                $this->_SCREEN['scrih'],
-	                                                $objScreenCounter->v_screen_counter +1,
-	                                                $CURDATE,
-	                                                $vid,
-	                                                $this->_SCREEN['scrw'],
-	                                                $this->_SCREEN['scrh']
-	                                               );
+                                ->execute(
+                                    $this->_SCREEN['scriw'],
+                                    $this->_SCREEN['scrih'],
+                                    $objScreenCounter->v_screen_counter +1,
+                                    $CURDATE,
+                                    $vid,
+                                    $this->_SCREEN['scrw'],
+                                    $this->_SCREEN['scrh']
+                                );
 	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': update tl_visitors_screen_counter');
 	        }
 	        else

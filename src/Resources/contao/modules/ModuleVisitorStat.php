@@ -1406,8 +1406,10 @@ class ModuleVisitorStat extends \BackendModule
                             ->execute();
 	    while ($objVisitorCat->next())
 	    {
-	        if (true === $this->isUserInVisitorStatGroups($objVisitorCat->visitors_stat_groups,
-                                                    (bool) $objVisitorCat->visitors_stat_protected))
+	        if (true === $this->isUserInVisitorStatGroups(
+	            $objVisitorCat->visitors_stat_groups,
+	            (bool) $objVisitorCat->visitors_stat_protected
+	        ))
 	        {
 	            $arrVisitorCats[] = array
 	            (
@@ -1439,8 +1441,10 @@ class ModuleVisitorStat extends \BackendModule
                                 ->execute($visitor_category_id);
         while ($objVisitorGroups->next())
         {
-            if (true === $this->isUserInVisitorStatGroups($objVisitorGroups->visitors_statreset_groups,
-                                                    (bool) $objVisitorGroups->visitors_statreset_protected))
+            if (true === $this->isUserInVisitorStatGroups(
+                $objVisitorGroups->visitors_statreset_groups,
+                (bool) $objVisitorGroups->visitors_statreset_protected
+            ))
             {
                 return true;
             }

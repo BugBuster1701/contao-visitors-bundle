@@ -101,9 +101,11 @@ class ModuleVisitors extends \Module
 
 			\System::getContainer()
 			     ->get('monolog.logger.contao')
-			     ->log(LogLevel::ERROR,
-			           'ModuleVisitors User Error: no published counter found.',
-			           array('contao' => new ContaoContext('ModulVisitors compile ', TL_ERROR)));
+			     ->log(
+			         LogLevel::ERROR,
+			         'ModuleVisitors User Error: no published counter found.',
+			         array('contao' => new ContaoContext('ModulVisitors compile ', TL_ERROR))
+			     );
 
 			return;
 		}

@@ -3,7 +3,7 @@
 $header = <<<EOF
 This file is part of a BugBuster Contao Bundle
 
-@copyright  Glen Langer 2021 <http://contao.ninja>
+@copyright  Glen Langer 2022 <http://contao.ninja>
 @author     Glen Langer (BugBuster)
 @package    Contao Visitors Bundle
 @license    LGPL-3.0-or-later
@@ -17,7 +17,8 @@ $finder = PhpCsFixer\Finder::create()
     ])
 ;
 
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setRules([
         '@Symfony' => true,
         '@Symfony:risky' => true,
@@ -33,11 +34,11 @@ return PhpCsFixer\Config::create()
         'compact_nullable_typehint' => true,
         'escape_implicit_backslashes' => true,
         'fully_qualified_strict_types' => true,
-        'general_phpdoc_annotation_remove' => [
-            'author',
-            'expectedException',
-            'expectedExceptionMessage',
-        ],
+        // 'general_phpdoc_annotation_remove' => [
+        //     'author',
+        //     'expectedException',
+        //     'expectedExceptionMessage',
+        // ],
         'fully_qualified_strict_types' => true,
         'header_comment' => ['header' => $header],
         'heredoc_to_nowdoc' => true,

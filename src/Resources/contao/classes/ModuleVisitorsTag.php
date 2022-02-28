@@ -120,9 +120,11 @@ class ModuleVisitorsTag extends \Frontend
 		{
 			\System::getContainer()
 			     ->get('monolog.logger.contao')
-			     ->log(LogLevel::ERROR,
-			           $GLOBALS['TL_LANG']['tl_visitors']['no_key'],
-			           array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+			     ->log(
+			         LogLevel::ERROR,
+			         $GLOBALS['TL_LANG']['tl_visitors']['no_key'],
+			         array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+			     );
 
 			return false;  // da fehlt was
 		}
@@ -158,9 +160,11 @@ class ModuleVisitorsTag extends \Frontend
 			{
 			    \System::getContainer()
 			         ->get('monolog.logger.contao')
-			         ->log(LogLevel::ERROR,
-			               $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-			               array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+			         ->log(
+			             LogLevel::ERROR,
+			             $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+			             array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+			         );
 
 				return false;
 			}
@@ -208,9 +212,11 @@ class ModuleVisitorsTag extends \Frontend
 		{
 		    \System::getContainer()
 		          ->get('monolog.logger.contao')
-		          ->log(LogLevel::ERROR,
-		                $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-		                array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+		          ->log(
+		              LogLevel::ERROR,
+		              $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+		              array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+		          );
 
 			return false;
 		}
@@ -480,9 +486,11 @@ class ModuleVisitorsTag extends \Frontend
 		    	{
 					\System::getContainer()
 					       ->get('monolog.logger.contao')
-					       ->log(LogLevel::ERROR,
-					             $GLOBALS['TL_LANG']['tl_visitors']['no_param4'],
-					             array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+					       ->log(
+					           LogLevel::ERROR,
+					           $GLOBALS['TL_LANG']['tl_visitors']['no_param4'],
+					           array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+					       );
 					ModuleVisitorLog::writeLog(__METHOD__, __LINE__, $GLOBALS['TL_LANG']['tl_visitors']['no_param4']);
 
 					return false;  // da fehlt was
@@ -535,9 +543,11 @@ class ModuleVisitorsTag extends \Frontend
 			    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':' .$GLOBALS['TL_LANG']['tl_visitors']['wrong_key']);
 				\System::getContainer()
 				        ->get('monolog.logger.contao')
-				        ->log(LogLevel::ERROR,
-				              $GLOBALS['TL_LANG']['tl_visitors']['wrong_key'],
-				              array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR)));
+				        ->log(
+				            LogLevel::ERROR,
+				            $GLOBALS['TL_LANG']['tl_visitors']['wrong_key'],
+				            array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+				        );
 
 				return false;
 				break;
@@ -838,9 +848,11 @@ class ModuleVisitorsTag extends \Frontend
                                         WHERE
                                             id = ?
                                         ")
-                            ->execute($visitors_page_hits, 
-                                      $visitors_page_visits,
-                                      $objPageHitVisit->id);
+                            ->execute(
+                                $visitors_page_hits,
+                                $visitors_page_visits,
+                                $objPageHitVisit->id
+                            );
     	    }
 	    }
 	    //Page Counter End
@@ -857,9 +869,11 @@ class ModuleVisitorsTag extends \Frontend
 				{
     		    	\System::getContainer()
     	                   ->get('monolog.logger.contao')
-			    	        ->log(LogLevel::ERROR,
-			    	              'ModuleVisitorBrowser3 Systemerror',
-			    	              array('contao' => new ContaoContext('ModulVisitors', TL_ERROR)));
+			    	        ->log(
+			    	            LogLevel::ERROR,
+			    	            'ModuleVisitorBrowser3 Systemerror',
+			    	            array('contao' => new ContaoContext('ModulVisitors', TL_ERROR))
+			    	        );
 				} 
 				else 
 				{
