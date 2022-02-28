@@ -174,18 +174,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             return $template->getResponse();
         }
 
-        while (false !== ($objVisitors = (object) $resultSet->fetchAssociative())) {
+        while (false !== ($objVisitors = $resultSet->fetchAssociative())) {
             $VisitorsStartDate = false;
             $VisitorsAverageVisits = false;
-            $boolSeparator = (1 === $objVisitors->visitors_thousands_separator) ? true : false;
+            $boolSeparator = (1 === $objVisitors['visitors_thousands_separator']) ? true : false;
 
-            if (\strlen($objVisitors->visitors_startdate)) {
-                $VisitorsStartDate = Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
+            if (\strlen($objVisitors['visitors_startdate'])) {
+                $VisitorsStartDate = Date::parse($objPage->dateFormat, $objVisitors['visitors_startdate']);
             }
 
-            if ($objVisitors->visitors_average) {
+            if ($objVisitors['visitors_average']) {
                 $VisitorsAverageVisits = true;
-                $VisitorsAverageVisitsValue = $this->getAverageVisits($objVisitors->id, $boolSeparator);
+                $VisitorsAverageVisitsValue = $this->getAverageVisits($objVisitors['id'], $boolSeparator);
             }
 
             if (!isset($GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'])) {
@@ -194,7 +194,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
             $arrVisitors[] = [
                 'VisitorsNameLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
-                'VisitorsName' => trim($objVisitors->visitors_name),
+                'VisitorsName' => trim($objVisitors['visitors_name']),
 
                 'VisitorsKatID' => $this->visitors_category,
                 'VisitorsCounting' => $counting,
@@ -205,10 +205,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 'AverageVisitsValue' => $VisitorsAverageVisitsValue,
 
                 'VisitorsOnlineCountLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend'],
-                'VisitorsOnlineCountValue' => $this->getVisitorsOnlineCount($objVisitors->id, $boolSeparator),
+                'VisitorsOnlineCountValue' => $this->getVisitorsOnlineCount($objVisitors['id'], $boolSeparator),
 
                 'VisitorsStartDateLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend'],
-                'VisitorsStartDateValue' => $this->getVisitorsStartDate($objVisitors->visitors_startdate, $objPage),
+                'VisitorsStartDateValue' => $this->getVisitorsStartDate($objVisitors['visitors_startdate'], $objPage),
 
                 'TotalVisitCountLegend' => $GLOBALS['TL_LANG']['visitors']['TotalVisitCountLegend'],
                 'TotalVisitCountValue' => $this->getTotalVisitCount($objVisitors, $boolSeparator),
@@ -261,9 +261,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() > 0) {
-            $objVisitorsAverageCount = (object) $resultSet->fetchAssociative();
-            $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount->MINDAY)) / 60 / 60 / 24);
-            $VisitorsAverageVisitCount = (null === $objVisitorsAverageCount->SUMV) ? 0 : (int) $objVisitorsAverageCount->SUMV;
+            $objVisitorsAverageCount = $resultSet->fetchAssociative();
+            $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount['MINDAY'])) / 60 / 60 / 24);
+            $VisitorsAverageVisitCount = (null === $objVisitorsAverageCount['SUMV']) ? 0 : (int) $objVisitorsAverageCount['SUMV'];
             if ($tmpTotalDays > 0) {
                 $VisitorsAverageVisits = round($VisitorsAverageVisitCount / $tmpTotalDays, 0);
             }
@@ -289,8 +289,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
-        $objVisitorsOnlineCount = (object) $resultSet->fetchAssociative();
-        $VisitorsOnlineCount = (null === $objVisitorsOnlineCount->VOC) ? 0 : $objVisitorsOnlineCount->VOC;
+        $objVisitorsOnlineCount = $resultSet->fetchAssociative();
+        $VisitorsOnlineCount = (null === $objVisitorsOnlineCount['VOC']) ? 0 : $objVisitorsOnlineCount['VOC'];
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsOnlineCount, 0) : $VisitorsOnlineCount;
     }
@@ -309,7 +309,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTotalVisitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT
@@ -320,13 +320,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             vid = :vid
                         ')
                     ;
-        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
-        $VisitorsTotalVisitCount = $objVisitors->visitors_visit_start; //Startwert
+        $VisitorsTotalVisitCount = $objVisitors['visitors_visit_start']; //Startwert
         if ($resultSet->rowCount() > 0) {
-            $objVisitorsTotalCount = (object) $resultSet->fetchAssociative();
-            $VisitorsTotalVisitCount += (null === $objVisitorsTotalCount->SUMV) ? 0 : $objVisitorsTotalCount->SUMV;
+            $objVisitorsTotalCount = $resultSet->fetchAssociative();
+            $VisitorsTotalVisitCount += (null === $objVisitorsTotalCount['SUMV']) ? 0 : $objVisitorsTotalCount['SUMV'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsTotalVisitCount, 0) : $VisitorsTotalVisitCount;
@@ -334,7 +334,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTotalHitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT
@@ -345,13 +345,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             vid = :vid
                         ')
                     ;
-        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
-        $VisitorsTotalHitCount = $objVisitors->visitors_hit_start;   //Startwert
+        $VisitorsTotalHitCount = $objVisitors['visitors_hit_start'];   //Startwert
         if ($resultSet->rowCount() > 0) {
-            $objVisitorsTotalCount = (object) $resultSet->fetchAssociative();
-            $VisitorsTotalHitCount += (null === $objVisitorsTotalCount->SUMH) ? 0 : $objVisitorsTotalCount->SUMH;
+            $objVisitorsTotalCount = $resultSet->fetchAssociative();
+            $VisitorsTotalHitCount += (null === $objVisitorsTotalCount['SUMH']) ? 0 : $objVisitorsTotalCount['SUMH'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsTotalHitCount, 0) : $VisitorsTotalHitCount;
@@ -359,7 +359,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTodaysVisitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT
@@ -370,14 +370,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
-        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysVisitCount = 0;
         if ($resultSet->rowCount() > 0) {
-            $objVisitorsTodaysCount = (object) $resultSet->fetchAssociative();
-            $VisitorsTodaysVisitCount = (null === $objVisitorsTodaysCount->visitors_visit) ? 0 : $objVisitorsTodaysCount->visitors_visit;
+            $objVisitorsTodaysCount = $resultSet->fetchAssociative();
+            $VisitorsTodaysVisitCount = (null === $objVisitorsTodaysCount['visitors_visit']) ? 0 : $objVisitorsTodaysCount['visitors_visit'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsTodaysVisitCount, 0) : $VisitorsTodaysVisitCount;
@@ -385,7 +385,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTodaysHitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT
@@ -396,14 +396,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
-        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysHitCount = 0;
         if ($resultSet->rowCount() > 0) {
-            $objVisitorsTodaysCount = (object) $resultSet->fetchAssociative();
-            $VisitorsTodaysHitCount = (null === $objVisitorsTodaysCount->visitors_hit) ? 0 : $objVisitorsTodaysCount->visitors_hit;
+            $objVisitorsTodaysCount = $resultSet->fetchAssociative();
+            $VisitorsTodaysHitCount = (null === $objVisitorsTodaysCount['visitors_hit']) ? 0 : $objVisitorsTodaysCount['visitors_hit'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsTodaysHitCount, 0) : $VisitorsTodaysHitCount;
@@ -411,7 +411,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getYesterdayVisitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT
@@ -422,14 +422,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
-        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayVisitCount = 0;
         if ($resultSet->rowCount() > 0) {
-            $objVisitorsYesterdayCount = (object) $resultSet->fetchAssociative();
-            $VisitorsYesterdayVisitCount = (null === $objVisitorsYesterdayCount->visitors_visit) ? 0 : $objVisitorsYesterdayCount->visitors_visit;
+            $objVisitorsYesterdayCount = $resultSet->fetchAssociative();
+            $VisitorsYesterdayVisitCount = (null === $objVisitorsYesterdayCount['visitors_visit']) ? 0 : $objVisitorsYesterdayCount['visitors_visit'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsYesterdayVisitCount, 0) : $VisitorsYesterdayVisitCount;
@@ -437,7 +437,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getYesterdayHitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->get('database_connection')
                     ->prepare(
                         'SELECT
@@ -448,14 +448,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             vid = :vid AND visitors_date = :vdate
                         ')
                     ;
-        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayHitCount = 0;
         if ($resultSet->rowCount() > 0) {
-            $objVisitorsYesterdayCount = (object) $resultSet->fetchAssociative();
-            $VisitorsYesterdayHitCount = (null === $objVisitorsYesterdayCount->visitors_hit) ? 0 : $objVisitorsYesterdayCount->visitors_hit;
+            $objVisitorsYesterdayCount = $resultSet->fetchAssociative();
+            $VisitorsYesterdayHitCount = (null === $objVisitorsYesterdayCount['visitors_hit']) ? 0 : $objVisitorsYesterdayCount['visitors_hit'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsYesterdayHitCount, 0) : $VisitorsYesterdayHitCount;
@@ -463,7 +463,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getPageHits($objVisitors, $boolSeparator, $objPage)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors->id.':'.$objPage->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id'].':'.$objPage->id);
 
         //if page from cache, we have no page-id
         /*
@@ -498,15 +498,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             visitors_page_type = :vpagetype
                         ')
                     ;
-        $stmt->bindValue('vid', $objVisitors->id, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
         $stmt->bindValue('vpagetype', $visitors_page_type, \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsPageHits = 0;
         if ($resultSet->rowCount() > 0) {
-            $objPageStatCount = (object) $resultSet->fetchAssociative();
-            $VisitorsPageHits = $objPageStatCount->visitors_page_hits;
+            $objPageStatCount = $resultSet->fetchAssociative();
+            $VisitorsPageHits = $objPageStatCount['visitors_page_hits'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
@@ -551,13 +551,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
             return false;
         }
-        while (false !== ($objVisitors = (object) $resultSet->fetchAssociative())) {
-            $this->visitorCountUpdate($objVisitors->id, $objVisitors->visitors_block_time, $this->visitors_category, self::$_BackendUser);
-            $this->visitorCheckSearchEngine($objVisitors->id);
+        while (false !== ($objVisitors = $resultSet->fetchAssociative())) {
+            $this->visitorCountUpdate($objVisitors['id'], $objVisitors['visitors_block_time'], $this->visitors_category, self::$_BackendUser);
+            $this->visitorCheckSearchEngine($objVisitors['id']);
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'BOT: '.(int) $this->_BOT);
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'SE : '.(int) $this->_SE);
             if (false === $this->_BOT && false === $this->_SE) {
-                $this->visitorCheckReferrer($objVisitors->id);
+                $this->visitorCheckReferrer($objVisitors['id']);
             }
         }
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Counted Server: True');
@@ -595,11 +595,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $stmt->bindValue('published', 1, \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
-        while (false !== ($objVisitors = (object) $resultSet->fetchAssociative())) {
-            $GLOBALS['visitors']['debug']['tag'] = (bool) $objVisitors->visitors_expert_debug_tag;
-            $GLOBALS['visitors']['debug']['checks'] = (bool) $objVisitors->visitors_expert_debug_checks;
-            $GLOBALS['visitors']['debug']['referrer'] = (bool) $objVisitors->visitors_expert_debug_referrer;
-            $GLOBALS['visitors']['debug']['searchengine'] = (bool) $objVisitors->visitors_expert_debug_searchengine;
+        while (false !== ($objVisitors = $resultSet->fetchAssociative())) {
+            $GLOBALS['visitors']['debug']['tag'] = (bool) $objVisitors['visitors_expert_debug_tag'];
+            $GLOBALS['visitors']['debug']['checks'] = (bool) $objVisitors['visitors_expert_debug_checks'];
+            $GLOBALS['visitors']['debug']['referrer'] = (bool) $objVisitors['visitors_expert_debug_referrer'];
+            $GLOBALS['visitors']['debug']['searchengine'] = (bool) $objVisitors['visitors_expert_debug_searchengine'];
             ModuleVisitorLog::writeLog('## START ##', '## DEBUG ##', 'T'.(int) $GLOBALS['visitors']['debug']['tag'].'#C'.(int) $GLOBALS['visitors']['debug']['checks'].'#R'.(int) $GLOBALS['visitors']['debug']['referrer'].'#S'.(int) $GLOBALS['visitors']['debug']['searchengine']);
         }
     }
@@ -777,10 +777,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
-                $objNews = (object) $resultSet->fetchAssociative();
-                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNews: '.$objNews->id);
+                $objNews = $resultSet->fetchAssociative();
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNews: '.$objNews['id']);
 
-                return $objNews->id;
+                return $objNews['id'];
             }
         }
         if (self::PAGE_TYPE_FAQ === $PageType) {
@@ -796,10 +796,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
-                $objFaq = (object) $resultSet->fetchAssociative();
-                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdFaq: '.$objFaq->id);
+                $objFaq = $resultSet->fetchAssociative();
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdFaq: '.$objFaq['id']);
 
-                return $objFaq->id;
+                return $objFaq['id'];
             }
         }
         if (self::PAGE_TYPE_ISOTOPE === $PageType) {
@@ -815,10 +815,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
-                $objIsotope = (object) $resultSet->fetchAssociative();
-                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdIsotope: '.$objIsotope->id);
+                $objIsotope = $resultSet->fetchAssociative();
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdIsotope: '.$objIsotope['id']);
 
-                return $objIsotope->id;
+                return $objIsotope['id'];
             }
         }
 
@@ -974,9 +974,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $visitors_hits = 1;
             $visitors_visit = 1;
         } else {
-            $objHitCounterResult = (object) $resHitCounter->fetchAssociative();
-            $visitors_hits = $objHitCounterResult->visitors_hit + 1;
-            $visitors_visit = $objHitCounterResult->visitors_visit + 1;
+            $objHitCounterResult = $resHitCounter->fetchAssociative();
+            $visitors_hits = $objHitCounterResult['visitors_hit'] + 1;
+            $visitors_visit = $objHitCounterResult['visitors_visit'] + 1;
             if ($resHitIP->rowCount() < 1) {
                 // Insert Blocker
                 $stmt = $dbconnection->prepare(
@@ -1005,7 +1005,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 ')
                             ;
                 $stmt->bindValue('vhit', $visitors_hits, \PDO::PARAM_INT);
-                $stmt->bindValue('vid', $objHitCounterResult->id, \PDO::PARAM_INT);
+                $stmt->bindValue('vid', $objHitCounterResult['id'], \PDO::PARAM_INT);
                 $resultSet = $stmt->executeQuery();
 
                 //for page counter
@@ -1193,9 +1193,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     */
                 }
             } else {
-                $objPageHitVisitResult = (object) $resPageHitVisit->fetchAssociative();
-                $visitors_page_hits = $objPageHitVisitResult->visitors_page_hit;
-                $visitors_page_visits = $objPageHitVisitResult->visitors_page_visit;
+                $objPageHitVisitResult = $resPageHitVisit->fetchAssociative();
+                $visitors_page_hits = $objPageHitVisitResult['visitors_page_hit'];
+                $visitors_page_visits = $objPageHitVisitResult['visitors_page_visit'];
 
                 if (true === $this->_HitCounted) {
                     //Update Hit
@@ -1217,7 +1217,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             ;
                 $stmt->bindValue('vpagehit', $visitors_page_hits, \PDO::PARAM_INT);
                 $stmt->bindValue('vpagevis', $visitors_page_visits, \PDO::PARAM_INT);
-                $stmt->bindValue('vid', $objPageHitVisitResult->id, \PDO::PARAM_INT);
+                $stmt->bindValue('vid', $objPageHitVisitResult['id'], \PDO::PARAM_INT);
                 $resultSet = $stmt->executeQuery();
             }
         }
@@ -1294,8 +1294,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     */
                     } else {
                         //Update
-                        $objBrowserCounterResult = (object) $resBrowserCounter->fetchAssociative();
-                        $visitors_counter = $objBrowserCounterResult->visitors_counter + 1;
+                        $objBrowserCounterResult = $resBrowserCounter->fetchAssociative();
+                        $visitors_counter = $objBrowserCounterResult['visitors_counter'] + 1;
                         // Update
                         $stmt = $dbconnection->prepare(
                                         'UPDATE
@@ -1307,7 +1307,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                         ')
                                     ;
                         $stmt->bindValue('vcounter', $visitors_counter, \PDO::PARAM_INT);
-                        $stmt->bindValue('vid', $objBrowserCounterResult->id, \PDO::PARAM_INT);
+                        $stmt->bindValue('vid', $objBrowserCounterResult['id'], \PDO::PARAM_INT);
                         $resultSet = $stmt->executeQuery();
                     }
                 } // else von NULL
