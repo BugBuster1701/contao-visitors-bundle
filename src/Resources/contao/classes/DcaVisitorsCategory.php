@@ -5,7 +5,7 @@
  *
  * Contao Module "Visitors" - DCA Helper Class DcaVisitorsCategory
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @license    LGPL
  * @filesource
@@ -21,7 +21,7 @@ namespace BugBuster\Visitors;
 /**
  * DCA Helper Class DcaVisitorsCategory
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
 class DcaVisitorsCategory extends \Backend 

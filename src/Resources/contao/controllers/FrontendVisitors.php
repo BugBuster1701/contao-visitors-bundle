@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright  Glen Langer 2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2017..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @license    LGPL-3.0+
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle

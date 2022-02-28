@@ -5,7 +5,7 @@
  * 
  * Modul Visitors Config File
  *
- * @copyright  Glen Langer 2009..2020 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource

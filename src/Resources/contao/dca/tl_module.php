@@ -11,7 +11,7 @@
  * This file modifies the data container array of table tl_module.
  *
  * PHP version 5
- * @copyright  Glen Langer 2009..2018
+ * @copyright  Glen Langer 2009..2022
  * @author     Glen Langer
  * @license    LGPL
  * @filesource

@@ -5,7 +5,7 @@
  *
  * Contao Module "Visitors" - DCA Helper Class DcaVisitors
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @license    LGPL
  * @filesource
@@ -25,7 +25,7 @@ use Psr\Log\LogLevel;
 /**
  * DCA Helper Class DcaVisitors
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
 class DcaVisitors extends \Backend 

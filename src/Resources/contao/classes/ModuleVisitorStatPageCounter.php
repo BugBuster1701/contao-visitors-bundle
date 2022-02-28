@@ -5,7 +5,7 @@
  *
  * Modul Visitors Stat Page Counter
  *
- * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @license    LGPL
  * @filesource
@@ -21,7 +21,7 @@ namespace BugBuster\Visitors;
 /**
  * Class ModuleVisitorStatPageCounter
  *
- * @copyright  Glen Langer 2014..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2014..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
 class ModuleVisitorStatPageCounter extends \BackendModule

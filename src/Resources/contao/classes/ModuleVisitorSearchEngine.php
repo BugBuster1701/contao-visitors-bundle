@@ -5,7 +5,7 @@
  * 
  * Modul Visitors SearchEngine - Frontend
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @licence    LGPL
  * @filesource
@@ -24,7 +24,7 @@ use BugBuster\Visitors\ModuleVisitorLog;
  * 
  * Check for searchengines in referrer
  *
- * @copyright  Glen Langer 2012..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @license    LGPL 
  */

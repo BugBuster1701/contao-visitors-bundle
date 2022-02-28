@@ -5,7 +5,7 @@
  * 
  * Modul Visitors Statistic Export 
  * 
- * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
+ * @copyright	Glen Langer 2015..2022 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
  * @license     LGPL 
  * @filesource
@@ -22,7 +22,7 @@ use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 /**
  * Class VisitorsStatExport
  *
- * @copyright	Glen Langer 2015..2017 <http://contao.ninja>
+ * @copyright	Glen Langer 2015..2022 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
  */
 class VisitorsStatExport extends \System
