@@ -2190,7 +2190,7 @@ class ModuleVisitorBrowser3
         for($i = 0; $i < $ca; $i++) 
         {
             //Konqueror
-            $array[$i] = str_replace(" ", null, $array[$i]);
+            $array[$i] = str_replace(" ", "", $array[$i]);
             $array[$i] = substr($array[$i], 0, 2);
             $array[$i] = strtolower($array[$i]);
         }
