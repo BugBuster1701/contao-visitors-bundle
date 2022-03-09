@@ -242,7 +242,7 @@ class VisitorsStatExport extends \System
 
         $arrVisitorsPageVisitHits = ModuleVisitorStatPageCounter::getInstance()->generatePageVisitHitTopDays($VisitorsID, $this->export_days, false);
         $row = 1; 
-        if (\count($arrVisitorsPageVisitHits)>0 && $arrVisitorsPageVisitHits !== false) 
+        if ($arrVisitorsPageVisitHits !== false && \count($arrVisitorsPageVisitHits)>0) 
         {
             foreach ($arrVisitorsPageVisitHits as $arrVisitorsPageVisitHit) 
             {
