@@ -508,7 +508,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $VisitorsPageHits = 0;
         if ($resultSet->rowCount() > 0) {
             $objPageStatCount = $resultSet->fetchAssociative();
-            $VisitorsPageHits = $objPageStatCount['visitors_page_hits'];
+            $VisitorsPageHits = (null === $objPageStatCount['visitors_page_hits']) ? 0 : $objPageStatCount['visitors_page_hits'];
         }
 
         return ($boolSeparator) ? System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
