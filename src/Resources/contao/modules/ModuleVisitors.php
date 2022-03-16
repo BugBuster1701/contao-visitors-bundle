@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+ * Contao Open Source CMS, Copyright (C) 2005-2022 Leo Feyer
  *
  * Modul Visitors File - Frontend
  *
@@ -19,15 +19,19 @@
 namespace BugBuster\Visitors;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Psr\Log\LogLevel;
+use Contao\Module;
+use Contao\StringUtil;
+use Contao\System;
+use Contao\Database;
 
 /**
  * Class ModuleVisitors 
  *
- * @copyright  Glen Langer 2009..2017
+ * @copyright  Glen Langer 2009..2022
  * @author     Glen Langer 
  * @license    LGPL 
  */
-class ModuleVisitors extends \Module
+class ModuleVisitors extends Module
 {
 
 	/**
@@ -46,7 +50,7 @@ class ModuleVisitors extends \Module
 	{
 		if (TL_MODE == 'BE')
 		{
-			$objTemplate = new \BackendTemplate('be_wildcard');
+			$objTemplate = new \Contao\BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### VISITORS LIST ###';
 			$objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
@@ -58,7 +62,7 @@ class ModuleVisitors extends \Module
 		//alte und neue Art gemeinsam zum Array bringen
 		if (strpos($this->visitors_categories, ':') !== false) 
 		{
-			$this->visitors_categories = deserialize($this->visitors_categories, true);
+			$this->visitors_categories = StringUtil::deserialize($this->visitors_categories, true);
 		} 
 		else 
 		{
@@ -79,7 +83,7 @@ class ModuleVisitors extends \Module
 	 */
 	protected function compile()
 	{						//visitors_template
-		$objVisitors = \Database::getInstance()
+		$objVisitors = Database::getInstance()
 		        ->prepare("SELECT 
                                 tl_visitors.id AS id, 
                                 visitors_name, 
@@ -97,9 +101,9 @@ class ModuleVisitors extends \Module
 		if ($objVisitors->numRows < 1)
 		{
 			$this->strTemplate = 'mod_visitors_error';
-			$this->Template = new \FrontendTemplate($this->strTemplate); 
+			$this->Template = new \Contao\FrontendTemplate($this->strTemplate); 
 
-			\System::getContainer()
+			System::getContainer()
 			     ->get('monolog.logger.contao')
 			     ->log(
 			         LogLevel::ERROR,
@@ -118,7 +122,7 @@ class ModuleVisitors extends \Module
 		    if (($this->visitors_template != $this->strTemplate) && ($this->visitors_template != '')) 
 		    {
                 $this->strTemplate = $this->visitors_template;
-                $this->Template = new \FrontendTemplate($this->strTemplate); 
+                $this->Template = new \Contao\FrontendTemplate($this->strTemplate); 
 		    }
 		    if ($this->strTemplate != 'mod_visitors_fe_invisible') 
 		    {

@@ -23,15 +23,21 @@ use BugBuster\Visitors\ModuleVisitorStatNewsFaqCounter;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
 use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
+use Contao\BackendModule;
+use Contao\System;
+use Contao\Input;
+use Contao\Database;
+use Contao\Environment;
+use Contao\StringUtil;
 
 /**
  * Class ModuleVisitorStat
  *
- * @copyright  Glen Langer 2009..2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2009..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @todo       Must be completely rewritten.
  */
-class ModuleVisitorStat extends \BackendModule
+class ModuleVisitorStat extends BackendModule
 {
 	/**
 	 * Template
@@ -59,21 +65,21 @@ class ModuleVisitorStat extends \BackendModule
 	    $this->import('BackendUser', 'User');
 	    parent::__construct();
 
-	    \System::loadLanguageFile('tl_visitors_stat_export');
-	    \System::loadLanguageFile('tl_visitors_referrer');
+	    System::loadLanguageFile('tl_visitors_stat_export');
+	    System::loadLanguageFile('tl_visitors_referrer');
 
-	    if (\Input::post('act', true)=='export') //action Export
+	    if (Input::post('act', true)=='export') //action Export
 	    {
 	        $this->generateExport();
 	    }
 
-	    if (\Input::post('id')>0) //Auswahl im Statistikmenü
+	    if (Input::post('id')>0) //Auswahl im Statistikmenü
 	    {
-	    	$this->intKatID = preg_replace('@\D@', '', \Input::post('id')); //  only digits
+	    	$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
 	    } 
-	    elseif (\Input::get('id')>0) //Auswahl in der Kategorieübersicht
+	    elseif (Input::get('id')>0) //Auswahl in der Kategorieübersicht
 	    {
-	    	$this->intKatID = preg_replace('@\D@', '', \Input::get('id')); //  only digits
+	    	$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
 	    }
 	    else 
 	    {
@@ -82,12 +88,12 @@ class ModuleVisitorStat extends \BackendModule
 
 	    $this->boolAllowReset = $this->isUserInVisitorStatisticResetGroups($this->intKatID);
 
-	    if (\Input::get('act', true) == 'zero')
+	    if (Input::get('act', true) == 'zero')
 	    {
 	        $this->setZero();
 	    }
 
-	    if (\Input::get('act', true) == 'zerobrowser')
+	    if (Input::get('act', true) == 'zerobrowser')
 	    {
 	        $this->setZeroBrowser();
 	    }
@@ -147,7 +153,7 @@ class ModuleVisitorStat extends \BackendModule
 	    }
 
 		// Alle Zähler je Kat holen, die Aktiven zuerst
-		$objVisitorsX = \Database::getInstance()
+		$objVisitorsX = Database::getInstance()
             		        ->prepare("SELECT 
                                             id 
                                         FROM 
@@ -266,7 +272,7 @@ class ModuleVisitorStat extends \BackendModule
 		}
 		// Version, Base, Footer
 		$this->Template->visitors_version = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname'] . ' ' . VISITORS_VERSION .'.'. VISITORS_BUILD;
-		$this->Template->visitors_base    = \Environment::get('base');
+		$this->Template->visitors_base    = Environment::get('base');
 		$this->Template->visitors_footer  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['footer'];
 		$this->Template->theme            = $this->getTheme();
 		$this->Template->theme0           = 'bundles/bugbustervisitors/flexible'; // for down0.gif
@@ -338,7 +344,7 @@ class ModuleVisitorStat extends \BackendModule
 		$visitors_hit_start       = 0;
 		$visitors_day_of_week_prefix = '';
 		//Anzahl Tage zu erst auslesen die angezeigt werden sollen
-		$objVisitors = \Database::getInstance()->prepare("SELECT tv.visitors_statistic_days FROM tl_visitors tv WHERE tv.pid = ? AND tv.id = ?")
+		$objVisitors = Database::getInstance()->prepare("SELECT tv.visitors_statistic_days FROM tl_visitors tv WHERE tv.pid = ? AND tv.id = ?")
                                                ->limit(1)
                                                ->execute($KatID, $VisitorsXid);
 		while ($objVisitors->next())
@@ -354,7 +360,7 @@ class ModuleVisitorStat extends \BackendModule
 		    $visitors_statistic_days = 99;
 		}
 	    // 7 Tages Statistik und Vorgabewerte
-	    $objVisitors = \Database::getInstance()
+	    $objVisitors = Database::getInstance()
 	            ->prepare("SELECT 
                                 tv.id,
                                 tv.visitors_name,
@@ -404,7 +410,7 @@ class ModuleVisitorStat extends \BackendModule
     		    $arrVisitorsStat[] = array
     			(
     			    'visitors_id'           => $objVisitors->id,
-    				'visitors_name'         => \StringUtil::specialchars(ampersand($objVisitors->visitors_name)),
+    				'visitors_name'         => StringUtil::specialchars(StringUtil::ampersand($objVisitors->visitors_name)),
     				'visitors_active'       => $objVisitors->published,
     				'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
     				'visitors_date_ymd'     => $objVisitors->visitors_date,
@@ -429,7 +435,7 @@ class ModuleVisitorStat extends \BackendModule
 		} 
 		else 
 		{
-			$objVisitors = \Database::getInstance()
+			$objVisitors = Database::getInstance()
 			        ->prepare("SELECT 
                                     tv.id, 
                                     tv.visitors_name, 
@@ -462,7 +468,7 @@ class ModuleVisitorStat extends \BackendModule
 		    $arrVisitorsStat[] = array
 			(
 			    'visitors_id'           => $objVisitors->id,
-				'visitors_name'         => \StringUtil::specialchars(ampersand($objVisitors->visitors_name)),
+				'visitors_name'         => StringUtil::specialchars(StringUtil::ampersand($objVisitors->visitors_name)),
 				'visitors_active'       => $objVisitors->published,
 				'visitors_startdate'    => $visitors_startdate
             );
@@ -507,7 +513,7 @@ class ModuleVisitorStat extends \BackendModule
 		    $sqlMonth = sprintf($sqlMonth, $ORDER);
 
 			//Total je Monat (aktueller und letzter)
-			$objVisitorsToMo = \Database::getInstance()
+			$objVisitorsToMo = Database::getInstance()
             			        ->prepare($sqlMonth)
                                 ->limit(2)
                                 ->execute($VisitorsID, $YearLastMonth, $YearCurrentMonth);
@@ -555,7 +561,7 @@ class ModuleVisitorStat extends \BackendModule
 		if ($VisitorsID) 
 		{
 			//Total je Monat (aktueller und letzter)
-            $objVisitorsToMo = \Database::getInstance()
+            $objVisitorsToMo = Database::getInstance()
 			        ->prepare('SELECT 
                                     EXTRACT( YEAR FROM visitors_date ) AS Y, 
                                     EXTRACT( MONTH FROM visitors_date ) AS M, 
@@ -596,7 +602,7 @@ class ModuleVisitorStat extends \BackendModule
 	    if ($VisitorsID)
 	    {
 	        //Total je Monat (aktueller und letzter)
-	        $objVisitorsToYear = \Database::getInstance()
+	        $objVisitorsToYear = Database::getInstance()
                                     ->prepare('SELECT
                                                 EXTRACT( YEAR FROM visitors_date ) AS Y,
                                                 SUM( visitors_visit ) AS SUMV,
@@ -643,7 +649,7 @@ class ModuleVisitorStat extends \BackendModule
 			$today     = date('Y-m-d');
 			$yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
     	    //Durchschnittswerte bis heute 00:00 Uhr, also bis einschließlich gestern
-    	    $objVisitorsAverageCount = \Database::getInstance()
+    	    $objVisitorsAverageCount = Database::getInstance()
     	            ->prepare("SELECT 
                                     SUM(visitors_visit) AS SUMV, 
                                     SUM(visitors_hit) AS SUMH, 
@@ -671,7 +677,7 @@ class ModuleVisitorStat extends \BackendModule
 	            //Durchschnittswerte der letzten 30 Tage
 	            $day30 = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-1, (int) date("d")-1, (int) date("Y")));            
 
-	            $objVisitorsAverageCount = \Database::getInstance()
+	            $objVisitorsAverageCount = Database::getInstance()
 	                    ->prepare("SELECT 
                                         SUM(visitors_visit) AS SUMV, 
                                         SUM(visitors_hit) AS SUMH
@@ -694,7 +700,7 @@ class ModuleVisitorStat extends \BackendModule
 	            //Durchschnittswerte der letzten 60 Tage
 	            $day60 = date('Y-m-d', mktime(0, 0, 0, (int) date("m")-2, (int) date("d")-1, (int) date("Y")));
 
-	            $objVisitorsAverageCount = \Database::getInstance()
+	            $objVisitorsAverageCount = Database::getInstance()
 	                    ->prepare("SELECT 
                                         SUM(visitors_visit) AS SUMV, 
                                         SUM(visitors_hit) AS SUMH
@@ -750,7 +756,7 @@ class ModuleVisitorStat extends \BackendModule
 	    if ($VisitorsID) 
 	    {
     		//Total je Woche (aktuelle und letzte)
-    		$objVisitorsToWe = \Database::getInstance()
+    		$objVisitorsToWe = Database::getInstance()
     		        ->prepare('SELECT 
                                     YEARWEEK(visitors_date, 3) AS YW,
                                     SUM(visitors_visit) AS SUMV,
@@ -806,7 +812,7 @@ class ModuleVisitorStat extends \BackendModule
 	    if ($VisitorsID) 
 	    {
     		//Total seit Zählung
-    		$objVisitorsTotalCount = \Database::getInstance()
+    		$objVisitorsTotalCount = Database::getInstance()
     		        ->prepare("SELECT 
                                     SUM(visitors_visit) AS SUMV, 
                                     SUM(visitors_hit) AS SUMH
@@ -837,11 +843,11 @@ class ModuleVisitorStat extends \BackendModule
 	    {
 	        return;
 	    }
-	    $intCID = preg_replace('@\D@', '', \Input::get('zid')); //  only digits 
+	    $intCID = preg_replace('@\D@', '', Input::get('zid')); //  only digits 
 	    if ($intCID>0) 
 	    {
 	        // mal sehen ob ein Startdatum gesetzt war
-    	    $objVisitorsDate = \Database::getInstance()
+    	    $objVisitorsDate = Database::getInstance()
     	            ->prepare("SELECT 
                                     visitors_startdate 
                                 FROM 
@@ -853,7 +859,7 @@ class ModuleVisitorStat extends \BackendModule
     	    if (0 < (int) $objVisitorsDate->visitors_startdate) 
     	    {
     	        // ok es war eins gesetzt, dann setzen wir es wieder
-                \Database::getInstance()
+                Database::getInstance()
                         ->prepare("UPDATE tl_visitors 
                                     SET 
                                         tstamp=?, 
@@ -863,19 +869,19 @@ class ModuleVisitorStat extends \BackendModule
                         ->execute(time(), strtotime(date('Y-m-d')), $intCID);
     	    }
     	    // und nun die eigendlichen counter
-    	    \Database::getInstance()
+    	    Database::getInstance()
     	            ->prepare("DELETE FROM tl_visitors_counter WHERE vid=?")
                     ->execute($intCID);
-            \Database::getInstance()
+            Database::getInstance()
                     ->prepare("DELETE FROM tl_visitors_blocker WHERE vid=?")
                     ->execute($intCID);
-            \Database::getInstance()
+            Database::getInstance()
                     ->prepare("DELETE FROM tl_visitors_browser WHERE vid=?")
                     ->execute($intCID);
-            \Database::getInstance()
+            Database::getInstance()
                     ->prepare("DELETE FROM tl_visitors_pages WHERE vid=?")
                     ->execute($intCID);
-            \Database::getInstance()
+            Database::getInstance()
                     ->prepare("DELETE FROM tl_visitors_screen_counter WHERE vid=?")
                     ->execute($intCID);
 	    }
@@ -892,11 +898,11 @@ class ModuleVisitorStat extends \BackendModule
 	    {
 	        return;
 	    }
-	    $intCID = preg_replace('@\D@', '', \Input::get('zid')); //  only digits 
+	    $intCID = preg_replace('@\D@', '', Input::get('zid')); //  only digits 
 	    if ($intCID>0) 
 	    {
 	        // Browser 
-            \Database::getInstance()
+            Database::getInstance()
                     ->prepare("DELETE FROM tl_visitors_browser WHERE vid=?")
                     ->execute($intCID);
 	    }
@@ -916,7 +922,7 @@ class ModuleVisitorStat extends \BackendModule
 	    if ($VisitorsID) 
 	    {
     		//Version
-    		$objVisitorsBrowserVersion = \Database::getInstance()
+    		$objVisitorsBrowserVersion = Database::getInstance()
     		        ->prepare("SELECT 
                                     `visitors_browser`, 
                                     SUM(`visitors_counter`) AS SUMBV
@@ -939,7 +945,7 @@ class ModuleVisitorStat extends \BackendModule
     		    }
     	    }
     	    //Version without number
-    	    $objVisitorsBrowserVersion2 = \Database::getInstance()
+    	    $objVisitorsBrowserVersion2 = Database::getInstance()
     	            ->prepare("SELECT 
                                     visitors_browser, 
                                     SUM(`visitors_counter`) AS SUMBV 
@@ -965,7 +971,7 @@ class ModuleVisitorStat extends \BackendModule
     		    }
     	    }
     	    // Unknown Version
-    	    $objVisitorsBrowserVersion = \Database::getInstance()
+    	    $objVisitorsBrowserVersion = Database::getInstance()
     	            ->prepare("SELECT 
                                     SUM(`visitors_counter`) AS SUMBV
                                 FROM 
@@ -987,7 +993,7 @@ class ModuleVisitorStat extends \BackendModule
     		    }
     	    }
     	    //Count all versions
-    	    $objVisitorsBrowserVersion = \Database::getInstance()
+    	    $objVisitorsBrowserVersion = Database::getInstance()
     	            ->prepare("SELECT 
                                     COUNT(DISTINCT `visitors_browser`) AS SUMBV
                                 FROM 
@@ -1006,7 +1012,7 @@ class ModuleVisitorStat extends \BackendModule
     		    }
     	    }
     	    //Language
-    		$objVisitorsBrowserLang = \Database::getInstance()
+    		$objVisitorsBrowserLang = Database::getInstance()
     		        ->prepare("SELECT 
                                     `visitors_lang`, 
                                     SUM(`visitors_counter`) AS SUMBL
@@ -1028,7 +1034,7 @@ class ModuleVisitorStat extends \BackendModule
     		    }
     	    }
     	    //OS
-    		$objVisitorsBrowserOS = \Database::getInstance()
+    		$objVisitorsBrowserOS = Database::getInstance()
     		        ->prepare("SELECT 
                                     `visitors_os`, 
                                     SUM(`visitors_counter`) AS SUMBOS
@@ -1050,7 +1056,7 @@ class ModuleVisitorStat extends \BackendModule
     		    }
     	    }
     	    //Count all OS
-    	    $objVisitorsBrowserOS = \Database::getInstance()
+    	    $objVisitorsBrowserOS = Database::getInstance()
     	            ->prepare("SELECT 
                                     COUNT(DISTINCT `visitors_os`) AS SUMBOS
                                 FROM 
@@ -1103,7 +1109,7 @@ class ModuleVisitorStat extends \BackendModule
 		$VisitorsSearchEngineKeywords = array(); //searchengine - keywords, order by keywords
 		$day60 = mktime(0, 0, 0, (int) date("m")-2, (int) date("d"), (int) date("Y"));
 
-		$objVisitors = \Database::getInstance()
+		$objVisitors = Database::getInstance()
 		        ->prepare("SELECT 
                                 tl_visitors.id AS id
                             FROM 
@@ -1120,7 +1126,7 @@ class ModuleVisitorStat extends \BackendModule
 			$objVisitors->next();
 			$VisitorsID = $objVisitors->id;
 
-			$objVisitorsSearchEngines = \Database::getInstance()
+			$objVisitorsSearchEngines = Database::getInstance()
 			        ->prepare("SELECT 
                                     `visitors_searchengine`,
                                     count(*) as anz 
@@ -1145,7 +1151,7 @@ class ModuleVisitorStat extends \BackendModule
 			    }
 		    }
 
-		    $objVisitorsSearchEngineKeywords = \Database::getInstance()
+		    $objVisitorsSearchEngineKeywords = Database::getInstance()
 		            ->prepare("SELECT 
                                     `visitors_searchengine`, 
                                     lower(`visitors_keywords`) AS keyword, 
@@ -1199,7 +1205,7 @@ class ModuleVisitorStat extends \BackendModule
 		if ($VisitorsID) 
 		{
 			//Version
-    		$objVisitorsReferrerTop = \Database::getInstance()
+    		$objVisitorsReferrerTop = Database::getInstance()
     		        ->prepare("SELECT 
                                     `visitors_referrer_dns`, 
                                     count(`id`) AS SUMRT
@@ -1262,7 +1268,7 @@ class ModuleVisitorStat extends \BackendModule
 		}
 		else
 		{
-			$strDate = \Date::parse($strModified, $intTstamp);
+			$strDate = \Contao\Date::parse($strModified, $intTstamp);
 		}
 
 		return $strDate;
@@ -1276,7 +1282,7 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function getVisitorsOnline($VisitorsID)
 	{
-		$objVisitorsOnlineCount = \Database::getInstance()
+		$objVisitorsOnlineCount = Database::getInstance()
 		        ->prepare("SELECT 
                                 COUNT(id) AS VOC 
                             FROM 
@@ -1297,7 +1303,7 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function getBestDay($VisitorsID)
 	{
-		$objVisitorsBestday = \Database::getInstance()
+		$objVisitorsBestday = Database::getInstance()
 		        ->prepare("SELECT 
                                 visitors_date, 
                                 visitors_visit, 
@@ -1337,7 +1343,7 @@ class ModuleVisitorStat extends \BackendModule
 	 */
 	protected function getBadDay($VisitorsID)
 	{
-		$objVisitorsBadday = \Database::getInstance()
+		$objVisitorsBadday = Database::getInstance()
 		        ->prepare("SELECT 
                                 visitors_date, 
                                 visitors_visit, 
@@ -1391,7 +1397,7 @@ class ModuleVisitorStat extends \BackendModule
 	protected function getVisitorCategoriesByUsergroups()
 	{
 	    $arrVisitorCats = array();
-	    $objVisitorCat = \Database::getInstance()
+	    $objVisitorCat = Database::getInstance()
                             ->prepare("SELECT
                                             `id`
                                           , `title`
@@ -1430,7 +1436,7 @@ class ModuleVisitorStat extends \BackendModule
 	protected function isUserInVisitorStatisticResetGroups($visitor_category_id)
 	{
 	    $arrVisitorGroups = array();
-	    $objVisitorGroups = \Database::getInstance()
+	    $objVisitorGroups = Database::getInstance()
                                 ->prepare("SELECT
                                             `visitors_statreset_protected`
                                            ,`visitors_statreset_groups`
@@ -1481,7 +1487,7 @@ class ModuleVisitorStat extends \BackendModule
 	    }
 
 	    //mit isMemberOf ermitteln, ob user Member einer der Cat Groups ist
-	    foreach (deserialize($visitors_stat_groups) as $id => $groupid)
+	    foreach (StringUtil::deserialize($visitors_stat_groups) as $id => $groupid)
 	    {
 	        if (true === $this->User->isMemberOf($groupid))
 	        {
