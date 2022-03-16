@@ -262,10 +262,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         if ($resultSet->rowCount() > 0) {
             $objVisitorsAverageCount = $resultSet->fetchAssociative();
-            $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount['MINDAY'])) / 60 / 60 / 24);
-            $VisitorsAverageVisitCount = (null === $objVisitorsAverageCount['SUMV']) ? 0 : (int) $objVisitorsAverageCount['SUMV'];
-            if ($tmpTotalDays > 0) {
-                $VisitorsAverageVisits = round($VisitorsAverageVisitCount / $tmpTotalDays, 0);
+            if (null !== $objVisitorsAverageCount['SUMV']) {
+                $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount['MINDAY'])) / 60 / 60 / 24);
+                $VisitorsAverageVisitCount = (null === $objVisitorsAverageCount['SUMV']) ? 0 : (int) $objVisitorsAverageCount['SUMV'];
+                if ($tmpTotalDays > 0) {
+                    $VisitorsAverageVisits = round($VisitorsAverageVisitCount / $tmpTotalDays, 0);
+                }
             }
         }
 
