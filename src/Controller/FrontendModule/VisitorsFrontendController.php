@@ -81,12 +81,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     {
         $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
-        //$this->initializeContaoFramework();
+
         /* @var PageModel $objPage */
         $objPage = $this->getPageModel();
-        $objPage->language = $objPage->current()->loadDetails()->rootLanguage;
-
-        //System::loadLanguageFile('tl_visitors'); #115
+        $objPage->current()->loadDetails(); // for language via cache call
 
         if (!is_numeric($this->visitors_category)) {
             $this->strTemplate = 'mod_visitors_error';
@@ -1091,7 +1089,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
             /* @var PageModel $objPage */
             $objPage = $this->getPageModel();
-            $objPage->language = $objPage->current()->loadDetails()->rootLanguage;
+            $objPage->current()->loadDetails(); // for language via cache call
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID / Lang in Object: '.$objPage->id.' / '.$objPage->language);
 
             //#102, bei Readerseite den Beitrags-Alias zählen (Parameter vorhanden)
