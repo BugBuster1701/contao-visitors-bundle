@@ -177,7 +177,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         while (false !== ($objVisitors = $resultSet->fetchAssociative())) {
             $VisitorsStartDate = false;
             $VisitorsAverageVisits = false;
-            $boolSeparator = (1 === $objVisitors['visitors_thousands_separator']) ? true : false;
+            $boolSeparator = (1 === (int) $objVisitors['visitors_thousands_separator']) ? true : false;
 
             if (\strlen($objVisitors['visitors_startdate'])) {
                 $VisitorsStartDate = Date::parse($objPage->dateFormat, $objVisitors['visitors_startdate']);
@@ -616,7 +616,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         $page_type = self::PAGE_TYPE_NORMAL;
 
-        if (1 === $objPage->protected) {
+        if (1 === (int) $objPage->protected) {
             //protected Seite. user
             $user = $this->get('security.helper')->getUser();
 
@@ -839,7 +839,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
         //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
         $ClientIP = bin2hex(sha1($visitors_category_id.$ModuleVisitorChecks->visitorGetUserIP(), true)); // sha1 20 Zeichen, bin2hex 40 zeichen
-        $BlockTime = ('' === $BlockTime) ? 1800 : $BlockTime; //Sekunden
+        $BlockTime = (0 === (int) $BlockTime) ? 1800 : $BlockTime; //Sekunden
         $CURDATE = date('Y-m-d');
 
         $dbconnection = $this->get('database_connection');
