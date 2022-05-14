@@ -84,9 +84,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         //$this->initializeContaoFramework();
         /* @var PageModel $objPage */
         $objPage = $this->getPageModel();
-        ##global $objPage;
-
-        System::loadLanguageFile('tl_visitors');
+        $objPage->current()->loadDetails(); // for language via cache call
 
         if (!is_numeric($this->visitors_category)) {
             $this->strTemplate = 'mod_visitors_error';
@@ -96,6 +94,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         $this->visitorSetDebugSettings($this->visitors_category);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': objPage Language manuall: '.$objPage->language);
 
         if (false === self::$_BackendUser) {
             $objTokenChecker = System::getContainer()->get('contao.security.token_checker');
@@ -467,16 +466,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getPageHits($objVisitors, $boolSeparator, $objPage)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id'].':'.$objPage->id);
-
-        //if page from cache, we have no page-id
-        /*
-        if ($objPage->id == 0)
-        {
-            $objPage = $this->visitorGetPageObj();
-
-        } //$objPage->id == 0
-        */
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID '.$objPage->id);
+
         //#80, bei Readerseite den Beitrags-Alias beachten
         //0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
         //1 = Nachrichten/News
@@ -1098,12 +1089,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
             /* @var PageModel $objPage */
             $objPage = $this->getPageModel();
-            //global $objPage;
-            //if page from cache, we have no page-id
-            //if ($objPage->id == 0)
-            //{
-            //    $objPage = $this->visitorGetPageObj();
-            //} //$objPage->id == 0
+            $objPage->current()->loadDetails(); // for language via cache call
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID / Lang in Object: '.$objPage->id.' / '.$objPage->language);
 
             //#102, bei Readerseite den Beitrags-Alias zählen (Parameter vorhanden)
