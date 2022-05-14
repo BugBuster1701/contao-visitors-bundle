@@ -81,9 +81,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     {
         $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
-
+        //$this->initializeContaoFramework();
         /* @var PageModel $objPage */
-        global $objPage;
+        $objPage = $this->getPageModel();
+        ##global $objPage;
 
         System::loadLanguageFile('tl_visitors');
 
@@ -1096,7 +1097,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         //Page Counter
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
             /* @var PageModel $objPage */
-            global $objPage;
+            $objPage = $this->getPageModel();
+            //global $objPage;
             //if page from cache, we have no page-id
             //if ($objPage->id == 0)
             //{
