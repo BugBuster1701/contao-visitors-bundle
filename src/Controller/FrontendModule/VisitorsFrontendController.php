@@ -86,7 +86,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $objPage = $this->getPageModel();
         ##global $objPage;
 
-        System::loadLanguageFile('tl_visitors');
+        //System::loadLanguageFile('tl_visitors'); #115
 
         if (!is_numeric($this->visitors_category)) {
             $this->strTemplate = 'mod_visitors_error';
@@ -96,6 +96,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         $this->visitorSetDebugSettings($this->visitors_category);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': Page Lang via Request: '.$request->getLocale());
 
         if (false === self::$_BackendUser) {
             $objTokenChecker = System::getContainer()->get('contao.security.token_checker');
