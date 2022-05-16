@@ -177,6 +177,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         while (false !== ($objVisitors = $resultSet->fetchAssociative())) {
             $VisitorsStartDate = false;
             $VisitorsAverageVisits = false;
+            $VisitorsAverageVisitsValue = 0;
             $boolSeparator = (1 === (int) $objVisitors['visitors_thousands_separator']) ? true : false;
 
             if (\strlen($objVisitors['visitors_startdate'])) {
