@@ -41,6 +41,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname']                         = 'Visitors Bundle';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']                            = 'Name';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['news_title']                      = 'Nachrichtenarchiv';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['events_title']                    = 'Kalender';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']                         = 'Keine Daten vorhanden für diese Kategorie.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']                    = 'Keine Statistik Daten vorhanden für diesen Zähler.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['not_defined']                     = 'Suchbegriff nicht definiert';
@@ -84,6 +85,8 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']      
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']                   = 'Tag mit den meisten Besuchern';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'Nachrichtenstatistik TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop_days']      = 'Nachrichtenstatistik TOP 20: die letzten 7 Tage';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['events_stat_visithittop']         = 'Events TOP 20';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['events_stat_visithittop_days']    = 'Events TOP 20: die letzten 7 Tage';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias']                      = 'Seitenalias';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language']                   = 'Sprache';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop']           = 'Seitenstatistik TOP 20';
@@ -104,4 +107,3 @@ $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend']                    
 $GLOBALS['TL_LANG']['visitors']['VisitorsStartDateLegend']                        = 'Zählung seit:';
 $GLOBALS['TL_LANG']['visitors']['YesterdayHitCountLegend']                        = 'Zugriffe gestern:';
 $GLOBALS['TL_LANG']['visitors']['YesterdayVisitCountLegend']                      = 'Besucher gestern:';
-
