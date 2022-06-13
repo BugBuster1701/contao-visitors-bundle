@@ -785,13 +785,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_NEWS === $PageType) {
             //alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
-                        'SELECT id
-                        FROM tl_news
-                        WHERE alias = :alias
+                        'SELECT t.id
+                        FROM tl_news t
+                        JOIN tl_news_archive r ON t.pid = r.id 
+                        WHERE
+                            t.alias = :alias
+                            AND
+                            r.jumpTo = :jumpTo
                         LIMIT 1
                         ')
                     ;
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -804,13 +809,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_FAQ === $PageType) {
             //alias = are-there-exams-how-do-they-work
             $stmt = $dbconnection->prepare(
-                        'SELECT id
-                        FROM tl_faq
-                        WHERE alias = :alias
+                        'SELECT t.id
+                        FROM tl_faq t
+                        JOIN tl_faq_category r ON t.pid = r.id 
+                        WHERE 
+                            t.alias = :alias
+                            AND
+                            r.jumpTo = :jumpTo
                         LIMIT 1
                         ')
                     ;
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -842,13 +852,20 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_EVENTS === $PageType) {
             //alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
-                'SELECT id
-                        FROM tl_calendar_events
-                        WHERE alias = :alias
+                       'SELECT t.id
+                        FROM tl_calendar_events t
+                        JOIN tl_calendar r ON t.pid = r.id 
+                        WHERE 
+                            t.alias = :alias
+                        WHERE 
+                            t.alias = :alias
+                            AND
+                            r.jumpTo = :jumpTo
                         LIMIT 1
                         ')
             ;
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
