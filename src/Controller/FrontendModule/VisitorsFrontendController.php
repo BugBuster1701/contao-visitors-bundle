@@ -857,8 +857,6 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         JOIN tl_calendar r ON t.pid = r.id 
                         WHERE 
                             t.alias = :alias
-                        WHERE 
-                            t.alias = :alias
                             AND
                             r.jumpTo = :jumpTo
                         LIMIT 1
