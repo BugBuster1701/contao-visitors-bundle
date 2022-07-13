@@ -64,6 +64,12 @@ class ModuleVisitorLog
             }
         }
 
+        if (!isset($GLOBALS['visitors']['debug']['first'])) 
+        {
+            $arrUniqid = StringUtil::trimsplit('.', uniqid('c0n7a0', true));
+            $GLOBALS['visitors']['debug']['first'] = $arrUniqid[1];
+        }
+
         $arrNamespace = StringUtil::trimsplit('::', $method);
         $arrClass =  StringUtil::trimsplit('\\', $arrNamespace[0]);
         $vclass = $arrClass[\count($arrClass)-1]; // class that will write the log
