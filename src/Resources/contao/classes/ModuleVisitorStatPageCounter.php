@@ -40,6 +40,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     const PAGE_TYPE_NEWS        = 1;    //1 = Nachrichten/News
     const PAGE_TYPE_FAQ         = 2;    //2 = FAQ
     const PAGE_TYPE_ISOTOPE     = 3;    //3   = Isotope
+    const PAGE_TYPE_EVENTS      = 4;    //4   = Events
     const PAGE_TYPE_FORBIDDEN   = 403;  //403 = Forbidden Seite
 
     /**
@@ -467,6 +468,40 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         }
     }
 
+    public function getEventsAliases($visitors_page_id)
+    {
+        //Events Tables exists?
+        if (\Database::getInstance()->tableExists('tl_calendar') &&
+            \Database::getInstance()->tableExists('tl_calendar_events'))
+        {
+            $objEventsAliases = \Database::getInstance()
+                                ->prepare("SELECT
+                                                tl_page.alias AS 'PageAlias',
+                                                tl_calendar_events.alias AS 'EventsAlias'
+                                            FROM
+                                                tl_page
+                                            INNER JOIN
+                                                tl_calendar ON tl_calendar.jumpTo = tl_page.id
+                                            INNER JOIN
+                                                tl_calendar_events ON tl_calendar_events.pid = tl_calendar.id
+                                            WHERE
+                                                tl_calendar_events.id = ?
+                                            ")
+                                ->limit(1)
+                                ->execute($visitors_page_id);
+            while ($objEventsAliases->next())
+            {
+                return array('PageAlias' => $objEventsAliases->PageAlias,
+                             'FaqAlias'  => $objEventsAliases->EventsAlias);
+            }
+        }
+        else
+        {
+            return array('PageAlias'    => false,
+                         'EventsAlias'  => false);
+        }
+    }
+
     public function getIsotopeAliases($visitors_page_id, $visitors_page_pid)
     {
         //Isotope Table exists?
@@ -597,6 +632,14 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             	        $alias = $aliases['PageAlias'] .'/'. $aliases['FaqAlias'];
             	    }
             	    break;
+                case self::PAGE_TYPE_EVENTS:
+                    $alias   = false;
+                    $aliases = $this->getEventsAliases($objPageStatCount->visitors_page_id);
+                    if (false !== $aliases['PageAlias'])
+                    {
+                        $alias = $aliases['PageAlias'] .'/'. $aliases['EventsAlias'];
+                    }
+                    break;
         	    case self::PAGE_TYPE_ISOTOPE:
         	        $alias   = false;
         	        $aliases = $this->getIsotopeAliases($objPageStatCount->visitors_page_id, $objPageStatCount->visitors_page_pid);
