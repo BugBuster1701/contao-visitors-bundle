@@ -491,8 +491,8 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                                 ->execute($visitors_page_id);
             while ($objEventsAliases->next())
             {
-                return array('PageAlias' => $objEventsAliases->PageAlias,
-                             'FaqAlias'  => $objEventsAliases->EventsAlias);
+                return array('PageAlias'    => $objEventsAliases->PageAlias,
+                             'EventsAlias'  => $objEventsAliases->EventsAlias);
             }
         }
         else
