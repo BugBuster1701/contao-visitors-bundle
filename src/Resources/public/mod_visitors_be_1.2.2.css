@@ -4,12 +4,12 @@
 }
 
 .mod_visitors_be_statistics {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 .mod_visitors_be_initial {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_average_nodata {
@@ -17,13 +17,13 @@
 }
 
 .mod_visitors_be_countings {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_chart {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 .mod_visitors_be_chart td {
 	padding-left:0 !important;
@@ -31,46 +31,46 @@
 }
 
 .mod_visitors_be_browser {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_browser_mini {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_browser_other {
   margin-top:16px;
 }
 .mod_visitors_be_searchenginekeywords {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_searchengines {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_page_visit_hit_top {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_page_visit_hit_days {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_page_visit_hit_today {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_page_visit_hit_yesterday {
-  width:50%;
-  float:left;
+  /* width:50%;
+  float:left; */
 }
 
 .mod_visitors_be_news_visit_hit_top {
@@ -98,18 +98,18 @@
 }
 
 .mod_visitors_be_referrer {
-  width:50%;
-  float:left;	
+  /* width:50%;
+  float:left;	 */
 }
 
 .mod_visitors_be_screen_top_resolution {
-  width:50%;
-  float:left;	
+  /* width:50%;
+  float:left;	 */
 }
 
 .mod_visitors_be_screen_top_resolution_days {
-  width:50%;
-  float:left;		
+  /* width:50%;
+  float:left;		 */
 }
 
 .mod_visitors_be_version {

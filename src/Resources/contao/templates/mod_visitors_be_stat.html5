@@ -121,7 +121,7 @@
 <?php if ($this->visitorsstatTotals[$vcid]['VisitorsTotalVisitCount'] >0) : ?>
 <?php if ($this->visitorskatid>0) : ?>
     <div class="tl_listing_container">
-        <div class="mod_visitors_be_statistics">
+        <div class="mod_visitors_be_statistics w50">
 			<table summary="Table lists statistik" class="mod_visitors_be_table">
 			<tbody>
 			<tr>
@@ -191,7 +191,7 @@
 			</tbody>
 			</table>
 		</div>
-		<div class="mod_visitors_be_initial">
+		<div class="mod_visitors_be_initial w50">
 <?php if ($this->visitorsstatDays[$vcid][110]['visitors_visit_start']>0 || $this->visitorsstatDays[$vcid][110]['visitors_hit_start']>0) : ?>
             <table summary="Table lists initial" class="mod_visitors_be_table" style="margin-left: auto;">
 			<tbody>
@@ -288,7 +288,7 @@
 	</div> <!-- 2 -->
 	<div style="clear:left;"></div><hr>
 	<div class="tl_listing_container">
-		<div class="mod_visitors_be_countings">
+		<div class="mod_visitors_be_countings w50">
 			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
@@ -308,7 +308,7 @@
 			</tbody>
 			</table>
 		</div>
-		<div class="mod_visitors_be_chart">
+		<div class="mod_visitors_be_chart w50">
 		<?= $this->visitorsstatChart[$vcid]; ?>
         </div>
 	</div> <!-- 3 -->
@@ -363,7 +363,7 @@
 <?php endif; ?>	
 	<div class="tl_content tl_listing_container list_view visitors_toggler">
 	  <div class="tl_listing block"> 
-		<div class="mod_visitors_be_browser">
+		<div class="mod_visitors_be_browser w50">
 			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
@@ -402,7 +402,7 @@
 			</tbody>
 			</table>
 		</div>
-		<div class="mod_visitors_be_browser_mini">
+		<div class="mod_visitors_be_browser_mini w50">
 			<div class="mod_visitors_be_browser2">
 				<table  class="mod_visitors_be_table" style="margin-left:auto;">
 				<tbody>
@@ -463,7 +463,7 @@
 	<hr>
 	<div class="tl_content tl_listing_container list_view visitors_toggler">
 	  <div class="tl_listing block"> 
-		<div class="mod_visitors_be_searchenginekeywords">
+		<div class="mod_visitors_be_searchenginekeywords w50">
 			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
@@ -486,7 +486,7 @@
 			</tbody>
 			</table>
 		</div>
-		<div class="mod_visitors_be_searchengines"> 
+		<div class="mod_visitors_be_searchengines w50"> 
 			<table  class="mod_visitors_be_table" style="margin-left:auto;">
 			<tbody>
 			<tr>
@@ -520,7 +520,7 @@
 	<hr>
 	<div class="tl_content tl_listing_container list_view visitors_toggler">
 	  <div class="tl_listing block"> 
-		<div class="mod_visitors_be_referrer">
+		<div class="mod_visitors_be_referrer w50">
 			<table  class="mod_visitors_be_table">
 			<tbody>
 			<tr>
