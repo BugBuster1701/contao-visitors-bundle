@@ -37,10 +37,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VisitorsFrontendController extends AbstractFrontendModuleController
 {
-    public const PAGE_TYPE_NORMAL = 0;       //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
-    public const PAGE_TYPE_NEWS = 1;         //1   = Nachrichten/News
-    public const PAGE_TYPE_FAQ = 2;          //2   = FAQ
-    public const PAGE_TYPE_ISOTOPE = 3;      //3   = Isotope
+    public const PAGE_TYPE_NORMAL    = 0;       //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
+    public const PAGE_TYPE_NEWS      = 1;         //1   = Nachrichten/News
+    public const PAGE_TYPE_FAQ       = 2;          //2   = FAQ
+    public const PAGE_TYPE_ISOTOPE   = 3;      //3   = Isotope
+    public const PAGE_TYPE_EVENTS    = 4;      //4   = Events
     public const PAGE_TYPE_FORBIDDEN = 403;  //403 = Forbidden Page
 
     protected $strTemplate = 'mod_visitors_fe_all';
@@ -710,6 +711,28 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
 
+        //Events Table exists?
+        if (\Contao\Input::get('events') && $dbconnection->getSchemaManager()->tablesExist('tl_calendar')) {
+            //Events Reader?
+            $stmt = $dbconnection->prepare(
+                'SELECT id
+                        FROM tl_calendar
+                        WHERE jumpTo = :jumpto
+                        LIMIT 1
+                        ')
+            ;
+            $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+            $resultSet = $stmt->executeQuery();
+
+            if ($resultSet->rowCount() > 0) {
+                //Events Reader
+                $page_type = self::PAGE_TYPE_EVENTS;
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
+
+                return $page_type;
+            }
+        }
+
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
 
         return $page_type;
@@ -762,13 +785,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_NEWS === $PageType) {
             //alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
-                        'SELECT id
-                        FROM tl_news
-                        WHERE alias = :alias
+                        'SELECT t.id
+                        FROM tl_news t
+                        JOIN tl_news_archive r ON t.pid = r.id 
+                        WHERE
+                            t.alias = :alias
+                            AND
+                            r.jumpTo = :jumpTo
                         LIMIT 1
                         ')
                     ;
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -781,13 +809,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_FAQ === $PageType) {
             //alias = are-there-exams-how-do-they-work
             $stmt = $dbconnection->prepare(
-                        'SELECT id
-                        FROM tl_faq
-                        WHERE alias = :alias
+                        'SELECT t.id
+                        FROM tl_faq t
+                        JOIN tl_faq_category r ON t.pid = r.id 
+                        WHERE 
+                            t.alias = :alias
+                            AND
+                            r.jumpTo = :jumpTo
                         LIMIT 1
                         ')
                     ;
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -814,6 +847,30 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdIsotope: '.$objIsotope['id']);
 
                 return $objIsotope['id'];
+            }
+        }
+        if (self::PAGE_TYPE_EVENTS === $PageType) {
+            //alias = james-wilson-returns
+            $stmt = $dbconnection->prepare(
+                       'SELECT t.id
+                        FROM tl_calendar_events t
+                        JOIN tl_calendar r ON t.pid = r.id 
+                        WHERE 
+                            t.alias = :alias
+                            AND
+                            r.jumpTo = :jumpTo
+                        LIMIT 1
+                        ')
+            ;
+            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
+            $resultSet = $stmt->executeQuery();
+
+            if ($resultSet->rowCount() > 0) {
+                $objNews = $resultSet->fetchAssociative();
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdEvent: '.$objNews['id']);
+
+                return $objNews['id'];
             }
         }
 

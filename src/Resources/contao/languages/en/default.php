@@ -85,10 +85,13 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_today']   
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday'] = 'Page Statistic TOP 5: yesterday';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop']           = 'News Statistic TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['news_stat_visithittop_days']      = 'News Statistic TOP 20: the last 7 days';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['events_stat_visithittop']         = 'Events Statistic TOP 20';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['events_stat_visithittop_days']    = 'Events Statistic TOP 20: the last 7 days';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ Statistic TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop_days']       = 'FAQ Statistic TOP 20: the last 7 days';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['isotope_stat_visithittop']        = 'Isotope Statistic TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['news_title']                      = 'News Archive';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['events_title']                    = 'Calendar';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']                       = 'FAQ Archive';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['isotope_title']                   = 'Isotope Products';
 $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend']                     = 'Visitors per day:';
@@ -105,4 +108,3 @@ $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top']               
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution'] = 'Device resolutions';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']      = 'Sample<br>viewport sizes';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']          = 'Screen Resolutions TOP 20 (last 30 days)';
-

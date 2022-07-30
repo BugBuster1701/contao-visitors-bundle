@@ -1,0 +1,27 @@
+<div class="mod_visitors_be_stat_partial_eventsvisithitdays">
+<!-- NewsHitDays::start -->
+<table summary="Table lists countings" class="mod_visitors_be_table" style="width: 100%;">
+	<tbody>
+		<tr>
+			<th colspan="4"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['events_stat_visithittop_days']; ?></th>
+		</tr>
+		<tr>
+			<th style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['events_title']; ?></th>
+			<th style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></th>
+			<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+			<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
+		</tr>
+<?php if ($this->EventsVisitHitDays !== false) : ?>
+	<?php foreach ($this->EventsVisitHitDays AS $EventsVisitHitDaysRow) : ?>
+		<tr>
+			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($EventsVisitHitDaysRow['title']) ? $EventsVisitHitDaysRow['title']  : ''); ?></td>
+			<td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;" class="tl_file_list"><?php echo (isset($EventsVisitHitDaysRow['alias']) ? $EventsVisitHitDaysRow['alias'] . ' (' . (isset($EventsVisitHitDaysRow['lang']) ? $EventsVisitHitDaysRow['lang'] . ')' : '') : ''); ?></td>
+			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($EventsVisitHitDaysRow['hits'])  ? $EventsVisitHitDaysRow['visits'] : ''); ?></td>
+			<td style="padding-left: 2px; text-align: right;"                                              class="tl_file_list"><?php echo (isset($EventsVisitHitDaysRow['hits'])  ? $EventsVisitHitDaysRow['hits']   : ''); ?></td>
+		</tr>
+	<?php endforeach; ?>
+<?php endif; ?>
+	</tbody>
+</table>
+<!-- NewsHitDays::stop -->
+</div>

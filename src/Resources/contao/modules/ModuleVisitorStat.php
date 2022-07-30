@@ -22,6 +22,7 @@ use BugBuster\Visitors\ModuleVisitorCharts;
 use BugBuster\Visitors\ModuleVisitorStatNewsFaqCounter;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
+use BugBuster\Visitors\ModuleVisitorStatEventsCounter;
 use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
 use Contao\BackendModule;
 use Contao\System;
@@ -249,6 +250,10 @@ class ModuleVisitorStat extends BackendModule
 				// Isotope
 				$arrVisitorsIsotopeVisitHits[$intAnzCounter]       = ModuleVisitorStatIsotopeProductCounter::getInstance()->generateIsotopeVisitHitTop($objVisitorsID, 20, true);
 
+                // Events
+                $arrVisitorsEventsVisitHits[$intAnzCounter]          = ModuleVisitorStatEventsCounter::getInstance()->generateEventsVisitHitTop($objVisitorsID, 20, true);
+                $arrVisitorsEventsVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatEventsCounter::getInstance()->generateNewsVisitHitDays($objVisitorsID, 20, true, 7);
+
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);
 				$arrVisitorsStatBrowser[$intAnzCounter] = $arrVSB['TOP'];
@@ -299,6 +304,8 @@ class ModuleVisitorStat extends BackendModule
 		$this->Template->visitorsstatFaqVisitHits      = $arrVisitorsFaqVisitHits;
 		$this->Template->visitorsstatFaqVisitHitsDays  = $arrVisitorsFaqVisitHitsDays;
 		$this->Template->visitorsstatIsotopeVisitHits  = $arrVisitorsIsotopeVisitHits;
+        $this->Template->visitorsstatEventsVisitHits     = $arrVisitorsEventsVisitHits;
+        $this->Template->visitorsstatEventsVisitHitsDays = $arrVisitorsEventsVisitHitsDays;
 		$this->Template->visitorsstatBrowser  	   = $arrVisitorsStatBrowser;
 		$this->Template->visitorsstatBrowser2  	   = $arrVisitorsStatBrowser2;
 		$this->Template->visitorsstatBrowserDefinition = $arrVisitorsStatBrowserDefinition;
