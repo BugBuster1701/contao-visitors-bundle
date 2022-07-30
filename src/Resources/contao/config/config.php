@@ -12,14 +12,14 @@
  * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
-\define('VISITORS_VERSION', '1.7');
-\define('VISITORS_BUILD', '2');
+\define('VISITORS_VERSION', '1.8');
+\define('VISITORS_BUILD', '0');
 
 /**
  * Backend css version number are added to style sheets files to make
  * the web browser reload those resources after a Visitors update.
  */
-\define('VISITORS_BE_CSS', '1.2.1');
+\define('VISITORS_BE_CSS', '1.2.2');
 
 /**
  * -------------------------------------------------------------------------

@@ -89,6 +89,14 @@
   margin-top: 20px;
 }
 
+.mod_visitors_be_events_visit_hit_top {
+  width:100%;
+}
+
+.mod_visitors_be_events_visit_hit_days {
+  margin-top: 20px;
+}
+
 .mod_visitors_be_referrer {
   width:50%;
   float:left;	
