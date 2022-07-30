@@ -1,5 +1,5 @@
 <div class="mod_visitors_be_stat_partial_eventsvisithitdays">
-<!-- NewsHitDays::start -->
+<!-- EventsHitDays::start -->
 <table summary="Table lists countings" class="mod_visitors_be_table" style="width: 100%;">
 	<tbody>
 		<tr>
@@ -23,5 +23,5 @@
 <?php endif; ?>
 	</tbody>
 </table>
-<!-- NewsHitDays::stop -->
+<!-- EventsHitDays::stop -->
 </div>

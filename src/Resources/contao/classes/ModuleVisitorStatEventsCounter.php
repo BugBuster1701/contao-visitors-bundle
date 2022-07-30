@@ -161,7 +161,7 @@ class ModuleVisitorStatEventsCounter extends \BackendModule
         return false;
     }
 
-    public function generateNewsVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
+    public function generateEventsVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
     {
         $arrEventsStatCount = false;
         $week               = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));

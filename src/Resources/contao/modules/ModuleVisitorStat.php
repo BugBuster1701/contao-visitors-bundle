@@ -252,7 +252,7 @@ class ModuleVisitorStat extends BackendModule
 
                 // Events
                 $arrVisitorsEventsVisitHits[$intAnzCounter]          = ModuleVisitorStatEventsCounter::getInstance()->generateEventsVisitHitTop($objVisitorsID, 20, true);
-                $arrVisitorsEventsVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatEventsCounter::getInstance()->generateNewsVisitHitDays($objVisitorsID, 20, true, 7);
+                $arrVisitorsEventsVisitHitsDays[$intAnzCounter]      = ModuleVisitorStatEventsCounter::getInstance()->generateEventsVisitHitDays($objVisitorsID, 20, true, 7);
 
 				//Browser
 				$arrVSB = $this->getBrowserTop($objVisitorsID);

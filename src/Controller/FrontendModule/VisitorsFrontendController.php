@@ -37,9 +37,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VisitorsFrontendController extends AbstractFrontendModuleController
 {
-    public const PAGE_TYPE_NORMAL    = 0;       //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
-    public const PAGE_TYPE_NEWS      = 1;         //1   = Nachrichten/News
-    public const PAGE_TYPE_FAQ       = 2;          //2   = FAQ
+    public const PAGE_TYPE_NORMAL    = 0;      //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
+    public const PAGE_TYPE_NEWS      = 1;      //1   = Nachrichten/News
+    public const PAGE_TYPE_FAQ       = 2;      //2   = FAQ
     public const PAGE_TYPE_ISOTOPE   = 3;      //3   = Isotope
     public const PAGE_TYPE_EVENTS    = 4;      //4   = Events
     public const PAGE_TYPE_FORBIDDEN = 403;  //403 = Forbidden Page
