@@ -136,6 +136,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         / /_/ / /_/ / / / / ____/ /_/ / / /
         \____/\____/ /_/ /_/    \____/ /_/
         */
+        
+        System::loadLanguageFile('default');
 
         $stmt = $this->get('database_connection')
                     ->prepare(
