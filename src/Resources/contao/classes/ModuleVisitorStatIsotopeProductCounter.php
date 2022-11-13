@@ -24,7 +24,7 @@ namespace BugBuster\Visitors;
  * @copyright  Glen Langer 2014..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
-class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
+class ModuleVisitorStatIsotopeProductCounter extends \Contao\BackendModule
 {
 
     /**
@@ -49,7 +49,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         $this->today     = date('Y-m-d');
         $this->yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
 
-        if (\Database::getInstance()->tableExists('tl_iso_product'))
+        if (\Contao\Database::getInstance()->tableExists('tl_iso_product'))
         {
             $this->setIsotopeTableExists(true);
         }
@@ -101,7 +101,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         //Isotope Table exists?
         if (true === $this->getIsotopeTableExists())
         {
-            $objIsotopeStatCount = \Database::getInstance()
+            $objIsotopeStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT 
                                             visitors_page_id,
                                             visitors_page_pid,
@@ -153,7 +153,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
             if ($parse === true)
             {
                 // @var $TemplatePartial Template
-                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_isotopevisithittop');
+                $TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_isotopevisithittop');
                 $TemplatePartial->IsotopeVisitHitTop = $arrIsotopeStatCount;
 
                 return $TemplatePartial->parse();
@@ -176,7 +176,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
         if (true === $this->getIsotopeTableExists())
         {
             $PageAlias = false;
-            $objIsotopePageAlias = \Database::getInstance()
+            $objIsotopePageAlias = \Contao\Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias' 
                                             FROM
@@ -192,7 +192,7 @@ class ModuleVisitorStatIsotopeProductCounter extends \BackendModule
                 $PageAlias = $objIsotopePageAlias->PageAlias;
             }            
 
-            $objIsotopeProduct= \Database::getInstance()
+            $objIsotopeProduct= \Contao\Database::getInstance()
                                     ->prepare("SELECT
                                                 tl_iso_product.alias  AS 'ProductAlias',
                                                 tl_iso_product.teaser AS 'ProductTeaser',

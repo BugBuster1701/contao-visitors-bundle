@@ -24,7 +24,7 @@ namespace BugBuster\Visitors;
  * @copyright  Glen Langer 2014..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
-class ModuleVisitorStatNewsFaqCounter extends \BackendModule
+class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 {
 
     /**
@@ -51,13 +51,13 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         $this->today     = date('Y-m-d');
         $this->yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
 
-        if (\Database::getInstance()->tableExists('tl_news') &&
-            \Database::getInstance()->tableExists('tl_news_archive'))
+        if (\Contao\Database::getInstance()->tableExists('tl_news') &&
+            \Contao\Database::getInstance()->tableExists('tl_news_archive'))
         {
             $this->setNewstableexists(true);
         }
-        if (\Database::getInstance()->tableExists('tl_faq') &&
-            \Database::getInstance()->tableExists('tl_faq_category'))
+        if (\Contao\Database::getInstance()->tableExists('tl_faq') &&
+            \Contao\Database::getInstance()->tableExists('tl_faq_category'))
         {
             $this->setFaqtableexists(true);
         }
@@ -125,7 +125,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         //News Tables exists?
         if (true === $this->getNewstableexists())
         {
-            $objNewsStatCount = \Database::getInstance()
+            $objNewsStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT 
                                             visitors_page_id,
                                             visitors_page_lang,
@@ -172,7 +172,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             if ($parse === true)
             {
                 // @var $TemplatePartial Template
-                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_newsvisithittop');
+                $TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_newsvisithittop');
                 $TemplatePartial->NewsVisitHitTop = $arrNewsStatCount;
 
                 return $TemplatePartial->parse();
@@ -192,7 +192,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         //News Tables exists?
         if (true === $this->getNewstableexists())
         {
-            $objNewsStatCount = \Database::getInstance()
+            $objNewsStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT 
                                             visitors_page_id,
                                             visitors_page_lang,
@@ -242,7 +242,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             if ($parse === true)
             {
                 // @var $TemplatePartial Template
-                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_newsvisithitdays');
+                $TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_newsvisithitdays');
                 $TemplatePartial->NewsVisitHitDays = $arrNewsStatCount;
 
                 return $TemplatePartial->parse();
@@ -261,7 +261,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         //FAQ Tables exists?
         if (true === $this->getFaqtableexists())
         {
-            $objFaqStatCount = \Database::getInstance()
+            $objFaqStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT
                                             visitors_page_id,
                                             visitors_page_lang,
@@ -308,7 +308,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             if ($parse === true)
             {
                 // @var $TemplatePartial Template
-                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithittop');
+                $TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_faqvisithittop');
                 $TemplatePartial->FaqVisitHitTop = $arrFaqStatCount;
 
                 return $TemplatePartial->parse();
@@ -329,7 +329,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         //FAQ Tables exists?
         if (true === $this->getFaqtableexists())
         {
-            $objFaqStatCount = \Database::getInstance()
+            $objFaqStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT
                                             visitors_page_id,
                                             visitors_page_lang,
@@ -379,7 +379,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
             if ($parse === true)
             {
                 // @var $TemplatePartial Template
-                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_faqvisithitdays');
+                $TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_faqvisithitdays');
                 $TemplatePartial->FaqVisitHitDays = $arrFaqStatCount;
 
                 return $TemplatePartial->parse();
@@ -397,7 +397,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         //News Tables exists?
         if (true === $this->getNewstableexists())
         {
-            $objNewsAliases = \Database::getInstance()
+            $objNewsAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias', 
                                                 tl_news.alias AS 'NewsAlias',
@@ -433,7 +433,7 @@ class ModuleVisitorStatNewsFaqCounter extends \BackendModule
         //FAQ Tables exists?
         if (true === $this->getFaqtableexists())
         {
-            $objFaqAliases = \Database::getInstance()
+            $objFaqAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias',
                                                 tl_faq.alias AS 'FaqAlias',

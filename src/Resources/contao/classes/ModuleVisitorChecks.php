@@ -21,7 +21,6 @@ namespace BugBuster\Visitors;
 use BugBuster\BotDetection\ModuleBotDetection;
 use BugBuster\Visitors\ModuleVisitorLog;
 use Contao\CoreBundle\Monolog\ContaoContext;
-use Jean85\PrettyVersions;
 use Psr\Log\LogLevel;
 
 /**
@@ -31,7 +30,7 @@ use Psr\Log\LogLevel;
  * @author     Glen Langer (BugBuster)
  * @license    LGPL 
  */
-class ModuleVisitorChecks extends \Frontend
+class ModuleVisitorChecks extends \Contao\Frontend
 {
 	/**
 	 * Current version of the class.
@@ -56,12 +55,12 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function checkBot() 
 	{
-	    $bundles = array_keys(\System::getContainer()->getParameter('kernel.bundles')); // old \ModuleLoader::getActive()
+	    $bundles = array_keys(\Contao\System::getContainer()->getParameter('kernel.bundles')); // old \ModuleLoader::getActive()
 
 		if (!\in_array('BugBusterBotdetectionBundle', $bundles))
 		{
 			//BugBusterBotdetectionBundle Modul fehlt, Abbruch
-			\System::getContainer()
+			\Contao\System::getContainer()
 			     ->get('monolog.logger.contao')
 			     ->log(
 			         LogLevel::ERROR,
@@ -91,16 +90,16 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function checkUserAgent($visitors_category_id)
 	{
-   	    if (\Environment::get('httpUserAgent')) 
+   	    if (\Contao\Environment::get('httpUserAgent')) 
    	    { 
-	        $UserAgent = trim(\Environment::get('httpUserAgent')); 
+	        $UserAgent = trim(\Contao\Environment::get('httpUserAgent')); 
 	    } 
 	    else 
 	    { 
 	        return false; // Ohne Absender keine Suche
 	    }
 	    $arrUserAgents = array();
-	    $objUserAgents = \Database::getInstance()
+	    $objUserAgents = \Contao\Database::getInstance()
 	            ->prepare("SELECT 
                                 `visitors_useragent` 
                             FROM 
@@ -162,7 +161,7 @@ class ModuleVisitorChecks extends \Frontend
 	    $dnsResult = false;
 	    //$this->_vhost :  Host.TLD
 	    //idn_to_ascii
-	    $dnsResult = @dns_get_record(\Idna::encode($host), DNS_A + DNS_AAAA);
+	    $dnsResult = @dns_get_record(\Contao\Idna::encode($host), DNS_A + DNS_AAAA);
 	    if ((bool) $dnsResult)
 	    {
 	        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
@@ -205,7 +204,7 @@ class ModuleVisitorChecks extends \Frontend
 	 */
 	public function visitorGetUserIP()
 	{
-	    $UserIP = \Environment::get('ip');
+	    $UserIP = \Contao\Environment::get('ip');
 	    if (strpos($UserIP, ',') !== false) //first IP
 	    {
 	        $UserIP = trim(substr($UserIP, 0, strpos($UserIP, ',')));
@@ -218,7 +217,7 @@ class ModuleVisitorChecks extends \Frontend
 	        $HTTPXFF = $_SERVER['HTTP_X_FORWARDED_FOR'];
 	        $_SERVER['HTTP_X_FORWARDED_FOR'] = '';
 
-	        $UserIP = \Environment::get('ip');
+	        $UserIP = \Contao\Environment::get('ip');
 	        if (strpos($UserIP, ',') !== false) //first IP
 	        {
 	            $UserIP = trim(substr($UserIP, 0, strpos($UserIP, ',')));

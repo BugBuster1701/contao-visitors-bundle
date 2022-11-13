@@ -24,7 +24,7 @@ namespace BugBuster\Visitors;
  * @copyright  Glen Langer 2017..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
-class ModuleVisitorStatScreenCounter extends \BackendModule
+class ModuleVisitorStatScreenCounter extends \Contao\BackendModule
 {
 
     /**
@@ -66,9 +66,9 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
     {
         $arrScreenStatCount = false;
 
-        $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_screentopresolution');
+        $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_screentopresolution');
 
-        $objScreenStatCount = \Database::getInstance()
+        $objScreenStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT 
                                         `v_s_w`,
                                         `v_s_h`,
@@ -106,9 +106,9 @@ class ModuleVisitorStatScreenCounter extends \BackendModule
         $arrScreenStatCount = false;
         $lastdays = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
-        $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
+        $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
 
-        $objScreenStatCount = \Database::getInstance()
+        $objScreenStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT
                                         `v_s_w`,
                                         `v_s_h`,

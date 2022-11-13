@@ -25,7 +25,7 @@ use BugBuster\Visitors\ModuleVisitorStatPageCounter;
  * @copyright	Glen Langer 2015..2022 <http://contao.ninja>
  * @author      Glen Langer (BugBuster)
  */
-class VisitorsStatExport extends \System
+class VisitorsStatExport extends \Contao\System
 {
     protected $catid  = 0;
     protected $format = 'xlsx';
@@ -35,11 +35,11 @@ class VisitorsStatExport extends \System
     public function __construct()
     {
         parent::__construct();
-        \System::loadLanguageFile('tl_visitors_stat_export');
+        \Contao\System::loadLanguageFile('tl_visitors_stat_export');
 
-        $this->format = \Input::post('visitors_export_format', true);
-        $this->catid  = \Input::post('catid', true);
-        $this->export_days = (int) \Input::post('visitors_export_days', true);
+        $this->format = \Contao\Input::post('visitors_export_format', true);
+        $this->catid  = \Contao\Input::post('catid', true);
+        $this->export_days = (int) \Contao\Input::post('visitors_export_days', true);
 
         if ($this->export_days <1) 
         {
@@ -48,7 +48,7 @@ class VisitorsStatExport extends \System
         $_SESSION['VISITORS_EXPORT_DAYS'] = $this->export_days;
 
         //IE or other?
-        $ua = \Environment::get('agent')->shorty;
+        $ua = \Contao\Environment::get('agent')->shorty;
         if ($ua == 'ie')
         {
             $this->BrowserAgent = 'IE';
@@ -159,7 +159,7 @@ class VisitorsStatExport extends \System
 
     protected function generateExportData()
     {
-        $objStatistic = \Database::getInstance()
+        $objStatistic = \Contao\Database::getInstance()
                             ->prepare("SELECT 
                                         tvc.title AS category_title, 
                                         tv.id AS visitors_id, 

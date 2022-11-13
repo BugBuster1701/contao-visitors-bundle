@@ -28,7 +28,7 @@ use Psr\Log\LogLevel;
  * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
-class DcaVisitors extends \Backend 
+class DcaVisitors extends \Contao\Backend 
 {
     /**
      * Import the back end user object
@@ -65,9 +65,9 @@ class DcaVisitors extends \Backend
      */
     public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
     {
-        if (\strlen(\Input::get('tid')))
+        if (\strlen(\Contao\Input::get('tid')))
         {
-            $this->toggleVisibility(\Input::get('tid'), (\Input::get('state') == 1));
+            $this->toggleVisibility(\Contao\Input::get('tid'), (\Contao\Input::get('state') == 1));
             $this->redirect($this->getReferer());
         }
 
@@ -97,7 +97,7 @@ class DcaVisitors extends \Backend
         // Check permissions to publish
         if (!$this->User->isAdmin && !$this->User->hasAccess('tl_visitors::published', 'alexf'))
         {
-            \System::getContainer()
+            \Contao\System::getContainer()
                 ->get('monolog.logger.contao')
                 ->log(
                     LogLevel::ERROR,
@@ -109,7 +109,7 @@ class DcaVisitors extends \Backend
         }
 
         // Update database
-        \Database::getInstance()->prepare("UPDATE 
+        \Contao\Database::getInstance()->prepare("UPDATE 
                                                tl_visitors 
                                            SET 
                                                published='" . ($blnVisible ? 1 : '') . "' 

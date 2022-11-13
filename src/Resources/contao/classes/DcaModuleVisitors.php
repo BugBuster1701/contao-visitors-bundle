@@ -24,7 +24,7 @@ namespace BugBuster\Visitors;
  * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
-class DcaModuleVisitors extends \Backend 
+class DcaModuleVisitors extends \Contao\Backend 
 {
 	public function getVisitorsTemplates($dc)
 	{

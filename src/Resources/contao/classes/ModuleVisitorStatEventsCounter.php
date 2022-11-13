@@ -24,7 +24,7 @@ namespace BugBuster\Visitors;
  * @copyright  Glen Langer 2014..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
-class ModuleVisitorStatEventsCounter extends \BackendModule
+class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
 {
 
     /**
@@ -49,8 +49,8 @@ class ModuleVisitorStatEventsCounter extends \BackendModule
         $this->today     = date('Y-m-d');
         $this->yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-1, (int) date("Y")));
 
-        if (\Database::getInstance()->tableExists('tl_calendar_events') &&
-            \Database::getInstance()->tableExists('tl_calendar'))
+        if (\Contao\Database::getInstance()->tableExists('tl_calendar_events') &&
+            \Contao\Database::getInstance()->tableExists('tl_calendar'))
         {
             $this->setEventstableexists(true);
         }
@@ -102,7 +102,7 @@ class ModuleVisitorStatEventsCounter extends \BackendModule
         //News Tables exists?
         if (true === $this->getEventstableexists())
         {
-            $objEventsStatCount = \Database::getInstance()
+            $objEventsStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT 
                                             visitors_page_id,
                                             visitors_page_lang,
@@ -149,7 +149,7 @@ class ModuleVisitorStatEventsCounter extends \BackendModule
             if ($parse === true)
             {
                 // @var $TemplatePartial Template
-                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_eventsvisithittop');
+                $TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_eventsvisithittop');
                 $TemplatePartial->EventsVisitHitTop = $arrEventsStatCount;
 
                 return $TemplatePartial->parse();
@@ -169,7 +169,7 @@ class ModuleVisitorStatEventsCounter extends \BackendModule
         //News Tables exists?
         if (true === $this->getEventstableexists())
         {
-            $objEventsStatCount = \Database::getInstance()
+            $objEventsStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT 
                                             visitors_page_id,
                                             visitors_page_lang,
@@ -219,7 +219,7 @@ class ModuleVisitorStatEventsCounter extends \BackendModule
             if ($parse === true)
             {
                 // @var $TemplatePartial Template
-                $TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_eventsvisithitdays');
+                $TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_eventsvisithitdays');
                 $TemplatePartial->EventsVisitHitDays = $arrEventsStatCount;
 
                 return $TemplatePartial->parse();
@@ -236,7 +236,7 @@ class ModuleVisitorStatEventsCounter extends \BackendModule
         //Events Tables exists?
         if (true === $this->getEventstableexists())
         {
-            $objEventsAliases = \Database::getInstance()
+            $objEventsAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias', 
                                                 tl_calendar_events.alias AS 'EventsAlias',

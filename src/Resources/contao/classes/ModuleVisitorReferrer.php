@@ -27,7 +27,7 @@ use BugBuster\Visitors\ModuleVisitorLog;
  * @author     Glen Langer (BugBuster)
  * @license    LGPL 
  */
-class ModuleVisitorReferrer	extends \System
+class ModuleVisitorReferrer	extends \Contao\System
 {
 	/**
 	 * Current version of the class.

@@ -24,7 +24,7 @@ namespace BugBuster\Visitors;
  * @copyright  Glen Langer 2014..2022 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  */
-class ModuleVisitorStatPageCounter extends \BackendModule
+class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 {
 
     /**
@@ -78,7 +78,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     public function generatePageVisitHitTop($VisitorsID, $limit = 20, $parse = true)
     {
         $arrPageStatCount = false;
-        $objPageStatCount = \Database::getInstance()
+        $objPageStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT 
                                         visitors_page_id,
                                         visitors_page_lang,
@@ -109,7 +109,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             switch ($objPageStatCount->visitors_page_type) 
             {
             	case self::PAGE_TYPE_NORMAL:
-                    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+                    $objPage = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
@@ -122,7 +122,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
-    	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+    	            $objPage  = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
     	            $alias403 = $this->getForbiddenAlias(
     	                $objPageStatCount->visitors_page_id,
     	                $objPageStatCount->visitors_page_lang
@@ -148,7 +148,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
 
         if ($parse === true) 
         {
-            $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_pagevisithittop');        
+            $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithittop');        
             $this->TemplatePartial->PageVisitHitTop = $arrPageStatCount;
 
             return $this->TemplatePartial->parse();
@@ -163,9 +163,9 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     {
         $arrPageStatCount = false;
 
-        $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_pagevisithittoday');
+        $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithittoday');
 
-        $objPageStatCount = \Database::getInstance()
+        $objPageStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT
                                         visitors_page_id,
                                         visitors_page_lang,
@@ -198,7 +198,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             switch ($objPageStatCount->visitors_page_type) 
             {
             	case self::PAGE_TYPE_NORMAL:
-                    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+                    $objPage = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
@@ -211,7 +211,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
-    	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+    	            $objPage  = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
     	            $alias403 = $this->getForbiddenAlias(
     	                $objPageStatCount->visitors_page_id,
     	                $objPageStatCount->visitors_page_lang
@@ -243,9 +243,9 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     {
         $arrPageStatCount = false;
 
-        $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_pagevisithityesterday');
+        $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithityesterday');
 
-        $objPageStatCount = \Database::getInstance()
+        $objPageStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT
                                         visitors_page_id,
                                         visitors_page_lang,
@@ -278,7 +278,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             switch ($objPageStatCount->visitors_page_type) 
             {
             	case self::PAGE_TYPE_NORMAL:
-                    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+                    $objPage = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
@@ -291,7 +291,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
-    	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+    	            $objPage  = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
     	            $alias403 = $this->getForbiddenAlias(
     	                $objPageStatCount->visitors_page_id,
     	                $objPageStatCount->visitors_page_lang
@@ -324,9 +324,9 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         $arrPageStatCount = false;
         $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
-        $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_pagevisithitdays');
+        $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithitdays');
 
-        $objPageStatCount = \Database::getInstance()
+        $objPageStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT
                                         visitors_page_id,
                                         visitors_page_lang,
@@ -359,7 +359,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             switch ($objPageStatCount->visitors_page_type) 
             {
             	case self::PAGE_TYPE_NORMAL:
-                    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+                    $objPage = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
                     if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
@@ -372,7 +372,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                 	break;
     	        case self::PAGE_TYPE_FORBIDDEN:
     	            $alias   = false;
-    	            $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+    	            $objPage  = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
     	            $alias403 = $this->getForbiddenAlias(
     	                $objPageStatCount->visitors_page_id,
     	                $objPageStatCount->visitors_page_lang
@@ -403,10 +403,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     public function getNewsAliases($visitors_page_id)
     {
         //News Tables exists?
-        if (\Database::getInstance()->tableExists('tl_news') &&
-            \Database::getInstance()->tableExists('tl_news_archive'))
+        if (\Contao\Database::getInstance()->tableExists('tl_news') &&
+            \Contao\Database::getInstance()->tableExists('tl_news_archive'))
         {
-            $objNewsAliases = \Database::getInstance()
+            $objNewsAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias', 
                                                 tl_news.alias AS 'NewsAlias'
@@ -437,10 +437,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     public function getFaqAliases($visitors_page_id)
     {
         //FAQ Tables exists?
-        if (\Database::getInstance()->tableExists('tl_faq') &&
-            \Database::getInstance()->tableExists('tl_faq_category'))
+        if (\Contao\Database::getInstance()->tableExists('tl_faq') &&
+            \Contao\Database::getInstance()->tableExists('tl_faq_category'))
         {
-            $objFaqAliases = \Database::getInstance()
+            $objFaqAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias',
                                                 tl_faq.alias AS 'FaqAlias'
@@ -471,10 +471,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     public function getEventsAliases($visitors_page_id)
     {
         //Events Tables exists?
-        if (\Database::getInstance()->tableExists('tl_calendar') &&
-            \Database::getInstance()->tableExists('tl_calendar_events'))
+        if (\Contao\Database::getInstance()->tableExists('tl_calendar') &&
+            \Contao\Database::getInstance()->tableExists('tl_calendar_events'))
         {
-            $objEventsAliases = \Database::getInstance()
+            $objEventsAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias',
                                                 tl_calendar_events.alias AS 'EventsAlias'
@@ -505,10 +505,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     public function getIsotopeAliases($visitors_page_id, $visitors_page_pid)
     {
         //Isotope Table exists?
-        if (\Database::getInstance()->tableExists('tl_iso_product'))
+        if (\Contao\Database::getInstance()->tableExists('tl_iso_product'))
         {
             $PageAlias = false;
-            $objIsotopePageAlias = \Database::getInstance()
+            $objIsotopePageAlias = \Contao\Database::getInstance()
                                     ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias'
                                             FROM
@@ -524,7 +524,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
                 $PageAlias = $objIsotopePageAlias->PageAlias;
             }
 
-            $objIsotopeProduct= \Database::getInstance()
+            $objIsotopeProduct= \Contao\Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_iso_product.alias  AS 'ProductAlias'
                                             FROM
@@ -551,10 +551,10 @@ class ModuleVisitorStatPageCounter extends \BackendModule
     public function getForbiddenAlias($visitors_page_id, $visitors_page_lang)
     {
         //Page ID von der 403 Seite ermitteln
-        $host = \Environment::get('host');
+        $host = \Contao\Environment::get('host');
         // Find the matching root pages (thanks to Andreas Schempp)
-        $objRootPage = \PageModel::findFirstPublishedRootByHostAndLanguage($host, $visitors_page_lang);
-        $objPage = \PageModel::find403ByPid($objRootPage->id);
+        $objRootPage = \Contao\PageModel::findFirstPublishedRootByHostAndLanguage($host, $visitors_page_lang);
+        $objPage = \Contao\PageModel::find403ByPid($objRootPage->id);
 
         return $objPage->alias;
     }
@@ -566,13 +566,13 @@ class ModuleVisitorStatPageCounter extends \BackendModule
      * @param integer $VisitorsID
      * @param number  $days
      * @param string  $parse
-     * @return string|multitype:string NULL
+     * @return array|string NULL
      */
     public function generatePageVisitHitTopDays($VisitorsID, $days = 365, $parse = false)
     {
         $STARTDATE = date("Y-m-d", mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y"))); 
         $arrPageStatCount = false;
-        $objPageStatCount = \Database::getInstance()
+        $objPageStatCount = \Contao\Database::getInstance()
                             ->prepare("SELECT
                                         visitors_page_id,
                                         visitors_page_pid,
@@ -605,7 +605,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
             switch ($objPageStatCount->visitors_page_type)
             {
             	case self::PAGE_TYPE_NORMAL:
-            	    $objPage = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+            	    $objPage = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
             	    if (!\is_null($objPage))
                     {
                         $alias = $objPage->alias;
@@ -650,7 +650,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
         	        break;
             	case self::PAGE_TYPE_FORBIDDEN:
             	    $alias   = false;
-            	    $objPage  = \PageModel::findWithDetails($objPageStatCount->visitors_page_id);
+            	    $objPage  = \Contao\PageModel::findWithDetails($objPageStatCount->visitors_page_id);
             	    $alias403 = $this->getForbiddenAlias(
             	        $objPageStatCount->visitors_page_id,
             	        $objPageStatCount->visitors_page_lang
@@ -676,7 +676,7 @@ class ModuleVisitorStatPageCounter extends \BackendModule
 
         if ($parse === true)
         {
-            $this->TemplatePartial = new \BackendTemplate('mod_visitors_be_stat_partial_pagevisithittop');
+            $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithittop');
             $this->TemplatePartial->PageVisitHitTop = $arrPageStatCount;
 
             return $this->TemplatePartial->parse();

@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author     Glen Langer (BugBuster)
  */
-class BackendVisitors extends \Backend
+class BackendVisitors extends \Contao\Backend
 {
 
 	/**
@@ -35,14 +35,14 @@ class BackendVisitors extends \Backend
 		parent::__construct();
 
 		//$this->User->authenticate(); //deprecated
-		if (false === \System::getContainer()->get('contao.security.token_checker')->hasBackendUser()) 
+		if (false === \Contao\System::getContainer()->get('contao.security.token_checker')->hasBackendUser()) 
 		{
 			throw new AccessDeniedException('Access denied');
 		}
 
-		\System::loadLanguageFile('default');
-		\System::loadLanguageFile('modules');
-		\System::loadLanguageFile('tl_visitors_referrer');
+		\Contao\System::loadLanguageFile('default');
+		\Contao\System::loadLanguageFile('modules');
+		\Contao\System::loadLanguageFile('tl_visitors_referrer');
 	}
 
 	/**
@@ -53,15 +53,15 @@ class BackendVisitors extends \Backend
 	public function run()
 	{
 		/** @var BackendTemplate|object $objTemplate */
-		$objTemplate                = new \BackendTemplate('mod_visitors_be_stat_details_referrer');
-		$objTemplate->theme         = \Backend::getTheme();
-		$objTemplate->base          = \Environment::get('base');
+		$objTemplate                = new \Contao\BackendTemplate('mod_visitors_be_stat_details_referrer');
+		$objTemplate->theme         = \Contao\Backend::getTheme();
+		$objTemplate->base          = \Contao\Environment::get('base');
 		$objTemplate->language      = $GLOBALS['TL_LANGUAGE'];
-		$objTemplate->title         = \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['systemMessages']);
-		$objTemplate->charset       = \Config::get('characterSet');
+		$objTemplate->title         = \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['systemMessages']);
+		$objTemplate->charset       = \Contao\Config::get('characterSet');
 		$objTemplate->visitorsbecss = VISITORS_BE_CSS;
 
-		if (\is_null(\Input::get('tl_vid', true)))
+		if (\is_null(\Contao\Input::get('tl_vid', true)))
 		{
 		    $objTemplate->messages = $GLOBALS['TL_LANG']['tl_visitors_referrer']['no_referrer'];
 
@@ -82,7 +82,7 @@ class BackendVisitors extends \Backend
 						                     . " WHERE `visitors_referrer_dns` = ?"
 						                     . " AND `vid` = ?"
 						                     . " GROUP BY 1 ORDER BY 2 DESC")*/
-		$objDetails = \Database::getInstance()
+		$objDetails = \Contao\Database::getInstance()
 		        ->prepare("SELECT
                                 visitors_referrer_full,
                                 count(id)   as ANZ,
@@ -93,7 +93,7 @@ class BackendVisitors extends \Backend
                                 visitors_referrer_dns = ? AND vid = ?
                             GROUP BY 1
                             ORDER BY 2 DESC")
-                ->execute(str_rot13(\Input::get('tl_referrer', true)), \Input::get('tl_vid', true));
+                ->execute(str_rot13(\Contao\Input::get('tl_referrer', true)), \Contao\Input::get('tl_vid', true));
 		$intRows = $objDetails->numRows;
 		if ($intRows > 0)
 		{
@@ -101,7 +101,7 @@ class BackendVisitors extends \Backend
 	        {
 				$objTemplate->messages .= '
                     <tr>
-                        <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.rawurldecode(htmlspecialchars(\Idna::decode($objDetails->visitors_referrer_full))).'</td>
+                        <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.rawurldecode(htmlspecialchars(\Contao\Idna::decode($objDetails->visitors_referrer_full))).'</td>
                         <td class="tl_file_list" style="padding-left: 2px; text-align: left;">'.date(\Contao\Config::get('datimFormat'), $objDetails->maxtstamp).'</td>
                         <td class="tl_file_list" style="text-align: center;">'.$objDetails->ANZ.'</td>
                     </tr>';

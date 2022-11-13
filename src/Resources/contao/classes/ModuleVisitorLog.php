@@ -146,7 +146,7 @@ class ModuleVisitorLog
 
         $strLogsDir = null;
 
-        if (($container = \System::getContainer()) !== null)
+        if (($container = \Contao\System::getContainer()) !== null)
         {
             $strLogsDir = $container->getParameter('kernel.logs_dir');
         }

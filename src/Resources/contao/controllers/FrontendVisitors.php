@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author     Glen Langer (BugBuster)
  */
-class FrontendVisitors extends \Frontend
+class FrontendVisitors extends \Contao\Frontend
 {
 
     private $_SCREEN = false; // Screen Resolution
@@ -45,7 +45,7 @@ class FrontendVisitors extends \Frontend
 			\define('FE_USER_LOGGED_IN', false);
 		}
 
-		\System::loadLanguageFile('tl_visitors');
+		\Contao\System::loadLanguageFile('tl_visitors');
 	}
 
 	/**
@@ -55,11 +55,11 @@ class FrontendVisitors extends \Frontend
 	 */
 	public function run()
 	{
-	    $logger = \System::getContainer()->get('monolog.logger.contao');
+	    $logger = \Contao\System::getContainer()->get('monolog.logger.contao');
 
 	    if (false === self::$_BackendUser)
 	    {
-	        $objTokenChecker = \System::getContainer()->get('contao.security.token_checker');
+	        $objTokenChecker = \Contao\System::getContainer()->get('contao.security.token_checker');
 	        if ($objTokenChecker->hasBackendUser())
 	        {
 	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': BackendUser: Yes');
@@ -72,9 +72,9 @@ class FrontendVisitors extends \Frontend
 	    }
 
 	    //Parameter holen
-	    if ((int) \Input::get('vcid')  > 0)
+	    if ((int) \Contao\Input::get('vcid')  > 0)
 	    {
-	        $visitors_category_id = (int) \Input::get('vcid');
+	        $visitors_category_id = (int) \Contao\Input::get('vcid');
 	        $this->visitorScreenSetDebugSettings($visitors_category_id);
 	        $this->visitorScreenSetResolutions();
 	        if ($this->_SCREEN !== false)
@@ -85,7 +85,7 @@ class FrontendVisitors extends \Frontend
 	            / /___/ /_/ / /_/ / /|  / / / _/ // /|  / /_/ /
 	            \____/\____/\____/_/ |_/ /_/ /___/_/ |_/\____/ only
 	            */
-	            $objVisitors = \Database::getInstance()
+	            $objVisitors = \Contao\Database::getInstance()
                             ->prepare("SELECT
                                         tl_visitors.id AS id, visitors_block_time
                                     FROM
@@ -135,24 +135,24 @@ class FrontendVisitors extends \Frontend
 	 */
 	protected function visitorScreenSetResolutions()
 	{
-	    $this->_SCREEN = array("scrw"  => (int) \Input::get('scrw'),
-                                "scrh"  => (int) \Input::get('scrh'),
-                                "scriw" => (int) \Input::get('scriw'),
-                                "scrih" => (int) \Input::get('scrih')
+	    $this->_SCREEN = array("scrw"  => (int) \Contao\Input::get('scrw'),
+                                "scrh"  => (int) \Contao\Input::get('scrh'),
+                                "scriw" => (int) \Contao\Input::get('scriw'),
+                                "scrih" => (int) \Contao\Input::get('scrih')
                                 );
-	    if ((int) \Input::get('scrw')  == 0 ||
-	        (int) \Input::get('scrh')  == 0 ||
-	        (int) \Input::get('scriw') == 0 ||
-	        (int) \Input::get('scrih') == 0
+	    if ((int) \Contao\Input::get('scrw')  == 0 ||
+	        (int) \Contao\Input::get('scrh')  == 0 ||
+	        (int) \Contao\Input::get('scriw') == 0 ||
+	        (int) \Contao\Input::get('scrih') == 0
 	    )
 	    {
 	        ModuleVisitorLog::writeLog(
 	            __METHOD__,
 	            __LINE__,
-	            'ERR: '.print_r(array("scrw"  => \Input::get('scrw'),
-                                                    	       "scrh"  => \Input::get('scrh'),
-                                                    	       "scriw" => \Input::get('scriw'),
-                                                    	       "scrih" => \Input::get('scrih')
+	            'ERR: '.print_r(array("scrw"  => \Contao\Input::get('scrw'),
+                                                    	       "scrh"  => \Contao\Input::get('scrh'),
+                                                    	       "scriw" => \Contao\Input::get('scriw'),
+                                                    	       "scrih" => \Contao\Input::get('scrih')
                                                 	        ), true)
 	        );
 	        $this->_SCREEN = false;
@@ -187,7 +187,7 @@ class FrontendVisitors extends \Frontend
 	    $CURDATE = date('Y-m-d');
 
 	    //Visitor Screen Blocker
-	    \Database::getInstance()
+	    \Contao\Database::getInstance()
                     ->prepare("DELETE FROM
                                     tl_visitors_blocker
                                 WHERE
@@ -199,7 +199,7 @@ class FrontendVisitors extends \Frontend
                     ->execute($BlockTime, $vid, 's');
 
 	    //Blocker IP lesen, sofern vorhanden
-	    $objVisitBlockerIP = \Database::getInstance()
+	    $objVisitBlockerIP = \Contao\Database::getInstance()
             	    ->prepare("SELECT
                                     id, visitors_ip
                                 FROM
@@ -209,7 +209,7 @@ class FrontendVisitors extends \Frontend
                     ->execute($ClientIP, $vid, 's');
 	    //Debug ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':\n'.$objVisitBlockerIP->query );
 	    //Daten lesen, nur Screen Angaben, die Inner Angaben werden jedesmal überschrieben
-	    $objScreenCounter = \Database::getInstance()
+	    $objScreenCounter = \Contao\Database::getInstance()
 	                                       ->prepare("SELECT
                                                             id, v_screen_counter
                                                         FROM
@@ -226,7 +226,7 @@ class FrontendVisitors extends \Frontend
 	        if ($objVisitBlockerIP->numRows < 1)
 	        {
 	            // Insert IP + Update Visits
-	            \Database::getInstance()
+	            \Contao\Database::getInstance()
 	                            ->prepare("INSERT INTO
                                                  tl_visitors_blocker
                                             SET
@@ -246,7 +246,7 @@ class FrontendVisitors extends \Frontend
 	                'v_s_ih'           => $this->_SCREEN['scrih'],
 	                'v_screen_counter' => 1
 	            );
-	            \Database::getInstance()
+	            \Contao\Database::getInstance()
 	                           ->prepare("INSERT IGNORE INTO tl_visitors_screen_counter %s")
 	                           ->set($arrSet)
 	                           ->execute();
@@ -258,7 +258,7 @@ class FrontendVisitors extends \Frontend
 	        {
 	            //Debug ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.'Update tstamp' );
 	            // Update tstamp
-	            \Database::getInstance()
+	            \Contao\Database::getInstance()
 	                           ->prepare("UPDATE
                                              tl_visitors_blocker
                                         SET
@@ -278,7 +278,7 @@ class FrontendVisitors extends \Frontend
 	        {
 	            //Debug ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.$objVisitBlockerIP->numRows );
 	            // Insert IP
-	            \Database::getInstance()
+	            \Contao\Database::getInstance()
 	                           ->prepare("INSERT INTO
                                                  tl_visitors_blocker
                                              SET
@@ -290,7 +290,7 @@ class FrontendVisitors extends \Frontend
 
 	            $objScreenCounter->next();
 	            //Update der Screen Counter, Inner Daten dabei aktualisieren
-	            \Database::getInstance()
+	            \Contao\Database::getInstance()
 	                            ->prepare("UPDATE
                             	                tl_visitors_screen_counter
                         	                SET
@@ -317,7 +317,7 @@ class FrontendVisitors extends \Frontend
 	        {
 	            //Debug ModuleVisitorLog::writeLog(__METHOD__ , __LINE__ , ':'.'Update tstamp' );
 	            // Update tstamp
-	            \Database::getInstance()
+	            \Contao\Database::getInstance()
 	                           ->prepare("UPDATE
                                                 tl_visitors_blocker
                                              SET
@@ -336,7 +336,7 @@ class FrontendVisitors extends \Frontend
 	{
 	    $GLOBALS['visitors']['debug']['screenresolutioncount'] = false;
 
-	    $objVisitors = \Database::getInstance()
+	    $objVisitors = \Contao\Database::getInstance()
 	                           ->prepare("SELECT
                                                 visitors_expert_debug_screenresolutioncount
                                             FROM
