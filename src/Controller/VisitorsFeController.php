@@ -37,7 +37,7 @@ class VisitorsFeController extends AbstractController
      */
     public function sccoAction()
     {
-        $this->get('contao.framework')->initialize();
+        $this->container->get('contao.framework')->initialize();
 
         $controller = new FrontendVisitors();
 

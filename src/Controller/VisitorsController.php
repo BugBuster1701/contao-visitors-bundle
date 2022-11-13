@@ -37,7 +37,7 @@ class VisitorsController extends AbstractController
      */
     public function detailsAction()
     {
-        $this->get('contao.framework')->initialize();
+        $this->container->get('contao.framework')->initialize();
 
         $controller = new BackendVisitors();
 

@@ -109,7 +109,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         if ($this->strTemplate !== $model->visitors_template && '' !== $model->visitors_template) {
             $this->strTemplate = $model->visitors_template;
-            $template = $this->get('contao.framework')->createInstance(\FrontendTemplate::class, [$this->strTemplate]);
+            $template = $this->container->get('contao.framework')->createInstance(\FrontendTemplate::class, [$this->strTemplate]);
             $template->setData($model->row());
             $this->addHeadlineToTemplate($template, $model->headline);
             $this->addCssAttributesToTemplate($template, $this->strTemplate, $model->cssID, ['mod_visitors']);
@@ -139,7 +139,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         
         System::loadLanguageFile('default');
 
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             tl_visitors.id AS id,
@@ -248,7 +248,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date('m'), (int) date('d') - 1, (int) date('Y')));
 
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                 ->prepare(
                     'SELECT
                         SUM(visitors_visit) AS SUMV,
@@ -281,7 +281,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getVisitorsOnlineCount($VisitorsId, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$VisitorsId);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                 ->prepare(
                     'SELECT
                         COUNT(id) AS VOC
@@ -316,7 +316,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getTotalVisitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             SUM(visitors_visit) AS SUMV
@@ -341,7 +341,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getTotalHitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             SUM(visitors_hit) AS SUMH
@@ -366,7 +366,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getTodaysVisitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             visitors_visit
@@ -392,7 +392,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getTodaysHitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             visitors_hit
@@ -418,7 +418,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getYesterdayVisitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             visitors_visit
@@ -444,7 +444,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getYesterdayHitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             visitors_hit
@@ -482,7 +482,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         //bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
         $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             SUM(visitors_page_hit)   AS visitors_page_hits
@@ -520,7 +520,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function setCounters($objPage)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objPage->id);
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             tl_visitors.id AS id,
@@ -572,7 +572,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $GLOBALS['visitors']['debug']['referrer'] = false;
         $GLOBALS['visitors']['debug']['searchengine'] = false;
 
-        $stmt = $this->get('database_connection')
+        $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
                             visitors_expert_debug_tag,
@@ -622,7 +622,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         if (1 === (int) $objPage->protected) {
             //protected Seite. user
-            $user = $this->get('security.helper')->getUser();
+            $user = $this->container->get('security.helper')->getUser();
 
             if (!$user instanceof FrontendUser) {
                 $page_type = self::PAGE_TYPE_FORBIDDEN;
@@ -643,7 +643,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             return $page_type;
         }
 
-        $dbconnection = $this->get('database_connection');
+        $dbconnection = $this->container->get('database_connection');
 
         //News Table exists?
         if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_news')) {
@@ -782,7 +782,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '.$alias);
 
-        $dbconnection = $this->get('database_connection');
+        $dbconnection = $this->container->get('database_connection');
 
         if (self::PAGE_TYPE_NEWS === $PageType) {
             //alias = james-wilson-returns
@@ -902,7 +902,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $BlockTime = (0 === (int) $BlockTime) ? 1800 : $BlockTime; //Sekunden
         $CURDATE = date('Y-m-d');
 
-        $dbconnection = $this->get('database_connection');
+        $dbconnection = $this->container->get('database_connection');
 
         //Visitor Blocker
         $stmt = $dbconnection->prepare(
@@ -1383,7 +1383,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     'visitors_searchengine' => $SearchEngine,
                     'visitors_keywords' => $Keywords,
                 ];
-                $this->get('database_connection')
+                $this->container->get('database_connection')
                         ->insert('tl_visitors_searchengines', $arrSet)
                 ;
                 //\Database::getInstance()
@@ -1392,7 +1392,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 //      ->execute();
                 // Delete old entries
                 $CleanTime = mktime(0, 0, 0, (int) date('m') - 3, (int) date('d'), (int) date('Y')); // Einträge >= 90 Tage werden gelöscht
-                $stmt = $this->get('database_connection')
+                $stmt = $this->container->get('database_connection')
                             ->prepare(
                                 'DELETE FROM
                                     tl_visitors_searchengines
@@ -1435,7 +1435,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     ];
                     //Referrer setzen
                     //Debug log_message('visitorCheckReferrer Referrer setzen', 'debug.log');
-                    $this->get('database_connection')
+                    $this->container->get('database_connection')
                             ->insert('tl_visitors_referrer', $arrSet)
                     ;
                     //\Database::getInstance()
@@ -1445,7 +1445,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     // Delete old entries
                     $CleanTime = mktime(0, 0, 0, (int) date('m') - 4, (int) date('d'), (int) date('Y')); // Einträge >= 120 Tage werden gelöscht
 
-                    $stmt = $this->get('database_connection')
+                    $stmt = $this->container->get('database_connection')
                                 ->prepare(
                                     'DELETE FROM
                                         tl_visitors_referrer
