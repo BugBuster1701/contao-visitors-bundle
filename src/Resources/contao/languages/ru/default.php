@@ -8,7 +8,7 @@
  *
  * @license http://www.gnu.org/licenses/lgpl-3.0.html LGPL
  *
- * last-updated: 2021-03-14T22:10:57+01:00
+ * last-updated: 2021-03-30T22:45:58+02:00
  */
 
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']                          = 'Активные';
@@ -31,6 +31,7 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['chart_red']                     
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']                   = 'Текущий месяц';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']                    = 'Текущая неделя';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['date']                            = 'Дата';
+$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['events_title']                    = 'Календарь';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['faq_title']                       = 'Архив FAQ';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']                             = 'Просмотры';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']                  = 'Начальные значения';
@@ -76,6 +77,8 @@ $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']                  
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']                     = 'Статистика браузера будет удалена.';
 $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']             = 'Вы действительно хотите удалить статистику браузера?';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']                = 'В настоящее время онлайн';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['events_stat_visithittop']         = 'Статистика событий ТОП 20';
+$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['events_stat_visithittop_days']    = 'Статистика событий ТОП-20: за последние 7 дней';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop']            = 'FAQ Статистика TOP 20';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['faq_stat_visithittop_days']       = 'FAQ Статистика TOP 20: за последние 7 дней';
 $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']                 = 'День с наименьшим количеством посетителей';
