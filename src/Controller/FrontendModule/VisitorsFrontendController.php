@@ -107,9 +107,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
 
-        if ($this->strTemplate !== $model->visitors_template && '' !== $model->visitors_template) {
+        if ('' !== $model->visitors_template) {
             $this->strTemplate = $model->visitors_template;
-            $template = $this->container->get('contao.framework')->createInstance(\FrontendTemplate::class, [$this->strTemplate]);
+            $template = new \Contao\FrontendTemplate($this->strTemplate);
             $template->setData($model->row());
             $this->addHeadlineToTemplate($template, $model->headline);
             $this->addCssAttributesToTemplate($template, $this->strTemplate, $model->cssID, ['mod_visitors']);
