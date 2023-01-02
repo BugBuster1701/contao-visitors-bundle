@@ -126,6 +126,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             // invisible, but counting!
             $arrVisitors[] = ['VisitorsKatID' => $this->visitors_category, 'VisitorsCounting' => $counting];
             $template->visitors = $arrVisitors;
+            $template->headline = ''; // Modul Überschrift unterdrücken falls gesetzt
 
             return $template->getResponse();
         }
