@@ -165,3 +165,8 @@
     font-weight:bold;
     font-size:0.8em;
 }
+
+.mod_visitors_fe_invisible {
+	border: 0;
+	margin: 0;
+}
