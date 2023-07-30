@@ -393,7 +393,7 @@ class Encoding
     {
         if ($option == self::WITHOUT_ICONV || !\function_exists('iconv'))
         {
-            $o = utf8_decode(str_replace(array_keys(self::$utf8ToWin1252), array_values(self::$utf8ToWin1252), self::toUTF8($text)));
+            $o = mb_convert_encoding(str_replace(array_keys(self::$utf8ToWin1252), array_values(self::$utf8ToWin1252), self::toUTF8($text)), 'ISO-8859-1', 'UTF-8');
         }
         else
         {
