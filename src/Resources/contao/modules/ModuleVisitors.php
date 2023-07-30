@@ -23,6 +23,7 @@ use Contao\Module;
 use Contao\StringUtil;
 use Contao\System;
 use Contao\Database;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ModuleVisitors 
@@ -48,7 +49,7 @@ class ModuleVisitors extends Module
 	 */
 	public function generate()
 	{
-		if (TL_MODE == 'BE')
+		if (System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
 		{
 			$objTemplate = new \Contao\BackendTemplate('be_wildcard');
 			$objTemplate->wildcard = '### VISITORS LIST ###';
