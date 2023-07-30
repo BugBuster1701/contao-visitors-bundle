@@ -256,7 +256,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 			    else 
 			    {
 			        /** @var PageModel $objPage */
-			        global $objPage;
+					$objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->get('pageModel');
 			        $VisitorsStartDate = \Contao\Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
 			    }
 
@@ -437,7 +437,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$arrTag[2]);
 
 		        /** @var PageModel $objPage */
-		        global $objPage;
+		        $objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->get('pageModel');
 		        //if page from cache, we have no page-id
 		        if ($objPage->id == 0)
 		        {
@@ -755,7 +755,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 	    if ($this->_HitCounted === true || $this->_VisitCounted === true) 
 	    {
     	    /** @var PageModel $objPage */
-    	    global $objPage;
+    	    $objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->get('pageModel');
     	    //if page from cache, we have no page-id
     	    if ($objPage->id == 0) 
     	    {
