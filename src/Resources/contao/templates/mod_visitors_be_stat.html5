@@ -9,7 +9,7 @@
 	</div>
 	<div class="tl_limit tl_subpanel">
 		<strong><?= $this->visitorsstatkat ?>:</strong>
-		<input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
+		<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
 		<select class="tl_select" name="id">
 <?php foreach ($this->visitorskats as $visitorskat): ?>
   <?php if ($visitorskat['id']==$this->visitorskatid) : ?>
@@ -27,7 +27,7 @@
 <div class="tl_panel cf">	
 	<!-- Export Zeile //-->
 	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
-		<input type="hidden" name="REQUEST_TOKEN" value="<?= REQUEST_TOKEN ?>">
+		<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
 		<input type="hidden" name="act" value="export">
 		<input type="hidden" name="catid" value="<?= $this->visitorskatid ?>">
 		<div class="" style="float:left;">

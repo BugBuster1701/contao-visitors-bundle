@@ -275,6 +275,8 @@ class ModuleVisitorStat extends BackendModule
 		{
 		    $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['footer'] = '';
 		}
+		// Request Token
+		$this->Template->requestToken = System::getContainer()->get('contao.csrf.token_manager')->getDefaultTokenValue();
 		// Version, Base, Footer
 		$this->Template->visitors_version = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['modname'] . ' ' . VISITORS_VERSION .'.'. VISITORS_BUILD;
 		$this->Template->visitors_base    = Environment::get('base');
