@@ -153,7 +153,8 @@ class ModuleVisitorLog
 
         if (!$strLogsDir)
         {
-            $strLogsDir = TL_ROOT . '/var/logs';
+            $strRootDir = \Contao\System::getContainer()->getParameter('kernel.project_dir');
+            $strLogsDir =  $strRootDir . '/var/logs';
         }
 
         error_log(sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage), 3, $strLogsDir . '/' . $strLog);
