@@ -325,7 +325,11 @@ class ModuleVisitorStat extends BackendModule
 		$this->Template->visitors_exportfield  = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['kat'].' '.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'];
 
         //ExportDays
-        $this->Template->visitors_export_days   = (isset($_SESSION['VISITORS_EXPORT_DAYS'])) ? $_SESSION['VISITORS_EXPORT_DAYS'] : 365;
+		$container = \Contao\System::getContainer();
+        $request = $container->get('request_stack')->getCurrentRequest();
+
+        //$this->Template->visitors_export_days   = (isset($_SESSION['VISITORS_EXPORT_DAYS'])) ? $_SESSION['VISITORS_EXPORT_DAYS'] : 365;
+		$this->Template->visitors_export_days   = ($request->getSession()->has('VISITORS_EXPORT_DAYS')) ? $request->getSession()->get('VISITORS_EXPORT_DAYS') : 365;
 
 		//SearchEngines
 		$arrSE = $this->getSearchEngine($this->intKatID);

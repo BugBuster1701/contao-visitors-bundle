@@ -45,7 +45,10 @@ class VisitorsStatExport extends \Contao\System
         {
         	$this->export_days = 1;
         }
-        $_SESSION['VISITORS_EXPORT_DAYS'] = $this->export_days;
+        //$_SESSION['VISITORS_EXPORT_DAYS'] = $this->export_days;
+        $container = \Contao\System::getContainer();
+        $request = $container->get('request_stack')->getCurrentRequest();
+        $request->getSession()->set('VISITORS_EXPORT_DAYS', $this->export_days);
 
         //IE or other?
         $ua = \Contao\Environment::get('agent')->shorty;
