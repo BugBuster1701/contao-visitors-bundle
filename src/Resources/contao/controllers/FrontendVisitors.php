@@ -91,7 +91,7 @@ class FrontendVisitors extends \Contao\Frontend
 	                $logger->log(
 	                    LogLevel::ERROR,
 	                    $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
-	                    array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+	                    array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, ContaoContext::ERROR))
 	                );
 	            }
 	            else
@@ -109,7 +109,7 @@ class FrontendVisitors extends \Contao\Frontend
 	        $logger->log(
 	            LogLevel::ERROR,
 	            $GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
-	            array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+	            array('contao' => new ContaoContext('FrontendVisitors '. VISITORS_VERSION .'.'. VISITORS_BUILD, ContaoContext::ERROR))
 	        );
 	    }
 

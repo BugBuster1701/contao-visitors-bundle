@@ -102,7 +102,7 @@ class DcaVisitors extends \Contao\Backend
                 ->log(
                     LogLevel::ERROR,
                     'Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"',
-                    array('contao' => new ContaoContext('tl_visitors toggleVisibility', TL_ERROR))
+                    array('contao' => new ContaoContext('tl_visitors toggleVisibility', ContaoContext::ERROR))
                 );
 
             $this->redirect('contao/main.php?act=error');

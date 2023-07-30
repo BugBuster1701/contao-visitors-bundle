@@ -109,7 +109,7 @@ class ModuleVisitors extends Module
 			     ->log(
 			         LogLevel::ERROR,
 			         'ModuleVisitors User Error: no published counter found.',
-			         array('contao' => new ContaoContext('ModulVisitors compile ', TL_ERROR))
+			         array('contao' => new ContaoContext('ModulVisitors compile ', ContaoContext::ERROR))
 			     );
 
 			return;

@@ -65,7 +65,7 @@ class ModuleVisitorChecks extends \Contao\Frontend
 			     ->log(
 			         LogLevel::ERROR,
 			         'contao-botdetection-bundle extension required for extension: Visitors!',
-			         array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', TL_ERROR))
+			         array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', ContaoContext::ERROR))
 			     );
 			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, print_r($bundles, true));
 

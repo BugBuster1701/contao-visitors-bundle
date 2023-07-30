@@ -169,7 +169,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                  ->get('monolog.logger.contao')
                  ->log(LogLevel::ERROR,
                        'VisitorsFrontendController User Error: no published counter found.',
-                       ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', TL_ERROR)])
+                       ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', ContaoContext::ERROR)])
         ;
 
             $this->strTemplate = 'mod_visitors_error';
@@ -545,7 +545,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     ->get('monolog.logger.contao')
                     ->log(LogLevel::ERROR,
                         $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-                        ['contao' => new ContaoContext('VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, TL_ERROR)])
+                        ['contao' => new ContaoContext('VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, ContaoContext::ERROR)])
             ;
 
             return false;
@@ -1285,7 +1285,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                            ->get('monolog.logger.contao')
                             ->log(LogLevel::ERROR,
                                   'ModuleVisitorBrowser3 Systemerror',
-                                  ['contao' => new ContaoContext('ModulVisitors', TL_ERROR)])
+                                  ['contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR)])
                     ;
                 } else {
                     $arrBrowser['Browser'] = $ModuleVisitorBrowser3->getBrowser();

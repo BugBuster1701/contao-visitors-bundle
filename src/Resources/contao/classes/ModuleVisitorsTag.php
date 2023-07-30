@@ -124,7 +124,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 			     ->log(
 			         LogLevel::ERROR,
 			         $GLOBALS['TL_LANG']['tl_visitors']['no_key'],
-			         array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+			         array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, ContaoContext::ERROR))
 			     );
 
 			return false;  // da fehlt was
@@ -164,7 +164,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 			         ->log(
 			             LogLevel::ERROR,
 			             $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-			             array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+			             array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, ContaoContext::ERROR))
 			         );
 
 				return false;
@@ -216,7 +216,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 		          ->log(
 		              LogLevel::ERROR,
 		              $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-		              array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+		              array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, ContaoContext::ERROR))
 		          );
 
 			return false;
@@ -490,7 +490,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 					       ->log(
 					           LogLevel::ERROR,
 					           $GLOBALS['TL_LANG']['tl_visitors']['no_param4'],
-					           array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+					           array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, ContaoContext::ERROR))
 					       );
 					ModuleVisitorLog::writeLog(__METHOD__, __LINE__, $GLOBALS['TL_LANG']['tl_visitors']['no_param4']);
 
@@ -547,7 +547,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 				        ->log(
 				            LogLevel::ERROR,
 				            $GLOBALS['TL_LANG']['tl_visitors']['wrong_key'],
-				            array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, TL_ERROR))
+				            array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags '. VISITORS_VERSION .'.'. VISITORS_BUILD, ContaoContext::ERROR))
 				        );
 
 				return false;
@@ -873,7 +873,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 			    	        ->log(
 			    	            LogLevel::ERROR,
 			    	            'ModuleVisitorBrowser3 Systemerror',
-			    	            array('contao' => new ContaoContext('ModulVisitors', TL_ERROR))
+			    	            array('contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR))
 			    	        );
 				} 
 				else 
