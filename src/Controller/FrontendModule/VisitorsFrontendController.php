@@ -27,7 +27,8 @@ use Contao\Date;
 use Contao\FrontendUser;
 use Contao\ModuleModel;
 use Contao\System;
-use Contao\Template;
+//use Contao\Template;
+use Contao\CoreBundle\Twig\FragmentTemplate;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,7 +79,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         return $services;
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(FragmentTemplate $template, ModuleModel $model, Request $request): ?Response
     {
         $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
