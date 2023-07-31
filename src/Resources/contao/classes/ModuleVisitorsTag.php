@@ -24,9 +24,11 @@ use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\Visitors\ModuleVisitorReferrer;
 use BugBuster\Visitors\ModuleVisitorSearchEngine;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\CoreBundle\Exception\NoRootPageFoundException;
 use Contao\StringUtil;
 use Contao\System;
 use Psr\Log\LogLevel;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ModuleVisitorsTag 
@@ -1346,20 +1348,36 @@ class ModuleVisitorsTag extends \Contao\Frontend
 	protected function visitorGetRootPageFromUrl($next=true)
 	{
 	    // simple Frontend:getRootPageFromUrl
-	    $host = \Contao\Environment::get('host');
+	    // $host = \Contao\Environment::get('host');
 
 	    // The language is set in the URL
-	    if ($GLOBALS['TL_CONFIG']['addLanguageToUrl'] && !empty($_GET['language']))
-	    {
-	        $objRootPage = \Contao\PageModel::findFirstPublishedRootByHostAndLanguage($host, \Contao\Input::get('language'));
-        }
-	    else // No language given
-	    {
-	        $accept_language = \Contao\Environment::get('httpAcceptLanguage');
+	    // if ($GLOBALS['TL_CONFIG']['addLanguageToUrl'] && !empty($_GET['language']))
+	    // {
+	    //     $objRootPage = \Contao\PageModel::findFirstPublishedRootByHostAndLanguage($host, \Contao\Input::get('language'));
+        // }
+	    // else // No language given
+	    // {
+	    //     $accept_language = \Contao\Environment::get('httpAcceptLanguage');
 
-	        // Find the matching root pages (thanks to Andreas Schempp)
-	        $objRootPage = \Contao\PageModel::findFirstPublishedRootByHostAndLanguage($host, $accept_language);
-	    }
+	    //     // Find the matching root pages (thanks to Andreas Schempp)
+	    //     $objRootPage = \Contao\PageModel::findFirstPublishedRootByHostAndLanguage($host, $accept_language);
+	    // }
+		$objRequest = System::getContainer()->get('request_stack')->getCurrentRequest();
+		if ($objRequest instanceof Request)
+		{
+			$objPage = $objRequest->attributes->get('pageModel');
+
+			if ($objPage instanceof \Contao\PageModel)
+			{
+				$objPage->loadDetails();
+
+				$objRootPage = \Contao\PageModel::findByPk($objPage->rootId);
+			}
+		}
+		else
+		{
+			throw new NoRootPageFoundException('No root page found');
+		}
 	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Root Page ID over URL: '. $objRootPage->id);
 	    if ($next === false) 
 	    {

@@ -18,6 +18,9 @@
 
 namespace BugBuster\Visitors;
 
+use Contao\CoreBundle\Exception\NoRootPageFoundException;
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Class ModuleVisitorStatPageCounter
  *
@@ -551,9 +554,25 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
     public function getForbiddenAlias($visitors_page_id, $visitors_page_lang)
     {
         //Page ID von der 403 Seite ermitteln
-        $host = \Contao\Environment::get('host');
+        // $host = \Contao\Environment::get('host');
         // Find the matching root pages (thanks to Andreas Schempp)
-        $objRootPage = \Contao\PageModel::findFirstPublishedRootByHostAndLanguage($host, $visitors_page_lang);
+        // $objRootPage = \Contao\PageModel::findFirstPublishedRootByHostAndLanguage($host, $visitors_page_lang);
+        $objRequest = \Contao\System::getContainer()->get('request_stack')->getCurrentRequest();
+		if ($objRequest instanceof Request)
+		{
+			$objPage = $objRequest->attributes->get('pageModel');
+
+			if ($objPage instanceof \Contao\PageModel)
+			{
+				$objPage->loadDetails();
+
+				$objRootPage = \Contao\PageModel::findByPk($objPage->rootId);
+			}
+		}
+		else
+		{
+			throw new NoRootPageFoundException('No root page found');
+		}
         $objPage = \Contao\PageModel::find403ByPid($objRootPage->id);
 
         return $objPage->alias;
