@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
     // Config
     'config' => array
     (
-        'dataContainer'               => 'Table',
+        'dataContainer'               => Contao\DC_Table::class,
         'ctable'                      => array('tl_visitors'),
         'switchToEdit'                => true,
         'enableVersioning'            => true,

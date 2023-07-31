@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 	// Config
 	'config' => array
 	(
-		'dataContainer'               => 'Table',
+		'dataContainer'               => Contao\DC_Table::class,
 		'ptable'                      => 'tl_visitors_category',
 		'enableVersioning'            => true,
         'sql' => array
@@ -194,7 +194,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 		    'eval'                    => array('mandatory'=>false, 'maxlength'=>10, 'rgxp'=>'digit', 'helpwizard'=>false, 'tl_class'=>'w50 w50h'),
 		    'save_callback' => array
 		    (
-                function ($varValue, DataContainer $dc) 
+                function ($varValue, Contao\DataContainer $dc) 
                 {
                     if ($varValue < 14) { $varValue = 14; }
                     if ($varValue > 99) { $varValue = 99; }
