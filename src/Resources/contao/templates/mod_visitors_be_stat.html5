@@ -5,7 +5,7 @@
 	<!-- Kategorie Zeile //-->
 	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
 	<div class="tl_submit_panel tl_subpanel">
-		<input type="image" alt="<?= \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" title="<?= \StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" class="tl_img_submit mod_visitors_be_reset" src="system/themes/<?= $this->theme ?>/icons/sync.svg" width="16" height="16" value="statistics" id="filter" name="filter">
+		<input type="image" alt="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" title="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" class="tl_img_submit mod_visitors_be_reset" src="system/themes/<?= $this->theme ?>/icons/sync.svg" width="16" height="16" value="statistics" id="filter" name="filter">
 	</div>
 	<div class="tl_limit tl_subpanel">
 		<strong><?= $this->visitorsstatkat ?>:</strong>
