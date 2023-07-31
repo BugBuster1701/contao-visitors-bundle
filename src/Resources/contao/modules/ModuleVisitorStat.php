@@ -63,7 +63,7 @@ class ModuleVisitorStat extends BackendModule
 	 */
 	public function __construct()
 	{
-	    $this->import('BackendUser', 'User');
+	    $this->import('Contao\BackendUser', 'User');
 	    parent::__construct();
 
 	    System::loadLanguageFile('tl_visitors_stat_export');

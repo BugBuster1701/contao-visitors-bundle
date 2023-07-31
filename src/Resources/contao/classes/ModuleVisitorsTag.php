@@ -1392,7 +1392,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 	    if ($objPage->protected == 1) 
 	    {
 	    	//protected Seite. user 
-	        $this->import('FrontendUser', 'User');
+	        $this->import('Contao\FrontendUser', 'User');
 	        if (!$this->User->authenticate())
 	        {
 	            $page_type = self::PAGE_TYPE_FORBIDDEN;

@@ -31,7 +31,7 @@ class BackendVisitors extends \Contao\Backend
 	 */
 	public function __construct()
 	{
-		$this->import('BackendUser', 'User');
+		$this->import('Contao\BackendUser', 'User');
 		parent::__construct();
 
 		//$this->User->authenticate(); //deprecated
