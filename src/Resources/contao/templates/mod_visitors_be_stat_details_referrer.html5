@@ -4,7 +4,7 @@
 <?php
   $version = \Contao\CoreBundle\ContaoCoreBundle::getVersion();
   $container = \Contao\System::getContainer();
-  $TL_ASSETS_URL = $container->get('contao.assets.assets_context')->getStaticUrl();
+  $ASSETS_URL = $container->get('contao.assets.assets_context')->getStaticUrl();
 ?>
   <meta charset="<?= $this->charset ?>">
   <title><?= $this->title ?> - Contao Open Source CMS <?= $version ?></title>
