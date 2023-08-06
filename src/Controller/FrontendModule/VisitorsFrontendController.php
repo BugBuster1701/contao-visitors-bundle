@@ -618,6 +618,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         //0 = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
         //1 = Nachrichten/News
         //2 = FAQ
+        //3 = Isotope
+        //4 = Event/Calendar
         //403 = Forbidden
 
         $page_type = self::PAGE_TYPE_NORMAL;
@@ -636,19 +638,19 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         //Set the item from the auto_item parameter
         //from class ModuleNewsReader#L57
-        if (!isset($_GET['items']) && \Contao\Config::get('useAutoItem') && isset($_GET['auto_item'])) {
-            \Contao\Input::setGet('items', \Contao\Input::get('auto_item'));
-        }
-        if (!\Contao\Input::get('items')) {
-            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
+        // if (!isset($_GET['items']) && \Contao\Config::get('useAutoItem') && isset($_GET['auto_item'])) {
+        //     \Contao\Input::setGet('items', \Contao\Input::get('auto_item'));
+        // }
+        // if (!\Contao\Input::get('items')) {
+        //     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
 
-            return $page_type;
-        }
+        //     return $page_type;
+        // }
 
         $dbconnection = $this->container->get('database_connection');
 
         //News Table exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_news')) {
+        if ($dbconnection->getSchemaManager()->tablesExist('tl_news')) {
             //News Reader?
             $stmt = $dbconnection->prepare(
                         'SELECT id
@@ -670,7 +672,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //FAQ Table exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_faq_category')) {
+        if ($dbconnection->getSchemaManager()->tablesExist('tl_faq_category')) {
             //FAQ Reader?
             $stmt = $dbconnection->prepare(
                         'SELECT id
@@ -692,7 +694,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //Isotope Table tl_iso_product exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_iso_product')) {
+        if ($dbconnection->getSchemaManager()->tablesExist('tl_iso_product')) {
             $strAlias = \Contao\Input::get('items');
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Get items: '.print_r($strAlias, true));
 
@@ -716,7 +718,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //Events Table exists?
-        if (\Contao\Input::get('events') && $dbconnection->getSchemaManager()->tablesExist('tl_calendar')) {
+        if ($dbconnection->getSchemaManager()->tablesExist('tl_calendar')) {
             //Events Reader?
             $stmt = $dbconnection->prepare(
                 'SELECT id
@@ -769,9 +771,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         //Reader mit Parameter oder ohne?
         $uri = $_SERVER['REQUEST_URI']; // /news/james-wilson-returns.html
         $alias = '';
+        $urlSuffix = '';
         //steht suffix (html) am Ende?
-        $urlSuffix = System::getContainer()->getParameter('contao.url_suffix'); // default: .html
-        if (substr($uri, -\strlen($urlSuffix)) === $urlSuffix) {
+        $container = System::getContainer();
+        $objRequest = $container->get('request_stack')->getCurrentRequest();
+        if (null !== $objRequest && ($objPage = $objRequest->attributes->get('pageModel')) instanceof \Contao\PageModel)
+        {
+            $urlSuffix = (string) $objPage->urlSuffix;
+        }
+        if (substr($uri, -\strlen($urlSuffix)) === $urlSuffix) { // TESTEN! für Readerseite selbst
             //Alias nehmen
             $alias = substr($uri, strrpos($uri, '/') + 1, -\strlen($urlSuffix));
             if (false === $alias) {
@@ -782,7 +790,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         } else {
             $alias = substr($uri, strrpos($uri, '/') + 1);
         }
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '.$alias);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '.$alias.' Suffix: '.$urlSuffix);
 
         $dbconnection = $this->container->get('database_connection');
 
