@@ -1410,8 +1410,9 @@ class ModuleVisitorsTag extends \Contao\Frontend
 	    if ($objPage->protected == 1) 
 	    {
 	    	//protected Seite. user 
-	        $this->import('Contao\FrontendUser', 'User');
-	        if (!$this->User->authenticate())
+	        //$this->import('Contao\FrontendUser', 'User');
+	        //if (!$this->User->authenticate())
+			if (false === \Contao\System::getContainer()->get('contao.security.token_checker')->hasFrontendUser()) 
 	        {
 	            $page_type = self::PAGE_TYPE_FORBIDDEN;
 	            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '. $page_type);
