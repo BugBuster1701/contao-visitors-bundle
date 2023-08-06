@@ -192,6 +192,7 @@ class ModuleVisitorBrowser3
 	const PLATFORM_WINDOWS_8     = 'Win8';
 	const PLATFORM_WINDOWS_81    = 'Win8.1';
 	const PLATFORM_WINDOWS_10    = 'Win10';
+	const PLATFORM_WINDOWS_11    = 'Win11';
 	const PLATFORM_WINDOWS_RT    = 'WinRT';
 	const PLATFORM_MACOSX        = 'MacOSX';
 	const PLATFORM_IOSX          = 'iOS';
@@ -2094,6 +2095,10 @@ class ModuleVisitorBrowser3
 			    $this->_platform = self::PLATFORM_WINDOWS_7;
 		    }
 	        else*/
+            // if(stripos($this->_agent, 'windows NT 11.1') !== false) // #138
+            // {
+            //     $this->_platformVersion = self::PLATFORM_WINDOWS_11;
+            // }
             if(stripos($this->_agent, 'windows NT 10.0') !== false) 
             {
                 $this->_platformVersion = self::PLATFORM_WINDOWS_10;
