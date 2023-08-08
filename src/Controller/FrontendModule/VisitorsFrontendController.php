@@ -646,6 +646,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         //     return $page_type;
         // }
+        
+        // if (isset($_GET['auto_item']) && '' !== $_GET['auto_item']) {
+        //     \Contao\Input::setGet('auto_item', $_GET['auto_item']);
+        // }
+        // if (!\Contao\Input::get('auto_item')) {
+        //     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
+
+        //     return $page_type;
+        // }
 
         $dbconnection = $this->container->get('database_connection');
 
@@ -779,7 +788,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         {
             $urlSuffix = (string) $objPage->urlSuffix;
         }
-        if (substr($uri, -\strlen($urlSuffix)) === $urlSuffix) { // TESTEN! für Readerseite selbst
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Auto Item: '.$_GET['auto_item']);
+        // wenn gleich dann hat Url ein Suffix wie .html, wenn ungleich dann Suffix ''
+        if (substr($uri, -\strlen($urlSuffix)) === $urlSuffix) {
+            //Suffix vorhanden
             //Alias nehmen
             $alias = substr($uri, strrpos($uri, '/') + 1, -\strlen($urlSuffix));
             if (false === $alias) {
@@ -788,6 +800,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 return $PageId; // kein Parameter, Readerseite selbst
             }
         } else {
+            //Suffix nicht vorhanden
             $alias = substr($uri, strrpos($uri, '/') + 1);
         }
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '.$alias.' Suffix: '.$urlSuffix);
@@ -795,6 +808,25 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $dbconnection = $this->container->get('database_connection');
 
         if (self::PAGE_TYPE_NEWS === $PageType) {
+            //alias = news-details - Reader direkt = wenn auto_item leer
+            if (!isset($_GET['auto_item'])) {
+                $stmt = $dbconnection->prepare(
+                            'SELECT id
+                            FROM tl_news_archive
+                            WHERE jumpTo = :jumpto
+                            LIMIT 1
+                            ')
+                        ;
+                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $resultSet = $stmt->executeQuery();
+
+                if ($resultSet->rowCount() > 0) {
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '.$PageId);
+
+                    return $PageId;
+                }
+            }
+            
             //alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
                         'SELECT t.id
@@ -819,6 +851,24 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
         if (self::PAGE_TYPE_FAQ === $PageType) {
+            // Reader direkt?
+            if (!isset($_GET['auto_item'])) {
+                $stmt = $dbconnection->prepare(
+                    'SELECT id
+                    FROM tl_faq_category
+                    WHERE jumpTo = :jumpto
+                    LIMIT 1
+                    ')
+                ;
+                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $resultSet = $stmt->executeQuery();
+
+                if ($resultSet->rowCount() > 0) {
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '.$PageId);
+
+                    return $PageId;
+                }
+            }
             //alias = are-there-exams-how-do-they-work
             $stmt = $dbconnection->prepare(
                         'SELECT t.id
@@ -862,6 +912,24 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
         if (self::PAGE_TYPE_EVENTS === $PageType) {
+            //Events Reader?
+            if (!isset($_GET['auto_item'])) {
+                $stmt = $dbconnection->prepare(
+                    'SELECT id
+                            FROM tl_calendar
+                            WHERE jumpTo = :jumpto
+                            LIMIT 1
+                            ')
+                ;
+                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $resultSet = $stmt->executeQuery();
+
+                if ($resultSet->rowCount() > 0) {
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$PageId);
+
+                    return $PageId;
+                }
+            }
             //alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
                        'SELECT t.id
