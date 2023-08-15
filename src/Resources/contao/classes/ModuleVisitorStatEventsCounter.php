@@ -236,6 +236,28 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
         //Events Tables exists?
         if (true === $this->getEventstableexists())
         {
+            //direkte Reader Seite?
+            $objEventsAliases = \Contao\Database::getInstance()
+                                ->prepare(
+                                    "SELECT
+                                        tl_page.alias AS 'PageAlias', 
+                                        ''  AS 'EventsAlias',
+                                        '-' AS 'CalendarAlias'
+                                    FROM
+                                        tl_page
+                                    INNER JOIN
+                                        tl_calendar ON tl_calendar.jumpTo = tl_page.id
+                                    WHERE tl_calendar.jumpTo = ?
+                                    LIMIT 1
+                                    ")
+                                ->execute($visitors_page_id);
+            while ($objEventsAliases->next())
+            {
+                return array('PageAlias'     => $objEventsAliases->PageAlias,
+                             'EventsAlias'   => $objEventsAliases->EventsAlias,
+                             'CalendarAlias' => $objEventsAliases->CalendarAlias);
+            }
+
             $objEventsAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias', 
@@ -261,8 +283,8 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
         }
         else
         {
-            return array('PageAlias'       => false,
-                         'EventsAlias'       => false,
+            return array('PageAlias'     => false,
+                         'EventsAlias'   => false,
                          'CalendarAlias' => false);
         }
     }
