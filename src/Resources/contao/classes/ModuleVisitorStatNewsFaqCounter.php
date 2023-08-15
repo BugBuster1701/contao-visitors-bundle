@@ -397,6 +397,28 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
         //News Tables exists?
         if (true === $this->getNewstableexists())
         {
+            //direkte Reader Seite?
+            $objNewsAliases = \Contao\Database::getInstance()
+                                ->prepare(
+                                    "SELECT
+                                        tl_page.alias AS 'PageAlias', 
+                                        ''  AS 'NewsAlias',
+                                        '-' AS 'NewsArchivTitle'
+                                    FROM
+                                        tl_page
+                                    INNER JOIN
+                                        tl_news_archive ON tl_news_archive.jumpTo = tl_page.id
+                                    WHERE tl_news_archive.jumpTo = ?
+                                    LIMIT 1
+                                    ")
+                                ->execute($visitors_page_id);
+            while ($objNewsAliases->next())
+            {
+                return array('PageAlias'       => $objNewsAliases->PageAlias, 
+                             'NewsAlias'       => $objNewsAliases->NewsAlias,
+                             'NewsArchivTitle' => $objNewsAliases->NewsArchivTitle);
+            }
+    
             $objNewsAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias', 
@@ -433,6 +455,28 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
         //FAQ Tables exists?
         if (true === $this->getFaqtableexists())
         {
+            //direkte Reader Seite?
+            $objFaqAliases = \Contao\Database::getInstance()
+                                ->prepare(
+                                    "SELECT
+                                        tl_page.alias AS 'PageAlias', 
+                                        ''  AS 'FaqAlias',
+                                        '-' AS 'FaqArchivTitle'
+                                    FROM
+                                        tl_page
+                                    INNER JOIN
+                                        tl_faq_category ON tl_faq_category.jumpTo = tl_page.id
+                                    WHERE tl_faq_category.jumpTo = ?
+                                    LIMIT 1
+                                    ")
+                                ->execute($visitors_page_id);
+            while ($objFaqAliases->next())
+            {
+                return array('PageAlias'      => $objFaqAliases->PageAlias,
+                             'FaqAlias'       => $objFaqAliases->FaqAlias,
+                             'FaqArchivTitle' => $objFaqAliases->FaqArchivTitle);
+            }
+            
             $objFaqAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias',
