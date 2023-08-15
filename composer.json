@@ -27,7 +27,7 @@
 	"require":{
 		"php": "^8.1",
 		"bugbuster/contao-botdetection-bundle":"^1.9",
-		"contao/core-bundle": "^5.1",
+		"contao/core-bundle": "^5.2",
 		"doctrine/dbal": "^3.3",		
 		"phpoffice/phpspreadsheet": "^1.28",
 		"symfony/http-foundation": "^5.4 || ^6.0",
