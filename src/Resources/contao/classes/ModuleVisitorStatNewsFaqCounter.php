@@ -120,7 +120,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateNewsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrNewsStatCount = false;
+        $arrNewsStatCount = [];
 
         //News Tables exists?
         if (true === $this->getNewstableexists())
@@ -186,7 +186,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateNewsVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
     {
-        $arrNewsStatCount = false;
+        $arrNewsStatCount = [];
         $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         //News Tables exists?
@@ -256,7 +256,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateFaqVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrFaqStatCount = false;
+        $arrFaqStatCount = [];
 
         //FAQ Tables exists?
         if (true === $this->getFaqtableexists())
@@ -323,7 +323,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateFaqVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
     {
-        $arrFaqStatCount = false;
+        $arrFaqStatCount = [];
         $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         //FAQ Tables exists?
