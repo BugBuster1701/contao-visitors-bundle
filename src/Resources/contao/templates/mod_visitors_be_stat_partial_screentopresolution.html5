@@ -10,7 +10,7 @@
 				<th style="padding-left: 2px; text-align: center;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']; ?></th>
 				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
 			</tr>
-<?php if ($this->ScreenTopResolution !== false) : ?>
+<?php if (count($this->ScreenTopResolution)) : ?>
 	<?php foreach ($this->ScreenTopResolution AS $ScreenTopResolutionRow) : ?>
 			<tr>
 			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?php echo (isset($ScreenTopResolutionRow['v_s_width'])    ? $ScreenTopResolutionRow['v_s_width'] .'x'.$ScreenTopResolutionRow['v_s_height']  : ''); ?></td>
