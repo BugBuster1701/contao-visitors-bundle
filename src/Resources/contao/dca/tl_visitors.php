@@ -47,12 +47,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 			'panelLayout'             => 'filter;search,limit',
 			'headerFields'            => array('title', 'tstamp'), //, 'visitors_template'
 			'child_record_callback'   => array('BugBuster\Visitors\DcaVisitors', 'listVisitors')
-		), /**
-		'label' => array
-		(
-			'fields'                  => array(''),
-			'format'                  => '%s'
-		),*/
+		),
 		'global_operations' => array
 		(
 			'all' => array
