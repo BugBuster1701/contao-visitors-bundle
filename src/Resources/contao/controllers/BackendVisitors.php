@@ -60,6 +60,7 @@ class BackendVisitors extends \Contao\Backend
 		$objTemplate->title         = \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['systemMessages']);
 		$objTemplate->charset       = \Contao\System::getContainer()->getParameter('kernel.charset');
 		$objTemplate->visitorsbecss = VISITORS_BE_CSS;
+		$objTemplate->contaoversion = \Contao\CoreBundle\ContaoCoreBundle::getVersion();
 
 		if (\is_null(\Contao\Input::get('tl_vid', true)))
 		{
