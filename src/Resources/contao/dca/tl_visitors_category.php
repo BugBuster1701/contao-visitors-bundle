@@ -68,34 +68,34 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['edit'],
                 'href'                => 'table=tl_visitors',
-                'icon'                => 'edit.gif',
+                'icon'                => 'edit.svg',
                 'attributes'          => 'class="contextmenu"'
             ),
             'editheader' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['editheader'],
                 'href'                => 'act=edit',
-                'icon'                => 'header.gif',
+                'icon'                => 'header.svg',
                 'attributes'          => 'class="edit-header"'
             ),
             'copy' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['copy'],
                 'href'                => 'act=copy',
-                'icon'                => 'copy.gif'
+                'icon'                => 'copy.svg'
             ),
             'delete' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['delete'],
                 'href'                => 'act=delete',
-                'icon'                => 'delete.gif',
+                'icon'                => 'delete.svg',
                 'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['tl_visitors_category']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
             ),
             'show' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['show'],
                 'href'                => 'act=show',
-                'icon'                => 'show.gif'
+                'icon'                => 'show.svg'
             ),
             'stat' => array
             (
