@@ -97,7 +97,7 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
 
     public function generateEventsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrEventsStatCount = false;
+        $arrEventsStatCount = [];
 
         //News Tables exists?
         if (true === $this->getEventstableexists())
@@ -163,7 +163,7 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
 
     public function generateEventsVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
     {
-        $arrEventsStatCount = false;
+        $arrEventsStatCount = [];
         $week               = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         //News Tables exists?
