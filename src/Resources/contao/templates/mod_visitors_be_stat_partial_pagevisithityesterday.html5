@@ -10,7 +10,7 @@
 				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
 				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
 			</tr>
-<?php if ($this->PageVisitHitYesterday !== false) : ?>
+<?php if (count($this->PageVisitHitYesterday)) : ?>
 	<?php foreach ($this->PageVisitHitYesterday AS $PageVisitHitYesterdayRow) : ?>
 			<tr>
 			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;"  class="tl_file_list"><?php echo (isset($PageVisitHitYesterdayRow['alias']) ? $PageVisitHitYesterdayRow['alias'] .' ('.(isset($PageVisitHitYesterdayRow['lang']) ? $PageVisitHitYesterdayRow['lang'] .')' : '') : ''); ?></td>

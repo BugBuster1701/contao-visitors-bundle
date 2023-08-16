@@ -10,7 +10,7 @@
 				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
 				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
 			</tr>
-<?php if ($this->PageVisitHitTop !== false) : ?>
+<?php if (count($this->PageVisitHitTop)) : ?>
 	<?php foreach ($this->PageVisitHitTop AS $PageVisitHitTopRow) : ?>
 			<tr>
 			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;"  class="tl_file_list"><?php echo (isset($PageVisitHitTopRow['alias']) ? $PageVisitHitTopRow['alias'] .' ('.(isset($PageVisitHitTopRow['lang']) ? $PageVisitHitTopRow['lang'] .')' : '') : ''); ?></td>
