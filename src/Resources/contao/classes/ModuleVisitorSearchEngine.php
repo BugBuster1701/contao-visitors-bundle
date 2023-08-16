@@ -132,7 +132,8 @@ class ModuleVisitorSearchEngine// extends Frontend
 
 	protected function detect()
 	{
-	    parse_str(parse_url($this->_http_referer, PHP_URL_QUERY), $this->_parse_result);
+		// parse_str: Passing null to parameter #1 ($string) of type string is deprecated
+	    parse_str(parse_url($this->_http_referer, PHP_URL_QUERY) ?? '', $this->_parse_result);
 
 	    return 
 	    	$this->checkEngineGoogleUserContent() ||
@@ -203,7 +204,7 @@ class ModuleVisitorSearchEngine// extends Frontend
 				//for imgres
 				if (isset($this->_parse_result['prev'])) 
 				{
-					parse_str(parse_url($this->_parse_result['prev'], PHP_URL_QUERY), $this->_parse_result);
+					parse_str(parse_url($this->_parse_result['prev'], PHP_URL_QUERY) ?? '', $this->_parse_result);
 					if (isset($this->_parse_result['q'])) 
 					{ 
 						$this->_keywords = $this->_parse_result['q']; 
@@ -232,7 +233,7 @@ class ModuleVisitorSearchEngine// extends Frontend
 				//translate.googleusercontent
 				if (isset($this->_parse_result['prev'])) 
 				{
-					parse_str(parse_url($this->_parse_result['prev'], PHP_URL_QUERY), $this->_parse_result);
+					parse_str(parse_url($this->_parse_result['prev'], PHP_URL_QUERY) ?? '', $this->_parse_result);
 					if (isset($this->_parse_result['q'])) 
 					{ 
 						$this->_keywords = str_replace('+', '', $this->_parse_result['q']); 
@@ -539,7 +540,7 @@ class ModuleVisitorSearchEngine// extends Frontend
 	    {
 	    	$parse_result = array();
 			$this->_search_engine = self::SEARCH_ENGINE_KENNENSIEMICH;
-			parse_str(parse_url(str_replace('?=', '?q=', $this->_http_referer), PHP_URL_QUERY), $parse_result);
+			parse_str(parse_url(str_replace('?=', '?q=', $this->_http_referer), PHP_URL_QUERY) ?? '', $parse_result);
 			if (isset($parse_result['q'])) { $this->_keywords = $parse_result['q']; }
 
 			return true;
