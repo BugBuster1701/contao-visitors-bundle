@@ -23,18 +23,9 @@ class BackendVisitors extends \Contao\Backend
 	/**
 	 * Initialize the controller
 	 *
-	 * 1. Import the user
-	 * 2. Call the parent constructor
-	 * 3. Authenticate the user
-	 * 4. Load the language files
-	 * DO NOT CHANGE THIS ORDER!
 	 */
 	public function __construct()
 	{
-		$this->import('Contao\BackendUser', 'User');
-		parent::__construct();
-
-		//$this->User->authenticate(); //deprecated
 		if (false === \Contao\System::getContainer()->get('contao.security.token_checker')->hasBackendUser()) 
 		{
 			throw new AccessDeniedException('Access denied');
