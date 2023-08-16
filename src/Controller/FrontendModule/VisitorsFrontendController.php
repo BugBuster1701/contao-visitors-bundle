@@ -659,7 +659,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $dbconnection = $this->container->get('database_connection');
 
         //News Table exists?
-        if ($dbconnection->getSchemaManager()->tablesExist('tl_news')) {
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_news'])) {
             //News Reader?
             $stmt = $dbconnection->prepare(
                         'SELECT id
@@ -681,7 +681,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //FAQ Table exists?
-        if ($dbconnection->getSchemaManager()->tablesExist('tl_faq_category')) {
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_faq_category'])) {
             //FAQ Reader?
             $stmt = $dbconnection->prepare(
                         'SELECT id
@@ -703,7 +703,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //Isotope Table tl_iso_product exists?
-        if ($dbconnection->getSchemaManager()->tablesExist('tl_iso_product')) {
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_iso_product'])) {
             $strAlias = \Contao\Input::get('items');
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Get items: '.print_r($strAlias, true));
 
@@ -727,7 +727,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         //Events Table exists?
-        if ($dbconnection->getSchemaManager()->tablesExist('tl_calendar')) {
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_calendar'])) {
             //Events Reader?
             $stmt = $dbconnection->prepare(
                 'SELECT id
