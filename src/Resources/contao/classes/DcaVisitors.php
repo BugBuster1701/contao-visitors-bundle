@@ -36,7 +36,6 @@ class DcaVisitors extends \Contao\Backend
     public function __construct()
     {
         parent::__construct();
-        $this->import('Contao\BackendUser', 'User');
     }
 
     public function listVisitors($arrRow)
@@ -72,7 +71,8 @@ class DcaVisitors extends \Contao\Backend
         }
 
         // Check permissions AFTER checking the tid, so hacking attempts are logged
-        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_visitors::published', 'alexf'))
+        $user = \Contao\BackendUser::getInstance();
+        if (!$user->isAdmin && !$user->hasAccess('tl_visitors::published', 'alexf'))
         {
             return '';
         }
@@ -95,7 +95,8 @@ class DcaVisitors extends \Contao\Backend
     public function toggleVisibility($intId, $blnVisible)
     {
         // Check permissions to publish
-        if (!$this->User->isAdmin && !$this->User->hasAccess('tl_visitors::published', 'alexf'))
+        $user = \Contao\BackendUser::getInstance();
+        if (!$user->isAdmin && !$user->hasAccess('tl_visitors::published', 'alexf'))
         {
             \Contao\System::getContainer()
                 ->get('monolog.logger.contao')

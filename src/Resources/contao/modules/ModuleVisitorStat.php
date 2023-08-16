@@ -63,7 +63,6 @@ class ModuleVisitorStat extends BackendModule
 	 */
 	public function __construct()
 	{
-	    $this->import('Contao\BackendUser', 'User');
 	    parent::__construct();
 
 	    System::loadLanguageFile('tl_visitors_stat_export');
@@ -1480,7 +1479,8 @@ class ModuleVisitorStat extends BackendModule
 	 */
 	protected function isUserInVisitorStatGroups($visitors_stat_groups, $visitors_stat_protected)
 	{
-	    if (true === $this->User->isAdmin)
+		$user = \Contao\BackendUser::getInstance();
+	    if (true === $user->isAdmin)
 	    {
 	        //Debug log_message('Ich bin Admin', 'visitors_debug.log');
 	        return true; // Admin darf immer
@@ -1502,7 +1502,7 @@ class ModuleVisitorStat extends BackendModule
 	    //mit isMemberOf ermitteln, ob user Member einer der Cat Groups ist
 	    foreach (StringUtil::deserialize($visitors_stat_groups) as $id => $groupid)
 	    {
-	        if (true === $this->User->isMemberOf($groupid))
+	        if (true === $user->isMemberOf($groupid))
 	        {
 	            //Debug log_message('Ich bin in der richtigen Gruppe', 'visitors_debug.log');
 	            return true; // User is Member of visitor_stat_group
