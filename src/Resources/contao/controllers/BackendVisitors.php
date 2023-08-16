@@ -70,7 +70,7 @@ class BackendVisitors extends \Contao\Backend
 		// <h1 class="main_headline">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for'].': '.\Contao\Idna::decode(str_rot13($this->Input->get('tl_referrer',true))).'</h1>
 		$objTemplate->messages = '
     	<div class="tl_listing_container list_view">
-            <table cellpadding="0" cellspacing="0" summary="Table lists records" class="mod_visitors_be_table_version">
+            <table cellpadding="0" cellspacing="0" summary="Table lists records" class="mod_visitors_be_table_version with-zebra">
                 <tbody>
                     <tr>
                         <th style="padding-left: 2px;" class="tl_folder_tlist">'.$GLOBALS['TL_LANG']['tl_visitors_referrer']['visitor_referrer'].'</th>
