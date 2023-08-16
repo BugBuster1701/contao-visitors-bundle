@@ -149,10 +149,10 @@ class ModuleVisitorReferrer	extends \Contao\System
 	    }
 
 	    //Special fake and local checks
-	    $this->import('BugBuster\Visitors\ModuleVisitorChecks', 'ModuleVisitorChecks');
+		$ModuleVisitorChecks = new ModuleVisitorChecks();
 
-	    if ($this->ModuleVisitorChecks->isIP4($this->_referrer_DNS) === true 
-	      || $this->ModuleVisitorChecks->isIP6($this->_referrer_DNS) === true) 
+	    if ($ModuleVisitorChecks->isIP4($this->_referrer_DNS) === true 
+	      || $ModuleVisitorChecks->isIP6($this->_referrer_DNS) === true) 
 	    {
 	        // loopback ?
 	        if (substr($this->_referrer_DNS, 0, 3)  == '127'
@@ -213,7 +213,7 @@ class ModuleVisitorReferrer	extends \Contao\System
 	    }
 
 	    //Kill fake domain (local.lan, planet.ufp, ....)
-	    if ($this->ModuleVisitorChecks->isDomain($this->_referrer_DNS) === false)
+	    if ($ModuleVisitorChecks->isDomain($this->_referrer_DNS) === false)
 	    {
 	        //Debug log_message('detect: Domain (not valid Domain) True','debug.log');
 	        $this->_wrong_detail = 'Referrer DNS was not a valid Domain: '.$this->_referrer_DNS;
