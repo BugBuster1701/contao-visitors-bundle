@@ -32,7 +32,7 @@ class ModuleVisitorReferrer	extends \Contao\System
 	/**
 	 * Current version of the class.
 	 */
-	const VERSION          = '3.3';
+	const VERSION          = '3.4';
 
     private $_http_referrer = '';
 

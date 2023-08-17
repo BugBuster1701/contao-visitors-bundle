@@ -35,7 +35,7 @@ class ModuleVisitorChecks extends \Contao\Frontend
 	/**
 	 * Current version of the class.
 	 */
-	const VERSION           = '4.0';
+	const VERSION           = '4.1';
 
 	private $_BackendUser   = false;
 

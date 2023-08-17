@@ -8,7 +8,7 @@
  * 
  * Contao Module Version
  * @author     Glen Langer (BugBuster); modified for Contao Module Visitors
- * @version 3.0.0
+ * @version 3.1.0
  */
 
 /**
@@ -19,7 +19,7 @@ namespace BugBuster\Visitors;
 
 /**
  * Class ModuleVisitorBrowser3
- * @author Data
+ * @author BugBuster
  */
 class ModuleVisitorBrowser3 
 {
