@@ -2224,9 +2224,22 @@ class ModuleVisitorBrowser3
     public function getLang() { return $this->_lang; }
 
 	// Matomo Part from device-detector/ClientHints.php
-	// only Platform an PlatformVersion
-	public function getClientHints($headers) {
-		foreach ($headers as $name => $value) {
+	// and core/Http getClientHintsFromServerVariables
+	// but only Platform an PlatformVersion
+	public function getClientHints() {
+		$clientHints = [];
+
+        foreach ($_SERVER as $key => $value) {
+            if (
+                0 === strpos(strtolower($key), strtolower('HTTP_SEC_CH_UA_PLATFORM'))
+                || 0 === strpos(strtolower($key), strtolower('SEC_CH_UA_PLATFORM'))
+				|| 0 === strpos(strtolower($key), strtolower('PLATFORM'))
+            ) {
+                $clientHints[$key] = $value;
+            }
+        }
+
+		foreach ($clientHints as $name => $value) {
             switch (str_replace('_', '-', strtolower((string) $name))) {
                 case 'http-sec-ch-ua-platform':
                 case 'sec-ch-ua-platform':
