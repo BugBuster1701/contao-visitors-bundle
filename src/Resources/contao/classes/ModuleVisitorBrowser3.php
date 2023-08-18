@@ -16,7 +16,7 @@
  */
 
 namespace BugBuster\Visitors;
-
+// use BugBuster\Visitors\ModuleVisitorLog;
 /**
  * Class ModuleVisitorBrowser3
  * @author BugBuster
@@ -2105,6 +2105,9 @@ class ModuleVisitorBrowser3
             {
                 $this->_platformVersion = self::PLATFORM_WINDOWS_10;
             }
+			// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
+			// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+			// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 			// #138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
 			if (('Windows' === (string) $this->_ch_platform) && ((string) $this->_ch_platformVersion !== ''))
 			{
@@ -2253,7 +2256,9 @@ class ModuleVisitorBrowser3
                     break;
             }
         }
-
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': clientHints: '. print_r($clientHints,true));
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		return true;
 	}
 }
