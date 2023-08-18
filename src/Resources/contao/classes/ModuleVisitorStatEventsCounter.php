@@ -97,7 +97,7 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
 
     public function generateEventsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrEventsStatCount = [];
+        $arrEventsStatCount = array();
 
         //News Tables exists?
         if (true === $this->getEventstableexists())
@@ -163,7 +163,7 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
 
     public function generateEventsVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
     {
-        $arrEventsStatCount = [];
+        $arrEventsStatCount = array();
         $week               = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         //News Tables exists?
@@ -249,7 +249,8 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
                                         tl_calendar ON tl_calendar.jumpTo = tl_page.id
                                     WHERE tl_calendar.jumpTo = ?
                                     LIMIT 1
-                                    ")
+                                    "
+                                )
                                 ->execute($visitors_page_id);
             while ($objEventsAliases->next())
             {

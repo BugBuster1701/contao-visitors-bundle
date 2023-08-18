@@ -64,7 +64,7 @@ class ModuleVisitorStatScreenCounter extends \Contao\BackendModule
 
     public function generateScreenTopResolution($VisitorsID, $limit=20)
     {
-        $arrScreenStatCount = [];
+        $arrScreenStatCount = array();
 
         $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_screentopresolution');
 
@@ -103,7 +103,7 @@ class ModuleVisitorStatScreenCounter extends \Contao\BackendModule
 
     public function generateScreenTopResolutionDays($VisitorsID, $limit=20, $days=30)
     {
-        $arrScreenStatCount = [];
+        $arrScreenStatCount = array();
         $lastdays = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');

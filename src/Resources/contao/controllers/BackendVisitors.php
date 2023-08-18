@@ -22,7 +22,6 @@ class BackendVisitors extends \Contao\Backend
 
 	/**
 	 * Initialize the controller
-	 *
 	 */
 	public function __construct()
 	{

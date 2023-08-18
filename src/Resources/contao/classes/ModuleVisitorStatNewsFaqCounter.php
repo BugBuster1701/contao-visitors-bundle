@@ -120,7 +120,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateNewsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrNewsStatCount = [];
+        $arrNewsStatCount = array();
 
         //News Tables exists?
         if (true === $this->getNewstableexists())
@@ -186,7 +186,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateNewsVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
     {
-        $arrNewsStatCount = [];
+        $arrNewsStatCount = array();
         $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         //News Tables exists?
@@ -256,7 +256,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateFaqVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrFaqStatCount = [];
+        $arrFaqStatCount = array();
 
         //FAQ Tables exists?
         if (true === $this->getFaqtableexists())
@@ -323,7 +323,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateFaqVisitHitDays($VisitorsID, $limit = 10, $parse = true, $days=7)
     {
-        $arrFaqStatCount = [];
+        $arrFaqStatCount = array();
         $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         //FAQ Tables exists?
@@ -410,7 +410,8 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
                                         tl_news_archive ON tl_news_archive.jumpTo = tl_page.id
                                     WHERE tl_news_archive.jumpTo = ?
                                     LIMIT 1
-                                    ")
+                                    "
+                                )
                                 ->execute($visitors_page_id);
             while ($objNewsAliases->next())
             {
@@ -418,7 +419,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
                              'NewsAlias'       => $objNewsAliases->NewsAlias,
                              'NewsArchivTitle' => $objNewsAliases->NewsArchivTitle);
             }
-    
+
             $objNewsAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT 
                                                 tl_page.alias AS 'PageAlias', 
@@ -468,7 +469,8 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
                                         tl_faq_category ON tl_faq_category.jumpTo = tl_page.id
                                     WHERE tl_faq_category.jumpTo = ?
                                     LIMIT 1
-                                    ")
+                                    "
+                                )
                                 ->execute($visitors_page_id);
             while ($objFaqAliases->next())
             {
@@ -476,7 +478,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
                              'FaqAlias'       => $objFaqAliases->FaqAlias,
                              'FaqArchivTitle' => $objFaqAliases->FaqArchivTitle);
             }
-            
+
             $objFaqAliases = \Contao\Database::getInstance()
                                 ->prepare("SELECT
                                                 tl_page.alias AS 'PageAlias',

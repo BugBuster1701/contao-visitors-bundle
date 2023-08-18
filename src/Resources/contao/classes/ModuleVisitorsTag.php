@@ -23,8 +23,8 @@ use BugBuster\Visitors\ModuleVisitorChecks;
 use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\Visitors\ModuleVisitorReferrer;
 use BugBuster\Visitors\ModuleVisitorSearchEngine;
-use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\CoreBundle\Exception\NoRootPageFoundException;
+use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\StringUtil;
 use Contao\System;
 use Psr\Log\LogLevel;
@@ -257,7 +257,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 			    } 
 			    else 
 			    {
-			        /** @var PageModel $objPage */
+					/** @var PageModel $objPage */
 					$objPage = System::getContainer()->get('request_stack')->getCurrentRequest()->get('pageModel');
 			        $VisitorsStartDate = \Contao\Date::parse($objPage->dateFormat, $objVisitors->visitors_startdate);
 			    }
@@ -1393,7 +1393,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 	/**
 	 * Get Page-Type
 	 * 
-	 * @param  object $objPage
+	 * @param  object  $objPage
 	 * @return integer 0 = reale Seite, 1 = News, 2 = FAQ, 403 = Forbidden
 	 */
 	protected function visitorGetPageType($objPage)

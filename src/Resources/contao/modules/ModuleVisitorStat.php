@@ -19,17 +19,17 @@
 namespace BugBuster\Visitors;
 
 use BugBuster\Visitors\ModuleVisitorCharts;
+use BugBuster\Visitors\ModuleVisitorStatEventsCounter;
 use BugBuster\Visitors\ModuleVisitorStatNewsFaqCounter;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
-use BugBuster\Visitors\ModuleVisitorStatEventsCounter;
 use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
 use Contao\BackendModule;
-use Contao\System;
-use Contao\Input;
 use Contao\Database;
 use Contao\Environment;
+use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Class ModuleVisitorStat

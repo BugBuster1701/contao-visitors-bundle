@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle
  *
- * @copyright  Glen Langer 2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @license    LGPL-3.0-or-later
@@ -56,8 +56,8 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
-        //$loader->load(__DIR__ . '/../Resources/config/parameters.yml');
+        // $loader->load(__DIR__ . '/../Resources/config/parameters.yml');
         $loader->load(__DIR__.'/../Resources/config/services.yml');
-        //$loader->load(__DIR__ . '/../Resources/config/listener.yml');
+        // $loader->load(__DIR__ . '/../Resources/config/listener.yml');
     }
 }

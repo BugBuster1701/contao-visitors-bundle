@@ -28,7 +28,7 @@ class ModuleVisitorBrowser3
 	private $_version = '';
 	private $_platform = '';
 	private $_ch_platform = '';
-	
+
 	//#130 private $_os = '';
 	private $_is_aol = false;
 	private $_is_mobile = false;
@@ -369,7 +369,7 @@ class ModuleVisitorBrowser3
 	  * Protected routine to determine the browser type
 	  * http://www.useragentstring.com/index.php
 	  * 
-	  * @return boolean True if the browser was detected otherwise false
+	   * @return boolean True if the browser was detected otherwise false
 	  */
 	 protected function checkBrowsers() {
 		return 
@@ -2104,13 +2104,13 @@ class ModuleVisitorBrowser3
             {
                 $this->_platformVersion = self::PLATFORM_WINDOWS_10;
             }
-			#138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
-			if ( ('Windows' === (string) $this->_ch_platform) && ((string) $this->_ch_platformVersion !== '') )
+			// #138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
+			if (('Windows' === (string) $this->_ch_platform) && ((string) $this->_ch_platformVersion !== ''))
 			{
-				$majorOsVersion = (int)(explode('.', $this->_ch_platformVersion)[0] ?? "0");
+				$majorOsVersion = (int) (explode('.', $this->_ch_platformVersion)[0] ?? "0");
 				if ($majorOsVersion > 0 && $majorOsVersion < 11) {
 					$this->_platformVersion = self::PLATFORM_WINDOWS_10;
-				} else if ($majorOsVersion > 10 && $majorOsVersion < 16) {
+				} elseif ($majorOsVersion > 10 && $majorOsVersion < 16) {
 					$this->_platformVersion = self::PLATFORM_WINDOWS_11;
 				}
 			}            
@@ -2226,16 +2226,16 @@ class ModuleVisitorBrowser3
 	// only Platform an PlatformVersion
 	public function getClientHints($headers) {
 		foreach ($headers as $name => $value) {
-            switch (\str_replace('_', '-', \strtolower((string) $name))) {
+            switch (str_replace('_', '-', strtolower((string) $name))) {
                 case 'http-sec-ch-ua-platform':
                 case 'sec-ch-ua-platform':
                 case 'platform':
-                    $this->_ch_platform = \trim($value, '"');
+                    $this->_ch_platform = trim($value, '"');
                     break;
                 case 'http-sec-ch-ua-platform-version':
                 case 'sec-ch-ua-platform-version':
                 case 'platformversion':
-                    $this->_ch_platformVersion = \trim($value, '"');
+                    $this->_ch_platformVersion = trim($value, '"');
                     break;
             }
         }

@@ -80,7 +80,7 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 
     public function generatePageVisitHitTop($VisitorsID, $limit = 20, $parse = true)
     {
-        $arrPageStatCount = [];
+        $arrPageStatCount = array();
         $objPageStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT 
                                         visitors_page_id,
@@ -164,7 +164,7 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 
     public function generatePageVisitHitToday($VisitorsID, $limit=5)
     {
-        $arrPageStatCount = [];
+        $arrPageStatCount = array();
 
         $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithittoday');
 
@@ -244,7 +244,7 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 
     public function generatePageVisitHitYesterday($VisitorsID, $limit=5)
     {
-        $arrPageStatCount = [];
+        $arrPageStatCount = array();
 
         $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithityesterday');
 
@@ -324,7 +324,7 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 
     public function generatePageVisitHitDays($VisitorsID, $limit=20, $days=7)
     {
-        $arrPageStatCount = [];
+        $arrPageStatCount = array();
         $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithitdays');
@@ -582,9 +582,9 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
      * generatePageVisitHitTopDays speziell für den Export
      * Filterung nach Anzahl Tagen
      * 
-     * @param integer $VisitorsID
-     * @param number  $days
-     * @param string  $parse
+     * @param  integer      $VisitorsID
+     * @param  number       $days
+     * @param  string       $parse
      * @return array|string NULL
      */
     public function generatePageVisitHitTopDays($VisitorsID, $days = 365, $parse = false)

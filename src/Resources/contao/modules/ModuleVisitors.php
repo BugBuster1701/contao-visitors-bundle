@@ -18,11 +18,11 @@
 
 namespace BugBuster\Visitors;
 use Contao\CoreBundle\Monolog\ContaoContext;
-use Psr\Log\LogLevel;
+use Contao\Database;
 use Contao\Module;
 use Contao\StringUtil;
 use Contao\System;
-use Contao\Database;
+use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
