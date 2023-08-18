@@ -202,6 +202,7 @@ class ModuleVisitorBrowser3
 
 	public function initBrowser($useragent="", $accept_language="") { //modified for compatibility
 		$this->reset();
+		$this->getClientHints($_SERVER);
 		$this->_accept_language = $accept_language;
 		$this->setLang();
 		if($useragent != "") {
