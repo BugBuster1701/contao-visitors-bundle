@@ -8,7 +8,7 @@
  * 
  * Contao Module Version
  * @author     Glen Langer (BugBuster); modified for Contao Module Visitors
- * @version 3.1.0
+ * @version 3.2.0
  */
 
 /**
@@ -27,7 +27,8 @@ class ModuleVisitorBrowser3
 	private $_browser_name = '';
 	private $_version = '';
 	private $_platform = '';
-
+	private $_ch_platform = '';
+	
 	//#130 private $_os = '';
 	private $_is_aol = false;
 	private $_is_mobile = false;
@@ -35,6 +36,7 @@ class ModuleVisitorBrowser3
 	private $_aol_version = '';
 
 	private $_platformVersion   = '';   //add BugBuster
+	private $_ch_platformVersion   = '';   //add BugBuster
 	protected $_accept_language; //add BugBuster
 	protected $_lang; //add BugBuster
 
@@ -224,6 +226,8 @@ class ModuleVisitorBrowser3
 		$this->_is_robot = false;
 		$this->_aol_version = self::VERSION_UNKNOWN;
 		$this->_platformVersion = self::PLATFORM_UNKNOWN;	//add BugBuster
+		$this->_ch_platform = self::PLATFORM_UNKNOWN;
+		$this->_ch_platformVersion = self::VERSION_UNKNOWN;	//add BugBuster
 	}
 
 	/**
@@ -2095,14 +2099,21 @@ class ModuleVisitorBrowser3
 			    $this->_platform = self::PLATFORM_WINDOWS_7;
 		    }
 	        else*/
-            // if(stripos($this->_agent, 'windows NT 11.1') !== false) // #138
-            // {
-            //     $this->_platformVersion = self::PLATFORM_WINDOWS_11;
-            // }
-            if(stripos($this->_agent, 'windows NT 10.0') !== false) 
+
+			if(stripos($this->_agent, 'windows NT 10.0') !== false) 
             {
                 $this->_platformVersion = self::PLATFORM_WINDOWS_10;
             }
+			#138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
+			if ( ('Windows' === (string) $this->_ch_platform) && ((string) $this->_ch_platformVersion !== '') )
+			{
+				$majorOsVersion = (int)(explode('.', $this->_ch_platformVersion)[0] ?? "0");
+				if ($majorOsVersion > 0 && $majorOsVersion < 11) {
+					$this->_platformVersion = self::PLATFORM_WINDOWS_10;
+				} else if ($majorOsVersion > 10 && $majorOsVersion < 16) {
+					$this->_platformVersion = self::PLATFORM_WINDOWS_11;
+				}
+			}            
             elseif(stripos($this->_agent, 'windows NT 6.3') !== false) 
             {
                 $this->_platformVersion = self::PLATFORM_WINDOWS_81;
@@ -2211,5 +2222,25 @@ class ModuleVisitorBrowser3
 
     public function getLang() { return $this->_lang; }
 
+	// Matomo Part from device-detector/ClientHints.php
+	// only Platform an PlatformVersion
+	public function getClientHints($headers) {
+		foreach ($headers as $name => $value) {
+            switch (\str_replace('_', '-', \strtolower((string) $name))) {
+                case 'http-sec-ch-ua-platform':
+                case 'sec-ch-ua-platform':
+                case 'platform':
+                    $this->_ch_platform = \trim($value, '"');
+                    break;
+                case 'http-sec-ch-ua-platform-version':
+                case 'sec-ch-ua-platform-version':
+                case 'platformversion':
+                    $this->_ch_platformVersion = \trim($value, '"');
+                    break;
+            }
+        }
+
+		return true;
+	}
 }
 
