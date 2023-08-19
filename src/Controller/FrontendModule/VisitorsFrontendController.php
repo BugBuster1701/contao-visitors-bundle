@@ -246,8 +246,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         $template->visitors = $arrVisitors;
+        $response = $template->getResponse();
 
-        return $template->getResponse();
+        // Request Client Hints for next browser request
+        if (empty($_SERVER['HTTP_SEC_CH_UA_PLATFORM']) && empty($_SERVER['SEC_CH_UA_PLATFORM']) && empty($_SERVER['PLATFORM']) && empty($_SERVER['platform'])) {
+            $response->headers->set('Accept-CH', 'Sec-CH-UA-Full-Version, Sec-CH-UA-Platform, Sec-CH-UA-Platform-Version, Sec-CH-UA-Model, Sec-CH-UA-Arc');
+        }
+        return $response;
     }
 
     protected function getAverageVisits($VisitorsId, $boolSeparator)
