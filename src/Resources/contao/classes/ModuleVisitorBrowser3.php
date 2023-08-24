@@ -156,6 +156,7 @@ class ModuleVisitorBrowser3
 
 	const PLATFORM_UNKNOWN = 'unknown';
 	const PLATFORM_WINDOWS = 'Windows';
+	const PLATFORM_WINDOWS_CH = 'Windows';	// Client Hints Platform
 	const PLATFORM_WINDOWS_CE = 'WinCE'; //modified for compatibility
 	const PLATFORM_WINDOWS_PHONE = 'WinPhone';           // http://www.developer.nokia.com/Community/Wiki/User-Agent_headers_for_Nokia_devices
 	const PLATFORM_APPLE = 'Apple';
@@ -2093,23 +2094,16 @@ class ModuleVisitorBrowser3
      */
     protected function checkPlatformVersion() 
     {
-        // based on browscap.ini
-        if ($this->_platform == self::PLATFORM_WINDOWS) 
-        {
-	        /*if( stripos($this->_agent, 'windows NT 7.1') !== false ) {
-			    $this->_platform = self::PLATFORM_WINDOWS_7;
-		    }
-	        else*/
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
+		// #138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
 
-			if(stripos($this->_agent, 'windows NT 10.0') !== false) 
-            {
-                $this->_platformVersion = self::PLATFORM_WINDOWS_10;
-            }
-			// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
-			// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
-			// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
-			// #138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
-			if (('Windows' === (string) $this->_ch_platform) && ((string) $this->_ch_platformVersion !== ''))
+		// Windows Browser unterstützt Client Hints und UA sagt Windows
+        if ((self::PLATFORM_WINDOWS_CH === (string) $this->_ch_platform) && ($this->_platform == self::PLATFORM_WINDOWS))
+		{
+			// Windows Browser unterstützt Client Hints und sendet nach Anforderung auch die PlatformVersion
+			if ((string) $this->_ch_platformVersion !== self::PLATFORM_UNKNOWN)
 			{
 				$majorOsVersion = (int) (explode('.', $this->_ch_platformVersion)[0] ?? "0");
 				if ($majorOsVersion > 0 && $majorOsVersion < 11) {
@@ -2118,6 +2112,14 @@ class ModuleVisitorBrowser3
 					$this->_platformVersion = self::PLATFORM_WINDOWS_11;
 				}
 			}            
+		}
+		// Windows Browser unterstützt keine Client Hints oder Request kam über HTTP und UA sagt Windows
+        if ((self::PLATFORM_UNKNOWN === (string) $this->_ch_platform) && ($this->_platform == self::PLATFORM_WINDOWS))
+        {
+			if (stripos($this->_agent, 'windows NT 10.0') !== false)
+            {
+                $this->_platformVersion = self::PLATFORM_WINDOWS;
+            }
             elseif(stripos($this->_agent, 'windows NT 6.3') !== false) 
             {
                 $this->_platformVersion = self::PLATFORM_WINDOWS_81;
@@ -2230,7 +2232,7 @@ class ModuleVisitorBrowser3
 	// and core/Http getClientHintsFromServerVariables
 	// but only Platform an PlatformVersion
 	public function getClientHints() {
-		$clientHints = [];
+		$clientHints = array();
 
         foreach ($_SERVER as $key => $value) {
             if (
