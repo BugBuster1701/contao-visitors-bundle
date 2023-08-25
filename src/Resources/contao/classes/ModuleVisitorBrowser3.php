@@ -72,6 +72,7 @@ class ModuleVisitorBrowser3
 	const BROWSER_VIVALDI = 'Vivaldi';                        // http://vivaldi.com
 	const BROWSER_DOOBLE  = 'Dooble';                         // https://textbrowser.github.io/dooble/
 	const BROWSER_QTWEB   = 'QtWeb Browser';                  // Dooble und andere
+	const BROWSER_ALOHA   = "AlohaBrowser";                   // https://alohabrowser.com/
 
 	const BROWSER_ANDROID = 'Android';                        // http://www.android.com/
 	const BROWSER_GALAXY_S        = 'Galaxy S';
@@ -433,6 +434,7 @@ class ModuleVisitorBrowser3
 			//$this->checkBrowserMSNBot() ||
 			//$this->checkBrowserSlurp() ||
 		    // chrome post Android Pads
+			$this->checkBrowserAloha() ||
 		    $this->checkBrowserChrome() ||
 			// WebKit base check (post mobile and others)
 			$this->checkBrowserSafari() ||
@@ -1999,6 +2001,22 @@ class ModuleVisitorBrowser3
     }
 
     /**
+     * Determine if the browser is Aloha or not
+     * @return boolean True if the browser is Aloha otherwise false
+     */
+    protected function checkBrowserAloha() {
+	    if(stripos($this->_agent, 'AlohaBrowser') !== false) {
+		    $aresult = explode('/', stristr($this->_agent, 'AlohaBrowser'));
+		    $this->setVersion($aresult[1]);
+		    $this->setBrowser(self::BROWSER_ALOHA);
+
+		    return true;
+	    }
+
+	    return false;
+    }
+
+    /**
      * Determine the user's platform (last updated 1.7)
      */
     protected function checkPlatform() 
@@ -2076,6 +2094,7 @@ class ModuleVisitorBrowser3
 
 	/**
 	 * The name of the platform.  All return types are from the class contants
+	 * (Windows, Win10, Linux, ...)
 	 * Fallback platformVersion with platform if platformVersion unknown
 	 * @return string Platformversion of the browser
 	 */
