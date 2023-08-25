@@ -72,7 +72,7 @@ class ModuleVisitorBrowser3
 	const BROWSER_VIVALDI = 'Vivaldi';                        // http://vivaldi.com
 	const BROWSER_DOOBLE  = 'Dooble';                         // https://textbrowser.github.io/dooble/
 	const BROWSER_QTWEB   = 'QtWeb Browser';                  // Dooble und andere
-	const BROWSER_ALOHA   = "AlohaBrowser";                   // https://alohabrowser.com/
+	const BROWSER_ALOHA   = "Aloha Browser";                  // https://alohabrowser.com/
 
 	const BROWSER_ANDROID = 'Android';                        // http://www.android.com/
 	const BROWSER_GALAXY_S        = 'Galaxy S';
@@ -388,6 +388,7 @@ class ModuleVisitorBrowser3
 			//     before Safari
 			// (5) Netscape 9+ is based on Firefox so Netscape checks
 			//     before FireFox are necessary
+			$this->checkBrowserAloha() ||
 			$this->checkBrowserWebTv() ||
 		    $this->checkBrowserMaxthon()    ||  //add BugBuster, must be before IE, (Dual Engine: Webkit and Trident)
 			$this->checkBrowserInternetExplorer() ||
@@ -434,7 +435,6 @@ class ModuleVisitorBrowser3
 			//$this->checkBrowserMSNBot() ||
 			//$this->checkBrowserSlurp() ||
 		    // chrome post Android Pads
-			$this->checkBrowserAloha() ||
 		    $this->checkBrowserChrome() ||
 			// WebKit base check (post mobile and others)
 			$this->checkBrowserSafari() ||
