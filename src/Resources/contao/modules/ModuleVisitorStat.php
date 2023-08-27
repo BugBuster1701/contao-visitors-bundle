@@ -963,7 +963,7 @@ class ModuleVisitorStat extends BackendModule
                                     SUM(`visitors_counter`) AS SUMBV 
                                 FROM
                                     (SELECT 
-										TRIM(REGEXP_SUBSTR(`visitors_browser`, '[a-z() ]+')) AS visitors_browser, 
+										REGEXP_REPLACE(`visitors_browser`,' [0-9].*$','') AS visitors_browser,
                                         `visitors_counter`
                                     FROM tl_visitors_browser
                                     WHERE vid=?
