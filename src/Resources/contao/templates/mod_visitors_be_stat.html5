@@ -314,7 +314,7 @@
 	</div> <!-- 3 -->
 	<div style="clear:left;"></div><hr>
 	
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 		<div class="tl_listing block">
 			<?= $this->visitorsstatPageVisitHits[$vcid]; ?>
 			<?= $this->visitorsstatPageVisitHitsDays[$vcid]; ?>
@@ -325,7 +325,7 @@
 	</div>
 	<div style="clear:left;"></div><hr>
 <?php if (false !== $this->visitorsstatNewsVisitHits[$vcid]) : ?>
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 		<div class="tl_listing block">
 			<?= $this->visitorsstatNewsVisitHits[$vcid]; ?>
 			<?= $this->visitorsstatNewsVisitHitsDays[$vcid]; ?>
@@ -333,7 +333,7 @@
 	</div>
 <?php endif; ?>
 <?php if (false !== $this->visitorsstatEventsVisitHits[$vcid]) : ?>
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 		<div class="tl_listing block">
 			<?= $this->visitorsstatEventsVisitHits[$vcid]; ?>
 			<?= $this->visitorsstatEventsVisitHitsDays[$vcid]; ?>
@@ -341,7 +341,7 @@
 	</div>
 <?php endif; ?>
 <?php if (false !== $this->visitorsstatFaqVisitHits[$vcid]) : ?>
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 		<div class="tl_listing block">
 			<?= $this->visitorsstatFaqVisitHits[$vcid]; ?>
 			<?= $this->visitorsstatFaqVisitHitsDays[$vcid]; ?>
@@ -349,7 +349,7 @@
 	</div>
 <?php endif; ?>
 <?php if (false !== $this->visitorsstatIsotopeVisitHits[$vcid]) : ?>
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 		<div class="tl_listing block">
 			<?= $this->visitorsstatIsotopeVisitHits[$vcid]; ?>
 		</div>
@@ -361,7 +361,7 @@
           false !== $this->visitorsstatIsotopeVisitHits[$vcid]) : ?>	
 	<hr>	
 <?php endif; ?>	
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 	  <div class="tl_listing block"> 
 		<div class="mod_visitors_be_browser w50">
 			<table  class="mod_visitors_be_table">
@@ -461,7 +461,7 @@
 	</div> <!-- 4 -->
 	<div style="clear:left;"></div>
 	<hr>
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 	  <div class="tl_listing block"> 
 		<div class="mod_visitors_be_searchenginekeywords w50">
 			<table  class="mod_visitors_be_table">
@@ -518,7 +518,7 @@
 	</div> <!-- 5 -->
 	<div style="clear:left;"></div>	
 	<hr>
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 	  <div class="tl_listing block"> 
 		<div class="mod_visitors_be_referrer w50">
 			<table  class="mod_visitors_be_table">
@@ -558,7 +558,7 @@
 	
 	<!-- Screen resolution -->
 	<hr>
-	<div class="tl_content tl_listing_container list_view visitors_toggler">
+	<div class="tl_content tl_listing_container list_view ">
 		<div class="tl_listing block">
 			<?= $this->visitorsstatScreenTop[$vcid]; ?>
 			<?= $this->visitorsstatScreenTopDays[$vcid]; ?>
