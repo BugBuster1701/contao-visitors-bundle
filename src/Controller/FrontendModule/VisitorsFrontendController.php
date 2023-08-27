@@ -1342,7 +1342,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 } else {
                     $arrBrowser['Browser'] = $ModuleVisitorBrowser3->getBrowser();
                     $arrBrowser['Version'] = $ModuleVisitorBrowser3->getVersion();
-                    $arrBrowser['Platform'] = $ModuleVisitorBrowser3->getPlatformVersion();
+                    $arrBrowser['Platform'] = $ModuleVisitorBrowser3->getPlatformVersion(); // wenn Version unknown, dann Platform
                     $arrBrowser['lang'] = $ModuleVisitorBrowser3->getLang();
                     // Anpassen an Version 1 zur Weiterverarbeitung
                     if ('unknown' === $arrBrowser['Browser']) {
@@ -1356,9 +1356,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     if ('unknown' === $arrBrowser['Platform']) {
                         $arrBrowser['Platform'] = 'Unknown';
                     }
-                    // Debug if ( $arrBrowser['Platform'] == 'Unknown' || $arrBrowser['Platform'] == 'Mozilla' || $arrBrowser['Version'] == 'unknown' ) {
-                    // Debug 	log_message("Unbekannter User Agent: ".$this->Environment->httpUserAgent."", 'unknown.log');
-                    // Debug }
+                    if ( $arrBrowser['Platform'] == 'Unknown' || $arrBrowser['Platform'] == 'Mozilla' || $arrBrowser['Version'] == 'unknown' ) {
+                        // ModuleVisitorLog::logMessage('Unbekannter User Agent: ' . \Contao\Environment::get('httpUserAgent'), 'visitors_debug_ua_unknown');
+                    }
                     $objBrowserCounter = $dbconnection->prepare(
                         'SELECT
                                             id,
