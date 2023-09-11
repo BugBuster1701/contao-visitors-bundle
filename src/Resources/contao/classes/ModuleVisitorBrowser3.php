@@ -690,7 +690,7 @@ class ModuleVisitorBrowser3
 		{
 			$aresult = explode('/', stristr($this->_agent, 'Edg'));
 			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setVersion($aversion[0].'.'.($aversion[1] ?? '0'));
 			$this->setBrowser(self::BROWSER_MS_EDG);
 
 			return true;
@@ -715,7 +715,7 @@ class ModuleVisitorBrowser3
 		{
 			$aresult = explode('/', stristr($this->_agent, 'EdgiOS'));
 			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setVersion($aversion[0].'.'.($aversion[1] ?? '0'));
 			$this->setBrowser(self::BROWSER_MS_EDGE);
 
 			return true;
@@ -726,7 +726,7 @@ class ModuleVisitorBrowser3
 		{
 			$aresult = explode('/', stristr($this->_agent, 'EdgA'));
 			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setVersion($aversion[0].'.'.($aversion[1] ?? '0'));
 			$this->setBrowser(self::BROWSER_MS_EDGE);
 
 			return true;
