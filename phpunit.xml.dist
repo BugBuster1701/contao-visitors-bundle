@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true"
-         backupGlobals="false"
-         processIsolation="false"
-         bootstrap="tests/bootstrap.php"
->
-
-    <testsuites>
-        <testsuite name="VisitorsTest">
-            <directory>./tests</directory>
-            <exclude>./tests/vendor</exclude>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory>./src/Resources/classes</directory>
-        </whitelist>
-	</filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" backupGlobals="false" processIsolation="false" bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage>
+    <include>
+      <directory>./src/Resources/classes</directory>
+    </include>
+  </coverage>
+  <testsuites>
+    <testsuite name="VisitorsTest">
+      <directory>./tests</directory>
+      <exclude>./tests/vendor</exclude>
+      <exclude>./tests/clienthints</exclude>
+    </testsuite>
+  </testsuites>
 </phpunit>
