@@ -349,15 +349,30 @@ class ModuleVisitorBrowser3
 	}
 
 	/**
-	 * Modify version for compatibility
+	 * Modify version for major.minor
 	 */
 	protected function reduceVersion() {
 	    if ($this->_version === self::VERSION_UNKNOWN) {
 	    	return;
 	    }
-	    if (stripos($this->_version, '.') !== false) {
-	    	$this->_version = substr($this->_version, 0, stripos($this->_version, '.')+2);
+		// aus x.y.z mach x.y
+	    if (strpos($this->_version, '.') !== false) {
+			$firstpos = strpos($this->_version, '.');
+			if (strpos($this->_version, '.', $firstpos +1) !== false) {
+				$secondpos  = strpos($this->_version, '.', $firstpos +1);
+	    		$this->_version = substr($this->_version, 0, $secondpos );
+			}
 	    }
+	}
+
+	protected function fixVersion($aresult) {
+		// Sonderfall für einstellige Version und weiteren folgenden String
+		// z.B Edg/116 Version/13.0.3
+		// $aversion hat hier "116 Version" statt 116
+		if (false !== strpos($aresult, ' ')) {
+			return explode(' ', $aresult)[0];
+		}
+		return $aresult;
 	}
 
 	 /**
@@ -671,6 +686,7 @@ class ModuleVisitorBrowser3
 			&& stripos($this->_agent, 'windows phone') === false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'Edge'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
 			require __DIR__ . '/../config/edgeMap.php';
 			if (\array_key_exists($aversion[0].'.'.$aversion[1], $arrEdgeMap))
@@ -689,8 +705,9 @@ class ModuleVisitorBrowser3
 		elseif (stripos($this->_agent, 'Edg/') !== false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'Edg'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.($aversion[1] ?? '0'));
+			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDG);
 
 			return true;
@@ -701,6 +718,7 @@ class ModuleVisitorBrowser3
 			&& stripos($this->_agent, 'windows phone') !== false)
 		{
 			$aresult = explode('/', stristr($this->_agent, 'Edge'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
 			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDGE_MOBILE);
@@ -714,8 +732,10 @@ class ModuleVisitorBrowser3
 		elseif (stripos($this->_agent, 'EdgiOS') !== false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'EdgiOS'));
-			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.($aversion[1] ?? '0'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
+			$aversion = explode('.', $aresult[1]);			
+			
+			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDGE);
 
 			return true;
@@ -725,8 +745,9 @@ class ModuleVisitorBrowser3
 		elseif (stripos($this->_agent, 'EdgA') !== false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'EdgA'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.($aversion[1] ?? '0'));
+			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDGE);
 
 			return true;
@@ -2207,4 +2228,3 @@ class ModuleVisitorBrowser3
     public function getLang() { return $this->_lang; }
 
 }
-
