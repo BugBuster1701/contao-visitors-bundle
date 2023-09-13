@@ -18,3 +18,7 @@ src/cache/largebrowscap_*/largebrowscap.patterns.*
 .phpunit.result.cache
 
 todo.txt
+todo.sql
+/tests/clienthints/
+curl-tests.sh
+
