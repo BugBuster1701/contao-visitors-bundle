@@ -1,15 +1,14 @@
 <?php
 
-/**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2020 Leo Feyer
- * 
- * Modul Visitors Referrer - Frontend
+/*
+ * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @licence    LGPL
- * @filesource
- * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
+ * @package    Contao Visitors Bundle
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
+ * @license    LGPL-3.0-or-later
  */
 
 /**
@@ -17,36 +16,36 @@
  */
 
 namespace BugBuster\Visitors;
+
 use BugBuster\Visitors\ForceUTF8\Encoding;
-use BugBuster\Visitors\ModuleVisitorLog;
+use Contao\System;
 
 /**
  * Class ModuleVisitorReferrer
  *
  * @copyright  Glen Langer 2012..2020 <http://contao.ninja>
- * @author     Glen Langer (BugBuster)
- * @license    LGPL 
+ * @license    LGPL
  */
-class ModuleVisitorReferrer	extends \Contao\System
+class ModuleVisitorReferrer extends System
 {
 	/**
 	 * Current version of the class.
 	 */
 	const VERSION          = '3.4';
 
-    private $_http_referrer = '';
+	private $_http_referrer = '';
 
-    private $_referrer_DNS  = '';
+	private $_referrer_DNS  = '';
 
-    private $_vhost        = '';
+	private $_vhost        = '';
 
-    private $_wrong_detail = '';
+	private $_wrong_detail = '';
 
-    const REFERRER_UNKNOWN  = '-';
+	const REFERRER_UNKNOWN  = '-';
 
-    const REFERRER_OWN      = 'o';
+	const REFERRER_OWN      = 'o';
 
-    const REFERRER_WRONG    = 'w';
+	const REFERRER_WRONG    = 'w';
 
 	/**
 	 * Call the parent constructor.
@@ -57,7 +56,6 @@ class ModuleVisitorReferrer	extends \Contao\System
 	 * Fatal error: Call to protected System::__construct() from invalid context
 	 *
 	 * @param	void
-	 * @return void
 	 */
 	public function __construct()
 	{
@@ -67,49 +65,51 @@ class ModuleVisitorReferrer	extends \Contao\System
 	/**
 	 * Reset all properties
 	 */
-	protected function reset() 
+	protected function reset()
 	{
-	    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Referrer Raw: ' . ($_SERVER['HTTP_REFERER'] ?? self::REFERRER_UNKNOWN));
-	    //NEVER TRUST USER INPUT
-	    if (\function_exists('filter_var'))	// Adjustment for hoster without the filter extension
-	    {
-	    	$this->_http_referrer  = isset($_SERVER['HTTP_REFERER']) ? filter_var($_SERVER['HTTP_REFERER'], FILTER_SANITIZE_URL) : self::REFERRER_UNKNOWN;
-	    } 
-	    else 
-	    {
-	    	$this->_http_referrer  = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : self::REFERRER_UNKNOWN;
-	    }
-	    //Fixed #206
-	    $this->_http_referrer = Encoding::toUTF8(urldecode($this->_http_referrer));
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Referrer Raw: ' . ($_SERVER['HTTP_REFERER'] ?? self::REFERRER_UNKNOWN));
+		// NEVER TRUST USER INPUT
+		if (\function_exists('filter_var'))	// Adjustment for hoster without the filter extension
+		{
+			$this->_http_referrer  = isset($_SERVER['HTTP_REFERER']) ? filter_var($_SERVER['HTTP_REFERER'], FILTER_SANITIZE_URL) : self::REFERRER_UNKNOWN;
+		}
+		else
+		{
+			$this->_http_referrer  = $_SERVER['HTTP_REFERER'] ?? self::REFERRER_UNKNOWN;
+		}
+		// Fixed #206
+		$this->_http_referrer = Encoding::toUTF8(urldecode($this->_http_referrer));
 
-	    $this->_referrer_DNS = self::REFERRER_UNKNOWN;
-	    if (empty($this->_http_referrer) || 
-	        $this->_http_referrer == '-') 
-	    {
-	    	//ungueltiger Referrer
-	    	$this->_referrer_DNS = self::REFERRER_WRONG;
-	    	$this->_wrong_detail = 'Invalid referrer';
-	    }
+		$this->_referrer_DNS = self::REFERRER_UNKNOWN;
+		if (
+			empty($this->_http_referrer)
+			|| $this->_http_referrer == '-'
+		) {
+			// ungueltiger Referrer
+			$this->_referrer_DNS = self::REFERRER_WRONG;
+			$this->_wrong_detail = 'Invalid referrer';
+		}
 	}
 
-	public function checkReferrer($referrer='') 
+	public function checkReferrer($referrer='')
 	{
 		$this->reset();
-		if($referrer != "") 
+		if ($referrer != "")
 		{
-			//NEVER TRUST USER INPUT
+			// NEVER TRUST USER INPUT
 			if (\function_exists('filter_var'))	// Adjustment for hoster without the filter extension
-	    	{
+			{
 				$this->_http_referrer = filter_var($referrer, FILTER_SANITIZE_URL);
-	    	} 
-	    	else 
-	    	{
-	    		$this->_http_referrer = $referrer;
-	    	}
+			}
+			else
+			{
+				$this->_http_referrer = $referrer;
+			}
 		}
-		if ($this->_http_referrer !== self::REFERRER_UNKNOWN && 
-		    $this->_referrer_DNS  !== self::REFERRER_WRONG) 
-		{ 
+		if (
+			$this->_http_referrer !== self::REFERRER_UNKNOWN
+			&& $this->_referrer_DNS  !== self::REFERRER_WRONG
+		) {
 			$this->detect();
 		}
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, $this->__toString());
@@ -117,110 +117,112 @@ class ModuleVisitorReferrer	extends \Contao\System
 
 	protected function detect()
 	{
-	    $this->_referrer_DNS = parse_url($this->_http_referrer, PHP_URL_HOST);
-	    if ($this->_referrer_DNS === NULL) 
-	    {
-	    	//try this...
-	    	try 
-	    	{
-	    	    $this->_referrer_DNS = parse_url('http://'.$this->_http_referrer, PHP_URL_HOST);
-	    	} 
-	    	catch (\Exception $e) 
-	    	{
-	    	    $this->_referrer_DNS = NULL;
-	    	}
-	    	if ($this->_referrer_DNS === NULL || 
-	    	    $this->_referrer_DNS === false) 
-	    	{
-	    		//wtf...
-	    		$this->_referrer_DNS = self::REFERRER_WRONG;
-	    		$this->_wrong_detail = 'Problem on parse_url for referrer: '.$this->_http_referrer;
+		$this->_referrer_DNS = parse_url($this->_http_referrer, PHP_URL_HOST);
+		if ($this->_referrer_DNS === null)
+		{
+			// try this...
+			try
+			{
+				$this->_referrer_DNS = parse_url('http://' . $this->_http_referrer, PHP_URL_HOST);
+			}
+			catch (\Exception $e)
+			{
+				$this->_referrer_DNS = null;
+			}
+			if (
+				$this->_referrer_DNS === null
+				|| $this->_referrer_DNS === false
+			) {
+				// wtf...
+				$this->_referrer_DNS = self::REFERRER_WRONG;
+				$this->_wrong_detail = 'Problem on parse_url for referrer: ' . $this->_http_referrer;
 
-	    		return;
-	    	}
-	    }
-	    $this->_vhost = parse_url('http://'.$this->vhost(), PHP_URL_HOST);
-	    //ReferrerDNS = HostDomain ?
-	    if ($this->_referrer_DNS == $this->_vhost) 
-	    {
-	    	$this->_referrer_DNS = self::REFERRER_OWN;
+				return;
+			}
+		}
+		$this->_vhost = parse_url('http://' . $this->vhost(), PHP_URL_HOST);
+		// ReferrerDNS = HostDomain ?
+		if ($this->_referrer_DNS == $this->_vhost)
+		{
+			$this->_referrer_DNS = self::REFERRER_OWN;
 
-	    	return;
-	    }
+			return;
+		}
 
-	    //Special fake and local checks
+		// Special fake and local checks
 		$ModuleVisitorChecks = new ModuleVisitorChecks();
 
-	    if ($ModuleVisitorChecks->isIP4($this->_referrer_DNS) === true 
-	      || $ModuleVisitorChecks->isIP6($this->_referrer_DNS) === true) 
-	    {
-	        // loopback ?
-	        if (substr($this->_referrer_DNS, 0, 3)  == '127'
-	            || trim($this->_referrer_DNS, '[]') == '::1') 
-	        {
-	            //Debug log_message('detect: loopback True','debug.log');
-	            $this->_wrong_detail = 'Referrer DNS was loopback IP: '.$this->_referrer_DNS;
-	            $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was loopback IP
+		if (
+			$ModuleVisitorChecks->isIP4($this->_referrer_DNS) === true
+		  || $ModuleVisitorChecks->isIP6($this->_referrer_DNS) === true
+		) {
+			// loopback ?
+			if (
+				substr($this->_referrer_DNS, 0, 3)  == '127'
+				|| trim($this->_referrer_DNS, '[]') == '::1'
+			) {
+				// Debug log_message('detect: loopback True','debug.log');
+				$this->_wrong_detail = 'Referrer DNS was loopback IP: ' . $this->_referrer_DNS;
+				$this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was loopback IP
 
-	            return;
-	        }
-	        //remove IPv6 [] (comes from parse_url) 
-	        $this->_referrer_DNS = trim($this->_referrer_DNS, '[]');
+				return;
+			}
+			// remove IPv6 [] (comes from parse_url)
+			$this->_referrer_DNS = trim($this->_referrer_DNS, '[]');
 
-	        return;
-	    }
-	    else
-	    {
-	        //no IP 
-    	    //Kill external local domain (Github #63)
-    	    if (strpos($this->_referrer_DNS, '.') === false)
-    	    {
-    	        //Debug log_message('detect: Domain (not dot in Host) True','debug.log');
-    	        $this->_wrong_detail = 'Referrer DNS was local (not domain): '.$this->_referrer_DNS;
-    	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was local (not domain)
+			return;
+		}
 
-    	        return;
-    	    }
-	    }
+		// no IP
+		// Kill external local domain (Github #63)
+		if (strpos($this->_referrer_DNS, '.') === false)
+		{
+			// Debug log_message('detect: Domain (not dot in Host) True','debug.log');
+			$this->_wrong_detail = 'Referrer DNS was local (not domain): ' . $this->_referrer_DNS;
+			$this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was local (not domain)
 
-	    //Special for Fake Google.com (GitHub #32, #53)
-	    if (rtrim($this->_http_referrer, "/") == 'http://'  . $this->_referrer_DNS ||
-	         rtrim($this->_http_referrer, "/") == 'https://' . $this->_referrer_DNS)
-	    {
-	        if (substr($this->_referrer_DNS, 0, 10) == 'www.google') 
-	        {
-    	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer is a fake. (shortened)
-    	        $this->_wrong_detail = 'Referrer is a fake. (shortened): '.$this->_http_referrer;
+			return;
+		}
 
-    	        return;
-	        }
-	    }
-	    //Special for DuckDuckGo (GitHub #33)
-	    if ($this->_http_referrer == 'http://duckduckgo.com/post.html') 
-	    {
-	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was duckduckgo.
-	        $this->_wrong_detail = 'Referrer is a fake. (duckduckgo): '.$this->_http_referrer;
+		// Special for Fake Google.com (GitHub #32, #53)
+		if (
+			rtrim($this->_http_referrer, "/") == 'http://' . $this->_referrer_DNS
+			 || rtrim($this->_http_referrer, "/") == 'https://' . $this->_referrer_DNS
+		) {
+			if (substr($this->_referrer_DNS, 0, 10) == 'www.google')
+			{
+				$this->_referrer_DNS = self::REFERRER_WRONG; // Referrer is a fake. (shortened)
+				$this->_wrong_detail = 'Referrer is a fake. (shortened): ' . $this->_http_referrer;
 
-	        return;
-	    }
-	    //Special for http:// (GitHub #37)
-	    if ($this->_http_referrer == 'http://' || $this->_http_referrer == 'http:/')
-	    {
-	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was shortened.
-	        $this->_wrong_detail = 'Referrer was shortened: '.$this->_http_referrer;
+				return;
+			}
+		}
+		// Special for DuckDuckGo (GitHub #33)
+		if ($this->_http_referrer == 'http://duckduckgo.com/post.html')
+		{
+			$this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was duckduckgo.
+			$this->_wrong_detail = 'Referrer is a fake. (duckduckgo): ' . $this->_http_referrer;
 
-	        return;
-	    }
+			return;
+		}
+		// Special for http:// (GitHub #37)
+		if ($this->_http_referrer == 'http://' || $this->_http_referrer == 'http:/')
+		{
+			$this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was shortened.
+			$this->_wrong_detail = 'Referrer was shortened: ' . $this->_http_referrer;
 
-	    //Kill fake domain (local.lan, planet.ufp, ....)
-	    if ($ModuleVisitorChecks->isDomain($this->_referrer_DNS) === false)
-	    {
-	        //Debug log_message('detect: Domain (not valid Domain) True','debug.log');
-	        $this->_wrong_detail = 'Referrer DNS was not a valid Domain: '.$this->_referrer_DNS;
-	        $this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was not a valid Domain
+			return;
+		}
 
-	        return;
-	    }
+		// Kill fake domain (local.lan, planet.ufp, ....)
+		if ($ModuleVisitorChecks->isDomain($this->_referrer_DNS) === false)
+		{
+			// Debug log_message('detect: Domain (not valid Domain) True','debug.log');
+			$this->_wrong_detail = 'Referrer DNS was not a valid Domain: ' . $this->_referrer_DNS;
+			$this->_referrer_DNS = self::REFERRER_WRONG; // Referrer was not a valid Domain
+
+			return;
+		}
 	}
 
 	/**
@@ -236,11 +238,11 @@ class ModuleVisitorReferrer	extends \Contao\System
 		}
 		$host  = preg_replace('/[^A-Za-z0-9\[\]\.:-]/', '', $host);
 
-		if (isset($_SERVER['HTTP_X_FORWARDED_HOST'])) 
+		if (isset($_SERVER['HTTP_X_FORWARDED_HOST']))
 		{
 			$xhost = preg_replace('/[^A-Za-z0-9\[\]\.:-]/', '', rtrim($_SERVER['HTTP_X_FORWARDED_HOST'], '/'));
-		} 
-		else 
+		}
+		else
 		{
 			$xhost = '';
 		}
@@ -249,40 +251,45 @@ class ModuleVisitorReferrer	extends \Contao\System
 	}
 
 	/**
-	 * Return the request URI 
+	 * Return the request URI
 	 * @return string
 	 */
 	protected function requestURI()
 	{
 		if (!empty($_SERVER['REQUEST_URI']))
 		{
-			return htmlspecialchars($_SERVER['REQUEST_URI']); 
+			return htmlspecialchars($_SERVER['REQUEST_URI']);
 		}
-		else
-		{
-			return '';
-		}
+
+		return '';
 	}
 
-	public function getReferrerDNS() { return $this->_referrer_DNS;  }
-
-	public function getReferrerFull() { return $this->_http_referrer; }
-
-	public function getHost() { return $this->_vhost; }
-
-	public function __toString() 
+	public function getReferrerDNS()
 	{
-	    $out = '';
-	    if ($this->_wrong_detail != '') 
-	    {
-	        $out = "Error Detail: {$this->_wrong_detail}\n";
-	    }
+		return $this->_referrer_DNS;
+	}
 
-	    return "\n".
-	           "Referrer DNS : {$this->getReferrerDNS()}\n{$out}" .
-			   "Referrer full: {$this->getReferrerFull()}\n".
+	public function getReferrerFull()
+	{
+		return $this->_http_referrer;
+	}
+
+	public function getHost()
+	{
+		return $this->_vhost;
+	}
+
+	public function __toString()
+	{
+		$out = '';
+		if ($this->_wrong_detail != '')
+		{
+			$out = "Error Detail: {$this->_wrong_detail}\n";
+		}
+
+		return "\n" .
+			   "Referrer DNS : {$this->getReferrerDNS()}\n{$out}" .
+			   "Referrer full: {$this->getReferrerFull()}\n" .
 			   "Server Host : {$this->getHost()}\n";
 	}
-
 }
-

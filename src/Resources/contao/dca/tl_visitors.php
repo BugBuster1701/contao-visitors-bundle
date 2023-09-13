@@ -1,39 +1,38 @@
 <?php
 
-/**
- * Extension for Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
- * 
- * Visitors - Backend DCA tl_visitors
+/*
+ * This file is part of a BugBuster Contao Bundle.
  *
- * This is the data container array for table tl_visitors.
- *
- * @copyright  Glen Langer 2009..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @licence    LGPL
- * @filesource
- * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
+ * @package    Contao Visitors Bundle
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
+ * @license    LGPL-3.0-or-later
  */
 
-/**
- * Table tl_visitors 
+use Contao\DataContainer;
+use Contao\DC_Table;
+
+/*
+ * Table tl_visitors
  */
 $GLOBALS['TL_DCA']['tl_visitors'] = array
 (
-
 	// Config
 	'config' => array
 	(
-		'dataContainer'               => Contao\DC_Table::class,
+		'dataContainer'               => DC_Table::class,
 		'ptable'                      => 'tl_visitors_category',
 		'enableVersioning'            => true,
-        'sql' => array
-        (
-            'keys' => array
-            (
-                'id'  => 'primary',
-                'pid' => 'index'
-            )
-        )
+		'sql' => array
+		(
+			'keys' => array
+			(
+				'id'  => 'primary',
+				'pid' => 'index'
+			)
+		)
 	),
 
 	// List
@@ -42,10 +41,10 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 		'sorting' => array
 		(
 			'mode'                    => 4,
-			//'filter'                  => true,
+			// 'filter'                  => true,
 			'fields'                  => array('sorting'),
 			'panelLayout'             => 'filter;search,limit',
-			'headerFields'            => array('title', 'tstamp'), //, 'visitors_template'
+			'headerFields'            => array('title', 'tstamp'), // , 'visitors_template'
 			'child_record_callback'   => array('BugBuster\Visitors\DcaVisitors', 'listVisitors')
 		),
 		'global_operations' => array
@@ -80,12 +79,12 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 				'attributes'          => 'onclick="if (!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\')) return false; Backend.getScrollOffset();"'
 			),
 			'toggle' => array
-            (
-                'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['toggle'],
-                'icon'                => 'visible.svg',
-                'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
-                'button_callback'     => array('BugBuster\Visitors\DcaVisitors', 'toggleIcon')
-            ),
+			(
+				'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['toggle'],
+				'icon'                => 'visible.svg',
+				'attributes'          => 'onclick="Backend.getScrollOffset(); return AjaxRequest.toggleVisibility(this, %s);"',
+				'button_callback'     => array('BugBuster\Visitors\DcaVisitors', 'toggleIcon')
+			),
 			'show' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors']['show'],
@@ -98,7 +97,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 	// Palettes
 	'palettes' => array
 	(
-		//'__selector__'                => array(''),
+		// '__selector__'                => array(''),
 		'default'                     => '{title_legend},visitors_name,visitors_startdate;{start_legend:hide},visitors_visit_start,visitors_hit_start;{average_legend},visitors_average,visitors_block_time;{design_legend},visitors_thousands_separator;{statistic_legend},visitors_statistic_days;{publish_legend},published;{visitors_expert_legend:hide},visitors_expert_debug_tag,visitors_expert_debug_checks,visitors_expert_debug_referrer,visitors_expert_debug_searchengine,visitors_expert_debug_screenresolutioncount'
 	),
 
@@ -111,23 +110,23 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 	// Fields
 	'fields' => array
 	(
-    	'id' => array
-    	(
-    	        'sql'       => "int(10) unsigned NOT NULL auto_increment"
-    	),
-    	'pid' => array
-    	(
-    	        'sql'       => "int(10) unsigned NOT NULL default '0'"
-    	),
-    	'sorting' => array
-    	(
-    	        'sql'       => "int(10) unsigned NOT NULL default '0'"
-    	),
-    	'tstamp' => array
-    	(
-    	        'sql'       => "int(10) unsigned NOT NULL default '0'"
-    	),
-	    'visitors_name' => array
+		'id' => array
+		(
+			'sql'       => "int(10) unsigned NOT NULL auto_increment"
+		),
+		'pid' => array
+		(
+			'sql'       => "int(10) unsigned NOT NULL default '0'"
+		),
+		'sorting' => array
+		(
+			'sql'       => "int(10) unsigned NOT NULL default '0'"
+		),
+		'tstamp' => array
+		(
+			'sql'       => "int(10) unsigned NOT NULL default '0'"
+		),
+		'visitors_name' => array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_name'],
 			'inputType'               => 'text',
@@ -183,20 +182,25 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 		),
 		'visitors_statistic_days'     => array
 		(
-		    'label'                   => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_statistic_days'],
-		    'inputType'               => 'text',
-		    'sql'                     => "int(10) unsigned NOT NULL default '14'",
-		    'eval'                    => array('mandatory'=>false, 'maxlength'=>10, 'rgxp'=>'digit', 'helpwizard'=>false, 'tl_class'=>'w50 w50h'),
-		    'save_callback' => array
-		    (
-                function ($varValue, Contao\DataContainer $dc) 
-                {
-                    if ($varValue < 14) { $varValue = 14; }
-                    if ($varValue > 99) { $varValue = 99; }
+			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_statistic_days'],
+			'inputType'               => 'text',
+			'sql'                     => "int(10) unsigned NOT NULL default '14'",
+			'eval'                    => array('mandatory'=>false, 'maxlength'=>10, 'rgxp'=>'digit', 'helpwizard'=>false, 'tl_class'=>'w50 w50h'),
+			'save_callback' => array
+			(
+				static function ($varValue, DataContainer $dc) {
+					if ($varValue < 14)
+					{
+						$varValue = 14;
+					}
+					if ($varValue > 99)
+					{
+						$varValue = 99;
+					}
 
-                    return $varValue;
-                }
-		    )
+					return $varValue;
+				}
+			)
 		),
 		'published' => array
 		(
@@ -210,39 +214,38 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 		),
 		'visitors_expert_debug_tag'=> array
 		(
-		        'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag'],
-		        'inputType'               => 'checkbox',
-		        'sql'                     => "char(1) NOT NULL default ''",
-		        'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
+			'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_tag'],
+			'inputType'               => 'checkbox',
+			'sql'                     => "char(1) NOT NULL default ''",
+			'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
 		),
 		'visitors_expert_debug_checks'=> array
 		(
-		        'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks'],
-		        'inputType'               => 'checkbox',
-		        'sql'                     => "char(1) NOT NULL default ''",
-		        'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
+			'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_checks'],
+			'inputType'               => 'checkbox',
+			'sql'                     => "char(1) NOT NULL default ''",
+			'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
 		),
 		'visitors_expert_debug_referrer'=> array
 		(
-		        'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer'],
-		        'inputType'               => 'checkbox',
-		        'sql'                     => "char(1) NOT NULL default ''",
-		        'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
+			'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_referrer'],
+			'inputType'               => 'checkbox',
+			'sql'                     => "char(1) NOT NULL default ''",
+			'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
 		),
 		'visitors_expert_debug_searchengine'=> array
 		(
-		        'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine'],
-		        'inputType'               => 'checkbox',
-		        'sql'                     => "char(1) NOT NULL default ''",
-		        'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
+			'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_searchengine'],
+			'inputType'               => 'checkbox',
+			'sql'                     => "char(1) NOT NULL default ''",
+			'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
 		),
 		'visitors_expert_debug_screenresolutioncount'=> array
 		(
-		        'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount'],
-		        'inputType'               => 'checkbox',
-		        'sql'                     => "char(1) NOT NULL default ''",
-		        'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
+			'label'					  => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_expert_debug_screenresolutioncount'],
+			'inputType'               => 'checkbox',
+			'sql'                     => "char(1) NOT NULL default ''",
+			'eval'                    => array('mandatory'=>false, 'helpwizard'=>false)
 		)
 	)
 );
-

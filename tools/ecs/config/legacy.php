@@ -52,6 +52,8 @@ return static function (ECSConfig $ecsConfig): void {
         '*/languages/*',
         '*/templates/*',
         '*/themes/*',
+        'src/Resources/contao/classes/Encoding.php',
+        'src/Resources/contao/classes/ModuleVisitorBrowser3.php',
         BinaryOperatorSpacesFixer::class,
         DeclareStrictTypesFixer::class,
         DisallowArrayTypeHintSyntaxSniff::class,

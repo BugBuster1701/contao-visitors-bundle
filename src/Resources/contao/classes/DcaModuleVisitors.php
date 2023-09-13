@@ -1,15 +1,14 @@
 <?php
 
-/**
- * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+/*
+ * This file is part of a BugBuster Contao Bundle.
  *
- * Contao Module "Visitors" - DCA Helper Class DcaModuleVisitors
- *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @license    LGPL
- * @filesource
- * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
+ * @package    Contao Visitors Bundle
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
+ * @license    LGPL-3.0-or-later
  */
 
 /**
@@ -18,16 +17,17 @@
 
 namespace BugBuster\Visitors;
 
+use Contao\Backend;
+
 /**
  * DCA Helper Class DcaModuleVisitors
  *
  * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
- * @author     Glen Langer (BugBuster)
  */
-class DcaModuleVisitors extends \Contao\Backend 
+class DcaModuleVisitors extends Backend
 {
 	public function getVisitorsTemplates($dc)
 	{
-	    return $this->getTemplateGroup('mod_visitors_fe_');
-	}  
+		return $this->getTemplateGroup('mod_visitors_fe_');
+	}
 }

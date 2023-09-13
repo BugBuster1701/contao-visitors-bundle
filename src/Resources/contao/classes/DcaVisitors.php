@@ -1,15 +1,14 @@
 <?php
 
-/**
- * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+/*
+ * This file is part of a BugBuster Contao Bundle.
  *
- * Contao Module "Visitors" - DCA Helper Class DcaVisitors
- *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @license    LGPL
- * @filesource
- * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
+ * @package    Contao Visitors Bundle
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
+ * @license    LGPL-3.0-or-later
  */
 
 /**
@@ -17,105 +16,115 @@
  */
 
 namespace BugBuster\Visitors;
+
+use Contao\Backend;
+use Contao\BackendUser;
+use Contao\Config;
 use Contao\CoreBundle\Monolog\ContaoContext;
+use Contao\Database;
 use Contao\Image;
+use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 use Psr\Log\LogLevel;
 
 /**
  * DCA Helper Class DcaVisitors
  *
  * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
- * @author     Glen Langer (BugBuster)
  */
-class DcaVisitors extends \Contao\Backend 
+class DcaVisitors extends Backend
 {
-    /**
-     * Import the back end user object
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	/**
+	 * Import the back end user object
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    public function listVisitors($arrRow)
-    {
-        $key = $arrRow['published'] ? 'published' : 'unpublished';
-        if (!\strlen($arrRow['visitors_startdate'])) {
-            $startdate = $GLOBALS['TL_LANG']['tl_visitors']['not_defined'];
-        } else {
-            $startdate = date (\Contao\Config::get('dateFormat'), $arrRow['visitors_startdate']);
-        }
-        $output = '<div class="cte_type ' . $key . '"><span class="tl_label">' . $arrRow['visitors_name'] . '</span></div>';
-        $output.= '<div>'.$GLOBALS['TL_LANG']['tl_visitors']['visitors_startdate'][0].': ' . $startdate . '</div>';
-        //Debug $output.= '<div>'.print_r($arrRow,true).'</div>';
-        return $output;
-    }
+	public function listVisitors($arrRow)
+	{
+		$key = $arrRow['published'] ? 'published' : 'unpublished';
+		if (!\strlen($arrRow['visitors_startdate']))
+		{
+			$startdate = $GLOBALS['TL_LANG']['tl_visitors']['not_defined'];
+		}
+		else
+		{
+			$startdate = date (Config::get('dateFormat'), $arrRow['visitors_startdate']);
+		}
+		$output = '<div class="cte_type ' . $key . '"><span class="tl_label">' . $arrRow['visitors_name'] . '</span></div>';
+		$output.= '<div>' . $GLOBALS['TL_LANG']['tl_visitors']['visitors_startdate'][0] . ': ' . $startdate . '</div>';
 
-    /**
-     * Return the "toggle visibility" button
-     * @param array
-     * @param string
-     * @param string
-     * @param string
-     * @param string
-     * @param string
-     * @return string
-     */
-    public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
-    {
-        if (\strlen(\Contao\Input::get('tid')))
-        {
-            $this->toggleVisibility(\Contao\Input::get('tid'), (\Contao\Input::get('state') == 1));
-            $this->redirect($this->getReferer());
-        }
+		// Debug $output.= '<div>'.print_r($arrRow,true).'</div>';
+		return $output;
+	}
 
-        // Check permissions AFTER checking the tid, so hacking attempts are logged
-        $user = \Contao\BackendUser::getInstance();
-        if (!$user->isAdmin && !$user->hasAccess('tl_visitors::published', 'alexf'))
-        {
-            return '';
-        }
+	/**
+	 * Return the "toggle visibility" button
+	 * @param  array  $row
+	 * @param  string $href
+	 * @param  string $label
+	 * @param  string $title
+	 * @param  string $icon
+	 * @param  string $attributes
+	 * @return string
+	 */
+	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
+	{
+		if (\strlen(Input::get('tid')))
+		{
+			$this->toggleVisibility(Input::get('tid'), Input::get('state') == 1);
+			$this->redirect($this->getReferer());
+		}
 
-        $href .= '&amp;tid='.$row['id'].'&amp;state='.($row['published'] ? '' : 1);
+		// Check permissions AFTER checking the tid, so hacking attempts are logged
+		$user = BackendUser::getInstance();
+		if (!$user->isAdmin && !$user->hasAccess('tl_visitors::published', 'alexf'))
+		{
+			return '';
+		}
 
-        if (!$row['published'])
-        {
-            $icon = 'invisible.svg';
-        }
+		$href .= '&amp;tid=' . $row['id'] . '&amp;state=' . ($row['published'] ? '' : 1);
 
-        return '<a href="'.$this->addToUrl($href).'" title="'.StringUtil::specialchars($title).'"'.$attributes.'>'.Image::getHtml($icon, $label, 'data-state="' . ($row['published'] ? 1 : 0) . '"').'</a> ';
-    }
+		if (!$row['published'])
+		{
+			$icon = 'invisible.svg';
+		}
 
-    /**
-     * Disable/enable a counter
-     * @param integer
-     * @param boolean
-     */
-    public function toggleVisibility($intId, $blnVisible)
-    {
-        // Check permissions to publish
-        $user = \Contao\BackendUser::getInstance();
-        if (!$user->isAdmin && !$user->hasAccess('tl_visitors::published', 'alexf'))
-        {
-            \Contao\System::getContainer()
-                ->get('monolog.logger.contao')
-                ->log(
-                    LogLevel::ERROR,
-                    'Not enough permissions to publish/unpublish Visitors ID "'.$intId.'"',
-                    array('contao' => new ContaoContext('tl_visitors toggleVisibility', ContaoContext::ERROR))
-                );
+		return '<a href="' . $this->addToUrl($href) . '" title="' . StringUtil::specialchars($title) . '"' . $attributes . '>' . Image::getHtml($icon, $label, 'data-state="' . ($row['published'] ? 1 : 0) . '"') . '</a> ';
+	}
 
-            $this->redirect('contao/main.php?act=error');
-        }
+	/**
+	 * Disable/enable a counter
+	 * @param integer $intId
+	 * @param boolean $blnVisible
+	 */
+	public function toggleVisibility($intId, $blnVisible)
+	{
+		// Check permissions to publish
+		$user = BackendUser::getInstance();
+		if (!$user->isAdmin && !$user->hasAccess('tl_visitors::published', 'alexf'))
+		{
+			System::getContainer()
+				->get('monolog.logger.contao')
+				->log(
+					LogLevel::ERROR,
+					'Not enough permissions to publish/unpublish Visitors ID "' . $intId . '"',
+					array('contao' => new ContaoContext('tl_visitors toggleVisibility', ContaoContext::ERROR))
+				);
 
-        // Update database
-        \Contao\Database::getInstance()->prepare("UPDATE 
-                                               tl_visitors 
-                                           SET 
-                                               published='" . ($blnVisible ? 1 : '') . "' 
-                                           WHERE 
+			$this->redirect('contao/main.php?act=error');
+		}
+
+		// Update database
+		Database::getInstance()->prepare("UPDATE
+                                               tl_visitors
+                                           SET
+                                               published='" . ($blnVisible ? 1 : '') . "'
+                                           WHERE
                                                id=?")
-                                ->execute($intId);
-    }
+								->execute($intId);
+	}
 }

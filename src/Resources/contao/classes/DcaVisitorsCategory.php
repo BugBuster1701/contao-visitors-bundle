@@ -1,15 +1,14 @@
 <?php
 
-/**
- * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+/*
+ * This file is part of a BugBuster Contao Bundle.
  *
- * Contao Module "Visitors" - DCA Helper Class DcaVisitorsCategory
- *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @license    LGPL
- * @filesource
- * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
+ * @package    Contao Visitors Bundle
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
+ * @license    LGPL-3.0-or-later
  */
 
 /**
@@ -18,25 +17,26 @@
 
 namespace BugBuster\Visitors;
 
+use Contao\Backend;
+
 /**
  * DCA Helper Class DcaVisitorsCategory
  *
  * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
- * @author     Glen Langer (BugBuster)
  */
-class DcaVisitorsCategory extends \Contao\Backend 
+class DcaVisitorsCategory extends Backend
 {
-    public function labelCallback($arrRow)
+	public function labelCallback($arrRow)
 	{
 		$label_1 = $arrRow['title'];
-		$label_2 = ' <span style="color: #B3B3B3;">[ID:'.$arrRow['id'].']</span>';
+		$label_2 = ' <span style="color: #B3B3B3;">[ID:' . $arrRow['id'] . ']</span>';
 		$version_warning = '';
 
-		return $label_1 . $label_2 . $version_warning;//. '<br /><span style="color:#b3b3b3;">['.$label_2.']</span>';
+		return $label_1 . $label_2 . $version_warning; // . '<br /><span style="color:#b3b3b3;">['.$label_2.']</span>';
 	}
 
 	public function getAdminCheckbox($varValue)
 	{
-        return '1';
+		return '1';
 	}
 }
