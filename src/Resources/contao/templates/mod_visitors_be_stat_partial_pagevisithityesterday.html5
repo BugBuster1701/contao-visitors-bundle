@@ -3,19 +3,19 @@
 <table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left:auto;">
 			<tbody>
 			<tr>
-				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday']; ?></th>
+				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_yesterday']; ?></th>
 			</tr>
 			<tr>
-				<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></th>
-				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
-				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
+				<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'].' ('.$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'].')'; ?></th>
+				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
 			</tr>
 <?php if (count($this->PageVisitHitYesterday)) : ?>
-	<?php foreach ($this->PageVisitHitYesterday AS $PageVisitHitYesterdayRow) : ?>
+	<?php foreach ($this->PageVisitHitYesterday as $PageVisitHitYesterdayRow) : ?>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;"  class="tl_file_list"><?php echo (isset($PageVisitHitYesterdayRow['alias']) ? $PageVisitHitYesterdayRow['alias'] .' ('.(isset($PageVisitHitYesterdayRow['lang']) ? $PageVisitHitYesterdayRow['lang'] .')' : '') : ''); ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($PageVisitHitYesterdayRow['hits'])  ? $PageVisitHitYesterdayRow['visits'] : ''); ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($PageVisitHitYesterdayRow['hits'])  ? $PageVisitHitYesterdayRow['hits']   : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;"  class="tl_file_list"><?= isset($PageVisitHitYesterdayRow['alias']) ? $PageVisitHitYesterdayRow['alias'].' ('.(isset($PageVisitHitYesterdayRow['lang']) ? $PageVisitHitYesterdayRow['lang'].')' : '') : ''; ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= isset($PageVisitHitYesterdayRow['hits']) ? $PageVisitHitYesterdayRow['visits'] : ''; ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $PageVisitHitYesterdayRow['hits'] ?? ''; ?></td>
 			</tr>
 	<?php endforeach; ?>
 <?php endif; ?>

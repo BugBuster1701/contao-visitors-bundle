@@ -10,7 +10,7 @@
 
   <link rel="stylesheet" href="<?= $this->asset('styles/fonts.css', 'system/themes/'.$this->theme) ?>">
   <link rel="stylesheet" href="<?= $this->asset('styles/basic.css', 'system/themes/'.$this->theme) ?>">
-  <link rel="stylesheet" href="<?= $this->asset('styles/main.css' , 'system/themes/'.$this->theme) ?>">
+  <link rel="stylesheet" href="<?= $this->asset('styles/main.css', 'system/themes/'.$this->theme) ?>">
   <link rel="stylesheet" href="bundles/bugbustervisitors/mod_visitors_be_<?= $this->visitorsbecss ?>.css">
   <?= $this->stylesheets ?>
   <script><?= $this->getLocaleString() ?></script>

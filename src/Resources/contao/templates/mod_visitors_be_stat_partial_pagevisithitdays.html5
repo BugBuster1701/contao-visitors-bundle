@@ -3,19 +3,19 @@
 <table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left:auto;">
 		<tbody>
 			<tr>
-				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_days']; ?></th>
+				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_stat_visithittop_days']; ?></th>
 			</tr>
 			<tr>
-				<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'] .' ('. $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'] .')'; ?></th>
-				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
-				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
+				<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_alias'].' ('.$GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['page_language'].')'; ?></th>
+				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
 			</tr>
 <?php if (count($this->PageVisitHitDays)) : ?>
-	<?php foreach ($this->PageVisitHitDays AS $PageVisitHitDaysRow) : ?>
+	<?php foreach ($this->PageVisitHitDays as $PageVisitHitDaysRow) : ?>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;"  class="tl_file_list"><?php echo (isset($PageVisitHitDaysRow['alias']) ? $PageVisitHitDaysRow['alias'] .' ('.(isset($PageVisitHitDaysRow['lang']) ? $PageVisitHitDaysRow['lang'] .')' : '') : ''); ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($PageVisitHitDaysRow['hits'])  ? $PageVisitHitDaysRow['visits'] : ''); ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($PageVisitHitDaysRow['hits'])  ? $PageVisitHitDaysRow['hits']   : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: left; word-break: break-all; word-wrap: break-word;"  class="tl_file_list"><?= isset($PageVisitHitDaysRow['alias']) ? $PageVisitHitDaysRow['alias'].' ('.(isset($PageVisitHitDaysRow['lang']) ? $PageVisitHitDaysRow['lang'].')' : '') : ''; ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= isset($PageVisitHitDaysRow['hits']) ? $PageVisitHitDaysRow['visits'] : ''; ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $PageVisitHitDaysRow['hits'] ?? ''; ?></td>
 			</tr>
 	<?php endforeach; ?>
 <?php endif; ?>

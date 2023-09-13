@@ -3,19 +3,19 @@
 <table summary="Table lists countings" class="mod_visitors_be_table" style="margin-left:auto;">
 			<tbody>
 			<tr>
-				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']; ?></th>
+				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_top_days']; ?></th>
 			</tr>
 			<tr>
-				<th style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']; ?></th>
-				<th style="padding-left: 2px; text-align: center;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']; ?></th>
-				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?php echo $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+				<th style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['screen_stat_device_resolution']; ?></th>
+				<th style="padding-left: 2px; text-align: center;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['screen_stat_css_viewport']; ?></th>
+				<th style="padding-left: 2px; text-align: right;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
 			</tr>
 <?php if (count($this->ScreenTopResolutionDays)) : ?>
-	<?php foreach ($this->ScreenTopResolutionDays AS $ScreenTopResolutionDaysRow) : ?>
+	<?php foreach ($this->ScreenTopResolutionDays as $ScreenTopResolutionDaysRow) : ?>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?php echo (isset($ScreenTopResolutionDaysRow['v_s_width'])    ? $ScreenTopResolutionDaysRow['v_s_width'] .'x'.$ScreenTopResolutionDaysRow['v_s_height']  : ''); ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($ScreenTopResolutionDaysRow['v_s_iwidth'])   ? $ScreenTopResolutionDaysRow['v_s_iwidth'].'x'.$ScreenTopResolutionDaysRow['v_s_iheight'] : ''); ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?php echo (isset($ScreenTopResolutionDaysRow['v_screen_sum']) ? $ScreenTopResolutionDaysRow['v_screen_sum'] : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= isset($ScreenTopResolutionDaysRow['v_s_width']) ? $ScreenTopResolutionDaysRow['v_s_width'].'x'.$ScreenTopResolutionDaysRow['v_s_height'] : ''; ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= isset($ScreenTopResolutionDaysRow['v_s_iwidth']) ? $ScreenTopResolutionDaysRow['v_s_iwidth'].'x'.$ScreenTopResolutionDaysRow['v_s_iheight'] : ''; ?></td>
+			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $ScreenTopResolutionDaysRow['v_screen_sum'] ?? ''; ?></td>
 			</tr>
 	<?php endforeach; ?>
 <?php endif; ?>

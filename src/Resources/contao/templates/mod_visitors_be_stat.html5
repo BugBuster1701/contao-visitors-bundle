@@ -300,9 +300,9 @@
 <?php foreach ($this->visitorsstatDays[$vcid] AS $visitorsstatDay) : ?>
 <?php $days++; if ($days>13 && !isset($visitorsstatDay['visitors_date'])) { break; } ?>
 			<tr>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= (isset($visitorsstatDay['visitors_date'])  ? $visitorsstatDay['visitors_date']  : '&nbsp;'); ?></td>
+			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= (isset($visitorsstatDay['visitors_date']) ? $visitorsstatDay['visitors_date'] : '&nbsp;'); ?></td>
 			    <td style="padding-left: 2px; text-align: right;"  class="tl_file_list"><?= (isset($visitorsstatDay['visitors_visit']) ? $visitorsstatDay['visitors_visit'] : ''); ?></td>
-			    <td style="padding-left: 2px; text-align: right;"  class="tl_file_list"><?= (isset($visitorsstatDay['visitors_hit'])   ? $visitorsstatDay['visitors_hit']   : ''); ?></td>
+			    <td style="padding-left: 2px; text-align: right;"  class="tl_file_list"><?= (isset($visitorsstatDay['visitors_hit']) ? $visitorsstatDay['visitors_hit'] : ''); ?></td>
 			</tr>
 <?php endforeach; ?>
 			</tbody>
@@ -387,9 +387,9 @@
   <?php if ( $browser[0][0] != 'Unknown' && $browser[1][0] != 'Unknown' && $browser[2][0] != 'Unknown' ) : ?>
   <?php $vsbu++; ?>
 			<tr>
-				<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= ($browser[0][0]) ? $browser[0][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[0][1].')' : '</td><td class="tl_file_list">'; ?></td>
-				<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= ($browser[1][0]) ? $browser[1][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[1][1].')' : '</td><td class="tl_file_list">'; ?></td>
-				<td style="padding-left: 10px; text-align: left;"  class="tl_file_list"><?= ($browser[2][0]) ? $browser[2][0].'</td><td style="padding-right: 2px; text-align: right;" class="tl_file_list">('.$browser[2][1].')' : '</td><td class="tl_file_list">'; ?></td>
+				<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= $browser[0][0] ? $browser[0][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[0][1].')' : '</td><td class="tl_file_list">'; ?></td>
+				<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $browser[1][0] ? $browser[1][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[1][1].')' : '</td><td class="tl_file_list">'; ?></td>
+				<td style="padding-left: 10px; text-align: left;"  class="tl_file_list"><?= $browser[2][0] ? $browser[2][0].'</td><td style="padding-right: 2px; text-align: right;" class="tl_file_list">('.$browser[2][1].')' : '</td><td class="tl_file_list">'; ?></td>
 			</tr>
   <?php endif; ?>
 <?php endif; ?>
@@ -417,8 +417,8 @@
 <?php foreach ($this->visitorsstatBrowser2[$vcid] AS $browser) : ?>
 <?php if ( $browser[0] || $vsbu>0 ) : ?>
 				<tr>
-					<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= ($browser[0]) ? $browser[0].'</td>' : '&nbsp;</td>'; ?>
-					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= ($browser[1]) ? $browser[1].'</td>' : '&nbsp;</td>'; ?>
+					<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= $browser[0] ? $browser[0].'</td>' : '&nbsp;</td>'; ?>
+					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $browser[1] ? $browser[1].'</td>' : '&nbsp;</td>'; ?>
 				</tr>
 <?php $vsbu++; ?>
 <?php endif; ?>
