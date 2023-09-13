@@ -23,7 +23,7 @@ use Contao\System;
 /**
  * Class ModuleVisitorReferrer
  *
- * @copyright  Glen Langer 2012..2020 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @license    LGPL
  */
 class ModuleVisitorReferrer extends System

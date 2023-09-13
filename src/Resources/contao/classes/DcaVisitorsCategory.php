@@ -22,7 +22,7 @@ use Contao\Backend;
 /**
  * DCA Helper Class DcaVisitorsCategory
  *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  */
 class DcaVisitorsCategory extends Backend
 {

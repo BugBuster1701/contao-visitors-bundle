@@ -24,7 +24,7 @@ use Contao\Database;
 /**
  * Class ModuleVisitorStatScreenCounter
  *
- * @copyright  Glen Langer 2017..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  */
 class ModuleVisitorStatScreenCounter extends BackendModule
 {

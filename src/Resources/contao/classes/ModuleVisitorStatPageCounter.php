@@ -28,7 +28,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class ModuleVisitorStatPageCounter
  *
- * @copyright  Glen Langer 2014..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  */
 class ModuleVisitorStatPageCounter extends BackendModule
 {

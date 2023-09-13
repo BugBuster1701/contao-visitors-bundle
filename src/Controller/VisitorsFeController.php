@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Handles the Visitors front end routes.
  *
- * @copyright  Glen Langer 2017 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  *
  * @Route("/visitors", defaults={"_scope" = "frontend", "_token_check" = false})
  */

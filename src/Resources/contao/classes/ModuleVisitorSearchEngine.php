@@ -22,7 +22,7 @@ namespace BugBuster\Visitors;
  *
  * Check for searchengines in referrer
  *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @license    LGPL
  */
 class ModuleVisitorSearchEngine // extends Frontend

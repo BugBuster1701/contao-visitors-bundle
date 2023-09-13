@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class ModuleVisitors
  *
- * @copyright  Glen Langer 2009..2022
+ * @copyright  Glen Langer 2023
  * @license    LGPL
  */
 class ModuleVisitors extends Module

@@ -31,7 +31,7 @@ use Contao\System;
 /**
  * Class ModuleVisitorStat
  *
- * @copyright  Glen Langer 2009..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @todo       Must be completely rewritten.
  */
 class ModuleVisitorStat extends BackendModule

@@ -30,7 +30,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 /**
  * Class VisitorsStatExport
  *
- * @copyright	Glen Langer 2015..2022 <http://contao.ninja>
+ * @copyright	Glen Langer 2023 <http://contao.ninja>
  */
 class VisitorsStatExport extends System
 {

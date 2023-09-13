@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Class ModuleVisitorsTag
  *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @license    LGPL
  */
 class ModuleVisitorsTag extends Frontend

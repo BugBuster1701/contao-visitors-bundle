@@ -19,7 +19,7 @@ use Contao\System;
 /**
  * Class ModuleVisitorLog
  *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @license    LGPL
  */
 class ModuleVisitorLog

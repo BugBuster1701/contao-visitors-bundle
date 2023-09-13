@@ -31,7 +31,7 @@ use Psr\Log\LogLevel;
 /**
  * DCA Helper Class DcaVisitors
  *
- * @copyright  Glen Langer 2012..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  */
 class DcaVisitors extends Backend
 {
