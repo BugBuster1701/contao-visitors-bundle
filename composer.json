@@ -76,5 +76,20 @@
 			"contao/manager-plugin": true,
 			"php-http/discovery": true
 		}
-	}
+	},
+    "scripts": {
+        "all": [
+            "@cs-fixer",
+            "@unit-tests"
+        ],
+        "cs-fixer": [
+            "@ecs",
+            "@ecs-legacy",
+            "@ecs-template"
+        ],
+        "ecs": "@php tools/ecs/vendor/bin/ecs check src/ tests/ --config tools/ecs/config/default.php --fix --ansi",
+        "ecs-legacy": "@php tools/ecs/vendor/bin/ecs check src/Resources/contao/ --config tools/ecs/config/legacy.php --fix --ansi",
+        "ecs-template": "@php tools/ecs/vendor/bin/ecs check src/Resources/contao/templates --config tools/ecs/config/template.php --fix --ansi",
+        "unit-tests": "@php vendor/bin/phpunit --testdox --colors=always"
+    }
 }
