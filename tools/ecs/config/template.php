@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @license LGPL-3.0-or-later
  */
 
+use Contao\EasyCodingStandard\Fixer\MultiLineIfIndentationFixer;
 use PhpCsFixer\Fixer\ClassNotation\VisibilityRequiredFixer;
 use PhpCsFixer\Fixer\ControlStructure\NoAlternativeSyntaxFixer;
 use PhpCsFixer\Fixer\FunctionNotation\VoidReturnFixer;
@@ -30,6 +31,7 @@ return static function (ECSConfig $ecsConfig): void {
         BlankLineAfterOpeningTagFixer::class,
         DeclareStrictTypesFixer::class,
         LinebreakAfterOpeningTagFixer::class,
+        MultiLineIfIndentationFixer::class,
         NoAlternativeSyntaxFixer::class,
         ReferenceUsedNamesOnlySniff::class,
         SemicolonAfterInstructionFixer::class,
