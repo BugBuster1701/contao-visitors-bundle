@@ -106,9 +106,9 @@ class ModuleVisitorStatScreenCounter extends BackendModule
 		$arrScreenStatCount = array();
 		$lastdays = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
-		$this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
+		$this->TemplatePartial = new BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
 
-		$objScreenStatCount = \Contao\Database::getInstance()
+		$objScreenStatCount = Database::getInstance()
 						->prepare("SELECT
                                         `v_s_w`,
                                         `v_s_h`,

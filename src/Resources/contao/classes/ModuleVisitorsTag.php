@@ -868,7 +868,7 @@ class ModuleVisitorsTag extends Frontend
 		if ($objVisitIP->numRows < 1)
 		{ // Browser Check wenn nicht geblockt
 			// Only counting if User Agent is set.
-			if ((Environment::get('httpUserAgent'))!=='')
+			if (Environment::get('httpUserAgent') !=='')
 			{
 				// Variante 3
 				$ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();

@@ -1005,7 +1005,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $stmt->bindValue('blocktime', $BlockTime, \PDO::PARAM_INT);
         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
-        $resultSet = $stmt->executeQuery();
+        $stmt->executeQuery();
 
         // Hit Blocker for IE8 Bullshit and Browser Counting
         // 3 Sekunden Blockierung zw. Zählung per Tag und Zählung per Browser
@@ -1018,7 +1018,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $stmt->bindValue('blocktime', 3, \PDO::PARAM_INT);
         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
-        $resultSet = $stmt->executeQuery();
+        $stmt->executeQuery();
 
         if (true === $ModuleVisitorChecks->checkBE()) {
             $this->_PF = true; // Bad but functionally
@@ -1074,7 +1074,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
 
                 // Insert
                 $stmt = $dbconnection->prepare(
@@ -1090,7 +1090,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $stmt->bindValue('vdate', $CURDATE, \PDO::PARAM_STR);
                 $stmt->bindValue('vv', 1, \PDO::PARAM_INT);
                 $stmt->bindValue('vh', 1, \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
                 /*
                 $arrSet = array
                 (
@@ -1130,7 +1130,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
 
                 // Insert Counter
                 $stmt = $dbconnection->prepare(
@@ -1143,7 +1143,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 ');
                 $stmt->bindValue('vhit', $visitors_hits, \PDO::PARAM_INT);
                 $stmt->bindValue('vid', $objHitCounterResult['id'], \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
 
                 // for page counter
                 $this->_HitCounted = true;
@@ -1183,7 +1183,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
             $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
             $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
-            $resultSet = $stmt->executeQuery();
+            $stmt->executeQuery();
 
             $stmt = $dbconnection->prepare(
                 'UPDATE
@@ -1198,7 +1198,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('vvis', $visitors_visit, \PDO::PARAM_INT);
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
             $stmt->bindValue('vdate', $CURDATE, \PDO::PARAM_STR);
-            $resultSet = $stmt->executeQuery();
+            $stmt->executeQuery();
 
             // for page counter
             $this->_VisitCounted = true;
@@ -1219,7 +1219,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
             $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
             $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
-            $resultSet = $stmt->executeQuery();
+            $stmt->executeQuery();
 
             $this->_VB = true;
         }
@@ -1300,7 +1300,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     $stmt->bindValue('vpagevis', 1, \PDO::PARAM_INT);
                     $stmt->bindValue('vpagehit', 1, \PDO::PARAM_INT);
                     $stmt->bindValue('vpagelang', $objPage->language, \PDO::PARAM_STR);
-                    $resultSet = $stmt->executeQuery();
+                    $stmt->executeQuery();
                     /*
         	        $arrSet = array
         	        (
@@ -1344,7 +1344,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $stmt->bindValue('vpagehit', $visitors_page_hits, \PDO::PARAM_INT);
                 $stmt->bindValue('vpagevis', $visitors_page_visits, \PDO::PARAM_INT);
                 $stmt->bindValue('vid', $objPageHitVisitResult['id'], \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
             }
         }
         // Page Counter End
@@ -1432,7 +1432,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                         ');
                         $stmt->bindValue('vcounter', $visitors_counter, \PDO::PARAM_INT);
                         $stmt->bindValue('vid', $objBrowserCounterResult['id'], \PDO::PARAM_INT);
-                        $resultSet = $stmt->executeQuery();
+                        $stmt->executeQuery();
                     }
                 } // else von NULL
             } // if strlen
@@ -1478,7 +1478,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('tstamp', $CleanTime, \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
             } // keywords
         } // searchengine
         // Debug log_message('visitorCheckSearchEngine $SearchEngine: ' . $SearchEngine,'debug.log');
@@ -1533,7 +1533,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                     $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                     $stmt->bindValue('tstamp', $CleanTime, \PDO::PARAM_INT);
-                    $resultSet = $stmt->executeQuery();
+                    $stmt->executeQuery();
                 }
             } // if PF
         } // if VB
