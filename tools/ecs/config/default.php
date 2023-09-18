@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 // use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
+use PhpCsFixer\Fixer\ControlStructure\TrailingCommaInMultilineFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return static function (ECSConfig $ecsConfig): void {
@@ -27,6 +28,9 @@ return static function (ECSConfig $ecsConfig): void {
         // MethodChainingIndentationFixer::class => [
         //     '*/DependencyInjection/Configuration.php',
         // ],
+        TrailingCommaInMultilineFixer::class => [
+            'src/Controller/FrontendModule/VisitorsFrontendController.php',
+        ]
     ]);
 
     $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, [
