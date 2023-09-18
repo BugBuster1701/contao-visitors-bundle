@@ -19,7 +19,7 @@ error_reporting(E_ALL);
 
 require 'vendor/autoload.php';
 
-$include = fn ($file) => file_exists($file) ? include $file : false;
+// $include = fn ($file) => file_exists($file) ? include $file : false;
 
 // Autoload the contao classes
 $fixtureLoader = static function ($class): void {
