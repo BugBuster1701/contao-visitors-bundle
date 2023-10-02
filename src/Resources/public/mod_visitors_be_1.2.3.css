@@ -74,27 +74,30 @@
 }
 
 .mod_visitors_be_news_visit_hit_top {
-  width:100%;
+  width:calc(100% - 60px);
 }
 
 .mod_visitors_be_news_visit_hit_days {
   margin-top: 20px;
+  width:calc(100% - 60px);
 }
 
 .mod_visitors_be_faq_visit_hit_top {
-  width:100%;
+  width:calc(100% - 60px);
 }
 
 .mod_visitors_be_faq_visit_hit_days {
   margin-top: 20px;
+  width:calc(100% - 60px);
 }
 
 .mod_visitors_be_events_visit_hit_top {
-  width:100%;
+  width:calc(100% - 60px);
 }
 
 .mod_visitors_be_events_visit_hit_days {
   margin-top: 20px;
+  width:calc(100% - 60px);
 }
 
 .mod_visitors_be_referrer {

@@ -1,12 +1,12 @@
-<?php $this->extend("block_unsearchable"); ?>
+<?php $this->extend('block_unsearchable'); ?>
 
-<?php $this->block("content"); ?>
+<?php $this->block('content'); ?>
     <!-- Template for "only counting", no display in Frontend. -->
     <?php foreach ($this->visitors as $visitor): ?>
     <span class="visitor_count invisible"><?= $visitor['VisitorsCounting']; ?></span>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth); 
+        var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth);
         var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
         var sWidth  = screen.width;
         var sHeight = screen.height;
@@ -17,7 +17,7 @@
         } catch (r) {
             return;
         }
-        
+
     });
     </script>
     <?php endforeach; ?>

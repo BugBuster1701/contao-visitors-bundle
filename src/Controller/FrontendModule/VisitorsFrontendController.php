@@ -3,13 +3,16 @@
 declare(strict_types=1);
 
 /*
- * This file is part of a BugBuster Contao Bundle
+ * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
  * @license    LGPL-3.0-or-later
- * @see        https://github.com/BugBuster1701/contao-visitors-bundle
+ * For the full copyright and license information,
+ * please view the LICENSE file that was distributed with this source code.
  */
 
 namespace BugBuster\VisitorsBundle\Controller\FrontendModule;
@@ -24,8 +27,13 @@ use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\CoreBundle\Routing\ScopeMatcher;
 use Contao\Date;
+use Contao\Environment;
+use Contao\FrontendTemplate;
 use Contao\FrontendUser;
+use Contao\Input;
+// use Contao\CoreBundle\Twig\FragmentTemplate;
 use Contao\ModuleModel;
+use Contao\PageModel;
 use Contao\System;
 use Contao\Template;
 use Doctrine\DBAL\Connection;
@@ -37,24 +45,31 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VisitorsFrontendController extends AbstractFrontendModuleController
 {
-    public const PAGE_TYPE_NORMAL    = 0;      //0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
-    public const PAGE_TYPE_NEWS      = 1;      //1   = Nachrichten/News
-    public const PAGE_TYPE_FAQ       = 2;      //2   = FAQ
-    public const PAGE_TYPE_ISOTOPE   = 3;      //3   = Isotope
-    public const PAGE_TYPE_EVENTS    = 4;      //4   = Events
-    public const PAGE_TYPE_FORBIDDEN = 403;  //403 = Forbidden Page
+    public const PAGE_TYPE_NORMAL = 0; // 0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
+
+    public const PAGE_TYPE_NEWS = 1; // 1   = Nachrichten/News
+
+    public const PAGE_TYPE_FAQ = 2; // 2   = FAQ
+
+    public const PAGE_TYPE_ISOTOPE = 3; // 3   = Isotope
+
+    public const PAGE_TYPE_EVENTS = 4; // 4   = Events
+
+    public const PAGE_TYPE_FORBIDDEN = 403; // 403 = Forbidden Page
 
     protected $strTemplate = 'mod_visitors_fe_all';
+
     protected $useragent_filter = '';
+
     protected $visitors_category = false;
 
-    private $_BOT = false;	// Bot
+    private $_BOT = false; // Bot
 
-    private $_SE = false;	// Search Engine
+    private $_SE = false; // Search Engine
 
-    private $_PF = false;	// Prefetch found
+    private $_PF = false; // Prefetch found
 
-    private $_VB = false;	// Visit Blocker
+    private $_VB = false; // Visit Blocker
 
     private $_VisitCounted = false;
 
@@ -78,18 +93,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         return $services;
     }
 
-    protected function getResponse(Template $template, ModuleModel $model, Request $request): ?Response
+    protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
-        //$this->initializeContaoFramework();
-        /* @var PageModel $objPage */
+        // $this->initializeContaoFramework();
+        /** @var PageModel $objPage */
         $objPage = $this->getPageModel();
         $objPage->current()->loadDetails(); // for language via cache call
 
         if (!is_numeric($this->visitors_category)) {
             $this->strTemplate = 'mod_visitors_error';
-            $template = new \Contao\FrontendTemplate($this->strTemplate);
+            $template = new FrontendTemplate($this->strTemplate);
 
             return $template->getResponse();
         }
@@ -109,7 +124,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         if ('' !== $model->visitors_template) {
             $this->strTemplate = $model->visitors_template;
-            $template = new \Contao\FrontendTemplate($this->strTemplate);
+            $template = new FrontendTemplate($this->strTemplate);
             $template->setData($model->row());
             $this->addHeadlineToTemplate($template, $model->headline);
             $this->addCssAttributesToTemplate($template, $this->strTemplate, $model->cssID, ['mod_visitors']);
@@ -137,12 +152,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         / /_/ / /_/ / / / / ____/ /_/ / / /
         \____/\____/ /_/ /_/    \____/ /_/
         */
-        
+
         System::loadLanguageFile('default');
 
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             tl_visitors.id AS id,
                             visitors_name,
                             visitors_startdate,
@@ -159,21 +174,22 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ORDER BY id, visitors_name
                         LIMIT :limit')
         ;
+
         $stmt->bindValue('pid', $this->visitors_category, \PDO::PARAM_INT);
         $stmt->bindValue('published', 1, \PDO::PARAM_INT);
         $stmt->bindValue('limit', 1, \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() < 1) {
-            \Contao\System::getContainer()
-                 ->get('monolog.logger.contao')
-                 ->log(LogLevel::ERROR,
-                       'VisitorsFrontendController User Error: no published counter found.',
-                       ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', TL_ERROR)])
-        ;
+            System::getContainer()
+                ->get('monolog.logger.contao')
+                ->log(LogLevel::ERROR,
+                    'VisitorsFrontendController User Error: no published counter found.',
+                    ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', ContaoContext::ERROR)])
+            ;
 
             $this->strTemplate = 'mod_visitors_error';
-            $template = new \Contao\FrontendTemplate($this->strTemplate);
+            $template = new FrontendTemplate($this->strTemplate);
 
             return $template->getResponse();
         }
@@ -182,7 +198,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $VisitorsStartDate = false;
             $VisitorsAverageVisits = false;
             $VisitorsAverageVisitsValue = 0;
-            $boolSeparator = (1 === (int) $objVisitors['visitors_thousands_separator']) ? true : false;
+            $boolSeparator = 1 === (int) $objVisitors['visitors_thousands_separator'] ? true : false;
 
             if (\strlen($objVisitors['visitors_startdate'])) {
                 $VisitorsStartDate = Date::parse($objPage->dateFormat, $objVisitors['visitors_startdate']);
@@ -203,10 +219,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                 'VisitorsKatID' => $this->visitors_category,
                 'VisitorsCounting' => $counting,
-                'VisitorsStartDate' => $VisitorsStartDate, //false|value - ugly - i know
+                'VisitorsStartDate' => $VisitorsStartDate, // false|value - ugly - i know
 
                 'AverageVisitsLegend' => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend'],
-                'AverageVisits' => $VisitorsAverageVisits,  //bool
+                'AverageVisits' => $VisitorsAverageVisits, // bool
                 'AverageVisitsValue' => $VisitorsAverageVisitsValue,
 
                 'VisitorsOnlineCountLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsOnlineCountLegend'],
@@ -250,8 +266,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date('m'), (int) date('d') - 1, (int) date('Y')));
 
         $stmt = $this->container->get('database_connection')
-                ->prepare(
-                    'SELECT
+            ->prepare(
+                'SELECT
                         SUM(visitors_visit) AS SUMV,
                         MIN( visitors_date) AS MINDAY
                     FROM
@@ -261,6 +277,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                     ')
         ;
+
         $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
         $stmt->bindValue('vdate', $today, \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
@@ -269,22 +286,22 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $objVisitorsAverageCount = $resultSet->fetchAssociative();
             if (null !== $objVisitorsAverageCount['SUMV']) {
                 $tmpTotalDays = floor((strtotime($yesterday) - strtotime($objVisitorsAverageCount['MINDAY'])) / 60 / 60 / 24);
-                $VisitorsAverageVisitCount = (null === $objVisitorsAverageCount['SUMV']) ? 0 : (int) $objVisitorsAverageCount['SUMV'];
+                $VisitorsAverageVisitCount = null === $objVisitorsAverageCount['SUMV'] ? 0 : (int) $objVisitorsAverageCount['SUMV'];
                 if ($tmpTotalDays > 0) {
                     $VisitorsAverageVisits = round($VisitorsAverageVisitCount / $tmpTotalDays, 0);
                 }
             }
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsAverageVisits, 0) : $VisitorsAverageVisits;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsAverageVisits, 0) : $VisitorsAverageVisits;
     }
 
     protected function getVisitorsOnlineCount($VisitorsId, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$VisitorsId);
         $stmt = $this->container->get('database_connection')
-                ->prepare(
-                    'SELECT
+            ->prepare(
+                'SELECT
                         COUNT(id) AS VOC
                     FROM
                         tl_visitors_blocker
@@ -292,14 +309,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         vid = :vid AND visitors_type = :vtype
                     ')
         ;
+
         $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
         $objVisitorsOnlineCount = $resultSet->fetchAssociative();
-        $VisitorsOnlineCount = (null === $objVisitorsOnlineCount['VOC']) ? 0 : $objVisitorsOnlineCount['VOC'];
+        $VisitorsOnlineCount = null === $objVisitorsOnlineCount['VOC'] ? 0 : $objVisitorsOnlineCount['VOC'];
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsOnlineCount, 0) : $VisitorsOnlineCount;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsOnlineCount, 0) : $VisitorsOnlineCount;
     }
 
     protected function getVisitorsStartDate($VisitorsStartdate, $objPage)
@@ -318,65 +336,68 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             SUM(visitors_visit) AS SUMV
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
-        $VisitorsTotalVisitCount = $objVisitors['visitors_visit_start']; //Startwert
+        $VisitorsTotalVisitCount = $objVisitors['visitors_visit_start']; // Startwert
         if ($resultSet->rowCount() > 0) {
             $objVisitorsTotalCount = $resultSet->fetchAssociative();
-            $VisitorsTotalVisitCount += (null === $objVisitorsTotalCount['SUMV']) ? 0 : $objVisitorsTotalCount['SUMV'];
+            $VisitorsTotalVisitCount += null === $objVisitorsTotalCount['SUMV'] ? 0 : $objVisitorsTotalCount['SUMV'];
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTotalVisitCount, 0) : $VisitorsTotalVisitCount;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsTotalVisitCount, 0) : $VisitorsTotalVisitCount;
     }
 
     protected function getTotalHitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             SUM(visitors_hit) AS SUMH
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
-        $VisitorsTotalHitCount = $objVisitors['visitors_hit_start'];   //Startwert
+        $VisitorsTotalHitCount = $objVisitors['visitors_hit_start']; // Startwert
         if ($resultSet->rowCount() > 0) {
             $objVisitorsTotalCount = $resultSet->fetchAssociative();
-            $VisitorsTotalHitCount += (null === $objVisitorsTotalCount['SUMH']) ? 0 : $objVisitorsTotalCount['SUMH'];
+            $VisitorsTotalHitCount += null === $objVisitorsTotalCount['SUMH'] ? 0 : $objVisitorsTotalCount['SUMH'];
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTotalHitCount, 0) : $VisitorsTotalHitCount;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsTotalHitCount, 0) : $VisitorsTotalHitCount;
     }
 
     protected function getTodaysVisitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             visitors_visit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
@@ -384,25 +405,26 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $VisitorsTodaysVisitCount = 0;
         if ($resultSet->rowCount() > 0) {
             $objVisitorsTodaysCount = $resultSet->fetchAssociative();
-            $VisitorsTodaysVisitCount = (null === $objVisitorsTodaysCount['visitors_visit']) ? 0 : $objVisitorsTodaysCount['visitors_visit'];
+            $VisitorsTodaysVisitCount = null === $objVisitorsTodaysCount['visitors_visit'] ? 0 : $objVisitorsTodaysCount['visitors_visit'];
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTodaysVisitCount, 0) : $VisitorsTodaysVisitCount;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsTodaysVisitCount, 0) : $VisitorsTodaysVisitCount;
     }
 
     protected function getTodaysHitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             visitors_hit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
@@ -410,25 +432,26 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $VisitorsTodaysHitCount = 0;
         if ($resultSet->rowCount() > 0) {
             $objVisitorsTodaysCount = $resultSet->fetchAssociative();
-            $VisitorsTodaysHitCount = (null === $objVisitorsTodaysCount['visitors_hit']) ? 0 : $objVisitorsTodaysCount['visitors_hit'];
+            $VisitorsTodaysHitCount = null === $objVisitorsTodaysCount['visitors_hit'] ? 0 : $objVisitorsTodaysCount['visitors_hit'];
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsTodaysHitCount, 0) : $VisitorsTodaysHitCount;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsTodaysHitCount, 0) : $VisitorsTodaysHitCount;
     }
 
     protected function getYesterdayVisitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             visitors_visit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
@@ -436,25 +459,26 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $VisitorsYesterdayVisitCount = 0;
         if ($resultSet->rowCount() > 0) {
             $objVisitorsYesterdayCount = $resultSet->fetchAssociative();
-            $VisitorsYesterdayVisitCount = (null === $objVisitorsYesterdayCount['visitors_visit']) ? 0 : $objVisitorsYesterdayCount['visitors_visit'];
+            $VisitorsYesterdayVisitCount = null === $objVisitorsYesterdayCount['visitors_visit'] ? 0 : $objVisitorsYesterdayCount['visitors_visit'];
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsYesterdayVisitCount, 0) : $VisitorsYesterdayVisitCount;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsYesterdayVisitCount, 0) : $VisitorsYesterdayVisitCount;
     }
 
     protected function getYesterdayHitCount($objVisitors, $boolSeparator)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             visitors_hit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
@@ -462,10 +486,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $VisitorsYesterdayHitCount = 0;
         if ($resultSet->rowCount() > 0) {
             $objVisitorsYesterdayCount = $resultSet->fetchAssociative();
-            $VisitorsYesterdayHitCount = (null === $objVisitorsYesterdayCount['visitors_hit']) ? 0 : $objVisitorsYesterdayCount['visitors_hit'];
+            $VisitorsYesterdayHitCount = null === $objVisitorsYesterdayCount['visitors_hit'] ? 0 : $objVisitorsYesterdayCount['visitors_hit'];
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsYesterdayHitCount, 0) : $VisitorsYesterdayHitCount;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsYesterdayHitCount, 0) : $VisitorsYesterdayHitCount;
     }
 
     protected function getPageHits($objVisitors, $boolSeparator, $objPage)
@@ -473,19 +497,19 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id'].':'.$objPage->id);
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID '.$objPage->id);
 
-        //#80, bei Readerseite den Beitrags-Alias beachten
-        //0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
-        //1 = Nachrichten/News
-        //2 = FAQ
-        //3 = Isotope
-        //403 = Forbidden
+        // #80, bei Readerseite den Beitrags-Alias beachten
+        // 0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
+        // 1 = Nachrichten/News
+        // 2 = FAQ
+        // 3 = Isotope
+        // 403 = Forbidden
         $visitors_page_type = $this->visitorGetPageType($objPage);
-        //bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
+        // bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
         $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             SUM(visitors_page_hit)   AS visitors_page_hits
                         FROM
                         tl_visitors_pages
@@ -496,7 +520,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         AND
                             visitors_page_type = :vpagetype
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
         $stmt->bindValue('vpagetype', $visitors_page_type, \PDO::PARAM_INT);
@@ -505,25 +530,23 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $VisitorsPageHits = 0;
         if ($resultSet->rowCount() > 0) {
             $objPageStatCount = $resultSet->fetchAssociative();
-            $VisitorsPageHits = (null === $objPageStatCount['visitors_page_hits']) ? 0 : $objPageStatCount['visitors_page_hits'];
+            $VisitorsPageHits = null === $objPageStatCount['visitors_page_hits'] ? 0 : $objPageStatCount['visitors_page_hits'];
         }
 
-        return ($boolSeparator) ? System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
+        return $boolSeparator ? System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
     }
 
     /**
      * Undocumented function.
      *
      * @param [type] $objPage
-     *
-     * @return void
      */
     protected function setCounters($objPage)
     {
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objPage->id);
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             tl_visitors.id AS id,
                             visitors_block_time
                         FROM
@@ -535,21 +558,23 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ORDER BY id, visitors_name
                         LIMIT 1
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('pid', $this->visitors_category, \PDO::PARAM_INT);
         $stmt->bindValue('published', 1, \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() < 1) {
             System::getContainer()
-                    ->get('monolog.logger.contao')
-                    ->log(LogLevel::ERROR,
-                        $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-                        ['contao' => new ContaoContext('VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, TL_ERROR)])
+                ->get('monolog.logger.contao')
+                ->log(LogLevel::ERROR,
+                    $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+                    ['contao' => new ContaoContext('VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, ContaoContext::ERROR)])
             ;
 
             return false;
         }
+
         while (false !== ($objVisitors = $resultSet->fetchAssociative())) {
             $this->visitorCountUpdate($objVisitors['id'], $objVisitors['visitors_block_time'], $this->visitors_category, self::$_BackendUser);
             $this->visitorCheckSearchEngine($objVisitors['id']);
@@ -564,7 +589,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         return true;
     }
 
-    ////////////////////////////////// INTERNAL /////////////////////////////////////////////7
+    // //////////////////////////////// INTERNAL /////////////////////////////////////////////
 
     protected function visitorSetDebugSettings($visitors_category_id): void
     {
@@ -574,8 +599,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $GLOBALS['visitors']['debug']['searchengine'] = false;
 
         $stmt = $this->container->get('database_connection')
-                    ->prepare(
-                        'SELECT
+            ->prepare(
+                'SELECT
                             visitors_expert_debug_tag,
                             visitors_expert_debug_checks,
                             visitors_expert_debug_referrer,
@@ -589,7 +614,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ORDER BY tl_visitors.id, visitors_name
                         LIMIT 1
                         ')
-                    ;
+        ;
+
         $stmt->bindValue('pid', $visitors_category_id, \PDO::PARAM_INT);
         $stmt->bindValue('published', 1, \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
@@ -613,16 +639,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function visitorGetPageType($objPage)
     {
         $PageId = $objPage->id;
-        //Return:
-        //0 = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
-        //1 = Nachrichten/News
-        //2 = FAQ
-        //403 = Forbidden
+        // Return:
+        // 0 = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
+        // 1 = Nachrichten/News
+        // 2 = FAQ
+        // 3 = Isotope
+        // 4 = Event/Calendar
+        // 403 = Forbidden
 
         $page_type = self::PAGE_TYPE_NORMAL;
 
         if (1 === (int) $objPage->protected) {
-            //protected Seite. user
+            // protected Seite. user
             $user = $this->container->get('security.helper')->getUser();
 
             if (!$user instanceof FrontendUser) {
@@ -633,34 +661,42 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
 
-        //Set the item from the auto_item parameter
-        //from class ModuleNewsReader#L57
-        if (!isset($_GET['items']) && \Contao\Config::get('useAutoItem') && isset($_GET['auto_item'])) {
-            \Contao\Input::setGet('items', \Contao\Input::get('auto_item'));
-        }
-        if (!\Contao\Input::get('items')) {
-            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
+        // Set the item from the auto_item parameter
+        // from class ModuleNewsReader#L57
+        // if (!isset($_GET['items']) && \Contao\Config::get('useAutoItem') && isset($_GET['auto_item'])) {
+        //     \Contao\Input::setGet('items', \Contao\Input::get('auto_item'));
+        // }
+        // if (!\Contao\Input::get('items')) {
+        //     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
 
-            return $page_type;
-        }
+        //     return $page_type;
+        // }
+
+        // if (isset($_GET['auto_item']) && '' !== $_GET['auto_item']) {
+        //     \Contao\Input::setGet('auto_item', $_GET['auto_item']);
+        // }
+        // if (!\Contao\Input::get('auto_item')) {
+        //     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
+
+        //     return $page_type;
+        // }
 
         $dbconnection = $this->container->get('database_connection');
 
-        //News Table exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_news')) {
-            //News Reader?
+        // News Table exists?
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_news'])) {
+            // News Reader?
             $stmt = $dbconnection->prepare(
-                        'SELECT id
+                'SELECT id
                         FROM tl_news_archive
                         WHERE jumpTo = :jumpto
                         LIMIT 1
-                        ')
-                    ;
+                        ');
             $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
-                //News Reader
+                // News Reader
                 $page_type = self::PAGE_TYPE_NEWS;
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
 
@@ -668,21 +704,20 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
 
-        //FAQ Table exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_faq_category')) {
-            //FAQ Reader?
+        // FAQ Table exists?
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_faq_category'])) {
+            // FAQ Reader?
             $stmt = $dbconnection->prepare(
-                        'SELECT id
+                'SELECT id
                         FROM tl_faq_category
                         WHERE jumpTo = :jumpto
                         LIMIT 1
-                        ')
-                    ;
+                        ');
             $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
-                //FAQ Reader
+                // FAQ Reader
                 $page_type = self::PAGE_TYPE_FAQ;
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
 
@@ -690,23 +725,22 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
 
-        //Isotope Table tl_iso_product exists?
-        if (\Contao\Input::get('items') && $dbconnection->getSchemaManager()->tablesExist('tl_iso_product')) {
-            $strAlias = \Contao\Input::get('items');
+        // Isotope Table tl_iso_product exists?
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_iso_product'])) {
+            $strAlias = Input::get('items');
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Get items: '.print_r($strAlias, true));
 
             $stmt = $dbconnection->prepare(
-                        'SELECT id
+                'SELECT id
                         FROM tl_iso_product
                         WHERE alias = :alias
                         LIMIT 1
-                        ')
-                    ;
+                        ');
             $stmt->bindValue('alias', $strAlias, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
-                //Isotope Reader
+                // Isotope Reader
                 $page_type = self::PAGE_TYPE_ISOTOPE;
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
 
@@ -714,21 +748,20 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
 
-        //Events Table exists?
-        if (\Contao\Input::get('events') && $dbconnection->getSchemaManager()->tablesExist('tl_calendar')) {
-            //Events Reader?
+        // Events Table exists?
+        if ($dbconnection->createSchemaManager()->tablesExist(['tl_calendar'])) {
+            // Events Reader?
             $stmt = $dbconnection->prepare(
                 'SELECT id
                         FROM tl_calendar
                         WHERE jumpTo = :jumpto
                         LIMIT 1
-                        ')
-            ;
+                        ');
             $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
-                //Events Reader
+                // Events Reader
                 $page_type = self::PAGE_TYPE_EVENTS;
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
 
@@ -759,19 +792,27 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         if (self::PAGE_TYPE_FORBIDDEN === $PageType) {
-            //Page ID von der 403 Seite ermitteln - nicht mehr
+            // Page ID von der 403 Seite ermitteln - nicht mehr
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNormal over 403: '.$PageId);
 
             return $PageId;
         }
 
-        //Reader mit Parameter oder ohne?
+        // Reader mit Parameter oder ohne?
         $uri = $_SERVER['REQUEST_URI']; // /news/james-wilson-returns.html
         $alias = '';
-        //steht suffix (html) am Ende?
-        $urlSuffix = System::getContainer()->getParameter('contao.url_suffix'); // default: .html
+        $urlSuffix = '';
+        // steht suffix (html) am Ende?
+        $container = System::getContainer();
+        $objRequest = $container->get('request_stack')->getCurrentRequest();
+        if (null !== $objRequest && ($objPage = $objRequest->attributes->get('pageModel')) instanceof PageModel) {
+            $urlSuffix = (string) $objPage->urlSuffix;
+        }
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Auto Item: '.$_GET['auto_item']);
+        // wenn gleich dann hat Url ein Suffix wie .html, wenn ungleich dann Suffix ''
         if (substr($uri, -\strlen($urlSuffix)) === $urlSuffix) {
-            //Alias nehmen
+            // Suffix vorhanden
+            // Alias nehmen
             $alias = substr($uri, strrpos($uri, '/') + 1, -\strlen($urlSuffix));
             if (false === $alias) {
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '.$PageId);
@@ -779,25 +820,43 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 return $PageId; // kein Parameter, Readerseite selbst
             }
         } else {
+            // Suffix nicht vorhanden
             $alias = substr($uri, strrpos($uri, '/') + 1);
         }
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '.$alias);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '.$alias.' Suffix: '.$urlSuffix);
 
         $dbconnection = $this->container->get('database_connection');
 
         if (self::PAGE_TYPE_NEWS === $PageType) {
-            //alias = james-wilson-returns
+            // alias = news-details - Reader direkt = wenn auto_item leer
+            if (!isset($_GET['auto_item'])) {
+                $stmt = $dbconnection->prepare(
+                    'SELECT id
+                            FROM tl_news_archive
+                            WHERE jumpTo = :jumpto
+                            LIMIT 1
+                            ');
+                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $resultSet = $stmt->executeQuery();
+
+                if ($resultSet->rowCount() > 0) {
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '.$PageId);
+
+                    return $PageId;
+                }
+            }
+
+            // alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
-                        'SELECT t.id
+                'SELECT t.id
                         FROM tl_news t
-                        JOIN tl_news_archive r ON t.pid = r.id 
+                        JOIN tl_news_archive r ON t.pid = r.id
                         WHERE
                             t.alias = :alias
                             AND
                             r.jumpTo = :jumpTo
                         LIMIT 1
-                        ')
-                    ;
+                        ');
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
@@ -810,18 +869,34 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
         if (self::PAGE_TYPE_FAQ === $PageType) {
-            //alias = are-there-exams-how-do-they-work
+            // Reader direkt?
+            if (!isset($_GET['auto_item'])) {
+                $stmt = $dbconnection->prepare(
+                    'SELECT id
+                    FROM tl_faq_category
+                    WHERE jumpTo = :jumpto
+                    LIMIT 1
+                    ');
+                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $resultSet = $stmt->executeQuery();
+
+                if ($resultSet->rowCount() > 0) {
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '.$PageId);
+
+                    return $PageId;
+                }
+            }
+            // alias = are-there-exams-how-do-they-work
             $stmt = $dbconnection->prepare(
-                        'SELECT t.id
+                'SELECT t.id
                         FROM tl_faq t
-                        JOIN tl_faq_category r ON t.pid = r.id 
-                        WHERE 
+                        JOIN tl_faq_category r ON t.pid = r.id
+                        WHERE
                             t.alias = :alias
                             AND
                             r.jumpTo = :jumpTo
                         LIMIT 1
-                        ')
-                    ;
+                        ');
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
@@ -834,14 +909,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
         if (self::PAGE_TYPE_ISOTOPE === $PageType) {
-            //alias = a-perfect-circle-thirteenth-step
+            // alias = a-perfect-circle-thirteenth-step
             $stmt = $dbconnection->prepare(
-                        'SELECT id
+                'SELECT id
                         FROM tl_iso_product
                         WHERE alias = :alias
                         LIMIT 1
-                        ')
-                    ;
+                        ');
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
 
@@ -853,18 +927,34 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             }
         }
         if (self::PAGE_TYPE_EVENTS === $PageType) {
-            //alias = james-wilson-returns
+            // Events Reader?
+            if (!isset($_GET['auto_item'])) {
+                $stmt = $dbconnection->prepare(
+                    'SELECT id
+                            FROM tl_calendar
+                            WHERE jumpTo = :jumpto
+                            LIMIT 1
+                            ');
+                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $resultSet = $stmt->executeQuery();
+
+                if ($resultSet->rowCount() > 0) {
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$PageId);
+
+                    return $PageId;
+                }
+            }
+            // alias = james-wilson-returns
             $stmt = $dbconnection->prepare(
-                       'SELECT t.id
+                'SELECT t.id
                         FROM tl_calendar_events t
-                        JOIN tl_calendar r ON t.pid = r.id 
-                        WHERE 
+                        JOIN tl_calendar r ON t.pid = r.id
+                        WHERE
                             t.alias = :alias
                             AND
                             r.jumpTo = :jumpTo
                         LIMIT 1
-                        ')
-            ;
+                        ');
             $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
             $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
             $resultSet = $stmt->executeQuery();
@@ -890,47 +980,45 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             if (true === $ModuleVisitorChecks->checkBot()) {
                 $this->_BOT = true;
 
-                return; //Bot / IP gefunden, wird nicht gezaehlt
+                return; // Bot / IP gefunden, wird nicht gezaehlt
             }
         }
         if (true === $ModuleVisitorChecks->checkUserAgent($visitors_category_id)) {
             $this->_PF = true; // Bad but functionally
 
-            return; //User Agent Filterung
+            return; // User Agent Filterung
         }
-        //Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
+        // Debug log_message("visitorCountUpdate count: ".$this->Environment->httpUserAgent,"useragents-noblock.log");
         $ClientIP = bin2hex(sha1($visitors_category_id.$ModuleVisitorChecks->visitorGetUserIP(), true)); // sha1 20 Zeichen, bin2hex 40 zeichen
-        $BlockTime = (0 === (int) $BlockTime) ? 1800 : $BlockTime; //Sekunden
+        $BlockTime = 0 === (int) $BlockTime ? 1800 : $BlockTime; // Sekunden
         $CURDATE = date('Y-m-d');
 
         $dbconnection = $this->container->get('database_connection');
 
-        //Visitor Blocker
+        // Visitor Blocker
         $stmt = $dbconnection->prepare(
-                                'DELETE FROM tl_visitors_blocker
+            'DELETE FROM tl_visitors_blocker
                                 WHERE CURRENT_TIMESTAMP - INTERVAL :blocktime SECOND > visitors_tstamp
                                 AND vid = :vid
                                 AND visitors_type = :vtype
-                                ')
-                            ;
+                                ');
         $stmt->bindValue('blocktime', $BlockTime, \PDO::PARAM_INT);
         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
-        $resultSet = $stmt->executeQuery();
+        $stmt->executeQuery();
 
-        //Hit Blocker for IE8 Bullshit and Browser Counting
+        // Hit Blocker for IE8 Bullshit and Browser Counting
         // 3 Sekunden Blockierung zw. Zählung per Tag und Zählung per Browser
         $stmt = $dbconnection->prepare(
-                                'DELETE FROM tl_visitors_blocker
+            'DELETE FROM tl_visitors_blocker
                                 WHERE CURRENT_TIMESTAMP - INTERVAL :blocktime SECOND > visitors_tstamp
                                 AND vid = :vid
                                 AND visitors_type = :vtype
-                                ')
-                            ;
+                                ');
         $stmt->bindValue('blocktime', 3, \PDO::PARAM_INT);
         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
-        $resultSet = $stmt->executeQuery();
+        $stmt->executeQuery();
 
         if (true === $ModuleVisitorChecks->checkBE()) {
             $this->_PF = true; // Bad but functionally
@@ -938,9 +1026,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             return; // Backend eingeloggt, nicht zaehlen (Feature: #197)
         }
 
-        //Test ob Hits gesetzt werden muessen (IE8 Bullshit and Browser Counting)
+        // Test ob Hits gesetzt werden muessen (IE8 Bullshit and Browser Counting)
         $objHitIP = $dbconnection->prepare(
-                            'SELECT
+            'SELECT
                                 id,
                                 visitors_ip
                             FROM
@@ -949,16 +1037,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 visitors_ip = :vip
                             AND vid = :vid
                             AND visitors_type = :vtype
-                            ')
-                        ;
+                            ');
         $objHitIP->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
         $objHitIP->bindValue('vid', $vid, \PDO::PARAM_INT);
         $objHitIP->bindValue('vtype', 'h', \PDO::PARAM_STR);
         $resHitIP = $objHitIP->executeQuery();
 
-        //Hits und Visits lesen
+        // Hits und Visits lesen
         $objHitCounter = $dbconnection->prepare(
-                            'SELECT
+            'SELECT
                                 id,
                                 visitors_hit,
                                 visitors_visit
@@ -966,47 +1053,44 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 tl_visitors_counter
                             WHERE
                                 visitors_date = :vdate AND vid = :vid
-                            ')
-                        ;
+                            ');
         $objHitCounter->bindValue('vdate', $CURDATE, \PDO::PARAM_STR);
         $objHitCounter->bindValue('vid', $vid, \PDO::PARAM_INT);
         $resHitCounter = $objHitCounter->executeQuery();
 
-        //Hits setzen
+        // Hits setzen
         if ($resHitCounter->rowCount() < 1) {
             if ($resHitIP->rowCount() < 1) {
-                //at first: block
+                // at first: block
                 $stmt = $dbconnection->prepare(
-                                    'INSERT INTO
+                    'INSERT INTO
                                         tl_visitors_blocker
                                     SET
                                         vid = :vid,
                                         visitors_tstamp = CURRENT_TIMESTAMP,
                                         visitors_ip = :vip,
                                         visitors_type = :vtype
-                                    ')
-                                ;
+                                    ');
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
 
                 // Insert
                 $stmt = $dbconnection->prepare(
-                                'INSERT IGNORE INTO
+                    'INSERT IGNORE INTO
                                     tl_visitors_counter
                                 SET
                                     vid = :vid,
                                     visitors_date = :vdate,
                                     visitors_visit = :vv,
                                     visitors_hit = :vh
-                                ')
-                            ;
+                                ');
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vdate', $CURDATE, \PDO::PARAM_STR);
                 $stmt->bindValue('vv', 1, \PDO::PARAM_INT);
                 $stmt->bindValue('vh', 1, \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
                 /*
                 $arrSet = array
                 (
@@ -1021,7 +1105,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ->set($arrSet)
                         ->execute();
                 */
-                //for page counter
+                // for page counter
                 $this->_HitCounted = true;
             } else {
                 $this->_PF = true; // Prefetch found
@@ -1035,44 +1119,42 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             if ($resHitIP->rowCount() < 1) {
                 // Insert Blocker
                 $stmt = $dbconnection->prepare(
-                                    'INSERT INTO
+                    'INSERT INTO
                                         tl_visitors_blocker
                                     SET
                                         vid = :vid,
                                         visitors_tstamp = CURRENT_TIMESTAMP,
                                         visitors_ip = :vip,
                                         visitors_type = :vtype
-                                    ')
-                                ;
+                                    ');
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
 
                 // Insert Counter
                 $stmt = $dbconnection->prepare(
-                                'UPDATE
+                    'UPDATE
                                     tl_visitors_counter
                                 SET
                                     visitors_hit = :vhit
                                 WHERE
                                     id = :vid
-                                ')
-                            ;
+                                ');
                 $stmt->bindValue('vhit', $visitors_hits, \PDO::PARAM_INT);
                 $stmt->bindValue('vid', $objHitCounterResult['id'], \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
 
-                //for page counter
+                // for page counter
                 $this->_HitCounted = true;
             } else {
                 $this->_PF = true; // Prefetch found
             }
         }
 
-        //Visits / IP setzen
+        // Visits / IP setzen
         $objVisitIP = $dbconnection->prepare(
-                    'SELECT
+            'SELECT
                         id,
                         visitors_ip
                     FROM
@@ -1081,8 +1163,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         visitors_ip = :vip
                     AND vid = :vid
                     AND visitors_type = :vtype
-                    ')
-                ;
+                    ');
         $objVisitIP->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
         $objVisitIP->bindValue('vid', $vid, \PDO::PARAM_INT);
         $objVisitIP->bindValue('vtype', 'v', \PDO::PARAM_STR);
@@ -1091,22 +1172,21 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if ($resVisitIP->rowCount() < 1) {
             // not blocked: Insert IP + Update Visits
             $stmt = $dbconnection->prepare(
-                            'INSERT INTO
+                'INSERT INTO
                                 tl_visitors_blocker
                             SET
                                 vid = :vid,
                                 visitors_tstamp = CURRENT_TIMESTAMP,
                                 visitors_ip = :vip,
                                 visitors_type = :vtype
-                            ')
-                        ;
+                            ');
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
             $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
             $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
-            $resultSet = $stmt->executeQuery();
+            $stmt->executeQuery();
 
             $stmt = $dbconnection->prepare(
-                            'UPDATE
+                'UPDATE
                                 tl_visitors_counter
                             SET
                                 visitors_visit = :vvis
@@ -1114,19 +1194,18 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 vid = :vid
                             AND
                                 visitors_date = :vdate
-                            ')
-                        ;
+                            ');
             $stmt->bindValue('vvis', $visitors_visit, \PDO::PARAM_INT);
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
             $stmt->bindValue('vdate', $CURDATE, \PDO::PARAM_STR);
-            $resultSet = $stmt->executeQuery();
+            $stmt->executeQuery();
 
-            //for page counter
+            // for page counter
             $this->_VisitCounted = true;
         } else {
             // blocked: Update tstamp
             $stmt = $dbconnection->prepare(
-                            'UPDATE
+                'UPDATE
                                 tl_visitors_blocker
                             SET
                                 visitors_tstamp = CURRENT_TIMESTAMP
@@ -1136,40 +1215,39 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 visitors_ip = :vip
                             AND
                                 visitors_type = :vtype
-                            ')
-                        ;
+                            ');
             $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
             $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
             $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
-            $resultSet = $stmt->executeQuery();
+            $stmt->executeQuery();
 
             $this->_VB = true;
         }
 
-        //Page Counter
+        // Page Counter
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
-            /* @var PageModel $objPage */
+            /** @var PageModel $objPage */
             $objPage = $this->getPageModel();
             $objPage->current()->loadDetails(); // for language via cache call
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID / Lang in Object: '.$objPage->id.' / '.$objPage->language);
 
-            //#102, bei Readerseite den Beitrags-Alias zählen (Parameter vorhanden)
-            //0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
-            //1 = Nachrichten/News
-            //2 = FAQ
-            //3 = Isotope
-            //403 = Forbidden
+            // #102, bei Readerseite den Beitrags-Alias zählen (Parameter vorhanden)
+            // 0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
+            // 1 = Nachrichten/News
+            // 2 = FAQ
+            // 3 = Isotope
+            // 403 = Forbidden
             $visitors_page_type = $this->visitorGetPageType($objPage);
-            //bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
-            //Fixed #211, Duplicate entry in tl_search
+            // bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
+            // Fixed #211, Duplicate entry in tl_search
             $objPageIdOrg = $objPage->id;
             $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
             if (self::PAGE_TYPE_ISOTOPE !== $visitors_page_type) {
-                $objPageIdOrg = 0; //backward compatibility
+                $objPageIdOrg = 0; // backward compatibility
             }
             $objPageHitVisit = $dbconnection->prepare(
-                                            'SELECT
+                'SELECT
                                                 id,
                                                 visitors_page_visit,
                                                 visitors_page_hit
@@ -1187,8 +1265,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                                 visitors_page_lang = :vpagelang
                                             AND
                                                 visitors_page_type = :vpagetype
-                                            ')
-                                    ;
+                                            ');
             $objPageHitVisit->bindValue('vpagedate', $CURDATE, \PDO::PARAM_STR);
             $objPageHitVisit->bindValue('vid', $vid, \PDO::PARAM_INT);
             $objPageHitVisit->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
@@ -1201,9 +1278,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             // oder      $objPage->rootLanguage; // Sprache der Root-Seite
             if ($resPageHitVisit->rowCount() < 1) {
                 if ($objPageId > 0) {
-                    //Page Counter Insert
+                    // Page Counter Insert
                     $stmt = $dbconnection->prepare(
-                                    'INSERT IGNORE INTO
+                        'INSERT IGNORE INTO
                                         tl_visitors_pages
                                     SET
                                         vid = :vid,
@@ -1214,8 +1291,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                         visitors_page_visit = :vpagevis,
                                         visitors_page_hit   = :vpagehit,
                                         visitors_page_lang  = :vpagelang
-                                    ')
-                                ;
+                                    ');
                     $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                     $stmt->bindValue('vpagedate', $CURDATE, \PDO::PARAM_STR);
                     $stmt->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
@@ -1224,7 +1300,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     $stmt->bindValue('vpagevis', 1, \PDO::PARAM_INT);
                     $stmt->bindValue('vpagehit', 1, \PDO::PARAM_INT);
                     $stmt->bindValue('vpagelang', $objPage->language, \PDO::PARAM_STR);
-                    $resultSet = $stmt->executeQuery();
+                    $stmt->executeQuery();
                     /*
         	        $arrSet = array
         	        (
@@ -1249,50 +1325,49 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $visitors_page_visits = $objPageHitVisitResult['visitors_page_visit'];
 
                 if (true === $this->_HitCounted) {
-                    //Update Hit
+                    // Update Hit
                     ++$visitors_page_hits;
                 }
                 if (true === $this->_VisitCounted) {
-                    //Update Visit
+                    // Update Visit
                     ++$visitors_page_visits;
                 }
                 $stmt = $dbconnection->prepare(
-                                'UPDATE
+                    'UPDATE
                                     tl_visitors_pages
                                 SET
                                     visitors_page_hit = :vpagehit,
                                     visitors_page_visit = :vpagevis
                                 WHERE
                                     id = :vid
-                                ')
-                            ;
+                                ');
                 $stmt->bindValue('vpagehit', $visitors_page_hits, \PDO::PARAM_INT);
                 $stmt->bindValue('vpagevis', $visitors_page_visits, \PDO::PARAM_INT);
                 $stmt->bindValue('vid', $objPageHitVisitResult['id'], \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
+                $stmt->executeQuery();
             }
         }
-        //Page Counter End
+        // Page Counter End
 
-        if ($resVisitIP->rowCount() < 1) { //Browser Check wenn nicht geblockt
-            //Only counting if User Agent is set.
-            if ((\Contao\Environment::get('httpUserAgent')) !== '') {
+        if ($resVisitIP->rowCount() < 1) { // Browser Check wenn nicht geblockt
+            // Only counting if User Agent is set.
+            if ('' !== Environment::get('httpUserAgent')) {
                 // Variante 3
                 $ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
-                $ModuleVisitorBrowser3->initBrowser(\Contao\Environment::get('httpUserAgent'), implode(',', \Contao\Environment::get('httpAcceptLanguage')));
+                $ModuleVisitorBrowser3->initBrowser(Environment::get('httpUserAgent'), implode(',', Environment::get('httpAcceptLanguage')));
                 if (null === $ModuleVisitorBrowser3->getLang()) {
                     System::getContainer()
-                           ->get('monolog.logger.contao')
-                            ->log(LogLevel::ERROR,
-                                  'ModuleVisitorBrowser3 Systemerror',
-                                  ['contao' => new ContaoContext('ModulVisitors', TL_ERROR)])
+                        ->get('monolog.logger.contao')
+                        ->log(LogLevel::ERROR,
+                            'ModuleVisitorBrowser3 Systemerror',
+                            ['contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR)])
                     ;
                 } else {
                     $arrBrowser['Browser'] = $ModuleVisitorBrowser3->getBrowser();
                     $arrBrowser['Version'] = $ModuleVisitorBrowser3->getVersion();
-                    $arrBrowser['Platform'] = $ModuleVisitorBrowser3->getPlatformVersion();
+                    $arrBrowser['Platform'] = $ModuleVisitorBrowser3->getPlatformVersion(); // wenn Version unknown, dann Platform
                     $arrBrowser['lang'] = $ModuleVisitorBrowser3->getLang();
-                    //Anpassen an Version 1 zur Weiterverarbeitung
+                    // Anpassen an Version 1 zur Weiterverarbeitung
                     if ('unknown' === $arrBrowser['Browser']) {
                         $arrBrowser['Browser'] = 'Unknown';
                     }
@@ -1304,11 +1379,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     if ('unknown' === $arrBrowser['Platform']) {
                         $arrBrowser['Platform'] = 'Unknown';
                     }
-                    //Debug if ( $arrBrowser['Platform'] == 'Unknown' || $arrBrowser['Platform'] == 'Mozilla' || $arrBrowser['Version'] == 'unknown' ) {
-                    //Debug 	log_message("Unbekannter User Agent: ".$this->Environment->httpUserAgent."", 'unknown.log');
-                    //Debug }
+                    if ('Unknown' === $arrBrowser['Platform'] || 'Mozilla' === $arrBrowser['Platform'] || 'unknown' === $arrBrowser['Version']) {
+                        // ModuleVisitorLog::logMessage('Unbekannter User Agent: ' . \Contao\Environment::get('httpUserAgent'), 'visitors_debug_ua_unknown');
+                    }
                     $objBrowserCounter = $dbconnection->prepare(
-                                        'SELECT
+                        'SELECT
                                             id,
                                             visitors_counter
                                         FROM
@@ -1318,55 +1393,53 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                             AND visitors_browser = :vbrowser
                                             AND visitors_os = :vos
                                             AND visitors_lang = :vlang
-                                            ')
-                                    ;
+                                            ');
                     $objBrowserCounter->bindValue('vid', $vid, \PDO::PARAM_INT);
                     $objBrowserCounter->bindValue('vbrowser', $arrBrowser['brversion'], \PDO::PARAM_STR);
                     $objBrowserCounter->bindValue('vos', $arrBrowser['Platform'], \PDO::PARAM_STR);
                     $objBrowserCounter->bindValue('vlang', $arrBrowser['lang'], \PDO::PARAM_STR);
                     $resBrowserCounter = $objBrowserCounter->executeQuery();
 
-                    //setzen
+                    // setzen
                     if ($resBrowserCounter->rowCount() < 1) {
                         // Insert
                         $arrSet = [
                             'vid' => $vid,
                             'visitors_browser' => $arrBrowser['brversion'], // version
-                            'visitors_os' => $arrBrowser['Platform'],  // os
+                            'visitors_os' => $arrBrowser['Platform'], // os
                             'visitors_lang' => $arrBrowser['lang'],
                             'visitors_counter' => 1,
                         ];
                         $dbconnection->insert('tl_visitors_browser', $arrSet);
-                    /*
-                    \Database::getInstance()
-                            ->prepare("INSERT INTO tl_visitors_browser %s")
-                            ->set($arrSet)
-                            ->execute();
-                    */
+                        /*
+                        \Database::getInstance()
+                                ->prepare("INSERT INTO tl_visitors_browser %s")
+                                ->set($arrSet)
+                                ->execute();
+                        */
                     } else {
-                        //Update
+                        // Update
                         $objBrowserCounterResult = $resBrowserCounter->fetchAssociative();
                         $visitors_counter = $objBrowserCounterResult['visitors_counter'] + 1;
                         // Update
                         $stmt = $dbconnection->prepare(
-                                        'UPDATE
+                            'UPDATE
                                             tl_visitors_browser
                                         SET
                                             visitors_counter = :vcounter
                                         WHERE
                                             id = :vid
-                                        ')
-                                    ;
+                                        ');
                         $stmt->bindValue('vcounter', $visitors_counter, \PDO::PARAM_INT);
                         $stmt->bindValue('vid', $objBrowserCounterResult['id'], \PDO::PARAM_INT);
-                        $resultSet = $stmt->executeQuery();
+                        $stmt->executeQuery();
                     }
                 } // else von NULL
             } // if strlen
-        } //VisitIP numRows
+        } // VisitIP numRows
     }
 
-    //visitorCountUpdate
+    // visitorCountUpdate
 
     protected function visitorCheckSearchEngine($vid): void
     {
@@ -1385,31 +1458,33 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     'visitors_keywords' => $Keywords,
                 ];
                 $this->container->get('database_connection')
-                        ->insert('tl_visitors_searchengines', $arrSet)
+                    ->insert('tl_visitors_searchengines', $arrSet)
                 ;
-                //\Database::getInstance()
+
+                // \Database::getInstance()
                 //      ->prepare("INSERT INTO tl_visitors_searchengines %s")
                 //      ->set($arrSet)
                 //      ->execute();
                 // Delete old entries
                 $CleanTime = mktime(0, 0, 0, (int) date('m') - 3, (int) date('d'), (int) date('Y')); // Einträge >= 90 Tage werden gelöscht
                 $stmt = $this->container->get('database_connection')
-                            ->prepare(
-                                'DELETE FROM
+                    ->prepare(
+                        'DELETE FROM
                                     tl_visitors_searchengines
                                 WHERE
                                     vid = :vid AND tstamp < :tstamp
                                 ')
-                            ;
+                ;
+
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('tstamp', $CleanTime, \PDO::PARAM_INT);
-                $resultSet = $stmt->executeQuery();
-            } //keywords
-        } //searchengine
-        //Debug log_message('visitorCheckSearchEngine $SearchEngine: ' . $SearchEngine,'debug.log');
+                $stmt->executeQuery();
+            } // keywords
+        } // searchengine
+        // Debug log_message('visitorCheckSearchEngine $SearchEngine: ' . $SearchEngine,'debug.log');
     }
 
-    //visitorCheckSearchEngine
+    // visitorCheckSearchEngine
 
     /**
      * Check for Referrer.
@@ -1424,9 +1499,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $ModuleVisitorReferrer->checkReferrer();
                 $ReferrerDNS = $ModuleVisitorReferrer->getReferrerDNS();
                 $ReferrerFull = $ModuleVisitorReferrer->getReferrerFull();
-                //Debug log_message('visitorCheckReferrer $ReferrerDNS:'.print_r($ReferrerDNS,true), 'debug.log');
-                //Debug log_message('visitorCheckReferrer Host:'.print_r($this->ModuleVisitorReferrer->getHost(),true), 'debug.log');
-                if ('o' !== $ReferrerDNS && 'w' !== $ReferrerDNS) { 	// not the own, not wrong
+                // Debug log_message('visitorCheckReferrer $ReferrerDNS:'.print_r($ReferrerDNS,true), 'debug.log');
+                // Debug log_message('visitorCheckReferrer Host:'.print_r($this->ModuleVisitorReferrer->getHost(),true), 'debug.log');
+                if ('o' !== $ReferrerDNS && 'w' !== $ReferrerDNS) { // not the own, not wrong
                     // Insert
                     $arrSet = [
                         'vid' => $vid,
@@ -1434,12 +1509,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'visitors_referrer_dns' => $ReferrerDNS,
                         'visitors_referrer_full' => $ReferrerFull,
                     ];
-                    //Referrer setzen
-                    //Debug log_message('visitorCheckReferrer Referrer setzen', 'debug.log');
+                    // Referrer setzen
+                    // Debug log_message('visitorCheckReferrer Referrer setzen', 'debug.log');
                     $this->container->get('database_connection')
-                            ->insert('tl_visitors_referrer', $arrSet)
+                        ->insert('tl_visitors_referrer', $arrSet)
                     ;
-                    //\Database::getInstance()
+
+                    // \Database::getInstance()
                     //      ->prepare("INSERT INTO tl_visitors_referrer %s")
                     //      ->set($arrSet)
                     //      ->execute();
@@ -1447,19 +1523,20 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     $CleanTime = mktime(0, 0, 0, (int) date('m') - 4, (int) date('d'), (int) date('Y')); // Einträge >= 120 Tage werden gelöscht
 
                     $stmt = $this->container->get('database_connection')
-                                ->prepare(
-                                    'DELETE FROM
+                        ->prepare(
+                            'DELETE FROM
                                         tl_visitors_referrer
                                     WHERE
                                         vid = :vid AND tstamp < :tstamp
                                     ')
-                                ;
+                    ;
+
                     $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                     $stmt->bindValue('tstamp', $CleanTime, \PDO::PARAM_INT);
-                    $resultSet = $stmt->executeQuery();
+                    $stmt->executeQuery();
                 }
-            } //if PF
-        } //if VB
+            } // if PF
+        } // if VB
     }
 
     // visitorCheckReferrer

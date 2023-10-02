@@ -1,7 +1,7 @@
-# Contao 4 Visitors Bundle
+# Contao 5 Visitors Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
-![Contao Version](https://img.shields.io/badge/Contao-4.13-orange)
+![Contao Version](https://img.shields.io/badge/Contao-5.2-orange)
 [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![Latest Unstable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/unstable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
@@ -11,17 +11,17 @@
 
 ## About
 
-A Contao 4 counter extension for hits and visits
+A Contao 5 counter extension for hits and visits
 
 ## Installation
 
 Installation Guide (EN): [INSTALLATION_EN.md](INSTALLATION_EN.md)
 
-__Attention__: Users of Contao 4.4 - 4.9, use `^1.5` as version number! 
+__Attention__: Users of Contao 4.13 use `^1.8` as version number! 
 
 Installationsanleitung (DE): [INSTALLATION_DE.md](INSTALLATION_DE.md)
 
-__Achtung__: Nutzer von Contao 4.4 - 4.9, verwenden `^1.5` als Versionsangabe!
+__Achtung__: Nutzer von Contao 4.13, verwenden `^1.8` als Versionsangabe!
 
 
 ## User guide
@@ -33,7 +33,7 @@ __Achtung__: Nutzer von Contao 4.4 - 4.9, verwenden `^1.5` als Versionsangabe!
 
 Translations are managed using Transifex. To create a new translation or to help to maintain an existing one, please register at transifex.com.
 
-Project Link: [https://www.transifex.com/projects/p/contao-visitors-bundle/](https://www.transifex.com/projects/p/contao-visitors-bundle/)
+Project Link: [https://www.transifex.com/bugbuster/contao-visitors-bundle/](https://www.transifex.com/bugbuster/contao-visitors-bundle/)
 
 Howto: [http://docs.transifex.com/faq/#translating](http://docs.transifex.com/faq/#translating)
 

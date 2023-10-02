@@ -8,7 +8,7 @@
  * 
  * Contao Module Version
  * @author     Glen Langer (BugBuster); modified for Contao Module Visitors
- * @version 3.0.0
+ * @version 3.2.0
  */
 
 /**
@@ -16,10 +16,10 @@
  */
 
 namespace BugBuster\Visitors;
-
+// use BugBuster\Visitors\ModuleVisitorLog;
 /**
  * Class ModuleVisitorBrowser3
- * @author Data
+ * @author BugBuster
  */
 class ModuleVisitorBrowser3 
 {
@@ -27,6 +27,7 @@ class ModuleVisitorBrowser3
 	private $_browser_name = '';
 	private $_version = '';
 	private $_platform = '';
+	private $_ch_platform = '';
 
 	//#130 private $_os = '';
 	private $_is_aol = false;
@@ -35,6 +36,7 @@ class ModuleVisitorBrowser3
 	private $_aol_version = '';
 
 	private $_platformVersion   = '';   //add BugBuster
+	private $_ch_platformVersion   = '';   //add BugBuster
 	protected $_accept_language; //add BugBuster
 	protected $_lang; //add BugBuster
 
@@ -70,6 +72,7 @@ class ModuleVisitorBrowser3
 	const BROWSER_VIVALDI = 'Vivaldi';                        // http://vivaldi.com
 	const BROWSER_DOOBLE  = 'Dooble';                         // https://textbrowser.github.io/dooble/
 	const BROWSER_QTWEB   = 'QtWeb Browser';                  // Dooble und andere
+	const BROWSER_ALOHA   = "Aloha Browser";                  // https://alohabrowser.com/
 
 	const BROWSER_ANDROID = 'Android';                        // http://www.android.com/
 	const BROWSER_GALAXY_S        = 'Galaxy S';
@@ -154,6 +157,7 @@ class ModuleVisitorBrowser3
 
 	const PLATFORM_UNKNOWN = 'unknown';
 	const PLATFORM_WINDOWS = 'Windows';
+	const PLATFORM_WINDOWS_CH = 'Windows';	// Client Hints Platform
 	const PLATFORM_WINDOWS_CE = 'WinCE'; //modified for compatibility
 	const PLATFORM_WINDOWS_PHONE = 'WinPhone';           // http://www.developer.nokia.com/Community/Wiki/User-Agent_headers_for_Nokia_devices
 	const PLATFORM_APPLE = 'Apple';
@@ -192,6 +196,7 @@ class ModuleVisitorBrowser3
 	const PLATFORM_WINDOWS_8     = 'Win8';
 	const PLATFORM_WINDOWS_81    = 'Win8.1';
 	const PLATFORM_WINDOWS_10    = 'Win10';
+	const PLATFORM_WINDOWS_11    = 'Win11';
 	const PLATFORM_WINDOWS_RT    = 'WinRT';
 	const PLATFORM_MACOSX        = 'MacOSX';
 	const PLATFORM_IOSX          = 'iOS';
@@ -199,6 +204,7 @@ class ModuleVisitorBrowser3
 
 	public function initBrowser($useragent="", $accept_language="") { //modified for compatibility
 		$this->reset();
+		$this->getClientHints($_SERVER);
 		$this->_accept_language = $accept_language;
 		$this->setLang();
 		if($useragent != "") {
@@ -223,6 +229,8 @@ class ModuleVisitorBrowser3
 		$this->_is_robot = false;
 		$this->_aol_version = self::VERSION_UNKNOWN;
 		$this->_platformVersion = self::PLATFORM_UNKNOWN;	//add BugBuster
+		$this->_ch_platform = self::PLATFORM_UNKNOWN;
+		$this->_ch_platformVersion = self::VERSION_UNKNOWN;	//add BugBuster
 	}
 
 	/**
@@ -349,22 +357,37 @@ class ModuleVisitorBrowser3
 	}
 
 	/**
-	 * Modify version for compatibility
+	 * Modify version for major.minor
 	 */
 	protected function reduceVersion() {
 	    if ($this->_version === self::VERSION_UNKNOWN) {
 	    	return;
 	    }
-	    if (stripos($this->_version, '.') !== false) {
-	    	$this->_version = substr($this->_version, 0, stripos($this->_version, '.')+2);
+		// aus x.y.z mach x.y
+	    if (strpos($this->_version, '.') !== false) {
+			$firstpos = strpos($this->_version, '.');
+			if (strpos($this->_version, '.', $firstpos +1) !== false) {
+				$secondpos  = strpos($this->_version, '.', $firstpos +1);
+	    		$this->_version = substr($this->_version, 0, $secondpos );
+			}
 	    }
+	}
+
+	protected function fixVersion($aresult) {
+		// Sonderfall für einstellige Version und weiteren folgenden String
+		// z.B Edg/116 Version/13.0.3
+		// $aversion hat hier "116 Version" statt 116
+		if (false !== strpos($aresult, ' ')) {
+			return explode(' ', $aresult)[0];
+		}
+		return $aresult;
 	}
 
 	 /**
 	  * Protected routine to determine the browser type
 	  * http://www.useragentstring.com/index.php
 	  * 
-	  * @return boolean True if the browser was detected otherwise false
+	   * @return boolean True if the browser was detected otherwise false
 	  */
 	 protected function checkBrowsers() {
 		return 
@@ -380,6 +403,7 @@ class ModuleVisitorBrowser3
 			//     before Safari
 			// (5) Netscape 9+ is based on Firefox so Netscape checks
 			//     before FireFox are necessary
+			$this->checkBrowserAloha() ||
 			$this->checkBrowserWebTv() ||
 		    $this->checkBrowserMaxthon()    ||  //add BugBuster, must be before IE, (Dual Engine: Webkit and Trident)
 			$this->checkBrowserInternetExplorer() ||
@@ -671,6 +695,7 @@ class ModuleVisitorBrowser3
 			&& stripos($this->_agent, 'windows phone') === false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'Edge'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
 			require __DIR__ . '/../config/edgeMap.php';
 			if (\array_key_exists($aversion[0].'.'.$aversion[1], $arrEdgeMap))
@@ -689,8 +714,9 @@ class ModuleVisitorBrowser3
 		elseif (stripos($this->_agent, 'Edg/') !== false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'Edg'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDG);
 
 			return true;
@@ -701,6 +727,7 @@ class ModuleVisitorBrowser3
 			&& stripos($this->_agent, 'windows phone') !== false)
 		{
 			$aresult = explode('/', stristr($this->_agent, 'Edge'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
 			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDGE_MOBILE);
@@ -714,8 +741,10 @@ class ModuleVisitorBrowser3
 		elseif (stripos($this->_agent, 'EdgiOS') !== false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'EdgiOS'));
-			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$aresult[1] = $this->fixVersion($aresult[1]);
+			$aversion = explode('.', $aresult[1]);			
+			
+			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDGE);
 
 			return true;
@@ -725,8 +754,9 @@ class ModuleVisitorBrowser3
 		elseif (stripos($this->_agent, 'EdgA') !== false) 
 		{
 			$aresult = explode('/', stristr($this->_agent, 'EdgA'));
+			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
-			$this->setVersion($aversion[0].'.'.$aversion[1]);
+			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDGE);
 
 			return true;
@@ -1250,7 +1280,7 @@ class ModuleVisitorBrowser3
 			    $this->setVersion($aversion[0]);
 		    }
 			elseif (preg_match('/(?:CPU OS|iPhone OS|iOS)[\s_]*([\d_]+)/i', $this->_agent, $foundVersion)) {
-					$this->setVersion = str_replace('_', '.', $foundVersion[1]);
+					$this->setVersion(str_replace('_', '.', $foundVersion[1]));
 			} else {
 			    $this->setVersion(self::VERSION_UNKNOWN);
 		    }
@@ -1992,6 +2022,22 @@ class ModuleVisitorBrowser3
     }
 
     /**
+     * Determine if the browser is Aloha or not
+     * @return boolean True if the browser is Aloha otherwise false
+     */
+    protected function checkBrowserAloha() {
+	    if(stripos($this->_agent, 'AlohaBrowser') !== false) {
+		    $aresult = explode('/', stristr($this->_agent, 'AlohaBrowser'));
+		    $this->setVersion($aresult[1]);
+		    $this->setBrowser(self::BROWSER_ALOHA);
+
+		    return true;
+	    }
+
+	    return false;
+    }
+
+    /**
      * Determine the user's platform (last updated 1.7)
      */
     protected function checkPlatform() 
@@ -2069,6 +2115,7 @@ class ModuleVisitorBrowser3
 
 	/**
 	 * The name of the platform.  All return types are from the class contants
+	 * (Windows, Win10, Linux, ...)
 	 * Fallback platformVersion with platform if platformVersion unknown
 	 * @return string Platformversion of the browser
 	 */
@@ -2087,16 +2134,31 @@ class ModuleVisitorBrowser3
      */
     protected function checkPlatformVersion() 
     {
-        // based on browscap.ini
-        if ($this->_platform == self::PLATFORM_WINDOWS) 
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
+		// #138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
+
+		// Windows Browser unterstützt Client Hints und UA sagt Windows
+        if ((self::PLATFORM_WINDOWS_CH === (string) $this->_ch_platform) && ($this->_platform == self::PLATFORM_WINDOWS))
+		{
+			// Windows Browser unterstützt Client Hints und sendet nach Anforderung auch die PlatformVersion
+			if ((string) $this->_ch_platformVersion !== self::PLATFORM_UNKNOWN)
+			{
+				$majorOsVersion = (int) (explode('.', $this->_ch_platformVersion)[0] ?? "0");
+				if ($majorOsVersion > 0 && $majorOsVersion < 11) {
+					$this->_platformVersion = self::PLATFORM_WINDOWS_10;
+				} elseif ($majorOsVersion > 10 && $majorOsVersion < 16) {
+					$this->_platformVersion = self::PLATFORM_WINDOWS_11;
+				}
+			}            
+		}
+		// Windows Browser unterstützt keine Client Hints oder Request kam über HTTP und UA sagt Windows
+        if ((self::PLATFORM_UNKNOWN === (string) $this->_ch_platform) && ($this->_platform == self::PLATFORM_WINDOWS))
         {
-	        /*if( stripos($this->_agent, 'windows NT 7.1') !== false ) {
-			    $this->_platform = self::PLATFORM_WINDOWS_7;
-		    }
-	        else*/
-            if(stripos($this->_agent, 'windows NT 10.0') !== false) 
+			if (stripos($this->_agent, 'windows NT 10.0') !== false)
             {
-                $this->_platformVersion = self::PLATFORM_WINDOWS_10;
+                $this->_platformVersion = self::PLATFORM_WINDOWS;
             }
             elseif(stripos($this->_agent, 'windows NT 6.3') !== false) 
             {
@@ -2206,5 +2268,39 @@ class ModuleVisitorBrowser3
 
     public function getLang() { return $this->_lang; }
 
-}
+	// Matomo Part from device-detector/ClientHints.php
+	// and core/Http getClientHintsFromServerVariables
+	// but only Platform an PlatformVersion
+	public function getClientHints() {
+		$clientHints = array();
 
+        foreach ($_SERVER as $key => $value) {
+            if (
+                0 === strpos(strtolower($key), strtolower('HTTP_SEC_CH_UA_PLATFORM'))
+                || 0 === strpos(strtolower($key), strtolower('SEC_CH_UA_PLATFORM'))
+				|| 0 === strpos(strtolower($key), strtolower('PLATFORM'))
+            ) {
+                $clientHints[$key] = $value;
+            }
+        }
+
+		foreach ($clientHints as $name => $value) {
+            switch (str_replace('_', '-', strtolower((string) $name))) {
+                case 'http-sec-ch-ua-platform':
+                case 'sec-ch-ua-platform':
+                case 'platform':
+                    $this->_ch_platform = trim($value, '"');
+                    break;
+                case 'http-sec-ch-ua-platform-version':
+                case 'sec-ch-ua-platform-version':
+                case 'platformversion':
+                    $this->_ch_platformVersion = trim($value, '"');
+                    break;
+            }
+        }
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': clientHints: '. print_r($clientHints,true));
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
+		return true;
+	}
+}

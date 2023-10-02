@@ -1,15 +1,14 @@
 <?php
 
-/**
- * Contao Open Source CMS, Copyright (C) 2005-2017 Leo Feyer
+/*
+ * This file is part of a BugBuster Contao Bundle.
  *
- * Modul Visitors Stat Screen Counter
- *
- * @copyright  Glen Langer 2009..2022 <http://contao.ninja>
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
- * @license    LGPL
- * @filesource
- * @see	       https://github.com/BugBuster1701/contao-visitors-bundle
+ * @package    Contao Visitors Bundle
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
+ * @license    LGPL-3.0-or-later
  */
 
 /**
@@ -18,58 +17,59 @@
 
 namespace BugBuster\Visitors;
 
+use Contao\BackendModule;
+use Contao\BackendTemplate;
+use Contao\Database;
+
 /**
  * Class ModuleVisitorStatScreenCounter
  *
- * @copyright  Glen Langer 2017..2022 <http://contao.ninja>
- * @author     Glen Langer (BugBuster)
+ * @copyright  Glen Langer 2023 <http://contao.ninja>
  */
-class ModuleVisitorStatScreenCounter extends \Contao\BackendModule
+class ModuleVisitorStatScreenCounter extends BackendModule
 {
+	/**
+	 * Current object instance
+	 * @var object
+	 */
+	protected static $instance;
 
-    /**
-     * Current object instance
-     * @var object
-     */
-    protected static $instance;
+	/**
+	 * Constructor
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+	}
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	protected function compile()
+	{
+	}
 
-    protected function compile()
-    {
+	/**
+	 * Return the current object instance (Singleton)
+	 * @return ModuleVisitorStatScreenCounter
+	 */
+	public static function getInstance()
+	{
+		if (self::$instance === null)
+		{
+			self::$instance = new self();
+		}
 
-    }
+		return self::$instance;
+	}
 
-    /**
-     * Return the current object instance (Singleton)
-     * @return ModuleVisitorStatScreenCounter
-     */
-    public static function getInstance()
-    {
-        if (self::$instance === null)
-        {
-            self::$instance = new self();
-        }
+	// ////////////////////////////////////////////////////////////
 
-        return self::$instance;
-    }
+	public function generateScreenTopResolution($VisitorsID, $limit=20)
+	{
+		$arrScreenStatCount = array();
 
-    //////////////////////////////////////////////////////////////
+		$this->TemplatePartial = new BackendTemplate('mod_visitors_be_stat_partial_screentopresolution');
 
-    public function generateScreenTopResolution($VisitorsID, $limit=20)
-    {
-        $arrScreenStatCount = false;
-
-        $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_screentopresolution');
-
-        $objScreenStatCount = \Contao\Database::getInstance()
-                        ->prepare("SELECT 
+		$objScreenStatCount = Database::getInstance()
+						->prepare("SELECT
                                         `v_s_w`,
                                         `v_s_h`,
                                         `v_s_iw`,
@@ -82,34 +82,34 @@ class ModuleVisitorStatScreenCounter extends \Contao\BackendModule
                                     GROUP BY `v_s_w`, `v_s_h`, `v_s_iw`, `v_s_ih`
                                     ORDER BY v_screen_sum DESC
                                 ")
-                        ->limit($limit)
-                        ->execute($VisitorsID);
+						->limit($limit)
+						->execute($VisitorsID);
 
-        while ($objScreenStatCount->next())
-        {
-            $arrScreenStatCount[] = array
-            (
-                'v_s_width'     => $objScreenStatCount->v_s_w,
-                'v_s_height'    => $objScreenStatCount->v_s_h,
-                'v_s_iwidth'    => $objScreenStatCount->v_s_iw,
-                'v_s_iheight'   => $objScreenStatCount->v_s_ih,
-                'v_screen_sum'  => $objScreenStatCount->v_screen_sum
-            );
-        }
-        $this->TemplatePartial->ScreenTopResolution = $arrScreenStatCount;
+		while ($objScreenStatCount->next())
+		{
+			$arrScreenStatCount[] = array
+			(
+				'v_s_width'     => $objScreenStatCount->v_s_w,
+				'v_s_height'    => $objScreenStatCount->v_s_h,
+				'v_s_iwidth'    => $objScreenStatCount->v_s_iw,
+				'v_s_iheight'   => $objScreenStatCount->v_s_ih,
+				'v_screen_sum'  => $objScreenStatCount->v_screen_sum
+			);
+		}
+		$this->TemplatePartial->ScreenTopResolution = $arrScreenStatCount;
 
-        return $this->TemplatePartial->parse();
-    }
+		return $this->TemplatePartial->parse();
+	}
 
-    public function generateScreenTopResolutionDays($VisitorsID, $limit=20, $days=30)
-    {
-        $arrScreenStatCount = false;
-        $lastdays = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
+	public function generateScreenTopResolutionDays($VisitorsID, $limit=20, $days=30)
+	{
+		$arrScreenStatCount = array();
+		$lastdays = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
-        $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
+		$this->TemplatePartial = new BackendTemplate('mod_visitors_be_stat_partial_screentopresolutiondays');
 
-        $objScreenStatCount = \Contao\Database::getInstance()
-                        ->prepare("SELECT
+		$objScreenStatCount = Database::getInstance()
+						->prepare("SELECT
                                         `v_s_w`,
                                         `v_s_h`,
                                         `v_s_iw`,
@@ -121,26 +121,25 @@ class ModuleVisitorStatScreenCounter extends \Contao\BackendModule
                                         `vid` = ?
                                     AND
                                         `v_date` >= ?
-                                    GROUP BY `v_s_w`, `v_s_h`, `v_s_iw`, `v_s_ih` 
+                                    GROUP BY `v_s_w`, `v_s_h`, `v_s_iw`, `v_s_ih`
                                     ORDER BY v_screen_sum DESC
                                 ")
-                        ->limit($limit)
-                        ->execute($VisitorsID, $lastdays);
+						->limit($limit)
+						->execute($VisitorsID, $lastdays);
 
-        while ($objScreenStatCount->next())
-        {
-            $arrScreenStatCount[] = array
-            (
-                'v_s_width'     => $objScreenStatCount->v_s_w,
-                'v_s_height'    => $objScreenStatCount->v_s_h,
-                'v_s_iwidth'    => $objScreenStatCount->v_s_iw,
-                'v_s_iheight'   => $objScreenStatCount->v_s_ih,
-                'v_screen_sum'  => $objScreenStatCount->v_screen_sum
-            );
-        }
-        $this->TemplatePartial->ScreenTopResolutionDays = $arrScreenStatCount;
+		while ($objScreenStatCount->next())
+		{
+			$arrScreenStatCount[] = array
+			(
+				'v_s_width'     => $objScreenStatCount->v_s_w,
+				'v_s_height'    => $objScreenStatCount->v_s_h,
+				'v_s_iwidth'    => $objScreenStatCount->v_s_iw,
+				'v_s_iheight'   => $objScreenStatCount->v_s_ih,
+				'v_screen_sum'  => $objScreenStatCount->v_screen_sum
+			);
+		}
+		$this->TemplatePartial->ScreenTopResolutionDays = $arrScreenStatCount;
 
-        return $this->TemplatePartial->parse();
-    }
-
+		return $this->TemplatePartial->parse();
+	}
 }
