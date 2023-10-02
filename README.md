@@ -1,7 +1,7 @@
 # Contao 5 Visitors Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
-![Contao Version](https://img.shields.io/badge/Contao-5.1-orange)
+![Contao Version](https://img.shields.io/badge/Contao-5.2-orange)
 [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![Latest Unstable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/unstable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
@@ -33,7 +33,7 @@ __Achtung__: Nutzer von Contao 4.13, verwenden `^1.8` als Versionsangabe!
 
 Translations are managed using Transifex. To create a new translation or to help to maintain an existing one, please register at transifex.com.
 
-Project Link: [https://www.transifex.com/projects/p/contao-visitors-bundle/](https://www.transifex.com/projects/p/contao-visitors-bundle/)
+Project Link: [https://www.transifex.com/bugbuster/contao-visitors-bundle/](https://www.transifex.com/bugbuster/contao-visitors-bundle/)
 
 Howto: [http://docs.transifex.com/faq/#translating](http://docs.transifex.com/faq/#translating)
 

@@ -18,7 +18,7 @@ __Attention__: Users of Contao 4.13, use `^1.8` as version number!
 
 ## Installation via command line
 
-Installation in a Composer-based Contao 5.1+ Managed-Edition:
+Installation in a Composer-based Contao 5.2+ Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle"`
 * Call http://yourdomain/contao/install
