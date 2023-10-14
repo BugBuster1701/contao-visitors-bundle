@@ -808,7 +808,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (null !== $objRequest && ($objPage = $objRequest->attributes->get('pageModel')) instanceof PageModel) {
             $urlSuffix = (string) $objPage->urlSuffix;
         }
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Auto Item: '.$_GET['auto_item']);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Auto Item: '.($_GET['auto_item'] ?? '--'));
         // wenn gleich dann hat Url ein Suffix wie .html, wenn ungleich dann Suffix ''
         if (substr($uri, -\strlen($urlSuffix)) === $urlSuffix) {
             // Suffix vorhanden
