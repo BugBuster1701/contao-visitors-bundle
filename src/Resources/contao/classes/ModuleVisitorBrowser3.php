@@ -70,6 +70,7 @@ class ModuleVisitorBrowser3
 	const BROWSER_VIVALDI = 'Vivaldi';                        // http://vivaldi.com
 	const BROWSER_DOOBLE  = 'Dooble';                         // https://textbrowser.github.io/dooble/
 	const BROWSER_QTWEB   = 'QtWeb Browser';                  // Dooble und andere
+	const BROWSER_ALOHA   = "Aloha Browser";                  // https://alohabrowser.com/
 
 	const BROWSER_ANDROID = 'Android';                        // http://www.android.com/
 	const BROWSER_GALAXY_S        = 'Galaxy S';
@@ -395,6 +396,7 @@ class ModuleVisitorBrowser3
 			//     before Safari
 			// (5) Netscape 9+ is based on Firefox so Netscape checks
 			//     before FireFox are necessary
+			$this->checkBrowserAloha() ||
 			$this->checkBrowserWebTv() ||
 		    $this->checkBrowserMaxthon()    ||  //add BugBuster, must be before IE, (Dual Engine: Webkit and Trident)
 			$this->checkBrowserInternetExplorer() ||
@@ -2012,6 +2014,22 @@ class ModuleVisitorBrowser3
         return false;
     }
 
+	/**
+     * Determine if the browser is Aloha or not
+     * @return boolean True if the browser is Aloha otherwise false
+     */
+    protected function checkBrowserAloha() {
+	    if(stripos($this->_agent, 'AlohaBrowser') !== false) {
+		    $aresult = explode('/', stristr($this->_agent, 'AlohaBrowser'));
+		    $this->setVersion($aresult[1]);
+		    $this->setBrowser(self::BROWSER_ALOHA);
+
+		    return true;
+	    }
+
+	    return false;
+    }
+
     /**
      * Determine the user's platform (last updated 1.7)
      */
@@ -2090,6 +2108,7 @@ class ModuleVisitorBrowser3
 
 	/**
 	 * The name of the platform.  All return types are from the class contants
+	 * (Windows, Win10, Linux, ...)
 	 * Fallback platformVersion with platform if platformVersion unknown
 	 * @return string Platformversion of the browser
 	 */
