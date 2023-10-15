@@ -368,7 +368,7 @@ class ModuleVisitorBrowser3
 			$firstpos = strpos($this->_version, '.');
 			if (strpos($this->_version, '.', $firstpos +1) !== false) {
 				$secondpos  = strpos($this->_version, '.', $firstpos +1);
-	    		$this->_version = substr($this->_version, 0, $secondpos );
+	    		$this->_version = substr($this->_version, 0, $secondpos);
 			}
 	    }
 	}
@@ -380,6 +380,7 @@ class ModuleVisitorBrowser3
 		if (false !== strpos($aresult, ' ')) {
 			return explode(' ', $aresult)[0];
 		}
+
 		return $aresult;
 	}
 
@@ -387,7 +388,7 @@ class ModuleVisitorBrowser3
 	  * Protected routine to determine the browser type
 	  * http://www.useragentstring.com/index.php
 	  * 
-	  * @return boolean True if the browser was detected otherwise false
+	   * @return boolean True if the browser was detected otherwise false
 	  */
 	 protected function checkBrowsers() {
 		return 
@@ -743,7 +744,7 @@ class ModuleVisitorBrowser3
 			$aresult = explode('/', stristr($this->_agent, 'EdgiOS'));
 			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);			
-			
+
 			$this->setVersion($aversion[0]);
 			$this->setBrowser(self::BROWSER_MS_EDGE);
 
@@ -2021,7 +2022,7 @@ class ModuleVisitorBrowser3
         return false;
     }
 
-	/**
+    /**
      * Determine if the browser is Aloha or not
      * @return boolean True if the browser is Aloha otherwise false
      */

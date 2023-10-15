@@ -56,8 +56,8 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
      */
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
-        //$loader->load(__DIR__ . '/../Resources/config/parameters.yml');
+        // $loader->load(__DIR__ . '/../Resources/config/parameters.yml');
         $loader->load(__DIR__.'/../Resources/config/services.yml');
-        //$loader->load(__DIR__ . '/../Resources/config/listener.yml');
+        // $loader->load(__DIR__ . '/../Resources/config/listener.yml');
     }
 }

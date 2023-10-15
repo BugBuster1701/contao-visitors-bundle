@@ -673,12 +673,14 @@ class ModuleVisitorSearchEngine// extends Frontend
 	    if (preg_match('/(http|https):\/\/duckduckgo\.com\//', $this->_http_referer))
 	    {
 	        $this->_search_engine = self::SEARCH_ENGINE_DUCKDUCKGO;
+
 	        //no parameter
 	        return true;
 	    }
 	    if (preg_match('/(http|https):\/\/r\.duckduckgo\.com\//', $this->_http_referer))
 	    {
 	        $this->_search_engine = self::SEARCH_ENGINE_DUCKDUCKGO;
+
 	        //Referrer Entferner über einen Redirect der SuMa.
 	        return true;
 	    }

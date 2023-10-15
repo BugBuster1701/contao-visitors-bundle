@@ -19,17 +19,17 @@
 namespace BugBuster\Visitors;
 
 use BugBuster\Visitors\ModuleVisitorCharts;
+use BugBuster\Visitors\ModuleVisitorStatEventsCounter;
 use BugBuster\Visitors\ModuleVisitorStatNewsFaqCounter;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use BugBuster\Visitors\ModuleVisitorStatScreenCounter;
-use BugBuster\Visitors\ModuleVisitorStatEventsCounter;
 use BugBuster\Visitors\Stat\Export\VisitorsStatExport;
 use Contao\BackendModule;
-use Contao\System;
-use Contao\Input;
 use Contao\Database;
 use Contao\Environment;
+use Contao\Input;
 use Contao\StringUtil;
+use Contao\System;
 
 /**
  * Class ModuleVisitorStat
@@ -1129,6 +1129,7 @@ class ModuleVisitorStat extends BackendModule
 		{
 			$VisitorsBrowserVersion2[$BT] = (isset($VisitorsBrowserVersion2[$BT][0])) ? $VisitorsBrowserVersion2[$BT] : array(0, 0);
 		}
+
 		//Debug log_message(print_r($VisitorsBrowserVersion2,true), 'debug.log');
 	    return array('TOP' =>$arrBrowserTop, 'TOP2'=>$VisitorsBrowserVersion2, 'DEF' =>array('UNK'  => $VisitorsBrowserVersionUNK,
                                    'KNO'  => $VisitorsBrowserVersionKNO,
@@ -1533,6 +1534,7 @@ class ModuleVisitorStat extends BackendModule
 	            return true; // User is Member of visitor_stat_group
 	        }
 	    }
+
 	    //Debug log_message('Ich bin in der falschen Gruppe', 'visitors_debug.log');
 	    return false;
 	}

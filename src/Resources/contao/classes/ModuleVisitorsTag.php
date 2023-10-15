@@ -1375,7 +1375,7 @@ class ModuleVisitorsTag extends \Contao\Frontend
 	/**
 	 * Get Page-Type
 	 * 
-	 * @param  object $objPage
+	 * @param  object  $objPage
 	 * @return integer 0 = reale Seite, 1 = News, 2 = FAQ, 403 = Forbidden
 	 */
 	protected function visitorGetPageType($objPage)

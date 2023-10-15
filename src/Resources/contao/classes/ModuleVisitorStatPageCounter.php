@@ -563,9 +563,9 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
      * generatePageVisitHitTopDays speziell für den Export
      * Filterung nach Anzahl Tagen
      * 
-     * @param integer $VisitorsID
-     * @param number  $days
-     * @param string  $parse
+     * @param  integer      $VisitorsID
+     * @param  number       $days
+     * @param  string       $parse
      * @return array|string NULL
      */
     public function generatePageVisitHitTopDays($VisitorsID, $days = 365, $parse = false)
