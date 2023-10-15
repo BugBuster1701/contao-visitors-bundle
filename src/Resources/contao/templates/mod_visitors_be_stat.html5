@@ -383,7 +383,7 @@
 			</tr>
 <?php $vsbu = 0; ?>
 <?php foreach ($this->visitorsstatBrowser[$vcid] AS $browser) : ?>
-<?php if ( $browser[0][0] ) : ?>
+<?php if ( $browser[0][0] || $browser[1][0] || $browser[2][0]) : ?>
   <?php if ( $browser[0][0] != 'Unknown' && $browser[1][0] != 'Unknown' && $browser[2][0] != 'Unknown' ) : ?>
   <?php $vsbu++; ?>
 			<tr>
