@@ -951,24 +951,55 @@ class ModuleVisitorStat extends BackendModule
                                                       $objVisitorsBrowserVersion->SUMBV);
     		    }
     	    }
-    	    //Version without number
-    	    $objVisitorsBrowserVersion2 = Database::getInstance()
-    	            ->prepare("SELECT 
-                                    visitors_browser, 
-                                    SUM(`visitors_counter`) AS SUMBV 
-                                FROM
-                                    (SELECT 
-                                        SUBSTRING_INDEX(`visitors_browser`,' ',1) AS visitors_browser, 
-                                        `visitors_counter`
-                                    FROM tl_visitors_browser
-                                    WHERE vid=?
-                                    AND visitors_browser !=?
-                                    AND SUBSTRING_INDEX(`visitors_browser`,' ',1) !=?
-                                    ) AS A
-                                GROUP BY `visitors_browser`
-                                ORDER BY SUMBV DESC, visitors_browser ASC")
-                    ->limit(10)
-                    ->execute($VisitorsID, 'Unknown', 'Mozilla');
+    	    // Version without number
+			// MySQL 8.0+ / MariaDB 10.0+ , aber wir sollten MySQL 5.7 unterstützen
+			// $objVisitorsBrowserVersion2 = Database::getInstance()
+			//         ->prepare("SELECT
+			//                         visitors_browser,
+			//                         SUM(`visitors_counter`) AS SUMBV
+			//                     FROM
+			//                         (SELECT
+			// 							REGEXP_REPLACE(`visitors_browser`,' [0-9].*$','') AS visitors_browser,
+			//                             `visitors_counter`
+			//                         FROM tl_visitors_browser
+			//                         WHERE vid=?
+			//                         AND visitors_browser !=?
+			//                         AND SUBSTRING_INDEX(`visitors_browser`,' ',1) !=?
+			//                         ) AS A
+			//                     GROUP BY `visitors_browser`
+			//                     ORDER BY SUMBV DESC, visitors_browser ASC")
+			//         ->limit(10)
+			//         ->execute($VisitorsID, 'Unknown', 'Mozilla');
+			$objVisitorsBrowserVersion2 = Database::getInstance()
+					->prepare("SELECT
+									visitors_browser,
+									SUM(`visitors_counter`) AS SUMBV
+								FROM
+									(SELECT
+										REPLACE(`visitors_browser`, SUBSTRING(
+											`visitors_browser`,
+											LENGTH(`visitors_browser`) - POSITION(' ' IN REVERSE(`visitors_browser`)) +2
+										), '') as visitors_browser , `visitors_counter`
+									FROM
+										`tl_visitors_browser`
+									WHERE
+										`visitors_browser` LIKE '%.%' AND `vid`=?
+										AND `visitors_browser` !=?
+										AND SUBSTRING_INDEX(`visitors_browser`,' ',1) !=?
+									UNION ALL
+									SELECT
+										`visitors_browser` as visitors_browser , `visitors_counter`
+									FROM
+										`tl_visitors_browser`
+									WHERE
+										`visitors_browser` NOT LIKE '%.%' AND `vid`=?
+										AND `visitors_browser` !=?
+										AND SUBSTRING_INDEX(`visitors_browser`,' ',1) !=?
+									) AS A
+								GROUP BY `visitors_browser`
+								ORDER BY SUMBV DESC, visitors_browser ASC")
+					->limit(10)
+					->execute($VisitorsID, 'Unknown', 'Mozilla', $VisitorsID, 'Unknown', 'Mozilla');
     	    if ($objVisitorsBrowserVersion2->numRows > 0) 
     	    {
     		    while ($objVisitorsBrowserVersion2->next()) 
