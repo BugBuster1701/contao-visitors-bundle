@@ -127,8 +127,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $arrVisitors[] = ['VisitorsKatID' => $this->visitors_category, 'VisitorsCounting' => $counting];
             $template->visitors = $arrVisitors;
             $template->headline = ''; // Modul Überschrift unterdrücken falls gesetzt
+            $response = $template->getResponse();
 
-            return $template->getResponse();
+            return $response;
         }
 
         /* ____  __  ____________  __  ________
@@ -239,8 +240,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         $template->visitors = $arrVisitors;
+        $response = $template->getResponse();
 
-        return $template->getResponse();
+        return $response;
     }
 
     protected function getAverageVisits($VisitorsId, $boolSeparator)

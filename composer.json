@@ -27,7 +27,8 @@
 	},
 	"require":{
 		"php": "^7.4 || ^8.0",
-		"bugbuster/contao-botdetection-bundle":">=1.7.0,<2",
+		"bugbuster/contao-botdetection-bundle":">=1.7.0,<1.9.0",
+		"bugbuster/contao-clienthints-request-bundle":"^1.0",
 		"contao/core-bundle": "^4.13",
 		"doctrine/dbal": "^2.13 || ^3.3",		
 		"phpoffice/phpspreadsheet": "^1.16",
