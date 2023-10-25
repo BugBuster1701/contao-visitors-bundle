@@ -77,7 +77,7 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 
     public function generatePageVisitHitTop($VisitorsID, $limit = 20, $parse = true)
     {
-        $arrPageStatCount = false;
+        $arrPageStatCount = array();
         $objPageStatCount = \Contao\Database::getInstance()
                         ->prepare("SELECT 
                                         visitors_page_id,
@@ -161,7 +161,7 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 
     public function generatePageVisitHitToday($VisitorsID, $limit=5)
     {
-        $arrPageStatCount = false;
+        $arrPageStatCount = array();
 
         $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithittoday');
 
@@ -321,7 +321,7 @@ class ModuleVisitorStatPageCounter extends \Contao\BackendModule
 
     public function generatePageVisitHitDays($VisitorsID, $limit=20, $days=7)
     {
-        $arrPageStatCount = false;
+        $arrPageStatCount = array();
         $week = date('Y-m-d', mktime(0, 0, 0, (int) date("m"), (int) date("d")-$days, (int) date("Y")));
 
         $this->TemplatePartial = new \Contao\BackendTemplate('mod_visitors_be_stat_partial_pagevisithitdays');

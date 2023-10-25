@@ -97,7 +97,7 @@ class ModuleVisitorStatEventsCounter extends \Contao\BackendModule
 
     public function generateEventsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrEventsStatCount = false;
+        $arrEventsStatCount = array();
 
         //News Tables exists?
         if (true === $this->getEventstableexists())

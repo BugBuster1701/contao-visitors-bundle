@@ -120,7 +120,7 @@ class ModuleVisitorStatNewsFaqCounter extends \Contao\BackendModule
 
     public function generateNewsVisitHitTop($VisitorsID, $limit = 10, $parse = true)
     {
-        $arrNewsStatCount = false;
+        $arrNewsStatCount = array();
 
         //News Tables exists?
         if (true === $this->getNewstableexists())
