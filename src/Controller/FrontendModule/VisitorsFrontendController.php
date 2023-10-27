@@ -1403,7 +1403,27 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     } // else von NULL
                 } // darf gezählt und geblockt werden
             } // if strlen
+            
         } // VisitIP numRows
+        else {
+            // blocked: Update tstamp
+            $stmt = $dbconnection->prepare(
+                'UPDATE
+                                tl_visitors_blocker
+                            SET
+                                visitors_tstamp = CURRENT_TIMESTAMP
+                            WHERE
+                                vid = :vid
+                            AND
+                                visitors_ip = :vip
+                            AND
+                                visitors_type = :vtype
+                            ');
+            $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
+            $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
+            $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
+            $stmt->executeQuery();
+        }
     }
 
     // visitorCountUpdate
