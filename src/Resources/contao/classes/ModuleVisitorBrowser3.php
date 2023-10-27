@@ -204,7 +204,6 @@ class ModuleVisitorBrowser3
 
 	public function initBrowser($useragent="", $accept_language="") { //modified for compatibility
 		$this->reset();
-		$this->getClientHints($_SERVER);
 		$this->_accept_language = $accept_language;
 		$this->setLang();
 		if($useragent != "") {
@@ -349,6 +348,7 @@ class ModuleVisitorBrowser3
 	 * Protected routine to calculate and determine what the browser is in use (including platform)
 	 */
 	protected function determine() {
+		$this->getClientHints($_SERVER);
 		$this->checkPlatform();
 		$this->checkBrowsers();
 		$this->checkForAol();
@@ -2150,15 +2150,12 @@ class ModuleVisitorBrowser3
 	}
 
     /**
-     * Improved checkPlatform with Windows Plattform Details
+     * Improved checkPlatform with Windows Platform Details
      * and Mac OS X
      * BugBuster (Glen Langer)
      */
     protected function checkPlatformVersion() 
     {
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		// #147, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
 
 		// Windows Browser unterstützt Client Hints und UA sagt Windows
@@ -2173,7 +2170,10 @@ class ModuleVisitorBrowser3
 				} elseif ($majorOsVersion > 10 && $majorOsVersion < 16) {
 					$this->_platformVersion = self::PLATFORM_WINDOWS_11;
 				}
-			}            
+			}
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		}
 		// Windows Browser unterstützt keine Client Hints oder Request kam über HTTP und UA sagt Windows
         if ((self::PLATFORM_UNKNOWN === (string) $this->_ch_platform) && ($this->_platform == self::PLATFORM_WINDOWS))
@@ -2303,6 +2303,20 @@ class ModuleVisitorBrowser3
 				|| 0 === strpos(strtolower($key), strtolower('PLATFORM'))
             ) {
                 $clientHints[$key] = $value;
+            }	
+        }
+		foreach ($clientHints as $name => $value) {
+            switch (str_replace('_', '-', strtolower((string) $name))) {
+                case 'http-sec-ch-ua-platform':
+                case 'sec-ch-ua-platform':
+                case 'platform':
+                    $this->_ch_platform = trim($value, '"');
+                    break;
+                case 'http-sec-ch-ua-platform-version':
+                case 'sec-ch-ua-platform-version':
+                case 'platformversion':
+                    $this->_ch_platformVersion = trim($value, '"');
+                    break;
             }
         }
 		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': clientHints: '. print_r($clientHints,true));
