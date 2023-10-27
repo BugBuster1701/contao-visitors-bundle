@@ -909,7 +909,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $stmt->bindValue('blocktime', $BlockTime, \PDO::PARAM_INT);
         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
-        $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
+        $stmt->bindValue('btype', 'b', \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
         // Hit Blocker for IE8 Bullshit and Browser Counting
