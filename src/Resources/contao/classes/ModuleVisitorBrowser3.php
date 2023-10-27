@@ -2128,6 +2128,27 @@ class ModuleVisitorBrowser3
 
 		return $this->_platformVersion; 
 	}
+
+	/**
+	 * Get Client Hints Platform (unknown, Windows)
+	 *
+	 * @return string
+	 */
+	public function getChPlatform() {
+
+		return $this->_ch_platform;
+	}
+
+	/**
+	 * Get Client Hints Platform Version (unknown, Win10, Win11)
+	 *
+	 * @return string
+	 */
+	public function getChPlatformVersion() {
+
+		return $this->_ch_platformVersion;
+	}
+
     /**
      * Improved checkPlatform with Windows Plattform Details
      * and Mac OS X
@@ -2135,9 +2156,9 @@ class ModuleVisitorBrowser3
      */
     protected function checkPlatformVersion() 
     {
-		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
-		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
-		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		// #147, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
 
 		// Windows Browser unterstützt Client Hints und UA sagt Windows
@@ -2284,6 +2305,9 @@ class ModuleVisitorBrowser3
                 $clientHints[$key] = $value;
             }
         }
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': clientHints: '. print_r($clientHints,true));
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 
 		return true;
 	}

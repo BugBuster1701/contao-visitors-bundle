@@ -899,16 +899,17 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         $dbconnection = $this->container->get('database_connection');
 
-        // Visitor Blocker
+        // Visitor Blocker / Browser Blocker
         $stmt = $dbconnection->prepare(
             'DELETE FROM tl_visitors_blocker
                                 WHERE CURRENT_TIMESTAMP - INTERVAL :blocktime SECOND > visitors_tstamp
                                 AND vid = :vid
-                                AND visitors_type = :vtype
+                                AND (visitors_type = :vtype OR visitors_type = :btype)
                                 ');
         $stmt->bindValue('blocktime', $BlockTime, \PDO::PARAM_INT);
         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
+        $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
         $resultSet = $stmt->executeQuery();
 
         // Hit Blocker for IE8 Bullshit and Browser Counting
@@ -1253,92 +1254,154 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
         // Page Counter End
 
-        if ($resVisitIP->rowCount() < 1) { // Browser Check wenn nicht geblockt
+        // Browser Blocker / IP setzen
+        $objBrowserIP = $dbconnection->prepare(
+            'SELECT
+                        id,
+                        visitors_ip
+                    FROM
+                        tl_visitors_blocker
+                    WHERE
+                        visitors_ip = :vip
+                    AND vid = :vid
+                    AND visitors_type = :vtype
+                    ');
+        $objBrowserIP->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
+        $objBrowserIP->bindValue('vid', $vid, \PDO::PARAM_INT);
+        $objBrowserIP->bindValue('vtype', 'b', \PDO::PARAM_STR);
+        $resBrowserIP = $objBrowserIP->executeQuery();
+
+        if ($resBrowserIP->rowCount() < 1) { // Browser Check wenn nicht geblockt
             // Only counting if User Agent is set.
             if ('' !== \Contao\Environment::get('httpUserAgent')) {
                 // Variante 3
                 $ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
                 $ModuleVisitorBrowser3->initBrowser(\Contao\Environment::get('httpUserAgent'), implode(',', \Contao\Environment::get('httpAcceptLanguage')));
-                if (null === $ModuleVisitorBrowser3->getLang()) {
-                    System::getContainer()
-                           ->get('monolog.logger.contao')
-                            ->log(LogLevel::ERROR,
-                                'ModuleVisitorBrowser3 Systemerror',
-                                ['contao' => new ContaoContext('ModulVisitors', TL_ERROR)])
-                    ;
-                } else {
-                    $arrBrowser['Browser'] = $ModuleVisitorBrowser3->getBrowser();
-                    $arrBrowser['Version'] = $ModuleVisitorBrowser3->getVersion();
-                    $arrBrowser['Platform'] = $ModuleVisitorBrowser3->getPlatformVersion();
-                    $arrBrowser['lang'] = $ModuleVisitorBrowser3->getLang();
-                    // Anpassen an Version 1 zur Weiterverarbeitung
-                    if ('unknown' === $arrBrowser['Browser']) {
-                        $arrBrowser['Browser'] = 'Unknown';
-                    }
-                    if ('unknown' === $arrBrowser['Version']) {
-                        $arrBrowser['brversion'] = $arrBrowser['Browser'];
-                    } else {
-                        $arrBrowser['brversion'] = $arrBrowser['Browser'].' '.$arrBrowser['Version'];
-                    }
-                    if ('unknown' === $arrBrowser['Platform']) {
-                        $arrBrowser['Platform'] = 'Unknown';
-                    }
-                    // Debug if ( $arrBrowser['Platform'] == 'Unknown' || $arrBrowser['Platform'] == 'Mozilla' || $arrBrowser['Version'] == 'unknown' ) {
-                    // Debug 	log_message("Unbekannter User Agent: ".$this->Environment->httpUserAgent."", 'unknown.log');
-                    // Debug }
-                    $objBrowserCounter = $dbconnection->prepare(
-                        'SELECT
-                                            id,
-                                            visitors_counter
-                                        FROM
-                                            tl_visitors_browser
-                                        WHERE
-                                            vid = :vid
-                                            AND visitors_browser = :vbrowser
-                                            AND visitors_os = :vos
-                                            AND visitors_lang = :vlang
-                                            ');
-                    $objBrowserCounter->bindValue('vid', $vid, \PDO::PARAM_INT);
-                    $objBrowserCounter->bindValue('vbrowser', $arrBrowser['brversion'], \PDO::PARAM_STR);
-                    $objBrowserCounter->bindValue('vos', $arrBrowser['Platform'], \PDO::PARAM_STR);
-                    $objBrowserCounter->bindValue('vlang', $arrBrowser['lang'], \PDO::PARAM_STR);
-                    $resBrowserCounter = $objBrowserCounter->executeQuery();
+                if ($ModuleVisitorBrowser3->getChPlatform() == 'Windows' && $ModuleVisitorBrowser3->getChPlatformVersion() == 'unknown')
+                {
+                    // Browser kann Client Hints, ist aber der erste Request ohne speziel Hints
+                    // Browser daher nicht zählen und nicht blocken
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Client Hints first request');
 
-                    // setzen
-                    if ($resBrowserCounter->rowCount() < 1) {
-                        // Insert
-                        $arrSet = [
-                            'vid' => $vid,
-                            'visitors_browser' => $arrBrowser['brversion'], // version
-                            'visitors_os' => $arrBrowser['Platform'],  // os
-                            'visitors_lang' => $arrBrowser['lang'],
-                            'visitors_counter' => 1,
-                        ];
-                        $dbconnection->insert('tl_visitors_browser', $arrSet);
-                        /*
-                        \Database::getInstance()
-                                ->prepare("INSERT INTO tl_visitors_browser %s")
-                                ->set($arrSet)
-                                ->execute();
-                        */
+                } else {
+                    // Browser kann keine Client Hints oder es ist der zweite Request mit spezial Hints
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Client Hints request or without');
+                    if ($resBrowserIP->rowCount() < 1) {
+                        // not blocked: Insert IP
+                        $stmt = $dbconnection->prepare(
+                            'INSERT INTO
+                                            tl_visitors_blocker
+                                        SET
+                                            vid = :vid,
+                                            visitors_tstamp = CURRENT_TIMESTAMP,
+                                            visitors_ip = :vip,
+                                            visitors_type = :vtype
+                                        ');
+                        $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
+                        $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
+                        $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
+                        $resultSet = $stmt->executeQuery();
                     } else {
-                        // Update
-                        $objBrowserCounterResult = $resBrowserCounter->fetchAssociative();
-                        $visitors_counter = $objBrowserCounterResult['visitors_counter'] + 1;
-                        // Update
+                        // blocked: Update tstamp
                         $stmt = $dbconnection->prepare(
                             'UPDATE
-                                            tl_visitors_browser
+                                            tl_visitors_blocker
                                         SET
-                                            visitors_counter = :vcounter
+                                            visitors_tstamp = CURRENT_TIMESTAMP
                                         WHERE
-                                            id = :vid
+                                            vid = :vid
+                                        AND
+                                            visitors_ip = :vip
+                                        AND
+                                            visitors_type = :vtype
                                         ');
-                        $stmt->bindValue('vcounter', $visitors_counter, \PDO::PARAM_INT);
-                        $stmt->bindValue('vid', $objBrowserCounterResult['id'], \PDO::PARAM_INT);
+                        $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
+                        $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
+                        $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
                         $resultSet = $stmt->executeQuery();
-                    }
-                } // else von NULL
+                    }                
+                    if (null === $ModuleVisitorBrowser3->getLang()) {
+                        System::getContainer()
+                            ->get('monolog.logger.contao')
+                                ->log(LogLevel::ERROR,
+                                    'ModuleVisitorBrowser3 Systemerror',
+                                    ['contao' => new ContaoContext('ModulVisitors', TL_ERROR)])
+                        ;
+                    } else {
+                        $arrBrowser['Browser'] = $ModuleVisitorBrowser3->getBrowser();
+                        $arrBrowser['Version'] = $ModuleVisitorBrowser3->getVersion();
+                        $arrBrowser['Platform'] = $ModuleVisitorBrowser3->getPlatformVersion();
+                        $arrBrowser['lang'] = $ModuleVisitorBrowser3->getLang();
+                        // Anpassen an Version 1 zur Weiterverarbeitung
+                        if ('unknown' === $arrBrowser['Browser']) {
+                            $arrBrowser['Browser'] = 'Unknown';
+                        }
+                        if ('unknown' === $arrBrowser['Version']) {
+                            $arrBrowser['brversion'] = $arrBrowser['Browser'];
+                        } else {
+                            $arrBrowser['brversion'] = $arrBrowser['Browser'].' '.$arrBrowser['Version'];
+                        }
+                        if ('unknown' === $arrBrowser['Platform']) {
+                            $arrBrowser['Platform'] = 'Unknown';
+                        }
+                        // Debug if ( $arrBrowser['Platform'] == 'Unknown' || $arrBrowser['Platform'] == 'Mozilla' || $arrBrowser['Version'] == 'unknown' ) {
+                        // Debug 	log_message("Unbekannter User Agent: ".$this->Environment->httpUserAgent."", 'unknown.log');
+                        // Debug }
+                        $objBrowserCounter = $dbconnection->prepare(
+                            'SELECT
+                                                id,
+                                                visitors_counter
+                                            FROM
+                                                tl_visitors_browser
+                                            WHERE
+                                                vid = :vid
+                                                AND visitors_browser = :vbrowser
+                                                AND visitors_os = :vos
+                                                AND visitors_lang = :vlang
+                                                ');
+                        $objBrowserCounter->bindValue('vid', $vid, \PDO::PARAM_INT);
+                        $objBrowserCounter->bindValue('vbrowser', $arrBrowser['brversion'], \PDO::PARAM_STR);
+                        $objBrowserCounter->bindValue('vos', $arrBrowser['Platform'], \PDO::PARAM_STR);
+                        $objBrowserCounter->bindValue('vlang', $arrBrowser['lang'], \PDO::PARAM_STR);
+                        $resBrowserCounter = $objBrowserCounter->executeQuery();
+
+                        // setzen
+                        if ($resBrowserCounter->rowCount() < 1) {
+                            // Insert
+                            $arrSet = [
+                                'vid' => $vid,
+                                'visitors_browser' => $arrBrowser['brversion'], // version
+                                'visitors_os' => $arrBrowser['Platform'],  // os
+                                'visitors_lang' => $arrBrowser['lang'],
+                                'visitors_counter' => 1,
+                            ];
+                            $dbconnection->insert('tl_visitors_browser', $arrSet);
+                            /*
+                            \Database::getInstance()
+                                    ->prepare("INSERT INTO tl_visitors_browser %s")
+                                    ->set($arrSet)
+                                    ->execute();
+                            */
+                        } else {
+                            // Update
+                            $objBrowserCounterResult = $resBrowserCounter->fetchAssociative();
+                            $visitors_counter = $objBrowserCounterResult['visitors_counter'] + 1;
+                            // Update
+                            $stmt = $dbconnection->prepare(
+                                'UPDATE
+                                                tl_visitors_browser
+                                            SET
+                                                visitors_counter = :vcounter
+                                            WHERE
+                                                id = :vid
+                                            ');
+                            $stmt->bindValue('vcounter', $visitors_counter, \PDO::PARAM_INT);
+                            $stmt->bindValue('vid', $objBrowserCounterResult['id'], \PDO::PARAM_INT);
+                            $resultSet = $stmt->executeQuery();
+                        }
+                        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser counted: ' . $arrBrowser['brversion'] .' ' . $arrBrowser['Platform']);
+                    } // else von NULL
+                } // darf gezählt und geblockt werden
             } // if strlen
         } // VisitIP numRows
     }
