@@ -561,7 +561,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $this->visitorCheckReferrer($objVisitors['id']);
             }
         }
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Counted Server: True');
+        // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Counted Server: True');
 
         return true;
     }
@@ -934,15 +934,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         // Test ob Hits gesetzt werden muessen (IE8 Bullshit and Browser Counting)
         $objHitIP = $dbconnection->prepare(
             'SELECT
-                                id,
-                                visitors_ip
-                            FROM
-                                tl_visitors_blocker
-                            WHERE
-                                visitors_ip = :vip
-                            AND vid = :vid
-                            AND visitors_type = :vtype
-                            ');
+                    id,
+                    visitors_ip
+                FROM
+                    tl_visitors_blocker
+                WHERE
+                    visitors_ip = :vip
+                AND vid = :vid
+                AND visitors_type = :vtype
+                ');
         $objHitIP->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
         $objHitIP->bindValue('vid', $vid, \PDO::PARAM_INT);
         $objHitIP->bindValue('vtype', 'h', \PDO::PARAM_STR);
@@ -951,14 +951,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         // Hits und Visits lesen
         $objHitCounter = $dbconnection->prepare(
             'SELECT
-                                id,
-                                visitors_hit,
-                                visitors_visit
-                            FROM
-                                tl_visitors_counter
-                            WHERE
-                                visitors_date = :vdate AND vid = :vid
-                            ');
+                    id,
+                    visitors_hit,
+                    visitors_visit
+                FROM
+                    tl_visitors_counter
+                WHERE
+                    visitors_date = :vdate AND vid = :vid
+                ');
         $objHitCounter->bindValue('vdate', $CURDATE, \PDO::PARAM_STR);
         $objHitCounter->bindValue('vid', $vid, \PDO::PARAM_INT);
         $resHitCounter = $objHitCounter->executeQuery();
@@ -969,13 +969,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // at first: block
                 $stmt = $dbconnection->prepare(
                     'INSERT INTO
-                                        tl_visitors_blocker
-                                    SET
-                                        vid = :vid,
-                                        visitors_tstamp = CURRENT_TIMESTAMP,
-                                        visitors_ip = :vip,
-                                        visitors_type = :vtype
-                                    ');
+                            tl_visitors_blocker
+                        SET
+                            vid = :vid,
+                            visitors_tstamp = CURRENT_TIMESTAMP,
+                            visitors_ip = :vip,
+                            visitors_type = :vtype
+                        ');
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
@@ -984,13 +984,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // Insert
                 $stmt = $dbconnection->prepare(
                     'INSERT IGNORE INTO
-                                    tl_visitors_counter
-                                SET
-                                    vid = :vid,
-                                    visitors_date = :vdate,
-                                    visitors_visit = :vv,
-                                    visitors_hit = :vh
-                                ');
+                            tl_visitors_counter
+                        SET
+                            vid = :vid,
+                            visitors_date = :vdate,
+                            visitors_visit = :vv,
+                            visitors_hit = :vh
+                        ');
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vdate', $CURDATE, \PDO::PARAM_STR);
                 $stmt->bindValue('vv', 1, \PDO::PARAM_INT);
@@ -1025,13 +1025,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // Insert Blocker
                 $stmt = $dbconnection->prepare(
                     'INSERT INTO
-                                        tl_visitors_blocker
-                                    SET
-                                        vid = :vid,
-                                        visitors_tstamp = CURRENT_TIMESTAMP,
-                                        visitors_ip = :vip,
-                                        visitors_type = :vtype
-                                    ');
+                            tl_visitors_blocker
+                        SET
+                            vid = :vid,
+                            visitors_tstamp = CURRENT_TIMESTAMP,
+                            visitors_ip = :vip,
+                            visitors_type = :vtype
+                        ');
                 $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                 $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                 $stmt->bindValue('vtype', 'h', \PDO::PARAM_STR);
@@ -1040,12 +1040,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // Insert Counter
                 $stmt = $dbconnection->prepare(
                     'UPDATE
-                                    tl_visitors_counter
-                                SET
-                                    visitors_hit = :vhit
-                                WHERE
-                                    id = :vid
-                                ');
+                            tl_visitors_counter
+                        SET
+                            visitors_hit = :vhit
+                        WHERE
+                            id = :vid
+                        ');
                 $stmt->bindValue('vhit', $visitors_hits, \PDO::PARAM_INT);
                 $stmt->bindValue('vid', $objHitCounterResult['id'], \PDO::PARAM_INT);
                 $resultSet = $stmt->executeQuery();
@@ -1277,12 +1277,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // Variante 3
                 $ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
                 $ModuleVisitorBrowser3->initBrowser(\Contao\Environment::get('httpUserAgent'), implode(',', \Contao\Environment::get('httpAcceptLanguage')));
-                if ($ModuleVisitorBrowser3->getChPlatform() == 'Windows' && $ModuleVisitorBrowser3->getChPlatformVersion() == 'unknown')
-                {
+                if ('Windows' === $ModuleVisitorBrowser3->getChPlatform() && 'unknown' === $ModuleVisitorBrowser3->getChPlatformVersion()) {
                     // Browser kann Client Hints, ist aber der erste Request ohne speziel Hints
                     // Browser daher nicht zählen und nicht blocken
                     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Client Hints first request');
-
                 } else {
                     // Browser kann keine Client Hints oder es ist der zweite Request mit spezial Hints
                     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Client Hints request or without');
@@ -1319,7 +1317,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                         $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
                         $resultSet = $stmt->executeQuery();
-                    }                
+                    }
                     if (null === $ModuleVisitorBrowser3->getLang()) {
                         System::getContainer()
                             ->get('monolog.logger.contao')
@@ -1376,12 +1374,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 'visitors_counter' => 1,
                             ];
                             $dbconnection->insert('tl_visitors_browser', $arrSet);
-                            /*
-                            \Database::getInstance()
-                                    ->prepare("INSERT INTO tl_visitors_browser %s")
-                                    ->set($arrSet)
-                                    ->execute();
-                            */
+                        /*
+                        \Database::getInstance()
+                                ->prepare("INSERT INTO tl_visitors_browser %s")
+                                ->set($arrSet)
+                                ->execute();
+                        */
                         } else {
                             // Update
                             $objBrowserCounterResult = $resBrowserCounter->fetchAssociative();
@@ -1399,11 +1397,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             $stmt->bindValue('vid', $objBrowserCounterResult['id'], \PDO::PARAM_INT);
                             $resultSet = $stmt->executeQuery();
                         }
-                        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser counted: ' . $arrBrowser['brversion'] .' ' . $arrBrowser['Platform']);
+                        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser counted: '.$arrBrowser['brversion'].' '.$arrBrowser['Platform']);
                     } // else von NULL
                 } // darf gezählt und geblockt werden
             } // if strlen
-            
         } // VisitIP numRows
         else {
             // blocked: Update tstamp
