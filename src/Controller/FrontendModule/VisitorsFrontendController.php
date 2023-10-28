@@ -584,7 +584,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $this->visitorCheckReferrer($objVisitors['id']);
             }
         }
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Counted Server: True');
+        // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Counted Server: True');
 
         return true;
     }
@@ -1493,6 +1493,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             $stmt->bindValue('vid', $objBrowserCounterResult['id'], \PDO::PARAM_INT);
                             $stmt->executeQuery();
                         }
+                        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser counted: '.$arrBrowser['brversion'].' '.$arrBrowser['Platform']);
                     } // else von NULL
                 } // darf gezählt und geblockt werden
             } // if strlen
