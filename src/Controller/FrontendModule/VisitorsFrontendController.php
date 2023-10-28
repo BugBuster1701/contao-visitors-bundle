@@ -1394,7 +1394,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                         $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                         $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
-                        $resultSet = $stmt->executeQuery();
+                        $stmt->executeQuery();
                     } else {
                         // blocked: Update tstamp
                         $stmt = $dbconnection->prepare(
@@ -1412,8 +1412,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         $stmt->bindValue('vid', $vid, \PDO::PARAM_INT);
                         $stmt->bindValue('vip', $ClientIP, \PDO::PARAM_STR);
                         $stmt->bindValue('vtype', 'b', \PDO::PARAM_STR);
-                        $resultSet = $stmt->executeQuery();
-                    }                
+                        $stmt->executeQuery();
+                    }
                     if (null === $ModuleVisitorBrowser3->getLang()) {
                         System::getContainer()
                             ->get('monolog.logger.contao')
@@ -1439,7 +1439,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             $arrBrowser['Platform'] = 'Unknown';
                         }
                         if ('Unknown' === $arrBrowser['Platform'] || 'Mozilla' === $arrBrowser['Platform'] || 'unknown' === $arrBrowser['Version']) {
-                            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unbekannter User Agent: ' . Environment::get('httpUserAgent'));
+                            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unbekannter User Agent: '.Environment::get('httpUserAgent'));
                         }
                         $objBrowserCounter = $dbconnection->prepare(
                             'SELECT
@@ -1470,12 +1470,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 'visitors_counter' => 1,
                             ];
                             $dbconnection->insert('tl_visitors_browser', $arrSet);
-                            /*
-                            \Database::getInstance()
-                                    ->prepare("INSERT INTO tl_visitors_browser %s")
-                                    ->set($arrSet)
-                                    ->execute();
-                            */
+                        /*
+                        \Database::getInstance()
+                                ->prepare("INSERT INTO tl_visitors_browser %s")
+                                ->set($arrSet)
+                                ->execute();
+                        */
                         } else {
                             // Update
                             $objBrowserCounterResult = $resBrowserCounter->fetchAssociative();
