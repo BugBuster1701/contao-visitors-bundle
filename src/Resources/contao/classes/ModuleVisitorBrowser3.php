@@ -815,7 +815,8 @@ class ModuleVisitorBrowser3
      * @return boolean True if the browser is Chrome otherwise false
      */
     protected function checkBrowserChrome() {
-	    if(stripos($this->_agent, 'Chrome') !== false) {
+	    if(stripos($this->_agent, 'Chrome') !== false
+			&& stripos($this->_agent, 'Prefetch Proxy') === false) {
 		    $aresult = explode('/', stristr($this->_agent, 'Chrome'));
 		    $aversion = explode(' ', $aresult[1]);
 		    $this->setVersion($aversion[0]);
