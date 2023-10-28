@@ -204,7 +204,6 @@ class ModuleVisitorBrowser3
 
 	public function initBrowser($useragent="", $accept_language="") { //modified for compatibility
 		$this->reset();
-		$this->getClientHints($_SERVER);
 		$this->_accept_language = $accept_language;
 		$this->setLang();
 		if($useragent != "") {
@@ -349,6 +348,7 @@ class ModuleVisitorBrowser3
 	 * Protected routine to calculate and determine what the browser is in use (including platform)
 	 */
 	protected function determine() {
+		$this->getClientHints($_SERVER);
 		$this->checkPlatform();
 		$this->checkBrowsers();
 		$this->checkForAol();
@@ -2127,6 +2127,27 @@ class ModuleVisitorBrowser3
 
 		return $this->_platformVersion; 
 	}
+
+	/**
+	 * Get Client Hints Platform (unknown, Windows)
+	 *
+	 * @return string
+	 */
+	public function getChPlatform() {
+
+		return $this->_ch_platform;
+	}
+
+	/**
+	 * Get Client Hints Platform Version (unknown, Win10, Win11)
+	 *
+	 * @return string
+	 */
+	public function getChPlatformVersion() {
+
+		return $this->_ch_platformVersion;
+	}
+
     /**
      * Improved checkPlatform with Windows Plattform Details
      * and Mac OS X
@@ -2134,9 +2155,6 @@ class ModuleVisitorBrowser3
      */
     protected function checkPlatformVersion() 
     {
-		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
-		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
-		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		// #138, Windows 11 über Client Hints, User Agent meldet Windows 10 auch bei Windows 11
 
 		// Windows Browser unterstützt Client Hints und UA sagt Windows
@@ -2151,7 +2169,10 @@ class ModuleVisitorBrowser3
 				} elseif ($majorOsVersion > 10 && $majorOsVersion < 16) {
 					$this->_platformVersion = self::PLATFORM_WINDOWS_11;
 				}
-			}            
+			}
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _platformVersion: '. $this->_platformVersion);
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		}
 		// Windows Browser unterstützt keine Client Hints oder Request kam über HTTP und UA sagt Windows
         if ((self::PLATFORM_UNKNOWN === (string) $this->_ch_platform) && ($this->_platform == self::PLATFORM_WINDOWS))
