@@ -522,7 +522,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
      */
     protected function setCounters($objPage)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objPage->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Object ID: '.$objPage->id);
         $stmt = $this->container->get('database_connection')
                     ->prepare(
                         'SELECT
