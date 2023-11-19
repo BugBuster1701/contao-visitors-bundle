@@ -24,7 +24,7 @@ use Contao\Environment;
 use Contao\Frontend;
 use Contao\Idna;
 use Contao\System;
-use Psr\Log\LogLevel;
+# use Psr\Log\LogLevel;
 
 /**
  * Class ModuleVisitorChecks
@@ -41,6 +41,8 @@ class ModuleVisitorChecks extends Frontend
 
 	private $_BackendUser   = false;
 
+	private $monologLogger;
+
 	/**
 	 * Initialize the object (do not remove)
 	 */
@@ -48,6 +50,7 @@ class ModuleVisitorChecks extends Frontend
 	{
 		parent::__construct();
 		$this->_BackendUser = $BackendUser;
+		$this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
 	}
 
 	/**
@@ -62,13 +65,16 @@ class ModuleVisitorChecks extends Frontend
 		if (!\in_array('BugBusterBotdetectionBundle', $bundles))
 		{
 			// BugBusterBotdetectionBundle Modul fehlt, Abbruch
-			System::getContainer()
-				 ->get('monolog.logger.contao')
-				 ->log(
-				 	LogLevel::ERROR,
-				 	'contao-botdetection-bundle extension required for extension: Visitors!',
-				 	array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', ContaoContext::ERROR))
-				 );
+			// System::getContainer()
+			// 	 ->get('monolog.logger.contao')
+			// 	 ->log(
+			// 	 	LogLevel::ERROR,
+			// 	 	'contao-botdetection-bundle extension required for extension: Visitors!',
+			// 	 	array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', ContaoContext::ERROR))
+			// 	 );
+			$this->monologLogger->logSystemLog('contao-botdetection-bundle extension required for extension: Visitors!'
+				 ,'ModuleVisitorChecks checkBot'
+				 , ContaoContext::ERROR);
 			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, print_r($bundles, true));
 
 			return false;
@@ -76,11 +82,11 @@ class ModuleVisitorChecks extends Frontend
 		$ModuleBotDetection = new ModuleBotDetection();
 		if ($ModuleBotDetection->checkBotAllTests())
 		{
-			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'checkBotAllTests: True');
 
 			return true;
 		}
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'checkBotAllTests: False');
 
 		return false;
 	} // checkBot
@@ -124,11 +130,11 @@ class ModuleVisitorChecks extends Frontend
 		$CheckUserAgent=str_replace($arrUserAgents, '#', $UserAgent);
 		if ($UserAgent != $CheckUserAgent)
 		{ 	// es wurde ersetzt also was gefunden
-			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'checkUserAgent: True');
 
 			return true;
 		}
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'checkUserAgent: False');
 
 		return false;
 	} // checkUserAgent
@@ -143,11 +149,11 @@ class ModuleVisitorChecks extends Frontend
 	{
 		if ($this->_BackendUser)
 		{
-			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'checkBE: True');
 
 			return true;
 		}
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'checkBE: False');
 
 		return false;
 	} // CheckBE
@@ -166,11 +172,11 @@ class ModuleVisitorChecks extends Frontend
 		$dnsResult = @dns_get_record(Idna::encode($host), DNS_A + DNS_AAAA);
 		if ((bool) $dnsResult)
 		{
-			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': True');
+			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'isDomain: True');
 
 			return true;
 		}
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': False');
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'isDomain: False');
 
 		return false;
 	}

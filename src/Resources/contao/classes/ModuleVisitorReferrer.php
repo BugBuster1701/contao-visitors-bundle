@@ -287,9 +287,8 @@ class ModuleVisitorReferrer extends System
 			$out = "Error Detail: {$this->_wrong_detail}\n";
 		}
 
-		return "\n" .
-			   "Referrer DNS : {$this->getReferrerDNS()}\n{$out}" .
+		return "Referrer DNS: {$this->getReferrerDNS()}\n{$out}" .
 			   "Referrer full: {$this->getReferrerFull()}\n" .
-			   "Server Host : {$this->getHost()}\n";
+			   "Server Host: {$this->getHost()}\n";
 	}
 }

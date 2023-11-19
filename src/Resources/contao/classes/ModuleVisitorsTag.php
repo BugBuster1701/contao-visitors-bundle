@@ -28,7 +28,7 @@ use Contao\Input;
 use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
-use Psr\Log\LogLevel;
+# use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -52,6 +52,8 @@ class ModuleVisitorsTag extends Frontend
 	private $_HitCounted   = false;
 
 	private static $_BackendUser  = false;
+
+	private $monologLogger;
 
 	const PAGE_TYPE_NORMAL     = 0;    // 0   = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
 
@@ -102,6 +104,8 @@ class ModuleVisitorsTag extends Frontend
 		}
 		System::loadLanguageFile('tl_visitors');
 
+		$this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
+
 		if (isset($arrTag[1]))
 		{
 			$visitors_category_id = (int) $arrTag[1];
@@ -125,13 +129,16 @@ class ModuleVisitorsTag extends Frontend
 
 		if (!isset($arrTag[2]))
 		{
-			System::getContainer()
-				 ->get('monolog.logger.contao')
-				 ->log(
-				 	LogLevel::ERROR,
-				 	$GLOBALS['TL_LANG']['tl_visitors']['no_key'],
-				 	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
-				 );
+			// System::getContainer()
+			// 	 ->get('monolog.logger.contao')
+			// 	 ->log(
+			// 	 	LogLevel::ERROR,
+			// 	 	$GLOBALS['TL_LANG']['tl_visitors']['no_key'],
+			// 	 	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
+			// 	 );
+			$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['no_key']
+				 ,'ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD
+				 , ContaoContext::ERROR);
 
 			return false;  // da fehlt was
 		}
@@ -165,14 +172,16 @@ class ModuleVisitorsTag extends Frontend
 					->execute($visitors_category_id, 1);
 			if ($objVisitors->numRows < 1)
 			{
-				System::getContainer()
-					 ->get('monolog.logger.contao')
-					 ->log(
-					 	LogLevel::ERROR,
-					 	$GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-					 	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
-					 );
-
+				// System::getContainer()
+				// 	 ->get('monolog.logger.contao')
+				// 	 ->log(
+				// 	 	LogLevel::ERROR,
+				// 	 	$GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+				// 	 	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
+				// 	 );
+				$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_katid']
+					 ,'ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD
+					 , ContaoContext::ERROR);
 				return false;
 			}
 
@@ -218,14 +227,16 @@ class ModuleVisitorsTag extends Frontend
 				->execute($visitors_category_id, 1);
 		if ($objVisitors->numRows < 1)
 		{
-			System::getContainer()
-				  ->get('monolog.logger.contao')
-				  ->log(
-				  	LogLevel::ERROR,
-				  	$GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-				  	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
-				  );
-
+			// System::getContainer()
+			// 	  ->get('monolog.logger.contao')
+			// 	  ->log(
+			// 	  	LogLevel::ERROR,
+			// 	  	$GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+			// 	  	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
+			// 	  );
+			$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_katid']
+				  ,'ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD
+				  , ContaoContext::ERROR);
 			return false;
 		}
 		$objVisitors->next();
@@ -492,13 +503,16 @@ class ModuleVisitorsTag extends Frontend
 				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':' . $arrTag[2]);
 				if (!isset($arrTag[3]))
 				{
-					System::getContainer()
-						   ->get('monolog.logger.contao')
-						   ->log(
-						   	LogLevel::ERROR,
-						   	$GLOBALS['TL_LANG']['tl_visitors']['no_param4'],
-						   	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
-						   );
+					// System::getContainer()
+					// 	   ->get('monolog.logger.contao')
+					// 	   ->log(
+					// 	   	LogLevel::ERROR,
+					// 	   	$GLOBALS['TL_LANG']['tl_visitors']['no_param4'],
+					// 	   	array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
+					// 	   );
+					$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['no_param4']
+						   ,'ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD
+						   , ContaoContext::ERROR);
 					ModuleVisitorLog::writeLog(__METHOD__, __LINE__, $GLOBALS['TL_LANG']['tl_visitors']['no_param4']);
 
 					return false;  // da fehlt was
@@ -549,14 +563,17 @@ class ModuleVisitorsTag extends Frontend
 				break;
 			default:
 				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':' . $GLOBALS['TL_LANG']['tl_visitors']['wrong_key']);
-				System::getContainer()
-						->get('monolog.logger.contao')
-						->log(
-							LogLevel::ERROR,
-							$GLOBALS['TL_LANG']['tl_visitors']['wrong_key'],
-							array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
-						);
-
+				// System::getContainer()
+				// 		->get('monolog.logger.contao')
+				// 		->log(
+				// 			LogLevel::ERROR,
+				// 			$GLOBALS['TL_LANG']['tl_visitors']['wrong_key'],
+				// 			array('contao' => new ContaoContext('ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
+				// 		);
+				$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_key']
+					,'ModulVisitors ReplaceInsertTags ' . VISITORS_VERSION . '.' . VISITORS_BUILD
+					, ContaoContext::ERROR);
+				 
 				return false;
 				break;
 		}
@@ -875,13 +892,17 @@ class ModuleVisitorsTag extends Frontend
 				$ModuleVisitorBrowser3->initBrowser(Environment::get('httpUserAgent'), implode(",", Environment::get('httpAcceptLanguage')));
 				if ($ModuleVisitorBrowser3->getLang() === null)
 				{
-					System::getContainer()
-						   ->get('monolog.logger.contao')
-							->log(
-								LogLevel::ERROR,
-								'ModuleVisitorBrowser3 Systemerror',
-								array('contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR))
-							);
+					// System::getContainer()
+					// 	   ->get('monolog.logger.contao')
+					// 		->log(
+					// 			LogLevel::ERROR,
+					// 			'ModuleVisitorBrowser3 Systemerror',
+					// 			array('contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR))
+					// 		);
+					$this->monologLogger->logSystemLog('ModuleVisitorBrowser3 Systemerror'
+							,'ModulVisitors'
+							, ContaoContext::ERROR);
+					 
 				}
 				else
 				{

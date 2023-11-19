@@ -51,7 +51,8 @@ class ModuleVisitorLog
 				) {
 					$arrUniqid = StringUtil::trimsplit('.', uniqid('c0n7a0', true));
 					$GLOBALS['visitors']['debug']['first'] = $arrUniqid[1];
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'], false, '', $method.' '.$line.' '.$value);
 
 					return;
 				}
@@ -82,47 +83,55 @@ class ModuleVisitorLog
 			case "ModuleVisitorsTag":
 				if ($GLOBALS['visitors']['debug']['tag'])
 				{
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'],$vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			case "ModuleVisitorChecks":
 				if ($GLOBALS['visitors']['debug']['checks'])
 				{
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'],$vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			case "ModuleVisitorReferrer":
 				if ($GLOBALS['visitors']['debug']['referrer'])
 				{
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'],$vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			case "ModuleVisitorSearchEngine":
 				if ($GLOBALS['visitors']['debug']['searchengine'])
 				{
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'],$vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			case "FrontendVisitors":
 				if ($GLOBALS['visitors']['debug']['screenresolutioncount'])
 				{
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'],$vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			case "VisitorsFrontendController":
 				if ($GLOBALS['visitors']['debug']['tag']) // @todo temporär, eigene Regel notwendig
 				{
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'],$vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			case "ModuleVisitorBrowser3":
 				if ($GLOBALS['visitors']['debug']['tag']) // @todo temporär, eigene Regel notwendig
 				{
-					self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+					self::logMonolog($GLOBALS['visitors']['debug']['first'],$vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			default:
-				self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, '(' . $vclass . ')' . $value), 'visitors_debug');
+				# self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, '(' . $vclass . ')' . $value), 'visitors_debug');
+				self::logMonolog($GLOBALS['visitors']['debug']['first'], $method, $line, '(' . $vclass . ')' . $value);
 				break;
 		}
 	}
@@ -159,7 +168,48 @@ class ModuleVisitorLog
 			$strLogsDir =  $strRootDir . '/var/logs';
 		}
 
-		error_log(sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage), 3, $strLogsDir . '/' . $strLog);
+		error_log(sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage ." (logMessage is deprecated)"), 3, $strLogsDir . '/' . $strLog);
+	}
+
+	/**
+	 * Wrapper for Monolog
+	 *
+	 * @param string $strMessage
+	 * @param string $strLog
+	 */
+	public static function logMonolog($uuid, $class, $line, $message)
+	{
+		// $env = $_SERVER['APP_ENV'] ?? 'prod';
+
+		// $strLog = $env . '-' . date('Y-m-d') . '.log';
+
+		// $strLogsDir = null;
+
+		// if (($container = System::getContainer()) !== null)
+		// {
+		// 	$strLogsDir = $container->getParameter('kernel.logs_dir');
+		// }
+
+		// if (!$strLogsDir)
+		// {
+		// 	$strRootDir = System::getContainer()->getParameter('kernel.project_dir');
+		// 	$strLogsDir =  $strRootDir . '/var/logs';
+		// }
+
+		$strMessage = sprintf("%s %s\n", $uuid, $message);
+
+		// $logger = new \Monolog\Logger('visitors');
+		// $logger->pushHandler(new \Monolog\Handler\StreamHandler($strLogsDir . '/' . $strLog, \Monolog\Logger::DEBUG));
+		// if (false !== $class) {
+		// 	$logger->debug($strMessage,["class" => $class.'::'.$line]);
+		// } else {
+		// 	$logger->debug($strMessage);
+		// }
+		// $logger = null;
+		// unset($logger);
+		#$userActionsLogger = System::getContainer()->get('monolog.logger.visitors');
+		$userActionsLogger = System::getContainer()->get('bug_buster_visitors.logger');
+		$userActionsLogger->logMonologLog($strMessage, $class, (int) $line, 'debug');
 	}
 
 	/**
