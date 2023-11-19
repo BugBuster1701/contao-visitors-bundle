@@ -1,0 +1,36 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-04-20T23:39:07+02:00" original="modules" source-language="en" target-language="hi">
+    <body>
+      <trans-unit id="FMD.visitors.0">
+        <source>Visitors</source>
+        <target>परिदर्शक</target>
+        
+      </trans-unit>
+      <trans-unit id="FMD.visitors.1">
+        <source>Count hits and visits</source>
+        <target>आने वाले और देखें गए की गणना</target>
+        
+      </trans-unit>
+      <trans-unit id="MOD.visitors.0">
+        <source>Visitors</source>
+        <target>परिदर्शक</target>
+        
+      </trans-unit>
+      <trans-unit id="MOD.visitors.1">
+        <source>This module allows you to count hits and visits of your website.</source>
+        <target>यह मापांक आपको आपके जालस्थल पर आने वालों के व संख्या बताता है।</target>
+        
+      </trans-unit>
+      <trans-unit id="MOD.visitorstat.0">
+        <source>Visitor Statistics</source>
+        <target>परिदर्शक आंकड़े</target>
+        
+      </trans-unit>
+      <trans-unit id="MOD.visitorstat.1">
+        <source>Visitor statistics from visitor module.</source>
+        <target>आने वालों के मापांक द्वारा आंकड़े</target>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

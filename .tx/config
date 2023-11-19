@@ -1,0 +1,83 @@
+[main]
+host = https://app.transifex.com
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-default]
+file_filter            = src/Resources/contao/languages/<lang>/default.xlf
+source_file            = src/Resources/contao/languages/en/default.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-default
+replace_edited_strings = false
+keep_translations      = false
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-explain]
+file_filter            = src/Resources/contao/languages/<lang>/explain.xlf
+source_file            = src/Resources/contao/languages/en/explain.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-explain
+replace_edited_strings = false
+keep_translations      = false
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-modules]
+file_filter            = src/Resources/contao/languages/<lang>/modules.xlf
+source_file            = src/Resources/contao/languages/en/modules.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-modules
+replace_edited_strings = false
+keep_translations      = false
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-tl_module]
+file_filter            = src/Resources/contao/languages/<lang>/tl_module.xlf
+source_file            = src/Resources/contao/languages/en/tl_module.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-tl_module
+replace_edited_strings = false
+keep_translations      = false
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-tl_visitors]
+file_filter            = src/Resources/contao/languages/<lang>/tl_visitors.xlf
+source_file            = src/Resources/contao/languages/en/tl_visitors.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-tl_visitors
+replace_edited_strings = false
+keep_translations      = false
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-tl_visitors_category]
+file_filter            = src/Resources/contao/languages/<lang>/tl_visitors_category.xlf
+source_file            = src/Resources/contao/languages/en/tl_visitors_category.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-tl_visitors_category
+replace_edited_strings = false
+keep_translations      = false
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-tl_visitors_referrer]
+file_filter            = src/Resources/contao/languages/<lang>/tl_visitors_referrer.xlf
+source_file            = src/Resources/contao/languages/en/tl_visitors_referrer.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-tl_visitors_referrer
+replace_edited_strings = false
+keep_translations      = false
+
+[o:bugbuster:p:contao-visitors-bundle:r:master-tl_visitors_stat_export]
+file_filter            = src/Resources/contao/languages/<lang>/tl_visitors_stat_export.xlf
+source_file            = src/Resources/contao/languages/en/tl_visitors_stat_export.xlf
+source_lang            = en
+type                   = XLIFF
+minimum_perc           = 0
+resource_name          = master-tl_visitors_stat_export
+replace_edited_strings = false
+keep_translations      = false
+

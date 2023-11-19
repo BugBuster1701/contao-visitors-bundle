@@ -1,0 +1,30 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-04-20T23:39:07+02:00" original="tl_visitors_referrer" source-language="en" target-language="fr-FR">
+    <body>
+      <trans-unit id="tl_visitors_referrer.details_for">
+        <source>Details for</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_referrer.no_data">
+        <source>No data available for the parameters.</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_referrer.no_referrer">
+        <source>Call with not enough parameters!</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_referrer.number">
+        <source>Number</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_referrer.visitor_referrer">
+        <source>Visitor Referrer</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_referrer.visitor_referrer_last_seen">
+        <source>Last seen</source>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

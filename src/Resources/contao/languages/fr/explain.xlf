@@ -1,0 +1,46 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-04-20T23:39:07+02:00" original="explain" source-language="en" target-language="fr">
+    <body>
+      <trans-unit id="XPL.visitors_help.0.0">
+        <source>Name</source>
+        <target>Nom</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help.0.1">
+        <source>The name appears as a headline in the frontend.</source>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help.1.0">
+        <source>Start date</source>
+        <target>Date de départ</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help.1.1">
+        <source>The start date is used for pure information.&lt;br&gt;In the frontend this date will be displayed&lt;br&gt;It does not affect the start of counting!&lt;br&gt;When the field left blank will hide the row in frontend.</source>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.0.0">
+        <source>HTTP_USER_AGENT partial identifier</source>
+        <target>HTTP_USER_AGENT identifiant partiel</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.0.1">
+        <source>With the change of a user agent with a unique string and entry in this field can be prevented, that will count your own requests.&lt;br&gt;Detailed instructions, can be found in the Wiki.</source>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.1.0">
+        <source>Counter template</source>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.1.1">
+        <source>Each module can be assigned its own Template. Four different templates are included.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_all&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;All fields are included.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_hits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the visit rows were removed.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_visits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the hit rows were removed.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_invisible&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here, nothing is displayed. This template is used for a pure counting.
+</source>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

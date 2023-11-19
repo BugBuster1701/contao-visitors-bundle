@@ -1,0 +1,440 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2022-08-01T09:39:51+02:00" original="default" source-language="en" target-language="hi">
+    <body>
+      <trans-unit id="MSC.tl_visitors_stat.active">
+        <source>Active</source>
+        <target>सक्रिय</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_hits">
+        <source>Hits per day:</source>
+        <target>प्रतिदिन देखा गया:</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_legend">
+        <source>Averages</source>
+        <target>औसत</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_tipp">
+        <source>(30) / (60) = &amp;Oslash; values of the last 30 / 60 days</source>
+        <target>(30) / (60) = &amp;Oslash; अंतिम 30 / 60 दिनों का मूल्य</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_visits">
+        <source>Visitors per day:</source>
+        <target>प्रति दिन परिदर्शक:</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_definition">
+        <source>Browser Definition</source>
+        <target>विचरक परिभाषा</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_known">
+        <source>Known</source>
+        <target>ज्ञात</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_lang">
+        <source>Languages</source>
+        <target>भाषाएँ</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_no_data">
+        <source>No data available.</source>
+        <target>आंकड़ा उपलब्ध नहीं।</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_os">
+        <source>Operating Systems</source>
+        <target>संचालन प्रणाली</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_osdif">
+        <source>different</source>
+        <target>भिन्न</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_top10">
+        <source>Browser TOP 10</source>
+        <target>शीर्ष 10 विचरक</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_top20">
+        <source>Browser TOP 20</source>
+        <target>शीर्ष 20 विचरक</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_unknown">
+        <source>Unknown</source>
+        <target>अज्ञात</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_version">
+        <source>Versions</source>
+        <target>संस्करण</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.chart_green">
+        <source>green</source>
+        <target>हरा</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.chart_red">
+        <source>red</source>
+        <target>लाल</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.current_month">
+        <source>Current month</source>
+        <target>इस महीने</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.current_week">
+        <source>Current week</source>
+        <target>इस सप्ताह</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.date">
+        <source>Date</source>
+        <target>दिनांक</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.hit">
+        <source>Hits</source>
+        <target>पहुंच</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.initial_values">
+        <source>Initial values</source>
+        <target>प्रारंभिक मान</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.kat">
+        <source>Category</source>
+        <target>श्रेणी</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.last_month">
+        <source>Last month</source>
+        <target>पिछले महीने</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.last_week">
+        <source>Last week</source>
+        <target>पिछले सप्ताह</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.modname">
+        <source>Visitors Bundle</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.name">
+        <source>Name</source>
+        <target>नाम</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.no_data">
+        <source>No data available for this category.</source>
+        <target>इस श्रेणी हेतु आंकड़ा उपलब्ध नहीं।</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.no_stat_data">
+        <source>No statistic data for this counter.</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.not_defined">
+        <source>Keyword not defined</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.number">
+        <source>Number</source>
+        <target>संख्या</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.over">
+        <source>via</source>
+        <target>द्वारा</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.parameter">
+        <source>Parameter</source>
+        <target>प्राचल</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.period">
+        <source>Period</source>
+        <target>अवधि</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.pub_no">
+        <source>no</source>
+        <target>नहीं</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.pub_yes">
+        <source>yes</source>
+        <target>हाँ</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_data">
+        <source>Values of the last 120 days.</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_direct">
+        <source>Direct Request</source>
+        <target>सीधे अनुरोध</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_dns">
+        <source>Domain</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_top">
+        <source>Visitor Referrer TOP 30</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.reset">
+        <source>Reset</source>
+        <target>पुनःस्थित</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine">
+        <source>Search Engine</source>
+        <target>खोज यंत्र</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine_data">
+        <source>Values of the last 60 days.</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine_no_data">
+        <source>No data available.</source>
+        <target>आंकड़ा उपलब्ध नहीं।</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine_unknown">
+        <source>unknown</source>
+        <target>अज्ञात</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchenginekeywords">
+        <source>Keywords</source>
+        <target>कुंजीशब्द</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchenginekeywords_top">
+        <source>Search Engine Keywords TOP 20</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengines_top">
+        <source>Search Engines TOP 20</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.select">
+        <source>Please select</source>
+        <target>कृपया चुनें</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.startdate">
+        <source>Counting since</source>
+        <target>तब से गिनती</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.startdate_not_defined">
+        <source>Not defined</source>
+        <target>अपरिभाषित</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.today">
+        <source>Today</source>
+        <target>आज</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.total">
+        <source>Total number</source>
+        <target>कुल संख्या</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.visit">
+        <source>Visits</source>
+        <target>उपस्थिति</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.yesterday">
+        <source>Yesterday</source>
+        <target>कल</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zero">
+        <source>The statistic counters will be reset to zero.</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zero_confirm">
+        <source>Do you really want to reset the statistic counters (hits and visits)?</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zerobrowser">
+        <source>Browser statistic will deleted.</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zerobrowser_confirm">
+        <source>Do you really want to delete the browser statistic?</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.currently online">
+        <source>Currently online</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.fewest_visitors">
+        <source>Day with the fewest visitors</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.hits_this_day">
+        <source>Hits on this day</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.most_visitors">
+        <source>Day with the most visitors</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.visitors_this_day">
+        <source>Visits on this day</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_alias">
+        <source>Page alias</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_language">
+        <source>Language</source>
+        <target>भाषा</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop">
+        <source>Page Statistic TOP 20</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop_days">
+        <source>Page Statistic TOP 20: the last 7 days</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop_today">
+        <source>Page Statistic TOP 5: today</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop_yesterday">
+        <source>Page Statistic TOP 5: yesterday</source>
+        
+      </trans-unit>
+      <trans-unit id="visitors.AverageVisitsLegend">
+        <source>Visitors per day:</source>
+        <target>प्रति दिन परिदर्शक:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TodayHitCountLegend">
+        <source>Hits today:</source>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TodayVisitCountLegend">
+        <source>Visits today:</source>
+        <target>आज का दौरा:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TotalHitCountLegend">
+        <source>Hits total:</source>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TotalVisitCountLegend">
+        <source>Visits total:</source>
+        <target>कुल परिदर्शक:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.VisitorsOnlineCountLegend">
+        <source>Online:</source>
+        
+      </trans-unit>
+      <trans-unit id="visitors.VisitorsStartDateLegend">
+        <source>Counting since:</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.screen_stat_top">
+        <source>Screen Resolutions TOP 20</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.screen_stat_device_resolution">
+        <source>Device resolutions</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.screen_stat_css_viewport">
+        <source>Sample&lt;br&gt;viewport sizes</source>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.screen_stat_top_days">
+        <source>Screen Resolutions TOP 20 (last 30 days)</source>
+        
+      </trans-unit>
+      <trans-unit id="visitors.YesterdayHitCountLegend">
+        
+        <source>Hits yesterday:</source>
+      </trans-unit>
+      <trans-unit id="visitors.YesterdayVisitCountLegend">
+        
+        <source>Visits yesterday:</source>
+      </trans-unit>
+      <trans-unit id="visitors.PageHitCountLegend">
+        
+        <source>Page hits:</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.news_stat_visithittop">
+        
+        <source>News Statistic TOP 20</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.faq_stat_visithittop">
+        
+        <source>FAQ Statistic TOP 20</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.news_title">
+        
+        <source>News Archive</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.faq_title">
+        
+        <source>FAQ Archive</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.isotope_stat_visithittop">
+        
+        <source>Isotope Statistic TOP 20</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.isotope_title">
+        
+        <source>Isotope Products</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.reset_not_allowed">
+        
+        <source>Reset the statistics is not allowed for this counter.</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.news_stat_visithittop_days">
+        
+        <source>News Statistic TOP 20: the last 7 days</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.faq_stat_visithittop_days">
+        
+        <source>FAQ Statistic TOP 20: the last 7 days</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.events_stat_visithittop">
+        
+        <source>Events Statistic TOP 20</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.events_stat_visithittop_days">
+        
+        <source>Events Statistic TOP 20: the last 7 days</source>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.events_title">
+        
+        <source>Calendar</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

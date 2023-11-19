@@ -1,6 +1,4 @@
 .git/
-# Transifex
-/.tx/
 #for development in vbox
 /vendor/
 src/vendor/

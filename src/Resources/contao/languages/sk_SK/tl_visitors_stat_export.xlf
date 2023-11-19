@@ -1,0 +1,70 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-06-01T00:12:33+02:00" original="tl_visitors_stat_export" source-language="en" target-language="sk-SK">
+    <body>
+      <trans-unit id="tl_visitors_stat_export.csv">
+        <source>CSV .csv</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.excel">
+        <source>Excel .xlsx</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.opendocument">
+        <source>OpenDocument .ods</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export">
+        <source>Export</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_category">
+        <source>Category</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_id">
+        <source>ID</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_name">
+        <source>Name</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_published">
+        <source>Published</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_date">
+        <source>Date</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_visits">
+        <source>Visits</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_hits">
+        <source>Hits</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_title">
+        <source>Visitors Statistic</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_page_title">
+        <source>Page Statistic</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.format">
+        <source>Format</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.number_of_days">
+        <source>Number of days</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.statistics_export">
+        <source>Statistics export</source>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

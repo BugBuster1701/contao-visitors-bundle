@@ -1,0 +1,36 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-04-20T23:39:07+02:00" original="tl_module" source-language="en" target-language="pl">
+    <body>
+      <trans-unit id="tl_module.visitors_categories.0">
+        <source>Visitors category</source>
+        <target>Kategorie odwiedzin</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_categories.1">
+        <source>Please select the visitors category you want to include.</source>
+        <target>Wybierz kategorię odwiedzin jaką chcesz uwzględnić.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_template.0">
+        <source>Counter template</source>
+        <target>Szablon licznika</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_template.1">
+        <source>Please choose the Counter-Template. Counter template files start with &lt;em&gt;mod_visitors_fe_&lt;/em&gt;.</source>
+        <target>Wybierz szablon licznika. Szablony licznika zaczynają się od &lt;em&gt;mod_visitors_fe_&lt;/em&gt;.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_useragent.0">
+        <source>No counting for this HTTP_USER_AGENT partial identifier</source>
+        <target>Nie licząc tego HTTP_USER_AGENT identyfikatora</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_useragent.1">
+        <source>Here you can specify a partial identifier, it will be no counting. These HTTP_USER_AGENT partial identifier of the browser must be changed.&lt;br&gt;See Wiki.</source>
+        <target>Tutaj możesz określić identyfikator który nie będzie liczony. Te HTTP_USER_AGENT identyfikatory muszą zostać zmienione.&lt;br &gt;See Wiki.</target>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
