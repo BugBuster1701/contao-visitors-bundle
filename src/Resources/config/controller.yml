@@ -1,0 +1,26 @@
+services:
+    _defaults: { autowire: true, autoconfigure: true, public: false }
+
+    BugBuster\VisitorsBundle\Controller\VisitorsFeController:
+        public: true
+        calls:
+            - method: setContainer
+              arguments: [ '@service_container' ]
+
+    BugBuster\VisitorsBundle\Controller\VisitorsController:
+        public: true
+        calls:
+            - method: setContainer
+              arguments: [ '@service_container' ]
+
+    BugBuster\VisitorsBundle\Controller\FrontendModule\VisitorsFrontendController:
+        public: true
+        tags:
+            -
+                name: contao.frontend_module
+                category: miscellaneous
+                type: visitors
+                template: mod_visitors_fe_all
+                renderer: esi
+            -
+                name: container.service_subscriber
