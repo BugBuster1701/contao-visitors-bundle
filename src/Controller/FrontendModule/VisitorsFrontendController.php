@@ -22,6 +22,7 @@ use BugBuster\Visitors\ModuleVisitorChecks;
 use BugBuster\Visitors\ModuleVisitorLog;
 use BugBuster\Visitors\ModuleVisitorReferrer;
 use BugBuster\Visitors\ModuleVisitorSearchEngine;
+use BugBuster\VisitorsBundle\Classes\VisitorLogger;
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
@@ -37,7 +38,7 @@ use Contao\PageModel;
 use Contao\System;
 use Contao\Template;
 use Doctrine\DBAL\Connection;
-use Psr\Log\LogLevel;
+// use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Security;
@@ -77,6 +78,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     private static $_BackendUser = false;
 
+    private $monologLogger;
+
     /**
      * Lazyload some services.
      */
@@ -89,12 +92,17 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $services['contao.routing.scope_matcher'] = ScopeMatcher::class;
         $services['security.helper'] = Security::class;
         $services['translator'] = TranslatorInterface::class;
+        $services['bug_buster_visitors.logger'] = VisitorLogger::class;
 
         return $services;
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
+        $this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
+        #$monologLogger->logMonologLog('Start',__METHOD__, __LINE__, 'info');
+        #$monologLogger->logSystemLog('Start',__METHOD__, ContaoContext::GENERAL);
+
         $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
         // $this->initializeContaoFramework();
@@ -110,15 +118,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         $this->visitorSetDebugSettings($this->visitors_category);
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': objPage Language manuall: '.$objPage->language);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objPage Language manuall: '.$objPage->language);
 
         if (false === self::$_BackendUser) {
             $objTokenChecker = System::getContainer()->get('contao.security.token_checker');
             if ($objTokenChecker->hasBackendUser()) {
-                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': BackendUser: Yes');
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'BackendUser: Yes');
                 self::$_BackendUser = true;
             } else {
-                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': BackendUser: No');
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'BackendUser: No');
             }
         }
 
@@ -181,12 +189,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() < 1) {
-            System::getContainer()
-                ->get('monolog.logger.contao')
-                ->log(LogLevel::ERROR,
-                    'VisitorsFrontendController User Error: no published counter found.',
-                    ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', ContaoContext::ERROR)])
-            ;
+            // System::getContainer()
+            //     ->get('monolog.logger.contao')
+            //     ->log(LogLevel::ERROR,
+            //         'VisitorsFrontendController User Error: no published counter found.',
+            //         ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', ContaoContext::ERROR)])
+            // ;
+            $this->monologLogger->logSystemLog('VisitorsFrontendController User Error: no published counter found.'
+                                        ,'VisitorsFrontendController getResponse '
+                                        , ContaoContext::ERROR);
 
             $this->strTemplate = 'mod_visitors_error';
             $template = new FrontendTemplate($this->strTemplate);
@@ -298,7 +309,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getVisitorsOnlineCount($VisitorsId, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$VisitorsId);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Visitor ID: '.$VisitorsId);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -322,19 +333,19 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getVisitorsStartDate($VisitorsStartdate, $objPage)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$VisitorsStartdate);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Visitor Startdate: '.$VisitorsStartdate);
         if (\strlen($VisitorsStartdate)) {
             $VisitorsStartDate = Date::parse($objPage->dateFormat, $VisitorsStartdate);
         } else {
             $VisitorsStartDate = '';
         }
-
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Visitor Startdate: '.$VisitorsStartDate);
         return $VisitorsStartDate;
     }
 
     protected function getTotalVisitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -360,7 +371,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTotalHitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -386,7 +397,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTodaysVisitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -413,7 +424,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getTodaysHitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -440,7 +451,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getYesterdayVisitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -467,7 +478,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getYesterdayHitCount($objVisitors, $boolSeparator)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id']);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -494,8 +505,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     protected function getPageHits($objVisitors, $boolSeparator, $objPage)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objVisitors['id'].':'.$objPage->id);
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID '.$objPage->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id'].' objPage ID:'.$objPage->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID: '.$objPage->id);
 
         // #80, bei Readerseite den Beitrags-Alias beachten
         // 0 = reale Seite / 404 / Reader ohne Parameter - Auflistung der News/FAQs
@@ -543,7 +554,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
      */
     protected function setCounters($objPage)
     {
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':'.$objPage->id);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID: '.$objPage->id);
         $stmt = $this->container->get('database_connection')
             ->prepare(
                 'SELECT
@@ -565,12 +576,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() < 1) {
-            System::getContainer()
-                ->get('monolog.logger.contao')
-                ->log(LogLevel::ERROR,
-                    $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
-                    ['contao' => new ContaoContext('VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, ContaoContext::ERROR)])
-            ;
+            // System::getContainer()
+            //     ->get('monolog.logger.contao')
+            //     ->log(LogLevel::ERROR,
+            //         $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
+            //         ['contao' => new ContaoContext('VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, ContaoContext::ERROR)])
+            // ;
+            $this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_katid']
+                                        ,'VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD
+                                        , ContaoContext::ERROR);
 
             return false;
         }
@@ -1415,12 +1429,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         $stmt->executeQuery();
                     }
                     if (null === $ModuleVisitorBrowser3->getLang()) {
-                        System::getContainer()
-                            ->get('monolog.logger.contao')
-                            ->log(LogLevel::ERROR,
-                                'ModuleVisitorBrowser3 Systemerror',
-                                ['contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR)])
-                        ;
+                        // System::getContainer()
+                        //     ->get('monolog.logger.contao')
+                        //     ->log(LogLevel::ERROR,
+                        //         'ModuleVisitorBrowser3 Systemerror',
+                        //         ['contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR)])
+                        // ;
+                        $this->monologLogger->logSystemLog('ModuleVisitorBrowser3 Systemerror'
+                                                ,'ModulVisitors'
+                                                , ContaoContext::ERROR);
                     } else {
                         $arrBrowser['Browser'] = $ModuleVisitorBrowser3->getBrowser();
                         $arrBrowser['Version'] = $ModuleVisitorBrowser3->getVersion();

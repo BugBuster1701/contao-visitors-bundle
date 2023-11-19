@@ -1,0 +1,265 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2020-11-01T15:32:47+01:00" original="tl_visitors" source-language="en" target-language="nl">
+    <body>
+      <trans-unit id="tl_visitors.average_legend">
+        <source>Average and blocktime</source>
+        <target>Gemiddeld</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.copy.0">
+        <source>Duplicate counter</source>
+        <target>Dupliceer teller</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.copy.1">
+        <source>Duplicate counter ID %s</source>
+        <target>Dupliceer teller %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.delete.0">
+        <source>Delete counter</source>
+        <target>Wis teller</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.delete.1">
+        <source>Delete counter ID %s</source>
+        <target>Wis teller %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.design_legend">
+        <source>Design</source>
+        <target>Ontwerp</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.edit.0">
+        <source>Edit counter</source>
+        <target>Bewerk teller</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.edit.1">
+        <source>Edit counter ID %s</source>
+        <target>Bewerk teller ID %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.editheader.0">
+        <source>Edit category</source>
+        <target>Bewerk categorie</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.editheader.1">
+        <source>Edit this category</source>
+        <target>Bewerk deze categorie</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.new.0">
+        <source>New counter</source>
+        <target>Nieuwe teller</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.new.1">
+        <source>Create a new counter</source>
+        <target>Maak een nieuwe teller</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.no_key">
+        <source>Tag name was not specified (parameter 3)</source>
+        <target>Tag is niet opgegeven (parameter 3)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.no_param4">
+        <source>Call without parameter 4</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.not_defined">
+        <source>Not defined</source>
+        <target>Niet gedefinieerd</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.publish_legend">
+        <source>Publish settings</source>
+        <target>Publicatie instellingen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.published.0">
+        <source>Published</source>
+        <target>Gepubliceerd</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.published.1">
+        <source>The counter will not be visible on your website until it is published.</source>
+        <target>De teller is niet zichtbaar op de website voordat deze is gepubliceerd.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.show.0">
+        <source>Details</source>
+        <target>Details</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.show.1">
+        <source>Show details of counter ID %s</source>
+        <target>Toon details van teller ID %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.start_legend">
+        <source>Optional initial values</source>
+        <target>Optionele beginwaarden</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.statistic_legend">
+        <source>Settings for the statistic output</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.title_legend">
+        <source>Name and start date</source>
+        <target>Naam en begindatum</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.toggle.0">
+        <source>Toggle visibility</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.toggle.1">
+        <source>Toggle the visibility of counter ID %s</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_average.0">
+        <source>Visitors per day</source>
+        <target>Bezoekers per dag</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_average.1">
+        <source>With activation is also displayed in the front end a line with the average number of visitors per day.</source>
+        <target>Het gemiddelde aantal bezoekers per dag.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_block_time.0">
+        <source>Block time</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_block_time.1">
+        <source>After interruption of the requests at this time, an access is counted as an additional visitor.</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_checks.0">
+        <source>Debug mode for the class &quot;Visitor Check&quot;</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_checks.1">
+        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_referrer.0">
+        <source>Debug mode for the class &quot;Visitor Referrer&quot;</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_referrer.1">
+        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_screenresolutioncount.0">
+        <source>Debug mode for the class &quot;Visitor Screen Count (Resolution)&quot;</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_screenresolutioncount.1">
+        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_searchengine.0">
+        <source>Debug mode for the class &quot;Visitor SearchEngine&quot;</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_searchengine.1">
+        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_tag.0">
+        <source>Debug mode for the class &quot;Visitors Tag&quot;</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_tag.1">
+        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_legend">
+        <source>Expert settings</source>
+        <target>Expert instellingen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_hit_start.0">
+        <source>Initial value of hits</source>
+        <target>Beginwaarde hits</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_hit_start.1">
+        <source>The entered number is added to the counter.</source>
+        <target>Het opgegeven getal wordt opgeteld bij de teller.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_name.0">
+        <source>Name</source>
+        <target>Naam</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_name.1">
+        <source>Please enter a name for this counter.</source>
+        <target>Geef een naam voor de teller.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_startdate.0">
+        <source>Start date</source>
+        <target>Begindatum</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_startdate.1">
+        <source>Here you can define a start date. In the front end this date will be displayed.&lt;br&gt;It does not affect the start of counting!</source>
+        <target>De begindatum wordt alleen gebruikt ter informatie.&lt;br /&gt;Deze datum zal in het frontend weergegeven worden.&lt;br /&gt;Deze datum beïnvloed niet het begin van het tellen!&lt;br /&gt;Als de regel leeg blijft, wordt er niets weergegeven in het frontend.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_statistic_days.0">
+        <source>Number of days in day view (table)</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_statistic_days.1">
+        <source>The entered number is the number of days in day view. Values smaller than 14 and greater than 99 are ignored.</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_thousands_separator.0">
+        <source>Thousands separator</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_thousands_separator.1">
+        <source>With activation, the thousands separator are also displayed in the front end.</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_visit_start.0">
+        <source>Initial value of visitors</source>
+        <target>Beginwaarde bezoek</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_visit_start.1">
+        <source>The entered number is added to the counter.</source>
+        <target>Het opgegeven getal wordt opgeteld bij de teller.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_count_katid">
+        <source>Call without parameter</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_katid">
+        <source>Faulty or incorrect category ID (parameter 2)</source>
+        <target>Foutieve of incorrecte categorie ID (parameter 2)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_key">
+        <source>Faulty or incorrect tag name (parameter 3)</source>
+        <target>Foutieve of incorrecte tag (parameter 3)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_screen_catid">
+        <source>Faulty or incorrect category ID (Module Screen Resolution)</source>
+        <target>Foutieve of incorrecte categorie ID (Module Screen Resolution)</target>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

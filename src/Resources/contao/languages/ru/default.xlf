@@ -1,0 +1,486 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2022-08-01T09:39:51+02:00" original="default" source-language="en" target-language="ru">
+    <body>
+      <trans-unit id="MSC.tl_visitors_stat.active">
+        <source>Active</source>
+        <target>Активные</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_hits">
+        <source>Hits per day:</source>
+        <target>Просмотров за день:</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_legend">
+        <source>Averages</source>
+        <target>Средние значения</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_tipp">
+        <source>(30) / (60) = &amp;Oslash; values of the last 30 / 60 days</source>
+        <target>(30) / (60) = &amp;Oslash; значения за последние 30 / 60 дней</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.average_visits">
+        <source>Visitors per day:</source>
+        <target>Посетителей за день:</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_definition">
+        <source>Browser Definition</source>
+        <target>Определение браузера</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_known">
+        <source>Known</source>
+        <target>Известный</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_lang">
+        <source>Languages</source>
+        <target>Языки</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_no_data">
+        <source>No data available.</source>
+        <target>Нет данных.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_os">
+        <source>Operating Systems</source>
+        <target>Операционные системы</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_osdif">
+        <source>different</source>
+        <target>иной</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_top10">
+        <source>Browser TOP 10</source>
+        <target>Браузер ТОП 10</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_top20">
+        <source>Browser TOP 20</source>
+        <target>Браузер ТОП 20</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_unknown">
+        <source>Unknown</source>
+        <target>Неизвестный</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.browser_version">
+        <source>Versions</source>
+        <target>Версии</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.chart_green">
+        <source>green</source>
+        <target>зеленый</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.chart_red">
+        <source>red</source>
+        <target>красный</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.current_month">
+        <source>Current month</source>
+        <target>Текущий месяц</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.current_week">
+        <source>Current week</source>
+        <target>Текущая неделя</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.date">
+        <source>Date</source>
+        <target>Дата</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.hit">
+        <source>Hits</source>
+        <target>Просмотры</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.initial_values">
+        <source>Initial values</source>
+        <target>Начальные значения</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.kat">
+        <source>Category</source>
+        <target>Категория</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.last_month">
+        <source>Last month</source>
+        <target>В прошлом месяце</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.last_week">
+        <source>Last week</source>
+        <target>На прошлой неделе</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.modname">
+        <source>Visitors Bundle</source>
+        <target>Пакет посетителей</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.name">
+        <source>Name</source>
+        <target>Название</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.no_data">
+        <source>No data available for this category.</source>
+        <target>Нет доступных данных для этой категории.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.no_stat_data">
+        <source>No statistic data for this counter.</source>
+        <target>Нет статистических данных для этого счетчика.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.not_defined">
+        <source>Keyword not defined</source>
+        <target>Ключевое слово не определено</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.number">
+        <source>Number</source>
+        <target>Количество</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.over">
+        <source>via</source>
+        <target>через</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.parameter">
+        <source>Parameter</source>
+        <target>Параметр</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.period">
+        <source>Period</source>
+        <target>Период</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.pub_no">
+        <source>no</source>
+        <target>нет</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.pub_yes">
+        <source>yes</source>
+        <target>да</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_data">
+        <source>Values of the last 120 days.</source>
+        <target>Значения за последние 120 дней.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_direct">
+        <source>Direct Request</source>
+        <target>Прямой запрос</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_dns">
+        <source>Domain</source>
+        <target>Домен</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.referrer_top">
+        <source>Visitor Referrer TOP 30</source>
+        <target>Реферер посетителя ТОП 30</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.reset">
+        <source>Reset</source>
+        <target>Сброс</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine">
+        <source>Search Engine</source>
+        <target>Поисковая система</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine_data">
+        <source>Values of the last 60 days.</source>
+        <target>Значения за последние 60 дней.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine_no_data">
+        <source>No data available.</source>
+        <target>Нет данных.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengine_unknown">
+        <source>unknown</source>
+        <target>неизвестно</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchenginekeywords">
+        <source>Keywords</source>
+        <target>Ключевые слова</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchenginekeywords_top">
+        <source>Search Engine Keywords TOP 20</source>
+        <target>Поисковые ключевые слова ТОП 20</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.searchengines_top">
+        <source>Search Engines TOP 20</source>
+        <target>Поисковые системы ТОП 20</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.select">
+        <source>Please select</source>
+        <target>Пожалуйста, выберите</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.startdate">
+        <source>Counting since</source>
+        <target>Подсчет с</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.startdate_not_defined">
+        <source>Not defined</source>
+        <target>Не определено</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.today">
+        <source>Today</source>
+        <target>Сегодня</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.total">
+        <source>Total number</source>
+        <target>Общее количество</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.visit">
+        <source>Visits</source>
+        <target>Визиты</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.yesterday">
+        <source>Yesterday</source>
+        <target>Вчера</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zero">
+        <source>The statistic counters will be reset to zero.</source>
+        <target>Счетчики статистики будут обнулены.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zero_confirm">
+        <source>Do you really want to reset the statistic counters (hits and visits)?</source>
+        <target>Вы действительно хотите сбросить статистику счетчиков (просмотров и посещений)?</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zerobrowser">
+        <source>Browser statistic will deleted.</source>
+        <target>Статистика браузера будет удалена.</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.zerobrowser_confirm">
+        <source>Do you really want to delete the browser statistic?</source>
+        <target>Вы действительно хотите удалить статистику браузера?</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.currently online">
+        <source>Currently online</source>
+        <target>В настоящее время онлайн</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.fewest_visitors">
+        <source>Day with the fewest visitors</source>
+        <target>День с наименьшим количеством посетителей</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.hits_this_day">
+        <source>Hits on this day</source>
+        <target>Просмотров за день</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.most_visitors">
+        <source>Day with the most visitors</source>
+        <target>День с набольшим количеством посетителей</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.visitors_this_day">
+        <source>Visits on this day</source>
+        <target>Посетителей за день</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_alias">
+        <source>Page alias</source>
+        <target>Алиас страницы</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_language">
+        <source>Language</source>
+        <target>Язык</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop">
+        <source>Page Statistic TOP 20</source>
+        <target>Статистика страниц ТОП 20</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop_days">
+        <source>Page Statistic TOP 20: the last 7 days</source>
+        <target>Статистика страниц ТОП 20: за последние 7 дней</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop_today">
+        <source>Page Statistic TOP 5: today</source>
+        <target>Статистика страниц ТОП 5: сегодня</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.page_stat_visithittop_yesterday">
+        <source>Page Statistic TOP 5: yesterday</source>
+        <target>Статистика страниц ТОП 5: вчера</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.AverageVisitsLegend">
+        <source>Visitors per day:</source>
+        <target>Посетителей за день:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TodayHitCountLegend">
+        <source>Hits today:</source>
+        <target>Просмотров сегодня:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TodayVisitCountLegend">
+        <source>Visits today:</source>
+        <target>Посещений сегодня:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TotalHitCountLegend">
+        <source>Hits total:</source>
+        <target>Просмотров всего:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.TotalVisitCountLegend">
+        <source>Visits total:</source>
+        <target>Посещений всего:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.VisitorsOnlineCountLegend">
+        <source>Online:</source>
+        <target>Онлайн:</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.VisitorsStartDateLegend">
+        <source>Counting since:</source>
+        <target>Подсчет с:</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.screen_stat_top">
+        <source>Screen Resolutions TOP 20</source>
+        <target>Разрешение экрана ТОП 20</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.screen_stat_device_resolution">
+        <source>Device resolutions</source>
+        <target>Разрешения экрана устройств</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.screen_stat_css_viewport">
+        <source>Sample&lt;br&gt;viewport sizes</source>
+        <target>Например&lt;br&gt;размер viewport</target>
+        
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.screen_stat_top_days">
+        <source>Screen Resolutions TOP 20 (last 30 days)</source>
+        <target>Разрешение экрана ТОП 20 (последние 30 дней)</target>
+        
+      </trans-unit>
+      <trans-unit id="visitors.YesterdayHitCountLegend">
+        
+        <source>Hits yesterday:</source>
+        <target>Просмотров вчера:</target>
+      </trans-unit>
+      <trans-unit id="visitors.YesterdayVisitCountLegend">
+        
+        <source>Visits yesterday:</source>
+        <target>Посещений вчера:</target>
+      </trans-unit>
+      <trans-unit id="visitors.PageHitCountLegend">
+        
+        <source>Page hits:</source>
+        <target>Просмотров страницы:</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.news_stat_visithittop">
+        
+        <source>News Statistic TOP 20</source>
+        <target>Новости Статистика TOP 20</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.faq_stat_visithittop">
+        
+        <source>FAQ Statistic TOP 20</source>
+        <target>FAQ Статистика TOP 20</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.news_title">
+        
+        <source>News Archive</source>
+        <target>Архив новостей</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.faq_title">
+        
+        <source>FAQ Archive</source>
+        <target>Архив FAQ</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.isotope_stat_visithittop">
+        
+        <source>Isotope Statistic TOP 20</source>
+        <target>Статистика Isotope ТОП 20</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.isotope_title">
+        
+        <source>Isotope Products</source>
+        <target>Приложения Isotope</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.reset_not_allowed">
+        
+        <source>Reset the statistics is not allowed for this counter.</source>
+        <target>Сброс статистики для этого счетчика запрещен.</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.news_stat_visithittop_days">
+        
+        <source>News Statistic TOP 20: the last 7 days</source>
+        <target>Новости Статистика TOP 20: за последние 7 дней</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.faq_stat_visithittop_days">
+        
+        <source>FAQ Statistic TOP 20: the last 7 days</source>
+        <target>FAQ Статистика TOP 20: за последние 7 дней</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.events_stat_visithittop">
+        
+        <source>Events Statistic TOP 20</source>
+        <target>Статистика событий ТОП 20</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_vivitors_stat.events_stat_visithittop_days">
+        
+        <source>Events Statistic TOP 20: the last 7 days</source>
+        <target>Статистика событий ТОП-20: за последние 7 дней</target>
+      </trans-unit>
+      <trans-unit id="MSC.tl_visitors_stat.events_title">
+        
+        <source>Calendar</source>
+        <target>Календарь</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

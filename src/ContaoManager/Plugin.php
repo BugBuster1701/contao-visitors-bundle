@@ -25,12 +25,18 @@ use Contao\ManagerPlugin\Routing\RoutingPluginInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\RouteCollection;
 
 /**
  * Plugin for the Contao Manager.
  */
-class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPluginInterface
+class Plugin implements BundlePluginInterface , RoutingPluginInterface, ConfigPluginInterface
 {
+    /**
+     * Gets a list of autoload configurations for this bundle.
+     *
+     * @return array<ConfigInterface>
+     */
     public function getBundles(ParserInterface $parser)
     {
         return [
@@ -39,7 +45,13 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
                 ->setReplace(['visitors']),
         ];
     }
-
+    /**
+     * getRouteCollection
+     *
+     * @param LoaderResolverInterface $resolver
+     * @param KernelInterface $kernel
+     * @return RouteCollection|null
+     */
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)
     {
         return $resolver
@@ -54,7 +66,8 @@ class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPlu
     public function registerContainerConfiguration(LoaderInterface $loader, array $managerConfig): void
     {
         // $loader->load(__DIR__ . '/../Resources/config/parameters.yml');
-        $loader->load(__DIR__.'/../Resources/config/services.yml');
+        $loader->load(__DIR__.'/../Resources/config/controller.yml');
+        $loader->load(__DIR__.'/../Resources/config/config.yml');
         // $loader->load(__DIR__ . '/../Resources/config/listener.yml');
     }
 }

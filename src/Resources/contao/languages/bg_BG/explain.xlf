@@ -1,0 +1,56 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-04-20T23:39:07+02:00" original="explain" source-language="en" target-language="bg-BG">
+    <body>
+      <trans-unit id="XPL.visitors_help.0.0">
+        <source>Name</source>
+        <target>Име</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help.0.1">
+        <source>The name appears as a headline in the frontend.</source>
+        <target>Името се вижда под формата на заглавие във фронтенда.</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help.1.0">
+        <source>Start date</source>
+        <target>Начална дата</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help.1.1">
+        <source>The start date is used for pure information.&lt;br&gt;In the frontend this date will be displayed&lt;br&gt;It does not affect the start of counting!&lt;br&gt;When the field left blank will hide the row in frontend.</source>
+        <target>Началната дата се ползва чисто информативно.&lt;br&gt;Тази дата ще се показва във фронтеда&lt;br&gt;Не влиае на началото на броенето!&lt;br&gt;Ако оставите това поле празно то този ред ще е скрит във фронтенда.</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.0.0">
+        <source>HTTP_USER_AGENT partial identifier</source>
+        <target>HTTP_USER_AGENT частичен идентификатор</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.0.1">
+        <source>With the change of a user agent with a unique string and entry in this field can be prevented, that will count your own requests.&lt;br&gt;Detailed instructions, can be found in the Wiki.</source>
+        <target>Чрез промяна на user agent с уникален стринг, въведен в това поле, ще предотвратите броенето на вашите собствени заявки.&lt;br&gt;Подробни инструкции можете да намерите в Wiki.</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.1.0">
+        <source>Counter template</source>
+        <target>Темплейт за брояча</target>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.1.1">
+        <source>Each module can be assigned its own Template. Four different templates are included.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_all&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;All fields are included.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_hits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the visit rows were removed.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_visits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the hit rows were removed.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_invisible&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here, nothing is displayed. This template is used for a pure counting.
+</source>
+        <target>Всеки модул може да бъда с различен темплейт. Включени са четири различни темплейта.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_all&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Всички полета са включени.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_hits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Тук е изключен реда с посещенията.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_visits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Тук е изключен редът с попаденията.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_invisible&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Тук не се показва нищо. Този темплейт е просто за броене без визуализация.
+</target>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

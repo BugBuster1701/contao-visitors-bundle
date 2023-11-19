@@ -1,26 +1,25 @@
 services:
     _defaults: { autowire: true, autoconfigure: true, public: false }
 
-    BugBuster\VisitorsBundle\Controller\VisitorsFeController:
+    # bug_buster_visitors.logger:
+    #     class: "BugBuster\\VisitorsBundle\\Classes\\VisitorLogger"
+    BugBuster\VisitorsBundle\Classes\VisitorLogger:
         public: true
-        calls:
-            - method: setContainer
-              arguments: [ '@service_container' ]
-
-    BugBuster\VisitorsBundle\Controller\VisitorsController:
-        public: true
-        calls:
-            - method: setContainer
-              arguments: [ '@service_container' ]
-
-    BugBuster\VisitorsBundle\Controller\FrontendModule\VisitorsFrontendController:
-        public: true
+        arguments: 
+            - '@service_container'
+            - '@logger'
+            - '@monolog.logger.contao'
         tags:
-            -
-                name: contao.frontend_module
-                category: miscellaneous
-                type: visitors
-                template: mod_visitors_fe_all
-                renderer: esi
-            -
-                name: container.service_subscriber
+            - 
+                name: monolog.logger
+                channel: visitors
+
+    bug_buster_visitors.logger:
+        alias: BugBuster\VisitorsBundle\Classes\VisitorLogger
+        public: true
+
+    # entspricht monolog.formatter.line
+    # monolog.formatter.visitors:
+    #     class: Monolog\Formatter\LineFormatter
+    #     arguments:
+    #         - "[%%datetime%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"

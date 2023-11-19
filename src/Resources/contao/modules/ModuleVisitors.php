@@ -24,7 +24,7 @@ use Contao\FrontendTemplate;
 use Contao\Module;
 use Contao\StringUtil;
 use Contao\System;
-use Psr\Log\LogLevel;
+# use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,6 +42,8 @@ class ModuleVisitors extends Module
 	protected $strTemplate = 'mod_visitors_fe_all';
 
 	protected $useragent_filter = '';
+
+	private $monologLogger;
 
 	/**
 	 * Display a wildcard in the back end
@@ -104,13 +106,18 @@ class ModuleVisitors extends Module
 			$this->strTemplate = 'mod_visitors_error';
 			$this->Template = new FrontendTemplate($this->strTemplate);
 
-			System::getContainer()
-				 ->get('monolog.logger.contao')
-				 ->log(
-				 	LogLevel::ERROR,
-				 	'ModuleVisitors User Error: no published counter found.',
-				 	array('contao' => new ContaoContext('ModulVisitors compile ', ContaoContext::ERROR))
-				 );
+			// System::getContainer()
+			// 	 ->get('monolog.logger.contao')
+			// 	 ->log(
+			// 	 	LogLevel::ERROR,
+			// 	 	'ModuleVisitors User Error: no published counter found.',
+			// 	 	array('contao' => new ContaoContext('ModulVisitors compile ', ContaoContext::ERROR))
+			// 	 );
+			$this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
+			$this->monologLogger->logSystemLog('ModuleVisitors User Error: no published counter found.'
+				 ,'ModulVisitors compile '
+				 , ContaoContext::ERROR);
+			 
 
 			return;
 		}

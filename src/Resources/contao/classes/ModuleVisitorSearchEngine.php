@@ -1011,8 +1011,7 @@ class ModuleVisitorSearchEngine // extends Frontend
 
 	public function __toString()
 	{
-		return "\n" .
-			   "Engine Name : {$this->getEngine()}\n" .
-			   "Keywords    : {$this->getKeywords()}\n";
+		return "Engine Name: {$this->getEngine()}\n" .
+			   "Keywords: {$this->getKeywords()}\n";
 	}
 }

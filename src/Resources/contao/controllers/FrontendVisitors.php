@@ -18,7 +18,7 @@ use Contao\Database;
 use Contao\Frontend;
 use Contao\Input;
 use Contao\System;
-use Psr\Log\LogLevel;
+# use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -30,6 +30,8 @@ class FrontendVisitors extends Frontend
 
 	private static $_BackendUser  = false;
 
+	private $monologLogger;
+
 	/**
 	 * Initialize the object (do not remove)
 	 */
@@ -38,6 +40,8 @@ class FrontendVisitors extends Frontend
 		parent::__construct();
 
 		System::loadLanguageFile('tl_visitors');
+
+		$this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
 	}
 
 	/**
@@ -47,7 +51,7 @@ class FrontendVisitors extends Frontend
 	 */
 	public function run()
 	{
-		$logger = System::getContainer()->get('monolog.logger.contao');
+		# $logger = System::getContainer()->get('monolog.logger.contao');
 
 		if (false === self::$_BackendUser)
 		{
@@ -91,11 +95,14 @@ class FrontendVisitors extends Frontend
 								->execute($visitors_category_id, 1);
 				if ($objVisitors->numRows < 1)
 				{
-					$logger->log(
-						LogLevel::ERROR,
-						$GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
-						array('contao' => new ContaoContext('FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
-					);
+					// $logger->log(
+					// 	LogLevel::ERROR,
+					// 	$GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
+					// 	array('contao' => new ContaoContext('FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
+					// );
+					$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid']
+						,'FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD
+						, ContaoContext::ERROR);
 				}
 				else
 				{
@@ -108,11 +115,14 @@ class FrontendVisitors extends Frontend
 		}
 		else
 		{
-			$logger->log(
-				LogLevel::ERROR,
-				$GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
-				array('contao' => new ContaoContext('FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
-			);
+			// $logger->log(
+			// 	LogLevel::ERROR,
+			// 	$GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
+			// 	array('contao' => new ContaoContext('FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
+			// );
+			$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid']
+				,'FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD
+				, ContaoContext::ERROR);
 		}
 
 		// raus hier
@@ -155,7 +165,7 @@ class FrontendVisitors extends Frontend
 	 */
 	protected function visitorScreenCountUpdate($vid, $BlockTime, $visitors_category_id, $BackendUser = false)
 	{
-		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': ' . print_r($this->_SCREEN, true));
+		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Screen: ' . implode(' ', (array) $this->_SCREEN));
 
 		$ModuleVisitorChecks = new ModuleVisitorChecks($BackendUser);
 		if ($ModuleVisitorChecks->checkBot() === true)

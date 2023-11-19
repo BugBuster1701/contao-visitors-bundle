@@ -1,0 +1,286 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2020-11-01T15:32:47+01:00" original="tl_visitors" source-language="en" target-language="ru">
+    <body>
+      <trans-unit id="tl_visitors.average_legend">
+        <source>Average and blocktime</source>
+        <target>Среднее и время блокировки</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.copy.0">
+        <source>Duplicate counter</source>
+        <target>Дублировать счетчик</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.copy.1">
+        <source>Duplicate counter ID %s</source>
+        <target>Дублировать счетчик ID %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.delete.0">
+        <source>Delete counter</source>
+        <target>Удалить счетчик</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.delete.1">
+        <source>Delete counter ID %s</source>
+        <target>Удалить счетчик ID %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.design_legend">
+        <source>Design</source>
+        <target>Дизайн</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.edit.0">
+        <source>Edit counter</source>
+        <target>Редактировать счетчик</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.edit.1">
+        <source>Edit counter ID %s</source>
+        <target>Редактировать счетчик ID %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.editheader.0">
+        <source>Edit category</source>
+        <target>Редактировать категорию</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.editheader.1">
+        <source>Edit this category</source>
+        <target>Редактировать категорию</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.new.0">
+        <source>New counter</source>
+        <target>Новый счетчик</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.new.1">
+        <source>Create a new counter</source>
+        <target>Создать новый счетчик</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.no_key">
+        <source>Tag name was not specified (parameter 3)</source>
+        <target>Имя тега не было указано (параметр 3)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.no_param4">
+        <source>Call without parameter 4</source>
+        <target>Вызов без параметра 4</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.not_defined">
+        <source>Not defined</source>
+        <target>Не определено</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.publish_legend">
+        <source>Publish settings</source>
+        <target>Настройки публикации</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.published.0">
+        <source>Published</source>
+        <target>Опубликовано</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.published.1">
+        <source>The counter will not be visible on your website until it is published.</source>
+        <target>Счетчик не будет виден на веб-сайте, пока он не будет опубликован.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.show.0">
+        <source>Details</source>
+        <target>Детали</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.show.1">
+        <source>Show details of counter ID %s</source>
+        <target>Показать детали счетчика ID %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.start_legend">
+        <source>Optional initial values</source>
+        <target>Дополнительные начальные значения</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.statistic_legend">
+        <source>Settings for the statistic output</source>
+        <target>Параметры вывода статистики</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.title_legend">
+        <source>Name and start date</source>
+        <target>Название и дата начала</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.toggle.0">
+        <source>Toggle visibility</source>
+        <target>Переключить видимость</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.toggle.1">
+        <source>Toggle the visibility of counter ID %s</source>
+        <target>Переключить видимость счетчика ID %s</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_average.0">
+        <source>Visitors per day</source>
+        <target>Посетителей за день</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_average.1">
+        <source>With activation is also displayed in the front end a line with the average number of visitors per day.</source>
+        <target>При активации отобразится во внешнем интерфейсе, как среднее количество посетителей в день.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_block_time.0">
+        <source>Block time</source>
+        <target>Время блокировки</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_block_time.1">
+        <source>After interruption of the requests at this time, an access is counted as an additional visitor.</source>
+        <target>Время в секундах. После этого интервала времени доступ засчитывается в качестве еще одного посещения.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_checks.0">
+        <source>Debug mode for the class &quot;Visitor Check&quot;</source>
+        <target>Режим отладки для класса &quot;Проверка посетителей&quot;</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_checks.1">
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
+        <target>При активации, записывать отладочную информацию (visitors.DEBUG) в журнал  (&lt;em&gt;var/logs/prod-Дата.log&lt;/em&gt;)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_referrer.0">
+        <source>Debug mode for the class &quot;Visitor Referrer&quot;</source>
+        <target>Режим отладки для класса &quot;Реферер посетителя&quot;</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_referrer.1">
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
+        <target>При активации, записывать отладочную информацию (visitors.DEBUG) в журнал  (&lt;em&gt;var/logs/prod-Дата.log&lt;/em&gt;)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_screenresolutioncount.0">
+        <source>Debug mode for the class &quot;Visitor Screen Count (Resolution)&quot;</source>
+        <target>Отладочный режим работы для класса &quot;Счетчик разрешений экрана посетителей&quot;</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_screenresolutioncount.1">
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
+        <target>При активации, записывать отладочную информацию (visitors.DEBUG) в журнал  (&lt;em&gt;var/logs/prod-Дата.log&lt;/em&gt;)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_searchengine.0">
+        <source>Debug mode for the class &quot;Visitor SearchEngine&quot;</source>
+        <target>Отладочный режим работы для класса &quot;Посетители поисковой системы&quot;</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_searchengine.1">
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
+        <target>При активации, записывать отладочную информацию (visitors.DEBUG) в журнал  (&lt;em&gt;var/logs/prod-Дата.log&lt;/em&gt;)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_tag.0">
+        <source>Debug mode for the class &quot;Visitors Tag&quot;</source>
+        <target>Режим отладки для класса &quot;Тег посетителей&quot;</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_debug_tag.1">
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
+        <target>При активации, записывать отладочную информацию (visitors.DEBUG) в журнал  (&lt;em&gt;var/logs/prod-Дата.log&lt;/em&gt;)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_expert_legend">
+        <source>Expert settings</source>
+        <target>Экспертные настройки</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_hit_start.0">
+        <source>Initial value of hits</source>
+        <target>Начальные значения просмотров</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_hit_start.1">
+        <source>The entered number is added to the counter.</source>
+        <target>Введенное число добавляется к счетчику.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_name.0">
+        <source>Name</source>
+        <target>Название</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_name.1">
+        <source>Please enter a name for this counter.</source>
+        <target>Введите название этого счетчика.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_startdate.0">
+        <source>Start date</source>
+        <target>Дата начала</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_startdate.1">
+        <source>Here you can define a start date. In the front end this date will be displayed.&lt;br&gt;It does not affect the start of counting!</source>
+        <target>Вы можете определить дату начала. Она будет выведена во внешнем интерфейсе.&lt;br&gt;Это не влияет на начало подсчета!</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_statistic_days.0">
+        <source>Number of days in day view (table)</source>
+        <target>Количество дней в день представления (таблица)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_statistic_days.1">
+        <source>The entered number is the number of days in day view. Values smaller than 14 and greater than 99 are ignored.</source>
+        <target>Введенное число — число дней в день представления. Значения меньше 14 и больше 99 игнорируются.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_thousands_separator.0">
+        <source>Thousands separator</source>
+        <target>Разделитель тысяч</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_thousands_separator.1">
+        <source>With activation, the thousands separator are also displayed in the front end.</source>
+        <target>При активации разделителя тысяч, он также выводится во внешнем интерфейсе веб-сайта.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_visit_start.0">
+        <source>Initial value of visitors</source>
+        <target>Начальные значения посещений</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.visitors_visit_start.1">
+        <source>The entered number is added to the counter.</source>
+        <target>Введенное число добавляется к счетчику.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_count_katid">
+        <source>Call without parameter</source>
+        <target>Вызов без параметра</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_katid">
+        <source>Faulty or incorrect category ID (parameter 2)</source>
+        <target>Неисправный или неправильная категория ID (параметр 2)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_key">
+        <source>Faulty or incorrect tag name (parameter 3)</source>
+        <target>Неисправный или неправильное имя тега (параметр 3)</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors.wrong_screen_catid">
+        <source>Faulty or incorrect category ID (Module Screen Resolution)</source>
+        <target>Ошибка или неверный ID категории (Модуль разрешение экрана)</target>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

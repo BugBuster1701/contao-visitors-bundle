@@ -1,0 +1,86 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-06-01T00:12:33+02:00" original="tl_visitors_stat_export" source-language="en" target-language="nl">
+    <body>
+      <trans-unit id="tl_visitors_stat_export.csv">
+        <source>CSV .csv</source>
+        <target>CSV .csv</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.excel">
+        <source>Excel .xlsx</source>
+        <target>Excel .xlsx</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.opendocument">
+        <source>OpenDocument .ods</source>
+        <target>OpenDocument .ods</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export">
+        <source>Export</source>
+        <target>Exporteer</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_category">
+        <source>Category</source>
+        <target>Categorie</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_id">
+        <source>ID</source>
+        <target>ID</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_name">
+        <source>Name</source>
+        <target>Naam</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_published">
+        <source>Published</source>
+        <target>Gepubliceerd</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_date">
+        <source>Date</source>
+        <target>Datum</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_visits">
+        <source>Visits</source>
+        <target>Bezoeken</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_field_hits">
+        <source>Hits</source>
+        <target>Hits</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_title">
+        <source>Visitors Statistic</source>
+        <target>Bezoekersstatistiek</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.export_page_title">
+        <source>Page Statistic</source>
+        <target>Pagina statistieken</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.format">
+        <source>Format</source>
+        <target>Indeling</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.number_of_days">
+        <source>Number of days</source>
+        <target>Aantal dagen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_stat_export.statistics_export">
+        <source>Statistics export</source>
+        <target>Statistieken export</target>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

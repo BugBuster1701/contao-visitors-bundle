@@ -1,0 +1,176 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2018-12-29T17:54:23+01:00" original="tl_visitors_category" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_visitors_category.copy.0">
+        <source>Copy category</source>
+        <target>Kategorie duplizieren</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.copy.1">
+        <source>Copy category ID %s</source>
+        <target>Kategorie ID %s duplizieren</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.delete.0">
+        <source>Delete category</source>
+        <target>Kategorie löschen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.delete.1">
+        <source>Delete category ID %s</source>
+        <target>Kategorie ID %s löschen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.deleteConfirm">
+        <source>Deleting a category will also delete all its counter informations. Do you really want to delete category ID %s?</source>
+        <target>Wenn Sie eine Kategorie löschen werden auch alle darin enthaltenen Besucher Definitionen gelöscht. Wollen Sie die Kategorie ID %s wirklich löschen?</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.edit.0">
+        <source>Edit category</source>
+        <target>Kategorie bearbeiten</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.edit.1">
+        <source>Edit category ID %s</source>
+        <target>Kategorie ID %s bearbeiten</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.editheader.0">
+        <source>Edit category settings</source>
+        <target>Einstellungen der Kategorie bearbeiten</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.editheader.1">
+        <source>Edit the settings of category ID %s</source>
+        <target>Einstellungen der Kategorie ID %s bearbeiten</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.new.0">
+        <source>New category</source>
+        <target>Neue Kategorie</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.new.1">
+        <source>Create a new category</source>
+        <target>Eine neue Kategorie anlegen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.show.0">
+        <source>Category details</source>
+        <target>Kategoriedetails</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.show.1">
+        <source>Show details of category ID %s</source>
+        <target>Details der Kategorie ID %s anzeigen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.stat.0">
+        <source>Category statistic</source>
+        <target>Kategoriestatistik</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.stat.1">
+        <source>Show counter statistic for category ID %s</source>
+        <target>Besucherstatistik für die Kategorie ID %s anzeigen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.title.0">
+        <source>Title</source>
+        <target>Kategorie</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.title.1">
+        <source>Please enter the title of the category.</source>
+        <target>Bitte geben Sie den Namen der Kategorie ein.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.title_legend">
+        <source>Title</source>
+        <target>Kategorie</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.tstamp.0">
+        <source>Revision date</source>
+        <target>Änderungsdatum</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.tstamp.1">
+        <source>Date and time of latest revision</source>
+        <target>Datum und Uhrzeit der letzten Änderung</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.protected_stat_legend">
+        <source>Access protection for the statistic</source>
+        <target>Zugriffsschutz für die Statistik</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_stat_protected.0">
+        <source>Protect the statistic</source>
+        <target>Schutz der Statistik</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_stat_protected.1">
+        <source>Show the visitor statistic for this category to certain user groups only.</source>
+        <target>Den Inhalt der Besucherstatistik nur bestimmten Gruppen im Backend anzeigen.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_stat_groups.0">
+        <source>Allowed user groups</source>
+        <target>Erlaubte Benutzergruppen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_stat_groups.1">
+        <source>Here you can choose which groups will be allowed to see the visitor statistic of this category.</source>
+        <target>Hier können Sie festlegen, welche Benutzergruppen die Besucherstatistik der Kategorie im Backend sehen dürfen.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_stat_admins.0">
+        <source>Administrators</source>
+        <target>Administratoren</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_stat_admins.1">
+        <source>Administrators have unlimited access to all visitor statistics.</source>
+        <target>Administratoren haben uneingeschränkten Zugriff auf alle Besucherstatistiken.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.protected_statreset_legend">
+        
+        <source>Access protection for resetting the statistics</source>
+        <target>Zugriffsschutz vor Rücksetzung der Statistik</target>
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_statreset_protected.0">
+        
+        <source>Protection of statistics from resetting</source>
+        <target>Schutz der Statistik vor Rücksetzung</target>
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_statreset_protected.1">
+        
+        <source>Allow resetting the visitor statistics only certain user groups only.</source>
+        <target>Die Rücksetzung der Besucherstatistik nur bestimmten Gruppen im Backend erlauben.</target>
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_statreset_groups.0">
+        
+        <source>Allowed user groups</source>
+        <target>Erlaubte Benutzergruppen</target>
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_statreset_groups.1">
+        
+        <source>Here you can choose which groups will be allowed to resetting the visitor statistic of this category.</source>
+        <target>Hier können Sie festlegen, welche Benutzergruppen die Besucherstatistik der Kategorie im Backend auf 0 setzen dürfen.</target>
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_statreset_admins.0">
+        
+        <source>Administrators</source>
+        <target>Administratoren</target>
+      </trans-unit>
+      <trans-unit id="tl_visitors_category.visitors_statreset_admins.1">
+        
+        <source>Administrators have unlimited access to all visitor statistics.</source>
+        <target>Administratoren haben uneingeschränkten Zugriff auf alle Besucherstatistiken.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,36 @@
+<?xml version="1.0" ?><xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file datatype="php" date="2017-04-20T23:39:07+02:00" original="tl_module" source-language="en" target-language="de">
+    <body>
+      <trans-unit id="tl_module.visitors_categories.0">
+        <source>Visitors category</source>
+        <target>Besucherkategorie</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_categories.1">
+        <source>Please select the visitors category you want to include.</source>
+        <target>Bitte wählen Sie die Kategorie für das Modul.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_template.0">
+        <source>Counter template</source>
+        <target>Besuchervorlage</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_template.1">
+        <source>Please choose the Counter-Template. Counter template files start with &lt;em&gt;mod_visitors_fe_&lt;/em&gt;.</source>
+        <target>Bitte wählen Sie eine Besucher-Vorlage. Sie können eigene Vorlagen im Ordner &lt;em&gt;templates&lt;/em&gt; speichern. Vorlagen müssen mit &lt;em&gt;mod_visitors_fe_&lt;/em&gt; beginnen und die Dateiendung &lt;em&gt;.html5&lt;/em&gt; bzw. &lt;em&gt;.xhtml&lt;/em&gt; haben.</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_useragent.0">
+        <source>No counting for this HTTP_USER_AGENT partial identifier</source>
+        <target>Keine Zählung bei HTTP_USER_AGENT Teilkennung</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_useragent.1">
+        <source>Here you can specify a partial identifier, it will be no counting. These HTTP_USER_AGENT partial identifier of the browser must be changed.&lt;br&gt;See Wiki.</source>
+        <target>Hier kann eine Teilkennung angegeben werden, bei der keine Zählung erfolgen soll. Dazu muss die HTTP_USER_AGENT Kennung des Browsers verändert werden.&lt;br&gt;Siehe Wiki.</target>
+        
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

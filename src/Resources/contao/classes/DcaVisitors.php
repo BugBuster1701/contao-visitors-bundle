@@ -26,7 +26,7 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
-use Psr\Log\LogLevel;
+# use Psr\Log\LogLevel;
 
 /**
  * DCA Helper Class DcaVisitors
@@ -35,12 +35,15 @@ use Psr\Log\LogLevel;
  */
 class DcaVisitors extends Backend
 {
+	private $monologLogger;
+
 	/**
 	 * Import the back end user object
 	 */
 	public function __construct()
 	{
 		parent::__construct();
+		$this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
 	}
 
 	public function listVisitors($arrRow)
@@ -107,13 +110,16 @@ class DcaVisitors extends Backend
 		$user = BackendUser::getInstance();
 		if (!$user->isAdmin && !$user->hasAccess('tl_visitors::published', 'alexf'))
 		{
-			System::getContainer()
-				->get('monolog.logger.contao')
-				->log(
-					LogLevel::ERROR,
-					'Not enough permissions to publish/unpublish Visitors ID "' . $intId . '"',
-					array('contao' => new ContaoContext('tl_visitors toggleVisibility', ContaoContext::ERROR))
-				);
+			// System::getContainer()
+			// 	->get('monolog.logger.contao')
+			// 	->log(
+			// 		LogLevel::ERROR,
+			// 		'Not enough permissions to publish/unpublish Visitors ID "' . $intId . '"',
+			// 		array('contao' => new ContaoContext('tl_visitors toggleVisibility', ContaoContext::ERROR))
+			// 	);
+			$this->monologLogger->logSystemLog('Not enough permissions to publish/unpublish Visitors ID "' . $intId . '"'
+				,'tl_visitors toggleVisibility'
+				, ContaoContext::ERROR);
 
 			$this->redirect('contao/main.php?act=error');
 		}
