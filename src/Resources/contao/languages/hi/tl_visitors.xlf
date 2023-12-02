@@ -140,7 +140,7 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_checks.1">
-        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_referrer.0">
@@ -148,7 +148,7 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_referrer.1">
-        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_screenresolutioncount.0">
@@ -156,7 +156,7 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_screenresolutioncount.1">
-        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_searchengine.0">
@@ -164,7 +164,7 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_searchengine.1">
-        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_tag.0">
@@ -172,7 +172,7 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_tag.1">
-        <source>With activation, write debug information to the log file (&lt;em&gt;var/logs/prod-Date-visitors_debug.log&lt;/em&gt;)</source>
+        <source>With activation, write debug information (visitors.DEBUG) to the log file (&lt;em&gt;var/logs/prod-Date.log&lt;/em&gt;)</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_legend">
