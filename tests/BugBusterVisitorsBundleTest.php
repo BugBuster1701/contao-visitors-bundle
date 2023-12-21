@@ -15,7 +15,7 @@ declare(strict_types=1);
  * please view the LICENSE file that was distributed with this source code.
  */
 
-namespace BugBuster\BannerBundle\Tests;
+namespace BugBuster\VisitorsBundle\Tests;
 
 use BugBuster\VisitorsBundle\BugBusterVisitorsBundle;
 use PHPUnit\Framework\TestCase;
