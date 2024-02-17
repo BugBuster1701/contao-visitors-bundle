@@ -1,9 +1,8 @@
-# Contao 5 Visitors Bundle
+# Contao 4/5 Visitors Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
-![Contao Version](https://img.shields.io/badge/Contao-5.2-orange)
+![Contao Version](https://img.shields.io/badge/Contao-5.2+-orange) ![Contao Version](https://img.shields.io/badge/Contao-4.13-orange) 
 [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
-[![Latest Unstable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/unstable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d55179131ab34d38a364685b57872af4)](https://www.codacy.com/app/BugBuster1701/contao-visitors-bundle?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BugBuster1701/contao-visitors-bundle&amp;utm_campaign=Badge_Grade)
@@ -11,7 +10,7 @@
 
 ## About
 
-A Contao 5 counter extension for hits and visits
+A Contao 4/5 counter extension for hits and visits
 
 ## Installation
 

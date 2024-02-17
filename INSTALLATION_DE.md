@@ -10,8 +10,7 @@ Es gibt zwei Arten der Installation.
 
 * Suche das Paket: `bugbuster/contao-visitors-bundle`
 * Installation der Erweiterung
-* Klick auf "Install Tool"
-* Anmelden und Datenbank Update durchführen
+* Datenbank Update durchführen
 
 __Achtung__: Nutzer von Contao 4.13, verwenden `^1.8` als Versionsangabe!
 
@@ -21,11 +20,9 @@ __Achtung__: Nutzer von Contao 4.13, verwenden `^1.8` als Versionsangabe!
 Installation in einer Composer-basierenden Contao 5.2+ Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle"`
-* Aufruf https://deinedomain/contao/install
-* Datenbank Update durchführen
+* `php bin/console contao:migrate`
 
 Installation in einer Composer-basierenden Contao 4.13 Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle=^1.8"`
-* Aufruf https://deinedomain/contao/install
-* Datenbank Update durchführen
+* `php bin/console contao:migrate`

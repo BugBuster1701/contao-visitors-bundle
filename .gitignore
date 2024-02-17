@@ -21,4 +21,4 @@ todo.txt
 todo.sql
 /tests/clienthints/
 curl-tests.sh
-
+src/Resources/config/logger.yml

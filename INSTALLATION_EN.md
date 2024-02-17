@@ -10,8 +10,7 @@ There are two types of installation.
 
 * search for package: `bugbuster/contao-visitors-bundle`
 * install the package
-* Click on "Install Tool"
-* Login and update the database
+* update the database
 
 __Attention__: Users of Contao 4.13, use `^1.8` as version number! 
 
@@ -21,11 +20,9 @@ __Attention__: Users of Contao 4.13, use `^1.8` as version number!
 Installation in a Composer-based Contao 5.2+ Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle"`
-* Call http://yourdomain/contao/install
-* Login and update the database
+* `php bin/console contao:migrate`
 
 Installation in a Composer-based Contao 4.13 Managed-Edition:
 
 * `composer require "bugbuster/contao-visitors-bundle=^1.8"`
-* Call http://yourdomain/contao/install
-* Login and update the database
+* `php bin/console contao:migrate`
