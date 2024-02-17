@@ -100,8 +100,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
     {
         $this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
-        #$monologLogger->logMonologLog('Start',__METHOD__, __LINE__, 'info');
-        #$monologLogger->logSystemLog('Start',__METHOD__, ContaoContext::GENERAL);
+        // $this->monologLogger->logMonologLog('Start',__METHOD__, __LINE__, 'info');
+        // $this->monologLogger->logSystemLog('Start',__METHOD__, ContaoContext::GENERAL);
 
         $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
