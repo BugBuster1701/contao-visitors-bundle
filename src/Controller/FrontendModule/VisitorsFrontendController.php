@@ -139,6 +139,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $this->addSectionToTemplate($template, $model->inColumn);
         }
 
+        System::loadLanguageFile('default');
+        System::loadLanguageFile('tl_visitors');
+
         $counting = '<!-- not counted -->';
         $this->setCounters($objPage);
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
@@ -160,8 +163,6 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         / /_/ / /_/ / / / / ____/ /_/ / / /
         \____/\____/ /_/ /_/    \____/ /_/
         */
-
-        System::loadLanguageFile('default');
 
         $stmt = $this->container->get('database_connection')
             ->prepare(
