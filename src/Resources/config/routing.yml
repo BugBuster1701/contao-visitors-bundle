@@ -5,3 +5,7 @@ visitors_backend_details:
 visitors_frontend_screencount:
     resource: "@BugBusterVisitorsBundle/Controller"
     type: annotation
+
+visitors_frontend_countervalues:
+    resource: "@BugBusterVisitorsBundle/Controller"
+    type: annotation

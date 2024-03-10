@@ -24,3 +24,9 @@ services:
                 renderer: esi
             -
                 name: container.service_subscriber
+
+    BugBuster\VisitorsBundle\Controller\VisitorsFeAjaxController:
+        public: true
+        arguments: 
+            - '@database_connection'
+            - '@bug_buster_visitors.logger'

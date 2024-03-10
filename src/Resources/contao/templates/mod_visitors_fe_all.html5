@@ -33,6 +33,30 @@
 
             });
         </script>
+        <script>
+            function updateVisitorData() {
+                var visitorAjaxurl = "<?= $this->route('visitors_frontend_countervalues',[ 'vc' => $visitor['VisitorsKatID']]) ?>";
+                console.log('url: ', visitorAjaxurl);
+                try {
+                    fetch( visitorAjaxurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
+                        .then(response => response.json())
+                        .then(data => { 
+                            console.log('id: ', data.visitor['id']); 
+                            console.log('name: ', data.visitor['visitors_name']);
+                        })
+                    .catch( error => console.error('error:', error) );
+                } catch (r) {
+
+                    return;
+                }
+            }
+            // Fügen Sie diese Funktion hinzu, um den Timer alle 10 Sekunden zu starten
+            function startVisitorTimer() {
+                setInterval(updateVisitorData, 2000);
+            }
+            // Starten Sie den Timer, wenn das Dokument geladen ist
+            document.addEventListener('DOMContentLoaded', startVisitorTimer);
+        </script>
     <?php endforeach; ?>
 
 <?php $this->endblock(); ?>

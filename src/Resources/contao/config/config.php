@@ -11,8 +11,8 @@
  * @license    LGPL-3.0-or-later
  */
 
-define('VISITORS_VERSION', '1.10');
-define('VISITORS_BUILD', '3');
+define('VISITORS_VERSION', '1.11');
+define('VISITORS_BUILD', '0');
 
 /*
  * Backend css version number are added to style sheets files to make
