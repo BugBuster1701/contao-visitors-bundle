@@ -387,7 +387,7 @@ class VisitorCalculator
     }
 
 
-        /**
+    /**
      * Get Page-Type.
      *
      * @param object $objPage
