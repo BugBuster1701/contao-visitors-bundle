@@ -139,36 +139,43 @@
       <trans-unit id="tl_visitors_category.protected_statreset_legend">
         
         <source>Access protection for resetting the statistics</source>
+        
         <target>Защита доступа для сброса статистики</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_protected.0">
         
         <source>Protection of statistics from resetting</source>
+        
         <target>Защита статистики от сброса</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_protected.1">
         
         <source>Allow resetting the visitor statistics only certain user groups only.</source>
+        
         <target>Разрешить сброс статистики посетителей только для определенных групп пользователей.</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_groups.0">
         
         <source>Allowed user groups</source>
+        
         <target>Разрешенные группы пользователей</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_groups.1">
         
         <source>Here you can choose which groups will be allowed to resetting the visitor statistic of this category.</source>
+        
         <target>Вы можете выбрать, для каких групп будет разрешен сброс статистики посещений этой категории.</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_admins.0">
         
         <source>Administrators</source>
+        
         <target>Администраторы</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_admins.1">
         
         <source>Administrators have unlimited access to all visitor statistics.</source>
+        
         <target>Администраторы имеют неограниченный доступ ко всей статистике посетителей.</target>
       </trans-unit>
     </body>

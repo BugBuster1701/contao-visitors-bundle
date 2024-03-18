@@ -409,76 +409,91 @@
       <trans-unit id="visitors.YesterdayHitCountLegend">
         
         <source>Hits yesterday:</source>
+        
         <target>Zugriffe gestern:</target>
       </trans-unit>
       <trans-unit id="visitors.YesterdayVisitCountLegend">
         
         <source>Visits yesterday:</source>
+        
         <target>Besucher gestern:</target>
       </trans-unit>
       <trans-unit id="visitors.PageHitCountLegend">
         
         <source>Page hits:</source>
+        
         <target>Seitenzugriffe:</target>
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.news_stat_visithittop">
         
         <source>News Statistic TOP 20</source>
+        
         <target>Nachrichtenstatistik TOP 20</target>
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.faq_stat_visithittop">
         
         <source>FAQ Statistic TOP 20</source>
+        
         <target>FAQ-Statistik TOP 20</target>
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.news_title">
         
         <source>News Archive</source>
+        
         <target>Nachrichtenarchiv</target>
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.faq_title">
         
         <source>FAQ Archive</source>
+        
         <target>FAQ-Archiv</target>
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.isotope_stat_visithittop">
         
         <source>Isotope Statistic TOP 20</source>
+        
         <target>Isotope-Statistik TOP 20</target>
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.isotope_title">
         
         <source>Isotope Products</source>
+        
         <target>Isotope Produkte</target>
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.reset_not_allowed">
         
         <source>Reset the statistics is not allowed for this counter.</source>
+        
         <target>Das Zurücksetzen der Statistik ist für diesen Zähler nicht erlaubt.</target>
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.news_stat_visithittop_days">
         
         <source>News Statistic TOP 20: the last 7 days</source>
+        
         <target>Nachrichtenstatistik TOP 20: die letzten 7 Tage</target>
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.faq_stat_visithittop_days">
         
         <source>FAQ Statistic TOP 20: the last 7 days</source>
+        
         <target>FAQ-Statistik TOP 20: die letzten 7 Tage</target>
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.events_stat_visithittop">
         
         <source>Events Statistic TOP 20</source>
+        
         <target>Events TOP 20</target>
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.events_stat_visithittop_days">
         
         <source>Events Statistic TOP 20: the last 7 days</source>
+        
         <target>Events TOP 20: die letzten 7 Tage</target>
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.events_title">
         
         <source>Calendar</source>
+        
         <target>Kalender</target>
       </trans-unit>
     </body>

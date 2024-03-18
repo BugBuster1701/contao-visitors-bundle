@@ -23,3 +23,8 @@ services:
     #     class: Monolog\Formatter\LineFormatter
     #     arguments:
     #         - "[%%datetime%%] %%channel%%.%%level_name%%: %%message%% %%context%% %%extra%%\n"
+
+    BugBuster\VisitorsBundle\Classes\VisitorCalculator:
+        public: true
+        arguments: 
+            - '@database_connection'
