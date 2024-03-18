@@ -39,16 +39,11 @@
       <trans-unit id="XPL.visitors_help_module.1.1">
         <source>Each module can be assigned its own Template. Four different templates are included.
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_all&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;All fields are included.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_all_ajax&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;All fields are included. (Ajax Refresh)
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_hits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the visit rows were removed.
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_visits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the hit rows were removed.
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_invisible&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here, nothing is displayed. This template is used for a pure counting.
 </source>
-        <target>Всеки модул може да бъда с различен темплейт. Включени са четири различни темплейта.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_all&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Всички полета са включени.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_hits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Тук е изключен реда с посещенията.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_visits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Тук е изключен редът с попаденията.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_invisible&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Тук не се показва нищо. Този темплейт е просто за броене без визуализация.
-</target>
         
       </trans-unit>
     </body>

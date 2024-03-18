@@ -36,16 +36,11 @@
       <trans-unit id="XPL.visitors_help_module.1.1">
         <source>Each module can be assigned its own Template. Four different templates are included.
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_all&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;All fields are included.
+&lt;br&gt;&lt;strong&gt;mod_visitors_fe_all_ajax&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;All fields are included. (Ajax Refresh)
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_hits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the visit rows were removed.
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_visits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here the hit rows were removed.
 &lt;br&gt;&lt;strong&gt;mod_visitors_fe_invisible&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Here, nothing is displayed. This template is used for a pure counting.
 </source>
-        <target>Aan elke module kan een eigen template worden toegewezen. Er zijn vier verschillende templates beschikbaar.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_all&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Alle velden inbegrepen.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_hits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Hier zijn bezoekrijen verwijderd.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_visits&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Hier werden de getroffen rijen verwijderd.
-&lt;br&gt;&lt;strong&gt;mod_visitors_fe_invisible&lt;/strong&gt;&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;Hier wordt niks getoond. Deze template wordt gebruikt om te tellen.
-</target>
         
       </trans-unit>
     </body>
