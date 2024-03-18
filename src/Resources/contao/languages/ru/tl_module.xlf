@@ -21,6 +21,16 @@
         <target>Выберите шаблон счетчика. Файлы шаблонов счетчика начинаются с &lt;em&gt;mod_visitors_fe_&lt;/em&gt;.</target>
         
       </trans-unit>
+      <trans-unit id="tl_module.visitors_update.0">
+        <source>Updating the values in the frontend in seconds</source>
+        <target>Обновление значений во фронтенде за считанные секунды</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_update.1">
+        <source>Continuous updating of values in the frontend without a new page view. Only when using the template 'mod_visitors_fe_all_ajax'.</source>
+        <target>Постоянное обновление значений во фронтенде без нового просмотра страницы. Только при использовании шаблона 'mod_visitors_fe_all_ajax'.</target>
+        
+      </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.0">
         <source>No counting for this HTTP_USER_AGENT partial identifier</source>
         <target>Не подсчитывать этот HTTP_USER_AGENT частичный идентификатор</target>

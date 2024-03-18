@@ -21,6 +21,16 @@
         <target>Bitte wählen Sie eine Besucher-Vorlage. Sie können eigene Vorlagen im Ordner &lt;em&gt;templates&lt;/em&gt; speichern. Vorlagen müssen mit &lt;em&gt;mod_visitors_fe_&lt;/em&gt; beginnen und die Dateiendung &lt;em&gt;.html5&lt;/em&gt; bzw. &lt;em&gt;.xhtml&lt;/em&gt; haben.</target>
         
       </trans-unit>
+      <trans-unit id="tl_module.visitors_update.0">
+        <source>Updating the values in the frontend in seconds</source>
+        <target>Aktualisierung der Werte im Frontend ohne neuen Seitenaufruf in Sekunden</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_update.1">
+        <source>Continuous updating of values in the frontend without a new page view. Only when using the template 'mod_visitors_fe_all_ajax'.</source>
+        <target>Laufende Aktualisierung der Werte im Frontend ohne neuen Seitenaufruf. Nur bei Verwendung vom Template 'mod_visitors_fe_all_ajax'.</target>
+        
+      </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.0">
         <source>No counting for this HTTP_USER_AGENT partial identifier</source>
         <target>Keine Zählung bei HTTP_USER_AGENT Teilkennung</target>

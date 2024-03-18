@@ -151,6 +151,7 @@
       <trans-unit id="tl_visitors_category.visitors_statreset_groups.0">
         
         <source>Allowed user groups</source>
+        
         <target>Потребителски групи с достъп</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_groups.1">
@@ -160,11 +161,13 @@
       <trans-unit id="tl_visitors_category.visitors_statreset_admins.0">
         
         <source>Administrators</source>
+        
         <target>Администратори</target>
       </trans-unit>
       <trans-unit id="tl_visitors_category.visitors_statreset_admins.1">
         
         <source>Administrators have unlimited access to all visitor statistics.</source>
+        
         <target>Администраторите имат неограничен достъп до всички статистики за посещения.</target>
       </trans-unit>
     </body>

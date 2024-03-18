@@ -54,7 +54,7 @@ class VisitorCalculator
     
 
 
-    public function getVisitorValues(array $rowBasics, int $visitors_category, PageModel|null $objPage)
+    public function getVisitorValues(array $rowBasics, int $visitors_category, $objPage)
     {
         $VisitorsStartDate = false;
         $VisitorsAverageVisits = false;

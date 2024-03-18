@@ -19,6 +19,14 @@
         <source>Please choose the Counter-Template. Counter template files start with &lt;em&gt;mod_visitors_fe_&lt;/em&gt;.</source>
         
       </trans-unit>
+      <trans-unit id="tl_module.visitors_update.0">
+        <source>Updating the values in the frontend in seconds</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_update.1">
+        <source>Continuous updating of values in the frontend without a new page view. Only when using the template 'mod_visitors_fe_all_ajax'.</source>
+        
+      </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.0">
         <source>No counting for this HTTP_USER_AGENT partial identifier</source>
         <target>Niet tellen voor deze HTTP_USER_AGENT partial identifier</target>

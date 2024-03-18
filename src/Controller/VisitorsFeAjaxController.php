@@ -46,12 +46,12 @@ class VisitorsFeAjaxController
         $this->monologLogger = $logger;
         $this->visitorCalculator = $VisitorCalculator;
 
-        /** @var PageModel $this->$objPage */
-        $this->objPage = $this->getPageModel();
-        if (null != $this->objPage)
-        {
-            $this->objPage->current()->loadDetails(); // for language via cache call
-        }
+        // /** @var PageModel $this->$objPage */
+        // $this->objPage = $this->getPageModel();
+        // if (null != $this->objPage)
+        // {
+        //     $this->objPage->current()->loadDetails(); // for language via cache call
+        // }
     }
 
     protected function getPageModel(): PageModel|null
@@ -76,10 +76,14 @@ class VisitorsFeAjaxController
      *
      * @return JsonResponse 
      *
-     * @Route("/coval/{vc}", name="visitors_frontend_countervalues")
+     * @Route("/coval/{vc}/{pid}/{protected}", name="visitors_frontend_countervalues")
      */
-    public function  __invoke(int $vc): JsonResponse 
+    public function  __invoke(int $vc, int $pid, int $protected): JsonResponse 
     {
+        $this->objPage = new \StdClass;
+        $this->objPage->id = $pid;
+        $this->objPage->protected = $protected;
+
         $rowBasics = $this->getBasics($vc);
 
         $rowValues = $this->getValues($rowBasics, $vc);
