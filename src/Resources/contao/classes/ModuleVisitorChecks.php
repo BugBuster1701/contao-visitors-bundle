@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -24,7 +24,8 @@ use Contao\Environment;
 use Contao\Frontend;
 use Contao\Idna;
 use Contao\System;
-# use Psr\Log\LogLevel;
+
+// use Psr\Log\LogLevel;
 
 /**
  * Class ModuleVisitorChecks
@@ -72,9 +73,7 @@ class ModuleVisitorChecks extends Frontend
 			// 	 	'contao-botdetection-bundle extension required for extension: Visitors!',
 			// 	 	array('contao' => new ContaoContext('ModuleVisitorChecks checkBot ', ContaoContext::ERROR))
 			// 	 );
-			$this->monologLogger->logSystemLog('contao-botdetection-bundle extension required for extension: Visitors!'
-				 ,'ModuleVisitorChecks checkBot'
-				 , ContaoContext::ERROR);
+			$this->monologLogger->logSystemLog('contao-botdetection-bundle extension required for extension: Visitors!', 'ModuleVisitorChecks checkBot', ContaoContext::ERROR);
 			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, print_r($bundles, true));
 
 			return false;

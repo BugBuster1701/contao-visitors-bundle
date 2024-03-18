@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -18,7 +18,7 @@ use Contao\Database;
 use Contao\Frontend;
 use Contao\Input;
 use Contao\System;
-# use Psr\Log\LogLevel;
+// use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -51,7 +51,7 @@ class FrontendVisitors extends Frontend
 	 */
 	public function run()
 	{
-		# $logger = System::getContainer()->get('monolog.logger.contao');
+		// $logger = System::getContainer()->get('monolog.logger.contao');
 
 		if (false === self::$_BackendUser)
 		{
@@ -100,9 +100,7 @@ class FrontendVisitors extends Frontend
 					// 	$GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
 					// 	array('contao' => new ContaoContext('FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
 					// );
-					$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid']
-						,'FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD
-						, ContaoContext::ERROR);
+					$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'], 'FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR);
 				}
 				else
 				{
@@ -120,9 +118,7 @@ class FrontendVisitors extends Frontend
 			// 	$GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'],
 			// 	array('contao' => new ContaoContext('FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR))
 			// );
-			$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid']
-				,'FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD
-				, ContaoContext::ERROR);
+			$this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_screen_catid'], 'FrontendVisitors ' . VISITORS_VERSION . '.' . VISITORS_BUILD, ContaoContext::ERROR);
 		}
 
 		// raus hier

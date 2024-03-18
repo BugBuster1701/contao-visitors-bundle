@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -24,7 +24,7 @@ use Contao\FrontendTemplate;
 use Contao\Module;
 use Contao\StringUtil;
 use Contao\System;
-# use Psr\Log\LogLevel;
+// use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -114,10 +114,7 @@ class ModuleVisitors extends Module
 			// 	 	array('contao' => new ContaoContext('ModulVisitors compile ', ContaoContext::ERROR))
 			// 	 );
 			$this->monologLogger = System::getContainer()->get('bug_buster_visitors.logger');
-			$this->monologLogger->logSystemLog('ModuleVisitors User Error: no published counter found.'
-				 ,'ModulVisitors compile '
-				 , ContaoContext::ERROR);
-			 
+			$this->monologLogger->logSystemLog('ModuleVisitors User Error: no published counter found.', 'ModulVisitors compile ', ContaoContext::ERROR);
 
 			return;
 		}

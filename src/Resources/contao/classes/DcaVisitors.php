@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -26,7 +26,8 @@ use Contao\Image;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
-# use Psr\Log\LogLevel;
+
+// use Psr\Log\LogLevel;
 
 /**
  * DCA Helper Class DcaVisitors
@@ -117,9 +118,7 @@ class DcaVisitors extends Backend
 			// 		'Not enough permissions to publish/unpublish Visitors ID "' . $intId . '"',
 			// 		array('contao' => new ContaoContext('tl_visitors toggleVisibility', ContaoContext::ERROR))
 			// 	);
-			$this->monologLogger->logSystemLog('Not enough permissions to publish/unpublish Visitors ID "' . $intId . '"'
-				,'tl_visitors toggleVisibility'
-				, ContaoContext::ERROR);
+			$this->monologLogger->logSystemLog('Not enough permissions to publish/unpublish Visitors ID "' . $intId . '"', 'tl_visitors toggleVisibility', ContaoContext::ERROR);
 
 			$this->redirect('contao/main.php?act=error');
 		}
