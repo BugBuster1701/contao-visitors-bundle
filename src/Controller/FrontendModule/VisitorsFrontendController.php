@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -200,9 +200,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             //         'VisitorsFrontendController User Error: no published counter found.',
             //         ['contao' => new ContaoContext('VisitorsFrontendController getResponse ', ContaoContext::ERROR)])
             // ;
-            $this->monologLogger->logSystemLog('VisitorsFrontendController User Error: no published counter found.'
-                                        ,'VisitorsFrontendController getResponse '
-                                        , ContaoContext::ERROR);
+            $this->monologLogger->logSystemLog('VisitorsFrontendController User Error: no published counter found.', 'VisitorsFrontendController getResponse ', ContaoContext::ERROR);
 
             $this->strTemplate = 'mod_visitors_error';
             $template = new FrontendTemplate($this->strTemplate);
@@ -229,12 +227,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'] = '';
             }
 
-            $strAjaxUrl = $this->container->get('router')->generate('visitors_frontend_countervalues', array
-			(
-				'vc' => $this->visitors_category,
-				'pid' => $objPage->id,
+            $strAjaxUrl = $this->container->get('router')->generate('visitors_frontend_countervalues', [
+                'vc' => $this->visitors_category,
+                'pid' => $objPage->id,
                 'protected' => (int) $objPage->protected,
-			));
+            ]);
 
             $arrVisitors[] = [
                 'VisitorsNameLegend' => $GLOBALS['TL_LANG']['visitors']['VisitorsNameLegend'],
@@ -356,6 +353,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $VisitorsStartDate = '';
         }
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Visitor Startdate: '.$VisitorsStartDate);
+
         return $VisitorsStartDate;
     }
 
@@ -598,9 +596,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             //         $GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'],
             //         ['contao' => new ContaoContext('VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, ContaoContext::ERROR)])
             // ;
-            $this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_katid']
-                                        ,'VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD
-                                        , ContaoContext::ERROR);
+            $this->monologLogger->logSystemLog($GLOBALS['TL_LANG']['tl_visitors']['wrong_katid'], 'VisitorsFrontendController setCounters '.VISITORS_VERSION.'.'.VISITORS_BUILD, ContaoContext::ERROR);
 
             return false;
         }
@@ -1451,9 +1447,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         //         'ModuleVisitorBrowser3 Systemerror',
                         //         ['contao' => new ContaoContext('ModulVisitors', ContaoContext::ERROR)])
                         // ;
-                        $this->monologLogger->logSystemLog('ModuleVisitorBrowser3 Systemerror'
-                                                ,'ModulVisitors'
-                                                , ContaoContext::ERROR);
+                        $this->monologLogger->logSystemLog('ModuleVisitorBrowser3 Systemerror', 'ModulVisitors', ContaoContext::ERROR);
                     } else {
                         $arrBrowser['Browser'] = $ModuleVisitorBrowser3->getBrowser();
                         $arrBrowser['Version'] = $ModuleVisitorBrowser3->getVersion();

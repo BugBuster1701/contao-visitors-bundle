@@ -17,14 +17,14 @@ declare(strict_types=1);
 
 namespace BugBuster\VisitorsBundle\Controller;
 
-use Doctrine\Dbal\Connection;
-use Symfony\Component\HttpFoundation\JsonResponse; 
-use Symfony\Component\Routing\Annotation\Route;
-use BugBuster\VisitorsBundle\Classes\VisitorLogger;
 use BugBuster\VisitorsBundle\Classes\VisitorCalculator;
+use BugBuster\VisitorsBundle\Classes\VisitorLogger;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\PageModel;
 use Contao\System;
+use Doctrine\Dbal\Connection;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Handles the Visitors front end routes.
@@ -36,8 +36,11 @@ use Contao\System;
 class VisitorsFeAjaxController
 {
     private $db;
+
     private $monologLogger;
+
     private $visitorCalculator;
+
     private $objPage;
 
     public function __construct(Connection $db, VisitorLogger $logger, VisitorCalculator $VisitorCalculator)
@@ -54,33 +57,14 @@ class VisitorsFeAjaxController
         // }
     }
 
-    protected function getPageModel(): PageModel|null
-    {
-        $request = null;
-        $container = System::getContainer();
-        if (null !== $container)
-        {
-            $request = $container->get('request_stack')->getCurrentRequest();
-        }
-
-
-        if (null !== $request && ($pageModel = $request->attributes->get('pageModel')) instanceof PageModel) {
-            return $pageModel;
-        }
-
-        return null;
-    }
-
     /**
-     * Renders the Counter Values as JSON
-     *
-     * @return JsonResponse 
+     * Renders the Counter Values as JSON.
      *
      * @Route("/coval/{vc}/{pid}/{protected}", name="visitors_frontend_countervalues")
      */
-    public function  __invoke(int $vc, int $pid, int $protected): JsonResponse 
+    public function __invoke(int $vc, int $pid, int $protected): JsonResponse
     {
-        $this->objPage = new \StdClass;
+        $this->objPage = new \stdClass();
         $this->objPage->id = $pid;
         $this->objPage->protected = $protected;
 
@@ -89,44 +73,54 @@ class VisitorsFeAjaxController
         $rowValues = $this->getValues($rowBasics, $vc);
 
         $arrJson = [
-            'statusBasics'   => !$rowBasics ? ['return' => 'no published counter found'] : ['return' => 'ok'],
-            'visitorBasics'  => !$rowBasics ? null : $rowBasics,
-            'statusValues'   => !$rowValues ? ['return' => 'no values'] : ['return' => 'ok'],
+            'statusBasics' => !$rowBasics ? ['return' => 'no published counter found'] : ['return' => 'ok'],
+            'visitorBasics' => !$rowBasics ? null : $rowBasics,
+            'statusValues' => !$rowValues ? ['return' => 'no values'] : ['return' => 'ok'],
             'visitorsValues' => !$rowValues ? null : $rowValues,
             'vc' => $vc,
-            'dateFormat' => $this->objPage->dateFormat
+            'dateFormat' => $this->objPage->dateFormat,
         ];
 
-        return new JsonResponse($arrJson); 
+        return new JsonResponse($arrJson);
+    }
+
+    protected function getPageModel(): PageModel|null
+    {
+        $request = null;
+        $container = System::getContainer();
+        if (null !== $container) {
+            $request = $container->get('request_stack')->getCurrentRequest();
+        }
+
+        if (null !== $request && ($pageModel = $request->attributes->get('pageModel')) instanceof PageModel) {
+            return $pageModel;
+        }
+
+        return null;
     }
 
     protected function getBasics(int $vc): array|bool
     {
-        $stmt = $this->db->prepare(
-            "SELECT tl_visitors.id AS id,
+        $stmt = $this->db->prepare('SELECT tl_visitors.id AS id,
                     visitors_name,
                     visitors_startdate,
                     visitors_visit_start,
                     visitors_hit_start,
                     visitors_average,
                     visitors_thousands_separator
-                FROM tl_visitors 
+                FROM tl_visitors
                 LEFT JOIN tl_visitors_category ON (tl_visitors_category.id = tl_visitors.pid)
                 WHERE pid = :pid AND published = :published
                 ORDER BY id
-                LIMIT :limit"
-        );
+                LIMIT :limit');
         $stmt->bindValue('pid', $vc, \PDO::PARAM_INT);
         $stmt->bindValue('published', 1, \PDO::PARAM_INT);
         $stmt->bindValue('limit', 1, \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
         $row = $resultSet->fetchAssociative();
-        if (false === $row)
-        {
-            $this->monologLogger->logSystemLog('VisitorsFeAjaxController User Error: no published counter found.'
-                                    ,'VisitorsFeAjaxController getBasics '
-                                    , ContaoContext::ERROR);
+        if (false === $row) {
+            $this->monologLogger->logSystemLog('VisitorsFeAjaxController User Error: no published counter found.', 'VisitorsFeAjaxController getBasics ', ContaoContext::ERROR);
 
             return false;
         }
@@ -136,20 +130,15 @@ class VisitorsFeAjaxController
 
     protected function getValues(array|bool $rowBasics, int $vc): array|bool
     {
-        if (false === $rowBasics)
-        {
+        if (false === $rowBasics) {
             return false;
         }
 
         $visitorsValues = $this->visitorCalculator->getVisitorValues($rowBasics, $vc, $this->objPage);
 
         // Filter for Ajax Request, nothing all is necessary
-        unset($visitorsValues[0]['VisitorsName']);
-        unset($visitorsValues[0]['VisitorsStartDate']);
-        unset($visitorsValues[0]['VisitorsStartDateValue']);
+        unset($visitorsValues[0]['VisitorsName'], $visitorsValues[0]['VisitorsStartDate'], $visitorsValues[0]['VisitorsStartDateValue']);
 
         return $visitorsValues;
-        
-
     }
 }

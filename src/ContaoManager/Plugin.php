@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -30,7 +30,7 @@ use Symfony\Component\Routing\RouteCollection;
 /**
  * Plugin for the Contao Manager.
  */
-class Plugin implements BundlePluginInterface , RoutingPluginInterface, ConfigPluginInterface
+class Plugin implements BundlePluginInterface, RoutingPluginInterface, ConfigPluginInterface
 {
     /**
      * Gets a list of autoload configurations for this bundle.
@@ -45,11 +45,10 @@ class Plugin implements BundlePluginInterface , RoutingPluginInterface, ConfigPl
                 ->setReplace(['visitors']),
         ];
     }
+
     /**
-     * getRouteCollection
+     * getRouteCollection.
      *
-     * @param LoaderResolverInterface $resolver
-     * @param KernelInterface $kernel
      * @return RouteCollection|null
      */
     public function getRouteCollection(LoaderResolverInterface $resolver, KernelInterface $kernel)

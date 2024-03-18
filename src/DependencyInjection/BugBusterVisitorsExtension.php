@@ -5,13 +5,14 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
- * @license LGPL-3.0-or-later
+ * @link       https://github.com/BugBuster1701/contao-visitors-bundle
+ *
+ * @license    LGPL-3.0-or-later
  * For the full copyright and license information,
  * please view the LICENSE file that was distributed with this source code.
- * @link https://github.com/BugBuster1701/contao-visitors-bundle
  */
 
 namespace BugBuster\VisitorsBundle\DependencyInjection;
@@ -33,7 +34,7 @@ class BugBusterVisitorsExtension extends Extension
         // Das wäre allerdings unübersichtlicher
 
         // Listener reagieren auf events / hooks
-        #$loader->load('listener.yml');
+        // $loader->load('listener.yml');
 
         // Services können aufgerufen und für Dependency Injection
         // verwendet werden

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -17,11 +17,11 @@ declare(strict_types=1);
 
 namespace BugBuster\VisitorsBundle\Classes;
 
-use Doctrine\DBAL\Connection;
 use Contao\Date;
+use Contao\Input;
 use Contao\PageModel;
 use Contao\System;
-use Contao\Input;
+use Doctrine\DBAL\Connection;
 
 class VisitorCalculator
 {
@@ -39,7 +39,6 @@ class VisitorCalculator
 
     private $connection;
 
-
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
@@ -51,8 +50,6 @@ class VisitorCalculator
 
     //     // …
     // }
-    
-
 
     public function getVisitorValues(array $rowBasics, int $visitors_category, $objPage)
     {
@@ -124,8 +121,7 @@ class VisitorCalculator
         $today = date('Y-m-d');
         $yesterday = date('Y-m-d', mktime(0, 0, 0, (int) date('m'), (int) date('d') - 1, (int) date('Y')));
 
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                         SUM(visitors_visit) AS SUMV,
                         MIN( visitors_date) AS MINDAY
                     FROM
@@ -133,8 +129,7 @@ class VisitorCalculator
                     WHERE
                         vid = :vid AND visitors_date < :vdate
 
-                    ')
-        ;
+                    ');
 
         $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
         $stmt->bindValue('vdate', $today, \PDO::PARAM_STR);
@@ -157,15 +152,13 @@ class VisitorCalculator
     protected function getVisitorsOnlineCount($VisitorsId, $boolSeparator)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Visitor ID: '.$VisitorsId);
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                         COUNT(id) AS VOC
                     FROM
                         tl_visitors_blocker
                     WHERE
                         vid = :vid AND visitors_type = :vtype
-                    ')
-        ;
+                    ');
 
         $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
         $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
@@ -185,6 +178,7 @@ class VisitorCalculator
         } else {
             $VisitorsStartDate = '';
         }
+
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Visitor Startdate: '.$VisitorsStartDate);
         return $VisitorsStartDate;
     }
@@ -192,15 +186,13 @@ class VisitorCalculator
     protected function getTotalVisitCount($objVisitors, $boolSeparator)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                         SUM(visitors_visit) AS SUMV
                     FROM
                         tl_visitors_counter
                     WHERE
                         vid = :vid
-                    ')
-        ;
+                    ');
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
@@ -217,15 +209,13 @@ class VisitorCalculator
     protected function getTotalHitCount($objVisitors, $boolSeparator)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                             SUM(visitors_hit) AS SUMH
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid
-                        ')
-        ;
+                        ');
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
@@ -242,15 +232,13 @@ class VisitorCalculator
     protected function getTodaysVisitCount($objVisitors, $boolSeparator)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                             visitors_visit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
-                        ')
-        ;
+                        ');
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
@@ -268,15 +256,13 @@ class VisitorCalculator
     protected function getTodaysHitCount($objVisitors, $boolSeparator)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                             visitors_hit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
-                        ')
-        ;
+                        ');
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
@@ -294,15 +280,13 @@ class VisitorCalculator
     protected function getYesterdayVisitCount($objVisitors, $boolSeparator)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                             visitors_visit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
-                        ')
-        ;
+                        ');
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
@@ -320,15 +304,13 @@ class VisitorCalculator
     protected function getYesterdayHitCount($objVisitors, $boolSeparator)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id']);
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                             visitors_hit
                         FROM
                             tl_visitors_counter
                         WHERE
                             vid = :vid AND visitors_date = :vdate
-                        ')
-        ;
+                        ');
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
@@ -358,8 +340,7 @@ class VisitorCalculator
         // bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
         $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
-        $stmt = $this->connection->prepare(
-                'SELECT
+        $stmt = $this->connection->prepare('SELECT
                             SUM(visitors_page_hit)   AS visitors_page_hits
                         FROM
                         tl_visitors_pages
@@ -369,8 +350,7 @@ class VisitorCalculator
                             visitors_page_id = :vpageid
                         AND
                             visitors_page_type = :vpagetype
-                        ')
-        ;
+                        ');
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
@@ -385,7 +365,6 @@ class VisitorCalculator
 
         return $boolSeparator ? System::getFormattedNumber($VisitorsPageHits, 0) : $VisitorsPageHits;
     }
-
 
     /**
      * Get Page-Type.
@@ -445,8 +424,7 @@ class VisitorCalculator
         // News Table exists?
         if ($dbconnection->createSchemaManager()->tablesExist(['tl_news'])) {
             // News Reader?
-            $stmt = $dbconnection->prepare(
-                'SELECT id
+            $stmt = $dbconnection->prepare('SELECT id
                         FROM tl_news_archive
                         WHERE jumpTo = :jumpto
                         LIMIT 1
@@ -456,18 +434,14 @@ class VisitorCalculator
 
             if ($resultSet->rowCount() > 0) {
                 // News Reader
-                $page_type = self::PAGE_TYPE_NEWS;
-                // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
-
-                return $page_type;
+                return self::PAGE_TYPE_NEWS;
             }
         }
 
         // FAQ Table exists?
         if ($dbconnection->createSchemaManager()->tablesExist(['tl_faq_category'])) {
             // FAQ Reader?
-            $stmt = $dbconnection->prepare(
-                'SELECT id
+            $stmt = $dbconnection->prepare('SELECT id
                         FROM tl_faq_category
                         WHERE jumpTo = :jumpto
                         LIMIT 1
@@ -477,10 +451,7 @@ class VisitorCalculator
 
             if ($resultSet->rowCount() > 0) {
                 // FAQ Reader
-                $page_type = self::PAGE_TYPE_FAQ;
-                // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
-
-                return $page_type;
+                return self::PAGE_TYPE_FAQ;
             }
         }
 
@@ -489,8 +460,7 @@ class VisitorCalculator
             $strAlias = Input::get('items');
             // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Get items: '.print_r($strAlias, true));
 
-            $stmt = $dbconnection->prepare(
-                    'SELECT id
+            $stmt = $dbconnection->prepare('SELECT id
                         FROM tl_iso_product
                         WHERE alias = :alias
                         LIMIT 1
@@ -500,18 +470,14 @@ class VisitorCalculator
 
             if ($resultSet->rowCount() > 0) {
                 // Isotope Reader
-                $page_type = self::PAGE_TYPE_ISOTOPE;
-                // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
-
-                return $page_type;
+                return self::PAGE_TYPE_ISOTOPE;
             }
         }
 
         // Events Table exists?
         if ($dbconnection->createSchemaManager()->tablesExist(['tl_calendar'])) {
             // Events Reader?
-            $stmt = $dbconnection->prepare(
-                'SELECT id
+            $stmt = $dbconnection->prepare('SELECT id
                         FROM tl_calendar
                         WHERE jumpTo = :jumpto
                         LIMIT 1
@@ -521,10 +487,7 @@ class VisitorCalculator
 
             if ($resultSet->rowCount() > 0) {
                 // Events Reader
-                $page_type = self::PAGE_TYPE_EVENTS;
-                // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
-
-                return $page_type;
+                return self::PAGE_TYPE_EVENTS;
             }
         }
 
@@ -589,8 +552,7 @@ class VisitorCalculator
         if (self::PAGE_TYPE_NEWS === $PageType) {
             // alias = news-details - Reader direkt = wenn auto_item leer
             if (!isset($_GET['auto_item'])) {
-                $stmt = $dbconnection->prepare(
-                    'SELECT id
+                $stmt = $dbconnection->prepare('SELECT id
                             FROM tl_news_archive
                             WHERE jumpTo = :jumpto
                             LIMIT 1
@@ -606,8 +568,7 @@ class VisitorCalculator
             }
 
             // alias = james-wilson-returns
-            $stmt = $dbconnection->prepare(
-                'SELECT t.id
+            $stmt = $dbconnection->prepare('SELECT t.id
                         FROM tl_news t
                         JOIN tl_news_archive r ON t.pid = r.id
                         WHERE
@@ -630,8 +591,7 @@ class VisitorCalculator
         if (self::PAGE_TYPE_FAQ === $PageType) {
             // Reader direkt?
             if (!isset($_GET['auto_item'])) {
-                $stmt = $dbconnection->prepare(
-                    'SELECT id
+                $stmt = $dbconnection->prepare('SELECT id
                     FROM tl_faq_category
                     WHERE jumpTo = :jumpto
                     LIMIT 1
@@ -646,8 +606,7 @@ class VisitorCalculator
                 }
             }
             // alias = are-there-exams-how-do-they-work
-            $stmt = $dbconnection->prepare(
-                'SELECT t.id
+            $stmt = $dbconnection->prepare('SELECT t.id
                         FROM tl_faq t
                         JOIN tl_faq_category r ON t.pid = r.id
                         WHERE
@@ -669,8 +628,7 @@ class VisitorCalculator
         }
         if (self::PAGE_TYPE_ISOTOPE === $PageType) {
             // alias = a-perfect-circle-thirteenth-step
-            $stmt = $dbconnection->prepare(
-                'SELECT id
+            $stmt = $dbconnection->prepare('SELECT id
                         FROM tl_iso_product
                         WHERE alias = :alias
                         LIMIT 1
@@ -688,8 +646,7 @@ class VisitorCalculator
         if (self::PAGE_TYPE_EVENTS === $PageType) {
             // Events Reader?
             if (!isset($_GET['auto_item'])) {
-                $stmt = $dbconnection->prepare(
-                    'SELECT id
+                $stmt = $dbconnection->prepare('SELECT id
                             FROM tl_calendar
                             WHERE jumpTo = :jumpto
                             LIMIT 1
@@ -704,8 +661,7 @@ class VisitorCalculator
                 }
             }
             // alias = james-wilson-returns
-            $stmt = $dbconnection->prepare(
-                'SELECT t.id
+            $stmt = $dbconnection->prepare('SELECT t.id
                         FROM tl_calendar_events t
                         JOIN tl_calendar r ON t.pid = r.id
                         WHERE
