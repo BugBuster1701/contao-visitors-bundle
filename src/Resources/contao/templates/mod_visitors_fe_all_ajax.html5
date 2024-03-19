@@ -35,9 +35,8 @@
         </script>
         <script>
             function updateVisitorData() {
-                // var visitorAjaxurl = "<?= $this->route('visitors_frontend_countervalues', ['vc' => $visitor['VisitorsKatID'], 'pid' => $visitor['PageID'], 'protected' => $visitor['PageProtected']]) ?>";
                 var visitorAjaxurl = "<?= $visitor['ajaxurl'] ?>";
-                console.log('url: ', visitorAjaxurl);
+                // console.log('url: ', visitorAjaxurl);
                 try {
                     fetch( visitorAjaxurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
                         .then(response => response.json())
