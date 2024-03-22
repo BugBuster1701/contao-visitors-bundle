@@ -3,7 +3,7 @@
 <?php $this->block('content'); ?>
 
     <?php foreach ($this->visitors as $visitor): ?>
-        <span class="visitor_count invisible"><?= $visitor['VisitorsCounting']; ?></span>
+        <span class="visitor_count invisible" id="VisitorsData" data-visitorsCategory="<?= $visitor['VisitorsKatID']; ?>" data-visitorsRouteScreenCount="<?= $visitor['VisitorsRouteScreenCount']; ?>" data-visitorsAjax="<?= $visitor['ajaxurl'] ?>" data-visitorsUpdate="<?= $visitor['VisitorsUpdate'] ?>"><?= $visitor['VisitorsCounting']; ?></span>
         <div class="visitor_name"       ><div id="VisitorsNameLegend"><?= $visitor['VisitorsNameLegend']; ?></div><div id="VisitorsName"       ><?= $visitor['VisitorsName']; ?></div></div>
         <div class="visitor_useronline" ><div id="VisitorsOnlineCountLegend"><?= $this->trans('visitors.VisitorsOnlineCountLegend'); ?></div><div id="VisitorsOnlineCount"><?= $visitor['VisitorsOnlineCountValue']; ?></div></div>
         <div class="visitor_visitstoday"><div id="TodayVisitCountLegend"><?= $this->trans('visitors.TodayVisitCountLegend'); ?></div><div id="TodayVisitCount"    ><?= $visitor['TodayVisitCountValue']; ?></div></div>
@@ -17,75 +17,8 @@
         <?php if ($visitor['VisitorsStartDate']): ?>
             <div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $this->trans('visitors.VisitorsStartDateLegend'); ?></div><div id="VisitorsStartDate">&nbsp;<?= $visitor['VisitorsStartDateValue']; ?></div></div>
         <?php endif; ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth);
-                var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
-                var sWidth  = screen.width;
-                var sHeight = screen.height;
-                var visitorurl = '<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'';
-                try {
-                    fetch( visitorurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
-                    .catch( error => console.error('error:', error) );
-                } catch (r) {
-                    return;
-                }
-
-            });
-        </script>
-        <script>
-            function updateVisitorData() {
-                var visitorAjaxurl = "<?= $visitor['ajaxurl'] ?>";
-                // console.log('url: ', visitorAjaxurl);
-                try {
-                    fetch( visitorAjaxurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
-                        .then(response => response.json())
-                        .then(data => {
-                            // console.log('id: ', data.visitorBasics['id']);
-                            // console.log('name: ', data.visitorBasics['visitors_name']);
-                            // console.log('PageHitCountValue: ', data.visitorsValues[0]['PageHitCountValue']);
-                            document.querySelectorAll("#VisitorsOnlineCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['VisitorsOnlineCountValue'];
-                            });
-                            document.querySelectorAll("#TodayVisitCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['TodayVisitCountValue'];
-                            });
-                            document.querySelectorAll("#TotalVisitCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['TotalVisitCountValue'];
-                            });
-                            document.querySelectorAll("#TodayHitCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['TodayHitCountValue'];
-                            });
-                            document.querySelectorAll("#TotalHitCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['TotalHitCountValue'];
-                            });
-                            document.querySelectorAll("#YesterdayVisitCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['YesterdayVisitCountValue'];
-                            });
-                            document.querySelectorAll("#YesterdayHitCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['YesterdayHitCountValue'];
-                            });
-                            document.querySelectorAll("#PageHitCount").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['PageHitCountValue'];
-                            });
-                            document.querySelectorAll("#AverageVisits").forEach(el => {
-                                el.innerHTML = data.visitorsValues[0]['AverageVisitsValue'];
-                            });
-                        })
-                    .catch( error => console.error('error:', error) );
-                } catch (r) {
-
-                    return;
-                }
-            }
-            // Fügen Sie diese Funktion hinzu, um den Timer alle 10 Sekunden zu starten
-            function startVisitorTimer() {
-                var visitorUpdate = <?= $visitor['VisitorsUpdate'] ?>;
-                setInterval(updateVisitorData, visitorUpdate);
-            }
-            // Starten Sie den Timer, wenn das Dokument geladen ist
-            document.addEventListener('DOMContentLoaded', startVisitorTimer);
-        </script>
+        <script src="bundles/bugbustervisitors/js/vfs.js"></script>
+        <script src="bundles/bugbustervisitors/js/vfa.js"></script>
     <?php endforeach; ?>
 
 <?php $this->endblock(); ?>

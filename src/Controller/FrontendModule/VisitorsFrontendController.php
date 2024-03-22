@@ -152,9 +152,15 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $counting = '<!-- counted -->';
         }
 
+        $routeScreenCount = System::getContainer()->get('router')->generate('visitors_frontend_screencount');
+
         if ('mod_visitors_fe_invisible' === $this->strTemplate) {
             // invisible, but counting!
-            $arrVisitors[] = ['VisitorsKatID' => $this->visitors_category, 'VisitorsCounting' => $counting];
+            $arrVisitors[] = [
+                'VisitorsKatID' => $this->visitors_category, 
+                'VisitorsCounting' => $counting,
+                'VisitorsRouteScreenCount' => $routeScreenCount
+            ];
             $template->visitors = $arrVisitors;
             $template->headline = ''; // Modul Überschrift unterdrücken falls gesetzt
 
@@ -239,6 +245,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                 'VisitorsKatID' => $this->visitors_category,
                 'VisitorsCounting' => $counting,
+                'VisitorsRouteScreenCount' => $routeScreenCount,
                 'VisitorsStartDate' => $VisitorsStartDate, // false|value - ugly - i know
 
                 'AverageVisitsLegend' => $GLOBALS['TL_LANG']['visitors']['AverageVisitsLegend'],
