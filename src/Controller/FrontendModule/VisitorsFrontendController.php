@@ -157,7 +157,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if ('mod_visitors_fe_invisible' === $this->strTemplate) {
             // invisible, but counting!
             $arrVisitors[] = [
-                'VisitorsKatID' => $this->visitors_category, 
+                'VisitorsKatID' => $this->visitors_category,
                 'VisitorsCounting' => $counting,
                 'VisitorsRouteScreenCount' => $routeScreenCount
             ];
