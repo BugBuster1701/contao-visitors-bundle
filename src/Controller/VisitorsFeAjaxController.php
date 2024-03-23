@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
+ * @copyright  Glen Langer 2024 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -29,8 +29,6 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Handles the Visitors front end routes.
  *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
- *
  * @Route("/visitors", defaults={"_scope" = "frontend", "_token_check" = false})
  */
 class VisitorsFeAjaxController
@@ -48,13 +46,6 @@ class VisitorsFeAjaxController
         $this->db = $db;
         $this->monologLogger = $logger;
         $this->visitorCalculator = $VisitorCalculator;
-
-        // /** @var PageModel $this->$objPage */
-        // $this->objPage = $this->getPageModel();
-        // if (null != $this->objPage)
-        // {
-        //     $this->objPage->current()->loadDetails(); // for language via cache call
-        // }
     }
 
     /**
@@ -64,9 +55,10 @@ class VisitorsFeAjaxController
      */
     public function __invoke(int $vc, int $pid, int $protected): JsonResponse
     {
-        $this->objPage = new \stdClass();
-        $this->objPage->id = $pid;
+        $this->objPage = PageModel::findWithDetails($pid);
         $this->objPage->protected = $protected;
+
+        System::loadLanguageFile('default');
 
         $rowBasics = $this->getBasics($vc);
 
@@ -82,21 +74,6 @@ class VisitorsFeAjaxController
         ];
 
         return new JsonResponse($arrJson);
-    }
-
-    protected function getPageModel(): PageModel|null
-    {
-        $request = null;
-        $container = System::getContainer();
-        if (null !== $container) {
-            $request = $container->get('request_stack')->getCurrentRequest();
-        }
-
-        if (null !== $request && ($pageModel = $request->attributes->get('pageModel')) instanceof PageModel) {
-            return $pageModel;
-        }
-
-        return null;
     }
 
     protected function getBasics(int $vc): array|bool

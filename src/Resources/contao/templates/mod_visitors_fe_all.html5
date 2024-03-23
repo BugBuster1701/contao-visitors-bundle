@@ -3,7 +3,7 @@
 <?php $this->block('content'); ?>
 
     <?php foreach ($this->visitors as $visitor): ?>
-        <span class="visitor_count invisible"><?= $visitor['VisitorsCounting']; ?></span>
+        <span class="visitor_count invisible" id="VisitorsData" data-visitorsCategory="<?= $visitor['VisitorsKatID']; ?>" data-visitorsRouteScreenCount="<?= $visitor['VisitorsRouteScreenCount']; ?>"><?= $visitor['VisitorsCounting']; ?></span>
         <div class="visitor_name"       ><div id="VisitorsNameLegend"><?= $visitor['VisitorsNameLegend']; ?></div><div id="VisitorsName"       ><?= $visitor['VisitorsName']; ?></div></div>
         <div class="visitor_useronline" ><div id="VisitorsOnlineCountLegend"><?= $this->trans('visitors.VisitorsOnlineCountLegend'); ?></div><div id="VisitorsOnlineCount"><?= $visitor['VisitorsOnlineCountValue']; ?></div></div>
         <div class="visitor_visitstoday"><div id="TodayVisitCountLegend"><?= $this->trans('visitors.TodayVisitCountLegend'); ?></div><div id="TodayVisitCount"    ><?= $visitor['TodayVisitCountValue']; ?></div></div>
@@ -17,22 +17,7 @@
         <?php if ($visitor['VisitorsStartDate']): ?>
             <div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $this->trans('visitors.VisitorsStartDateLegend'); ?></div><div id="VisitorsStartDate">&nbsp;<?= $visitor['VisitorsStartDateValue']; ?></div></div>
         <?php endif; ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var iWidth  = window.innerWidth  || (window.document.documentElement.clientWidth  || window.document.body.clientWidth);
-                var iHeight = window.innerHeight || (window.document.documentElement.clientHeight || window.document.body.clientHeight);
-                var sWidth  = screen.width;
-                var sHeight = screen.height;
-                var visitorurl = '<?= $this->route('visitors_frontend_screencount') ?>?vcid=<?= $visitor['VisitorsKatID']; ?>&scrw='+sWidth+'&scrh='+sHeight+'&scriw='+iWidth+'&scrih='+iHeight+'';
-                try {
-                    fetch( visitorurl, { method: 'GET' , headers: { 'X-Requested-With': 'XMLHttpRequest', } } )
-                    .catch( error => console.error('error:', error) );
-                } catch (r) {
-                    return;
-                }
-
-            });
-        </script>
+        <script src="bundles/bugbustervisitors/js/vfs.js"></script>
     <?php endforeach; ?>
 
 <?php $this->endblock(); ?>
