@@ -12,7 +12,7 @@
  */
 
 define('VISITORS_VERSION', '1.12');
-define('VISITORS_BUILD', '0');
+define('VISITORS_BUILD', '1');
 
 /*
  * Backend css version number are added to style sheets files to make
@@ -41,10 +41,16 @@ $GLOBALS['BE_MOD']['system']['visitorstat'] = array
 
 /*
  * -------------------------------------------------------------------------
- * FRONT END MODULES
+ * FRONT END MODULES CSS Minimum Definitions
+ * (ugly hack, in FE esi request, no isFrontendRequest is available)
  * -------------------------------------------------------------------------
  */
-// $GLOBALS['FE_MOD']['miscellaneous']['visitors'] = 'BugBuster\Visitors\ModuleVisitors';
+use Contao\System;
+use Symfony\Component\HttpFoundation\Request;
+if (!System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
+{
+	$GLOBALS['TL_CSS'][] = 'bundles/bugbustervisitors/css_demo/mod_visitors_basic.css';
+}
 
 /*
  * -------------------------------------------------------------------------
