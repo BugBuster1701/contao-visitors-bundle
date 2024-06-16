@@ -148,8 +148,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         $counting = '<!-- not counted -->';
         $this->setCounters($objPage);
+        $page_type = $this->visitorGetPageType($objPage);
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
-            $counting = '<!-- counted -->';
+            $counting = '<!-- counted t' . $page_type . ' -->';
         }
 
         $routeScreenCount = System::getContainer()->get('router')->generate('visitors_frontend_screencount');
@@ -237,6 +238,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 'vc' => $this->visitors_category,
                 'pid' => $objPage->id,
                 'protected' => (int) $objPage->protected,
+                'page_type' => (int) $page_type
             ]);
 
             $arrVisitors[] = [

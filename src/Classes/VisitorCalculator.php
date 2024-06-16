@@ -51,7 +51,7 @@ class VisitorCalculator
     //     // …
     // }
 
-    public function getVisitorValues(array $rowBasics, int $visitors_category, $objPage)
+    public function getVisitorValues(array $rowBasics, int $visitors_category, $objPage, int $pagetype = 0)
     {
         $VisitorsStartDate = false;
         $VisitorsAverageVisits = false;
@@ -109,7 +109,7 @@ class VisitorCalculator
             'YesterdayHitCountValue' => $this->getYesterdayHitCount($rowBasics, $boolSeparator),
 
             // 'PageHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend'],
-            'PageHitCountValue' => $this->getPageHits($rowBasics, $boolSeparator, $objPage),
+            'PageHitCountValue' => $this->getPageHits($rowBasics, $boolSeparator, $objPage, $pagetype),
         ];
 
         return $arrVisitors;
@@ -325,7 +325,7 @@ class VisitorCalculator
         return $boolSeparator ? System::getFormattedNumber($VisitorsYesterdayHitCount, 0) : $VisitorsYesterdayHitCount;
     }
 
-    protected function getPageHits($objVisitors, $boolSeparator, $objPage)
+    protected function getPageHits($objVisitors, $boolSeparator, $objPage, $pagetype=0)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id'].' objPage ID:'.$objPage->id);
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID: '.$objPage->id);
@@ -336,7 +336,7 @@ class VisitorCalculator
         // 2 = FAQ
         // 3 = Isotope
         // 403 = Forbidden
-        $visitors_page_type = $this->visitorGetPageType($objPage);
+        $visitors_page_type = $pagetype;
         // bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
         $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
