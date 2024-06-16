@@ -158,7 +158,7 @@ class ModuleVisitorStatNewsFaqCounter extends BackendModule
 			{
 				$alias   = false;
 				$aliases = $this->getNewsAliases($objNewsStatCount->visitors_page_id);
-				if (false !== $aliases['PageAlias'])
+				if (isset($aliases['PageAlias']) && false !== $aliases['PageAlias'])
 				{
 					$alias = $aliases['PageAlias'] . '/' . $aliases['NewsAlias'];
 				}

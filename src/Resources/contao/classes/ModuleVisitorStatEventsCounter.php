@@ -132,7 +132,7 @@ class ModuleVisitorStatEventsCounter extends BackendModule
 			{
 				$alias   = false;
 				$aliases = $this->getEventsAliases($objEventsStatCount->visitors_page_id);
-				if (false !== $aliases['PageAlias'])
+				if (isset($aliases['PageAlias']) && false !== $aliases['PageAlias'])
 				{
 					$alias = $aliases['PageAlias'] . '/' . $aliases['EventsAlias'];
 				}
