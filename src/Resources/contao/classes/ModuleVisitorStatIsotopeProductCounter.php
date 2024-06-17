@@ -133,7 +133,7 @@ class ModuleVisitorStatIsotopeProductCounter extends BackendModule
 			{
 				$alias   = false;
 				$aliases = $this->getIsotopeAliases($objIsotopeStatCount->visitors_page_id, $objIsotopeStatCount->visitors_page_pid);
-				if (false !== $aliases['PageAlias'])
+				if (isset($aliases['PageAlias']) && false !== $aliases['PageAlias'])
 				{
 					$alias = $aliases['PageAlias'] . '/' . $aliases['ProductAlias'];
 					$title = $aliases['ProductTeaser'] . ': ' . $aliases['ProductName'];
