@@ -238,7 +238,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 'vc' => $this->visitors_category,
                 'pid' => $objPage->id,
                 'protected' => (int) $objPage->protected,
-                'page_type' => (int) $page_type
+                'pagetype' => (int) $page_type
             ]);
 
             $arrVisitors[] = [
