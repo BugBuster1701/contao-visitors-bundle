@@ -51,7 +51,7 @@ class VisitorCalculator
     //     // …
     // }
 
-    public function getVisitorValues(array $rowBasics, int $visitors_category, $objPage, int $pagetype = 0)
+    public function getVisitorValues(array $rowBasics, int $visitors_category, $objPage, int $pagetype = 0, int $specialid = 0)
     {
         $VisitorsStartDate = false;
         $VisitorsAverageVisits = false;
@@ -109,7 +109,7 @@ class VisitorCalculator
             'YesterdayHitCountValue' => $this->getYesterdayHitCount($rowBasics, $boolSeparator),
 
             // 'PageHitCountLegend' => $GLOBALS['TL_LANG']['visitors']['PageHitCountLegend'],
-            'PageHitCountValue' => $this->getPageHits($rowBasics, $boolSeparator, $objPage, $pagetype),
+            'PageHitCountValue' => $this->getPageHits($rowBasics, $boolSeparator, $objPage, $pagetype, $specialid),
         ];
 
         return $arrVisitors;
@@ -325,7 +325,7 @@ class VisitorCalculator
         return $boolSeparator ? System::getFormattedNumber($VisitorsYesterdayHitCount, 0) : $VisitorsYesterdayHitCount;
     }
 
-    protected function getPageHits($objVisitors, $boolSeparator, $objPage, $pagetype=0)
+    protected function getPageHits($objVisitors, $boolSeparator, $objPage, $pagetype = 0, $specialid = 0)
     {
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objVisitors ID: '.$objVisitors['id'].' objPage ID:'.$objPage->id);
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Page ID: '.$objPage->id);
@@ -336,9 +336,13 @@ class VisitorCalculator
         // 2 = FAQ
         // 3 = Isotope
         // 403 = Forbidden
-        $visitors_page_type = $pagetype;
+        $objPageId = $objPage->id;
         // bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
-        $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
+        if ( self::PAGE_TYPE_NORMAL < $pagetype)
+        {
+            $objPageId = $specialid;
+        }
+        //$objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
         $stmt = $this->connection->prepare('SELECT
                             SUM(visitors_page_hit)   AS visitors_page_hits
@@ -354,7 +358,7 @@ class VisitorCalculator
 
         $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
         $stmt->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
-        $stmt->bindValue('vpagetype', $visitors_page_type, \PDO::PARAM_INT);
+        $stmt->bindValue('vpagetype', $pagetype, \PDO::PARAM_INT);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsPageHits = 0;
