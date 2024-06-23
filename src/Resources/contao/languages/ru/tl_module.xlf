@@ -31,6 +31,16 @@
         <target>Постоянное обновление значений во фронтенде без нового просмотра страницы. Только при использовании шаблона 'mod_visitors_fe_all_ajax'.</target>
         
       </trans-unit>
+      <trans-unit id="tl_module.visitors_screencount.0">
+        <source>Activate counting for device/screen resolutions</source>
+        <target>Активируйте подсчет разрешения устройства/экрана</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_screencount.1">
+        <source>Open the help wizard for more information</source>
+        <target>Откройте мастер справки для получения дополнительной информации</target>
+        
+      </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.0">
         <source>No counting for this HTTP_USER_AGENT partial identifier</source>
         <target>Не подсчитывать этот HTTP_USER_AGENT частичный идентификатор</target>

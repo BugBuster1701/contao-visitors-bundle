@@ -31,6 +31,16 @@
         <target>Laufende Aktualisierung der Werte im Frontend ohne neuen Seitenaufruf. Nur bei Verwendung vom Template 'mod_visitors_fe_all_ajax'.</target>
         
       </trans-unit>
+      <trans-unit id="tl_module.visitors_screencount.0">
+        <source>Activate counting for device/screen resolutions</source>
+        <target>Aktivierung der Zählung für Geräte-/Bildschirmauflösungen</target>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_screencount.1">
+        <source>Open the help wizard for more information</source>
+        <target>Öffnen Sie den Hilfe-Assistenten für weitere Informationen</target>
+        
+      </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.0">
         <source>No counting for this HTTP_USER_AGENT partial identifier</source>
         <target>Keine Zählung bei HTTP_USER_AGENT Teilkennung</target>

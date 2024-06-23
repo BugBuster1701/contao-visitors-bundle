@@ -14,7 +14,7 @@
 /*
  * Add palettes to tl_module
  */
-$GLOBALS['TL_DCA']['tl_module']['palettes']['visitors']   = '{title_legend},name,type,headline;{config_legend},visitors_categories,visitors_template,visitors_update;{protected_legend:hide},protected;{expert_legend:hide},visitors_useragent,guests,cssID';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['visitors']   = '{title_legend},name,type,headline;{config_legend},visitors_categories,visitors_template,visitors_update;{protected_legend:hide},protected;{expert_legend:hide},visitors_screencount,visitors_useragent,guests,cssID';
 
 /*
  * Add fields to tl_module
@@ -47,6 +47,18 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['visitors_update'] = array
 	'sql'                     => "int(10) unsigned NOT NULL default '10'",
 	'eval'                    => array('mandatory'=>false, 'maxlength'=>10, 'rgxp'=>'natural', 'minval'=>1, 'helpwizard'=>false, 'tl_class'=>'w50 w50h')
 );
+$GLOBALS['TL_DCA']['tl_module']['fields']['visitors_screencount'] = array
+(
+	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['visitors_screencount'],
+	'inputType'               => 'checkbox',
+	'explanation'	          => 'visitors_help_module',
+	'sql'                     => [
+									'type' => 'boolean',
+									'default' => false,
+								],
+	'eval'                    => array('mandatory'=>false, 'helpwizard'=>true)
+);
+
 $GLOBALS['TL_DCA']['tl_module']['fields']['visitors_useragent'] = array
 (
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['visitors_useragent'],
