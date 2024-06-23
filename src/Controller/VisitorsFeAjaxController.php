@@ -51,18 +51,21 @@ class VisitorsFeAjaxController
     /**
      * Renders the Counter Values as JSON.
      *
-     * @Route("/coval/{vc}/{pid}/{protected}", name="visitors_frontend_countervalues")
+     * @Route("/coval/{vc}/{pid}/{protected}/{pagetype}/{specialid}", name="visitors_frontend_countervalues")
      */
-    public function __invoke(int $vc, int $pid, int $protected): JsonResponse
+    public function __invoke(int $vc, int $pid, int $protected, int $pagetype, int $specialid): JsonResponse
     {
         $this->objPage = PageModel::findWithDetails($pid);
-        $this->objPage->protected = $protected;
+        if (0 == $pagetype)
+        {
+            $this->objPage->protected = $protected;
+        }
 
         System::loadLanguageFile('default');
 
         $rowBasics = $this->getBasics($vc);
 
-        $rowValues = $this->getValues($rowBasics, $vc);
+        $rowValues = $this->getValues($rowBasics, $vc, $pagetype, $specialid);
 
         $arrJson = [
             'statusBasics' => !$rowBasics ? ['return' => 'no published counter found'] : ['return' => 'ok'],
@@ -71,6 +74,8 @@ class VisitorsFeAjaxController
             'visitorsValues' => !$rowValues ? null : $rowValues,
             'vc' => $vc,
             'dateFormat' => $this->objPage->dateFormat,
+            'pagetype' => $pagetype,
+            'specialid' => $specialid
         ];
 
         return new JsonResponse($arrJson);
@@ -105,13 +110,13 @@ class VisitorsFeAjaxController
         return $row;
     }
 
-    protected function getValues(array|bool $rowBasics, int $vc): array|bool
+    protected function getValues(array|bool $rowBasics, int $vc, int $pagetype, int $specialid): array|bool
     {
         if (false === $rowBasics) {
             return false;
         }
 
-        $visitorsValues = $this->visitorCalculator->getVisitorValues($rowBasics, $vc, $this->objPage);
+        $visitorsValues = $this->visitorCalculator->getVisitorValues($rowBasics, $vc, $this->objPage, $pagetype, $specialid);
 
         // Filter for Ajax Request, nothing all is necessary
         unset($visitorsValues[0]['VisitorsName'], $visitorsValues[0]['VisitorsStartDate'], $visitorsValues[0]['VisitorsStartDateValue']);

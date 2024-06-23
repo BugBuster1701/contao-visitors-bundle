@@ -146,10 +146,16 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         System::loadLanguageFile('default');
         System::loadLanguageFile('tl_visitors');
 
-        $counting = '<!-- not counted -->';
         $this->setCounters($objPage);
+        $page_type = $this->visitorGetPageType($objPage);
+        $objPageIdSpecial = 0;
+        if (self::PAGE_TYPE_NORMAL < $page_type)
+        {
+            $objPageIdSpecial = $this->visitorGetPageIdByType($objPage->id, $page_type, $objPage->alias);
+        }
+        $counting = '<!-- not counted t' . $page_type . ' p' .$objPage->id. ' s'.$objPageIdSpecial.' -->';
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
-            $counting = '<!-- counted -->';
+            $counting = '<!-- counted t' . $page_type . ' p' .$objPage->id. ' s'.$objPageIdSpecial.' -->';
         }
 
         $routeScreenCount = System::getContainer()->get('router')->generate('visitors_frontend_screencount');
@@ -237,6 +243,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 'vc' => $this->visitors_category,
                 'pid' => $objPage->id,
                 'protected' => (int) $objPage->protected,
+                'pagetype' => (int) $page_type,
+                'specialid' => (int) $objPageIdSpecial
             ]);
 
             $arrVisitors[] = [
