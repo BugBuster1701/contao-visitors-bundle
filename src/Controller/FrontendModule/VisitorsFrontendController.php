@@ -146,7 +146,6 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         System::loadLanguageFile('default');
         System::loadLanguageFile('tl_visitors');
 
-        $counting = '<!-- not counted -->';
         $this->setCounters($objPage);
         $page_type = $this->visitorGetPageType($objPage);
         $objPageIdSpecial = 0;
@@ -154,6 +153,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         {
             $objPageIdSpecial = $this->visitorGetPageIdByType($objPage->id, $page_type, $objPage->alias);
         }
+        $counting = '<!-- not counted t' . $page_type . ' p' .$objPage->id. ' s'.$objPageIdSpecial.' -->';
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
             $counting = '<!-- counted t' . $page_type . ' p' .$objPage->id. ' s'.$objPageIdSpecial.' -->';
         }
