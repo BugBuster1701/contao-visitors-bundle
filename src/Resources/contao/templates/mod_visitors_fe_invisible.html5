@@ -4,7 +4,9 @@
     <!-- Template for "only counting", no display in Frontend. -->
     <?php foreach ($this->visitors as $visitor): ?>
     <span class="visitor_count invisible" id="VisitorsData" data-visitorsCategory="<?= $visitor['VisitorsKatID']; ?>" data-visitorsRouteScreenCount="<?= $visitor['VisitorsRouteScreenCount']; ?>"><?= $visitor['VisitorsCounting']; ?></span>
+    <?php if ($visitor['VisitorsScreenCount']): ?>
     <script src="bundles/bugbustervisitors/js/vfs.js"></script>
+    <?php endif; ?>
     <?php endforeach; ?>
 
 <?php $this->endblock(); ?>

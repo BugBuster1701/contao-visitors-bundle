@@ -65,6 +65,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected $visitors_category = false;
 
     protected $visitors_update = 10;
+    
+    protected $visitors_screencount = 0;
 
     private $_BOT = false; // Bot
 
@@ -108,6 +110,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $this->useragent_filter = $model->visitors_useragent;
         $this->visitors_category = $model->visitors_categories;
         $this->visitors_update = $model->visitors_update;
+        $this->visitors_screencount = $model->visitors_screencount;
 
         // $this->initializeContaoFramework();
         /** @var PageModel $objPage */
@@ -290,6 +293,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // for FE Ajax Controller
                 'ajaxurl' => $strAjaxUrl,
                 'VisitorsUpdate' => 1000 * (int) $this->visitors_update,
+
+                // for Screen Counting on/off
+                'VisitorsScreenCount' => (int) $this->visitors_screencount,
             ];
         }
 
