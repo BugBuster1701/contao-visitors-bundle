@@ -27,6 +27,14 @@
         <source>Continuous updating of values in the frontend without a new page view. Only when using the template 'mod_visitors_fe_all_ajax'.</source>
         
       </trans-unit>
+      <trans-unit id="tl_module.visitors_screencount.0">
+        <source>Activate counting for device/screen resolutions</source>
+        
+      </trans-unit>
+      <trans-unit id="tl_module.visitors_screencount.1">
+        <source>Open the help wizard for more information</source>
+        
+      </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.0">
         <source>No counting for this HTTP_USER_AGENT partial identifier</source>
         

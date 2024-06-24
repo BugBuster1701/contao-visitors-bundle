@@ -46,6 +46,20 @@
 </source>
         
       </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.2.0">
+        <source>Count the device/screen resolution</source>
+        
+      </trans-unit>
+      <trans-unit id="XPL.visitors_help_module.2.1">
+        <source>The module can detect and count the device/screen resolution and display it in the backend statistics.
+&lt;br&gt;In Germany, according to TDDDG §25, this is only permitted if the end user has consented on the basis of clear and comprehensive information.
+&lt;br&gt;There are exceptions to this. See: https://gesetz-tdddg.de/25-tdddg/
+&lt;br&gt;
+&lt;br&gt;In other countries, the lawfulness of detecting the device/screen resolution should be checked before activation.
+&lt;br&gt;
+</source>
+        
+      </trans-unit>
     </body>
   </file>
 </xliff>
