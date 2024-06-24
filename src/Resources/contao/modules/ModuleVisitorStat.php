@@ -338,6 +338,9 @@ class ModuleVisitorStat extends BackendModule
 		{
 			$this->Template->visitorssearchengine = false;
 		}
+		
+		// ScreenCountActivated?
+		$this->Template->visitorsscreenactivated = $this->isScreencountActivated($this->intKatID);
 	}
 
 	/**
@@ -1541,6 +1544,30 @@ class ModuleVisitorStat extends BackendModule
 		}
 
 		// Debug log_message('Ich bin in der falschen Gruppe', 'visitors_debug.log');
+		return false;
+	}
+
+	protected function isScreencountActivated($visitor_category_id)
+	{
+		$objVisitorScreens = Database::getInstance()
+								->prepare("SELECT
+                                            count(`id`) as anz 
+                                       FROM
+                                            tl_module
+                                        WHERE `visitors_categories` = ? 
+											AND `type`='visitors' 
+											AND `visitors_screencount`=1
+                                        ")
+								->execute($visitor_category_id);
+
+		while ($objVisitorScreens->next())
+		{
+			if (0 < (int) $objVisitorScreens->anz)
+			{
+				return true;
+			}
+		}
+
 		return false;
 	}
 

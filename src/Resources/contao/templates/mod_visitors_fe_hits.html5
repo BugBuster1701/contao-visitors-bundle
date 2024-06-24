@@ -12,7 +12,9 @@
         <?php if ($visitor['VisitorsStartDate']): ?>
         <div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $this->trans('visitors.VisitorsStartDateLegend'); ?></div><div id="VisitorsStartDate">&nbsp;<?= $visitor['VisitorsStartDateValue']; ?></div></div>
         <?php endif; ?>
+        <?php if ($visitor['VisitorsScreenCount']): ?>
         <script src="bundles/bugbustervisitors/js/vfs.js"></script>
+        <?php endif; ?>
     <?php endforeach; ?>
 
 <?php $this->endblock(); ?>

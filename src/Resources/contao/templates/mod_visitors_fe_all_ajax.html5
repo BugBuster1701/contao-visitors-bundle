@@ -15,9 +15,11 @@
         <div class="visitor_pagehits"><div id="PageHitCountLegend"><?= $this->trans('visitors.PageHitCountLegend'); ?></div><div id="PageHitCount"><?= $visitor['PageHitCountValue']; ?></div></div>
         <div class="visitor_average" ><?php if ($visitor['AverageVisits']): ?><div id="AverageVisitsLegend"><?= $this->trans('visitors.AverageVisitsLegend'); ?>&nbsp;&Oslash;</div><div id="AverageVisits"><?= $visitor['AverageVisitsValue']; ?></div><?php endif; ?></div>
         <?php if ($visitor['VisitorsStartDate']): ?>
-            <div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $this->trans('visitors.VisitorsStartDateLegend'); ?></div><div id="VisitorsStartDate">&nbsp;<?= $visitor['VisitorsStartDateValue']; ?></div></div>
+        <div class="visitor_countsince" ><div id="VisitorsStartDateLegend"><?= $this->trans('visitors.VisitorsStartDateLegend'); ?></div><div id="VisitorsStartDate">&nbsp;<?= $visitor['VisitorsStartDateValue']; ?></div></div>
         <?php endif; ?>
+        <?php if ($visitor['VisitorsScreenCount']): ?>
         <script src="bundles/bugbustervisitors/js/vfs.js"></script>
+        <?php endif; ?>
         <script src="bundles/bugbustervisitors/js/vfa.js"></script>
     <?php endforeach; ?>
 
