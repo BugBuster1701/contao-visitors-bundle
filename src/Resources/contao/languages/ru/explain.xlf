@@ -66,6 +66,13 @@
 &lt;br&gt;In other countries, the lawfulness of detecting the device/screen resolution should be checked before activation.
 &lt;br&gt;
 </source>
+        <target>Модуль может обнаруживать и подсчитывать разрешение устройства/экрана и отображать его в статистике серверной части.
+&lt;br&gt;В Германии, согласно §25 TDDDG, это разрешено только в том случае, если конечный пользователь дал согласие на основе четкой и полной информации.
+&lt;br&gt;Есть исключения из этого. См.: https://gesetz-tdddg.de/25-tdddg/
+&lt;br&gt;
+&lt;br&gt;В других странах перед активацией следует проверять законность определения разрешения устройства/экрана.
+&lt;br&gt;
+</target>
         
       </trans-unit>
     </body>
