@@ -123,6 +123,10 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
+						if ($alias == 404) 
+						{
+							$alias = $objPage->title . ' [404]';
+						}
 					}
 					else
 					{
@@ -210,6 +214,10 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
+						if ($alias == 404) 
+						{
+							$alias = $objPage->title . ' [404]';
+						}
 					}
 					else
 					{
@@ -291,6 +299,10 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
+						if ($alias == 404) 
+						{
+							$alias = $objPage->title . ' [404]';
+						}
 					}
 					else
 					{
@@ -373,6 +385,10 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
+						if ($alias == 404) 
+						{
+							$alias = $objPage->title . ' [404]';
+						}
 					}
 					else
 					{
