@@ -168,7 +168,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
             $arrVisitors[] = [
                 'VisitorsKatID' => $this->visitors_category,
                 'VisitorsCounting' => $counting,
-                'VisitorsRouteScreenCount' => $routeScreenCount
+                'VisitorsRouteScreenCount' => $routeScreenCount,
+                // for Screen Counting on/off
+                'VisitorsScreenCount' => (int) $this->visitors_screencount
             ];
             $template->visitors = $arrVisitors;
             $template->headline = ''; // Modul Überschrift unterdrücken falls gesetzt
