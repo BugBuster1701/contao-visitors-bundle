@@ -12,7 +12,7 @@
  */
 
 define('VISITORS_VERSION', '1.13');
-define('VISITORS_BUILD', '1');
+define('VISITORS_BUILD', '2');
 
 /*
  * Backend css version number are added to style sheets files to make
@@ -49,7 +49,7 @@ use Contao\System;
 use Symfony\Component\HttpFoundation\Request;
 if (!System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest(System::getContainer()->get('request_stack')->getCurrentRequest() ?? Request::create('')))
 {
-	$GLOBALS['TL_CSS'][] = 'bundles/bugbustervisitors/css_demo/mod_visitors_basic.css';
+	$GLOBALS['TL_CSS'][] = 'bundles/bugbustervisitors/mod_visitors_basic.css|static';
 }
 
 /*
