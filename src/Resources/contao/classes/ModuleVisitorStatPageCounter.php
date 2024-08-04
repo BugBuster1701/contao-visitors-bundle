@@ -131,7 +131,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					else
 					{
 						// Seite in der Statistik existiert nicht mehr in der Seitenstruktur
-						$alias = '-/-';
+						$alias = false;
 					}
 					break;
 				case self::PAGE_TYPE_FORBIDDEN:
@@ -144,7 +144,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					$alias = $alias403 . ' [' . $objPage->alias . ']';
 					break;
 				default:
-					$alias = '-/-';
+					$alias = false;
 					break;
 			}
 
@@ -222,7 +222,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					else
 					{
 						// Seite in der Statistik existiert nicht mehr in der Seitenstruktur
-						$alias = '-/-';
+						$alias = false;
 					}
 					break;
 				case self::PAGE_TYPE_FORBIDDEN:
@@ -235,7 +235,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					$alias = $alias403 . ' [' . $objPage->alias . ']';
 				// no break
 				default:
-					$alias = '-/-';
+					$alias = false;
 					break;
 			}
 
@@ -307,7 +307,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					else
 					{
 						// Seite in der Statistik existiert nicht mehr in der Seitenstruktur
-						$alias = '-/-';
+						$alias = false;
 					}
 					break;
 				case self::PAGE_TYPE_FORBIDDEN:
@@ -320,7 +320,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					$alias = $alias403 . ' [' . $objPage->alias . ']';
 				// no break
 				default:
-					$alias = '-/-';
+					$alias = false;
 					break;
 			}
 
@@ -393,7 +393,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					else
 					{
 						// Seite in der Statistik existiert nicht mehr in der Seitenstruktur
-						$alias = '-/-';
+						$alias = false;
 					}
 					break;
 				case self::PAGE_TYPE_FORBIDDEN:
@@ -406,7 +406,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					$alias = $alias403 . ' [' . $objPage->alias . ']';
 				// no break
 				default:
-					$alias = '-/-';
+					$alias = false;
 					break;
 			}
 
@@ -661,7 +661,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					else
 					{
 						// Seite in der Statistik existiert nicht mehr in der Seitenstruktur
-						$alias = '-/-';
+						$alias = false;
 					}
 					break;
 				case self::PAGE_TYPE_NEWS:
@@ -706,7 +706,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					$alias = $alias403 . ' [' . $objPage->alias . ']';
 					break;
 				default:
-					$alias = '-/-';
+					$alias = false;
 					break;
 			}
 
