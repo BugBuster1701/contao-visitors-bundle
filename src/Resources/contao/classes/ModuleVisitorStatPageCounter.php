@@ -455,6 +455,8 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias' => $objNewsAliases->PageAlias,
 					'NewsAlias' => $objNewsAliases->NewsAlias);
 			}
+			return array('PageAlias' => false,
+				'NewsAlias' => false);
 		}
 		else
 		{
@@ -491,6 +493,8 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias' => $objFaqAliases->PageAlias,
 					'FaqAlias'  => $objFaqAliases->FaqAlias);
 			}
+			return array('PageAlias' => false,
+				'FaqAlias'  => false);
 		}
 		else
 		{
@@ -527,6 +531,8 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias'    => $objEventsAliases->PageAlias,
 					'EventsAlias'  => $objEventsAliases->EventsAlias);
 			}
+			return array('PageAlias'    => false,
+				'EventsAlias'  => false);
 		}
 		else
 		{
@@ -573,6 +579,8 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias'     => $PageAlias,
 					'ProductAlias'  => $objIsotopeProduct->ProductAlias);
 			}
+			return array('PageAlias'       => false,
+				'ProductAlias'    => false);
 		}
 
 		return array('PageAlias'       => false,
@@ -612,7 +620,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 	 * Filterung nach Anzahl Tagen
 	 *
 	 * @param  integer      $VisitorsID
-	 * @param  number       $days
+	 * @param  int          $days
 	 * @param  string       $parse
 	 * @return array|string NULL
 	 */

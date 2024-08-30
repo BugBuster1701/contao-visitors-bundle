@@ -60,12 +60,12 @@ class VisitorsStatExport extends System
 		$request = $container->get('request_stack')->getCurrentRequest();
 		$request->getSession()->set('VISITORS_EXPORT_DAYS', $this->export_days);
 
-		// IE or other?
-		$ua = Environment::get('agent')->shorty;
-		if ($ua == 'ie')
-		{
-			$this->BrowserAgent = 'IE';
-		}
+		// IE or other? #181, entfernt
+		// $ua = Environment::get('agent')->shorty;
+		// if ($ua == 'ie')
+		// {
+		// 	$this->BrowserAgent = 'IE';
+		// }
 	}
 
 	public function run()
