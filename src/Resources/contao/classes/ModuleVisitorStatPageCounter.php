@@ -491,6 +491,8 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias' => $objFaqAliases->PageAlias,
 					'FaqAlias'  => $objFaqAliases->FaqAlias);
 			}
+			return array('PageAlias' => false,
+				'FaqAlias'  => false);
 		}
 		else
 		{
