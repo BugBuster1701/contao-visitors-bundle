@@ -51,7 +51,7 @@ class ModuleVisitorLog
                 {
                     $arrUniqid = StringUtil::trimsplit('.', uniqid('c0n7a0', true));
                     $GLOBALS['visitors']['debug']['first'] = $arrUniqid[1];
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, $value), 'visitors_debug');
 
                     return;
                 }
@@ -84,47 +84,47 @@ class ModuleVisitorLog
             case "ModuleVisitorsTag":
                 if ($GLOBALS['visitors']['debug']['tag'])
                 {
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
             case "ModuleVisitorChecks":
                 if ($GLOBALS['visitors']['debug']['checks'])
                 {
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
             case "ModuleVisitorReferrer":
                 if ($GLOBALS['visitors']['debug']['referrer'])
                 {
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
             case "ModuleVisitorSearchEngine":
                 if ($GLOBALS['visitors']['debug']['searchengine'])
                 {
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
             case "FrontendVisitors":
                 if ($GLOBALS['visitors']['debug']['screenresolutioncount'])
                 {
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
             case "VisitorsFrontendController":
                 if ($GLOBALS['visitors']['debug']['tag']) //@todo temporär, eigene Regel notwendig  
                 {
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
             case "ModuleVisitorBrowser3":
                 if ($GLOBALS['visitors']['debug']['tag']) //@todo temporär, eigene Regel notwendig  
                 {
-                    self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
+                    self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass.'::'.$arrNamespace[1], $line, $value), 'visitors_debug');
                 }
                 break;
             default:
-                self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, '('.$vclass.')'.$value), 'visitors_debug');
+                self::logMessage(\sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $method, $line, '('.$vclass.')'.$value), 'visitors_debug');
                 break;
         }
 
@@ -162,7 +162,7 @@ class ModuleVisitorLog
             $strLogsDir = TL_ROOT . '/var/logs';
         }
 
-        error_log(sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage), 3, $strLogsDir . '/' . $strLog);
+        error_log(\sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage), 3, $strLogsDir . '/' . $strLog);
     }
 
     /**

@@ -517,7 +517,7 @@ class ModuleVisitorStat extends BackendModule
                                 vid=? AND visitors_date BETWEEN ? AND ?
                             GROUP BY M
                             ORDER BY M %s';
-		    $sqlMonth = sprintf($sqlMonth, $ORDER);
+		    $sqlMonth = \sprintf($sqlMonth, $ORDER);
 
 			//Total je Monat (aktueller und letzter)
 			$objVisitorsToMo = Database::getInstance()
