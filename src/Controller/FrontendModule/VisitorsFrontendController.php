@@ -1422,7 +1422,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // Variante 3
                 $ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
                 $ModuleVisitorBrowser3->initBrowser(Environment::get('httpUserAgent'), implode(',', Environment::get('httpAcceptLanguage')));
-                if ('Windows' === $ModuleVisitorBrowser3->getChPlatform() && 'unknown' === $ModuleVisitorBrowser3->getChPlatformVersion()) {
+                if ('Chrome' == $ModuleVisitorBrowser3->getBrowser() && 'unknown' === $ModuleVisitorBrowser3->getChUa()) {
+                    // Brave ist ein Chrome, der nur über Client Hints als Brave erkannt werden kann
+                    // Browser daher nicht zählen und nicht blocken
+                    ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Chrome based, wait for second request with Client Hints');
+                } elseif ('Windows' === $ModuleVisitorBrowser3->getChPlatform() && 'unknown' === $ModuleVisitorBrowser3->getChPlatformVersion()) {
                     // Browser kann Client Hints, ist aber der erste Request ohne speziel Hints
                     // Browser daher nicht zählen und nicht blocken
                     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Client Hints first request');
