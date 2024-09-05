@@ -268,7 +268,7 @@ class ModuleVisitorBrowser3
 	 * The version of the browser.
 	 * @return string Version of the browser (will only contain alpha-numeric characters and a period)
 	 */
-	public function getVersion() { return $this->_version; }
+	public function getVersion() { return $this->convertToFloatString($this->_version); }
 	/**
 	 * Set the version of the browser
 	 * @param $version The version of the Browser
@@ -2364,5 +2364,23 @@ class ModuleVisitorBrowser3
 		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
 		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		return true;
+	}
+
+	/**
+	 * Überprüfen, ob der String bereits eine Dezimalstelle hat
+	 * Wenn keine Dezimalstelle vorhanden ist, füge ".0" hinzu
+	 * Wenn bereits vorhanden, den String unverändert zurückgeben
+	 * 
+	 * @param string $input
+	 * @return string
+	 */
+	public function convertToFloatString($input) {
+		// Überprüfen, ob der String bereits eine Dezimalstelle hat
+		if (strpos($input, '.') === false) {
+			// Wenn keine Dezimalstelle vorhanden ist, füge ".0" hinzu
+			return $input . '.0';
+		}
+		// Wenn bereits eine Dezimalstelle vorhanden ist, den String unverändert zurückgeben
+		return $input;
 	}
 }
