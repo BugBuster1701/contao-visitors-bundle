@@ -28,6 +28,7 @@ class ModuleVisitorBrowser3
 	private $_version = '';
 	private $_platform = '';
 	private $_ch_platform = '';
+	private $_sec_ch_ua = '';
 
 	//#130 private $_os = '';
 	private $_is_aol = false;
@@ -73,6 +74,7 @@ class ModuleVisitorBrowser3
 	const BROWSER_DOOBLE  = 'Dooble';                         // https://textbrowser.github.io/dooble/
 	const BROWSER_QTWEB   = 'QtWeb Browser';                  // Dooble und andere
 	const BROWSER_ALOHA   = "Aloha Browser";                  // https://alohabrowser.com/
+	const BROWSER_BRAVE   = "Brave";                          // https://brave.com/
 
 	const BROWSER_ANDROID = 'Android';                        // http://www.android.com/
 	const BROWSER_GALAXY_S        = 'Galaxy S';
@@ -181,6 +183,8 @@ class ModuleVisitorBrowser3
 
 	const OPERATING_SYSTEM_UNKNOWN = 'unknown';
 
+	const SEC_UA_UNKNOWN = 'unknown';
+
 	/**
 	 * Special Platform Add-On, BugBuster (Glen Langer)
 	 */
@@ -230,6 +234,7 @@ class ModuleVisitorBrowser3
 		$this->_platformVersion = self::PLATFORM_UNKNOWN;	//add BugBuster
 		$this->_ch_platform = self::PLATFORM_UNKNOWN;
 		$this->_ch_platformVersion = self::VERSION_UNKNOWN;	//add BugBuster
+		$this->_sec_ch_ua = self::SEC_UA_UNKNOWN;
 	}
 
 	/**
@@ -263,7 +268,7 @@ class ModuleVisitorBrowser3
 	 * The version of the browser.
 	 * @return string Version of the browser (will only contain alpha-numeric characters and a period)
 	 */
-	public function getVersion() { return $this->_version; }
+	public function getVersion() { return $this->convertToFloatString($this->_version); }
 	/**
 	 * Set the version of the browser
 	 * @param $version The version of the Browser
@@ -450,6 +455,7 @@ class ModuleVisitorBrowser3
 			//$this->checkBrowserMSNBot() ||
 			//$this->checkBrowserSlurp() ||
 		    // chrome post Android Pads
+			$this->checkBrowserBrave() ||
 		    $this->checkBrowserChrome() ||
 			// WebKit base check (post mobile and others)
 			$this->checkBrowserSafari() ||
@@ -808,6 +814,25 @@ class ModuleVisitorBrowser3
 
 		return false;
     }
+
+	/**
+     * Determine if the browser is Brave or not
+     * @return boolean True if the browser is Brave otherwise false
+     */
+	protected function checkBrowserBrave() {
+		if(stripos($this->_agent, 'Chrome') !== false) {
+			if(stripos($this->getChUa(), 'Brave') !== false) {
+				$str = str_replace(array('"','v='), '', $this->getChUa());
+				$aresult = explode('Brave;', $str);
+				$this->setVersion($aresult[1]);
+				$this->setBrowser(self::BROWSER_BRAVE);
+
+				return true;
+			}
+		}
+
+		return false;
+	}
 
     /**
      * Determine if the browser is Chrome or not (last updated 1.7)
@@ -2148,6 +2173,15 @@ class ModuleVisitorBrowser3
 		return $this->_ch_platformVersion;
 	}
 
+	/**
+	 * Get Client Hints sec-ch-ua
+	 *
+	 * @return string
+	 */
+	public function getChUa() {
+		return $this->_sec_ch_ua;
+	}
+
     /**
      * Improved checkPlatform with Windows Plattform Details
      * and Mac OS X
@@ -2292,6 +2326,7 @@ class ModuleVisitorBrowser3
 	// Matomo Part from device-detector/ClientHints.php
 	// and core/Http getClientHintsFromServerVariables
 	// but only Platform an PlatformVersion
+	// and sec-ch-ua
 	public function getClientHints() {
 		$clientHints = array();
 
@@ -2300,6 +2335,8 @@ class ModuleVisitorBrowser3
                 0 === strpos(strtolower($key), strtolower('HTTP_SEC_CH_UA_PLATFORM'))
                 || 0 === strpos(strtolower($key), strtolower('SEC_CH_UA_PLATFORM'))
 				|| 0 === strpos(strtolower($key), strtolower('PLATFORM'))
+				|| 0 === strpos(strtolower($key), strtolower('HTTP_SEC_CH_UA'))
+				|| 0 === strpos(strtolower($key), strtolower('SEC_CH_UA'))
             ) {
                 $clientHints[$key] = $value;
             }
@@ -2317,11 +2354,33 @@ class ModuleVisitorBrowser3
                 case 'platformversion':
                     $this->_ch_platformVersion = trim($value, '"');
                     break;
+				case 'http-sec-ch-ua':
+				case 'sec-ch-ua':
+					$this->_sec_ch_ua = trim($value, '"');
+					break;
             }
         }
 		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': clientHints: '. print_r($clientHints,true));
 		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platform: '. $this->_ch_platform);
 		// ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ': _ch_platformVersion: '. $this->_ch_platformVersion);
 		return true;
+	}
+
+	/**
+	 * Überprüfen, ob der String bereits eine Dezimalstelle hat
+	 * Wenn keine Dezimalstelle vorhanden ist, füge ".0" hinzu
+	 * Wenn bereits vorhanden, den String unverändert zurückgeben
+	 * 
+	 * @param string $input
+	 * @return string
+	 */
+	public function convertToFloatString($input) {
+		// Überprüfen, ob der String bereits eine Dezimalstelle hat
+		if (strpos($input, '.') === false) {
+			// Wenn keine Dezimalstelle vorhanden ist, füge ".0" hinzu
+			return $input . '.0';
+		}
+		// Wenn bereits eine Dezimalstelle vorhanden ist, den String unverändert zurückgeben
+		return $input;
 	}
 }
