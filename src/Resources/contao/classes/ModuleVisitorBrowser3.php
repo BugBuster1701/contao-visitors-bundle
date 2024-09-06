@@ -75,6 +75,7 @@ class ModuleVisitorBrowser3
 	const BROWSER_QTWEB   = 'QtWeb Browser';                  // Dooble und andere
 	const BROWSER_ALOHA   = "Aloha Browser";                  // https://alohabrowser.com/
 	const BROWSER_BRAVE   = "Brave";                          // https://brave.com/
+	const BROWSER_YANDEX  = "Yandex Browser";                 // https://browser.yandex.com/
 
 	const BROWSER_ANDROID = 'Android';                        // http://www.android.com/
 	const BROWSER_GALAXY_S        = 'Galaxy S';
@@ -455,6 +456,7 @@ class ModuleVisitorBrowser3
 			//$this->checkBrowserMSNBot() ||
 			//$this->checkBrowserSlurp() ||
 		    // chrome post Android Pads
+			$this->checkBrowserYandex() ||
 			$this->checkBrowserBrave() ||
 		    $this->checkBrowserChrome() ||
 			// WebKit base check (post mobile and others)
@@ -814,6 +816,23 @@ class ModuleVisitorBrowser3
 
 		return false;
     }
+
+	/**
+     * Determine if the browser is Yandex Browser or not
+     * @return boolean True if the browser is Yandex Browser otherwise false
+     */
+	protected function checkBrowserYandex() {
+	    if(stripos($this->_agent, 'YaBrowser') !== false) {
+		    $aresult = explode('/', stristr($this->_agent, 'YaBrowser'));
+		    $aversion = explode(' ', $aresult[1]);
+		    $this->setVersion($aversion[0]);
+		    $this->setBrowser(self::BROWSER_YANDEX);
+
+		    return true;
+	    }
+
+	    return false;
+	}
 
 	/**
      * Determine if the browser is Brave or not
