@@ -56,8 +56,7 @@ class VisitorsFeAjaxController
     public function __invoke(int $vc, int $pid, int $protected, int $pagetype, int $specialid): JsonResponse
     {
         $this->objPage = PageModel::findWithDetails($pid);
-        if (0 == $pagetype)
-        {
+        if (0 === $pagetype) {
             $this->objPage->protected = $protected;
         }
 
@@ -75,7 +74,7 @@ class VisitorsFeAjaxController
             'vc' => $vc,
             'dateFormat' => $this->objPage->dateFormat,
             'pagetype' => $pagetype,
-            'specialid' => $specialid
+            'specialid' => $specialid,
         ];
 
         return new JsonResponse($arrJson);

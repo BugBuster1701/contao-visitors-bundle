@@ -53,7 +53,7 @@ class ModuleVisitorBrowser3Test extends TestCase
         parent::tearDown();
     }
 
-    public function providerAgents()
+    public static function providerAgents(): iterable
     {
         return [// result,host
             ['Aloha Browser', 'Mozilla/5.0 (Linux; Android 10; SAMSUNG SM-G975U1 Build/NMF26F) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.96 Mobile Safari/537.36 AlohaBrowser/3.1.1'],
@@ -133,7 +133,7 @@ class ModuleVisitorBrowser3Test extends TestCase
         $this->moduleVisitorBrowser3->setBrowser(/* parameters */);
     }
 
-    public function providerAgentPlatforms()
+    public static function providerAgentPlatforms(): iterable
     {
         return [// result,host
             ['Apple', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12'],
@@ -175,7 +175,7 @@ class ModuleVisitorBrowser3Test extends TestCase
         $this->moduleVisitorBrowser3->setPlatform(/* parameters */);
     }
 
-    public function providerAgentVersions()
+    public static function providerAgentVersions(): iterable
     {
         return [// result,host
             ['8.0', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12'],

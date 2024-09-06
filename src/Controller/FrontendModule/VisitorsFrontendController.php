@@ -65,7 +65,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     protected $visitors_category = false;
 
     protected $visitors_update = 10;
-    
+
     protected $visitors_screencount = 0;
 
     protected $client_hints_status = false;
@@ -133,7 +133,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         $this->visitorSetDebugSettings($this->visitors_category);
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'client_hints_status (scheme): ' . (int) $this->client_hints_status);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'client_hints_status (scheme): '.(int) $this->client_hints_status);
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objPage Language manuall: '.$objPage->language);
 
         if (false === self::$_BackendUser) {
@@ -161,13 +161,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         $this->setCounters($objPage);
         $page_type = $this->visitorGetPageType($objPage);
         $objPageIdSpecial = 0;
-        if (self::PAGE_TYPE_NORMAL < $page_type)
-        {
+        if (self::PAGE_TYPE_NORMAL < $page_type) {
             $objPageIdSpecial = $this->visitorGetPageIdByType($objPage->id, $page_type, $objPage->alias);
         }
-        $counting = '<!-- not counted t' . $page_type . ' p' .$objPage->id. ' s'.$objPageIdSpecial.' -->';
+        $counting = '<!-- not counted t'.$page_type.' p'.$objPage->id.' s'.$objPageIdSpecial.' -->';
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
-            $counting = '<!-- counted t' . $page_type . ' p' .$objPage->id. ' s'.$objPageIdSpecial.' -->';
+            $counting = '<!-- counted t'.$page_type.' p'.$objPage->id.' s'.$objPageIdSpecial.' -->';
         }
 
         $routeScreenCount = System::getContainer()->get('router')->generate('visitors_frontend_screencount');
@@ -1653,6 +1652,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         'visitors_referrer_dns' => $ReferrerDNS,
                         'visitors_referrer_full' => $ReferrerFull,
                     ];
+
                     // Referrer setzen
                     // Debug log_message('visitorCheckReferrer Referrer setzen', 'debug.log');
                     $this->container->get('database_connection')
