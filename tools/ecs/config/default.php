@@ -15,6 +15,7 @@ declare(strict_types=1);
  * please view the LICENSE file that was distributed with this source code.
  */
 
+use Contao\EasyCodingStandard\Fixer\CommentLengthFixer;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
 // use PhpCsFixer\Fixer\Whitespace\MethodChainingIndentationFixer;
 use PhpCsFixer\Fixer\ControlStructure\TrailingCommaInMultilineFixer;
@@ -30,7 +31,8 @@ return static function (ECSConfig $ecsConfig): void {
         // ],
         TrailingCommaInMultilineFixer::class => [
             'src/Controller/FrontendModule/VisitorsFrontendController.php',
-        ]
+        ],
+        CommentLengthFixer::class
     ]);
 
     $ecsConfig->ruleWithConfiguration(HeaderCommentFixer::class, [

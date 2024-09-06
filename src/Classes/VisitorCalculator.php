@@ -338,11 +338,10 @@ class VisitorCalculator
         // 403 = Forbidden
         $objPageId = $objPage->id;
         // bei News/FAQ id des Beitrags ermitteln und $objPage->id ersetzen
-        if ( self::PAGE_TYPE_NORMAL < $pagetype)
-        {
+        if (self::PAGE_TYPE_NORMAL < $pagetype) {
             $objPageId = $specialid;
         }
-        //$objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
+        // $objPageId = $this->visitorGetPageIdByType($objPage->id, $visitors_page_type, $objPage->alias);
 
         $stmt = $this->connection->prepare('SELECT
                             SUM(visitors_page_hit)   AS visitors_page_hits

@@ -1430,7 +1430,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // Variante 3
                 $ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
                 $ModuleVisitorBrowser3->initBrowser(Environment::get('httpUserAgent'), implode(',', Environment::get('httpAcceptLanguage')));
-                if (true === $this->client_hints_status && 'Chrome' == $ModuleVisitorBrowser3->getBrowser() && 'unknown' === $ModuleVisitorBrowser3->getChPlatformVersion()) {
+                if (true === $this->client_hints_status && 'Chrome' === $ModuleVisitorBrowser3->getBrowser() && 'unknown' === $ModuleVisitorBrowser3->getChPlatformVersion()) {
                     // Chrome hat reduzierten Agent String, zweiter Request nötig mit spezial Hints für genauere Bestimmung
                     // z.B. ob Chrome oder Brave, ob Windows 10 oder 11
                     // Browser daher nicht zählen und nicht blocken
@@ -1533,12 +1533,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 'visitors_counter' => 1,
                             ];
                             $dbconnection->insert('tl_visitors_browser', $arrSet);
-                        /*
-                        \Database::getInstance()
-                                ->prepare("INSERT INTO tl_visitors_browser %s")
-                                ->set($arrSet)
-                                ->execute();
-                        */
+                            /*
+                            \Database::getInstance()
+                                    ->prepare("INSERT INTO tl_visitors_browser %s")
+                                    ->set($arrSet)
+                                    ->execute();
+                            */
                         } else {
                             // Update
                             $objBrowserCounterResult = $resBrowserCounter->fetchAssociative();
@@ -1600,6 +1600,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     'visitors_searchengine' => $SearchEngine,
                     'visitors_keywords' => $Keywords,
                 ];
+
                 $this->container->get('database_connection')
                     ->insert('tl_visitors_searchengines', $arrSet)
                 ;
