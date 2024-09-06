@@ -131,9 +131,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if ('https' === $request_scheme) {
             $this->client_hints_status = true;
         }
-        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'client_hints_status (scheme): ' . (int) $this->client_hints_status);
 
         $this->visitorSetDebugSettings($this->visitors_category);
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'client_hints_status (scheme): ' . (int) $this->client_hints_status);
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objPage Language manuall: '.$objPage->language);
 
         if (false === self::$_BackendUser) {
