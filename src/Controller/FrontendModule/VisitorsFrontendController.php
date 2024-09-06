@@ -68,6 +68,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
     
     protected $visitors_screencount = 0;
 
+    protected $client_hints_status = false;
+
     private $_BOT = false; // Bot
 
     private $_SE = false; // Search Engine
@@ -123,6 +125,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
             return $template->getResponse();
         }
+
+        // Client-Hints werden nur über sichere Verbindungen gesendet
+        $request_scheme = $request->getscheme(); // 'https' : 'http'
+        if ('https' === $request_scheme) {
+            $this->client_hints_status = true;
+        }
+        ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'client_hints_status (scheme): ' . (int) $this->client_hints_status);
 
         $this->visitorSetDebugSettings($this->visitors_category);
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'objPage Language manuall: '.$objPage->language);
@@ -1422,11 +1431,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 // Variante 3
                 $ModuleVisitorBrowser3 = new ModuleVisitorBrowser3();
                 $ModuleVisitorBrowser3->initBrowser(Environment::get('httpUserAgent'), implode(',', Environment::get('httpAcceptLanguage')));
-                if ('Chrome' == $ModuleVisitorBrowser3->getBrowser() && 'unknown' === $ModuleVisitorBrowser3->getChUa()) {
+                if (true === $this->client_hints_status && 'Chrome' == $ModuleVisitorBrowser3->getBrowser() && 'unknown' === $ModuleVisitorBrowser3->getChUa()) {
                     // Brave ist ein Chrome, der nur über Client Hints als Brave erkannt werden kann
                     // Browser daher nicht zählen und nicht blocken
                     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Chrome based, wait for second request with Client Hints');
-                } elseif ('Windows' === $ModuleVisitorBrowser3->getChPlatform() && 'unknown' === $ModuleVisitorBrowser3->getChPlatformVersion()) {
+                } elseif (true === $this->client_hints_status && 'Windows' === $ModuleVisitorBrowser3->getChPlatform() && 'unknown' === $ModuleVisitorBrowser3->getChPlatformVersion()) {
                     // Browser kann Client Hints, ist aber der erste Request ohne speziel Hints
                     // Browser daher nicht zählen und nicht blocken
                     ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser Client Hints first request');
