@@ -69,8 +69,9 @@ class ModuleVisitorReferrer extends System
 	{
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Referrer Raw: ' . ($_SERVER['HTTP_REFERER'] ?? self::REFERRER_UNKNOWN));
 		// NEVER TRUST USER INPUT
-		if (\function_exists('filter_var'))	// Adjustment for hoster without the filter extension
+		if (\function_exists('filter_var'))
 		{
+			// Adjustment for hoster without the filter extension
 			$this->_http_referrer  = isset($_SERVER['HTTP_REFERER']) ? filter_var($_SERVER['HTTP_REFERER'], FILTER_SANITIZE_URL) : self::REFERRER_UNKNOWN;
 		}
 		else
@@ -97,8 +98,9 @@ class ModuleVisitorReferrer extends System
 		if ($referrer != "")
 		{
 			// NEVER TRUST USER INPUT
-			if (\function_exists('filter_var'))	// Adjustment for hoster without the filter extension
+			if (\function_exists('filter_var'))
 			{
+				// Adjustment for hoster without the filter extension
 				$this->_http_referrer = filter_var($referrer, FILTER_SANITIZE_URL);
 			}
 			else

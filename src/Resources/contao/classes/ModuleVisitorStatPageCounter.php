@@ -123,7 +123,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
-						if ($alias == 404) 
+						if ($alias == 404)
 						{
 							$alias = $objPage->title . ' [404]';
 						}
@@ -214,7 +214,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
-						if ($alias == 404) 
+						if ($alias == 404)
 						{
 							$alias = $objPage->title . ' [404]';
 						}
@@ -299,7 +299,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
-						if ($alias == 404) 
+						if ($alias == 404)
 						{
 							$alias = $objPage->title . ' [404]';
 						}
@@ -385,7 +385,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 					if (null !== $objPage)
 					{
 						$alias = $objPage->alias;
-						if ($alias == 404) 
+						if ($alias == 404)
 						{
 							$alias = $objPage->title . ' [404]';
 						}
@@ -455,14 +455,13 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias' => $objNewsAliases->PageAlias,
 					'NewsAlias' => $objNewsAliases->NewsAlias);
 			}
+
 			return array('PageAlias' => false,
 				'NewsAlias' => false);
 		}
-		else
-		{
-			return array('PageAlias' => false,
-				'NewsAlias' => false);
-		}
+
+		return array('PageAlias' => false,
+			'NewsAlias' => false);
 	}
 
 	public function getFaqAliases($visitors_page_id)
@@ -493,14 +492,13 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias' => $objFaqAliases->PageAlias,
 					'FaqAlias'  => $objFaqAliases->FaqAlias);
 			}
+
 			return array('PageAlias' => false,
 				'FaqAlias'  => false);
 		}
-		else
-		{
-			return array('PageAlias' => false,
-				'FaqAlias'  => false);
-		}
+
+		return array('PageAlias' => false,
+			'FaqAlias'  => false);
 	}
 
 	public function getEventsAliases($visitors_page_id)
@@ -531,14 +529,13 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias'    => $objEventsAliases->PageAlias,
 					'EventsAlias'  => $objEventsAliases->EventsAlias);
 			}
+
 			return array('PageAlias'    => false,
 				'EventsAlias'  => false);
 		}
-		else
-		{
-			return array('PageAlias'    => false,
-				'EventsAlias'  => false);
-		}
+
+		return array('PageAlias'    => false,
+			'EventsAlias'  => false);
 	}
 
 	public function getIsotopeAliases($visitors_page_id, $visitors_page_pid)
@@ -579,6 +576,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				return array('PageAlias'     => $PageAlias,
 					'ProductAlias'  => $objIsotopeProduct->ProductAlias);
 			}
+
 			return array('PageAlias'       => false,
 				'ProductAlias'    => false);
 		}
@@ -603,7 +601,7 @@ class ModuleVisitorStatPageCounter extends BackendModule
 			{
 				$objPage->loadDetails();
 
-				$objRootPage = PageModel::findByPk($objPage->rootId);
+				$objRootPage = PageModel::findById($objPage->rootId);
 			}
 		}
 		else

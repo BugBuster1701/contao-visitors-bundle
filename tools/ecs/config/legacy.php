@@ -15,6 +15,7 @@ declare(strict_types=1);
  * please view the LICENSE file that was distributed with this source code.
  */
 
+use Contao\EasyCodingStandard\Fixer\CommentLengthFixer;
 use Contao\EasyCodingStandard\Fixer\MultiLineLambdaFunctionArgumentsFixer;
 use Contao\EasyCodingStandard\Fixer\TypeHintOrderFixer;
 use Contao\EasyCodingStandard\Sniffs\UseSprintfInExceptionsSniff;
@@ -68,6 +69,7 @@ return static function (ECSConfig $ecsConfig): void {
         'src/Resources/contao/classes/Encoding.php',
         'src/Resources/contao/classes/ModuleVisitorBrowser3.php',
         BinaryOperatorSpacesFixer::class,
+        CommentLengthFixer::class,
         DeclareStrictTypesFixer::class,
         DisallowArrayTypeHintSyntaxSniff::class,
         DuplicateSpacesSniff::class,

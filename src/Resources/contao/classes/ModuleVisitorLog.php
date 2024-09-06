@@ -168,7 +168,7 @@ class ModuleVisitorLog
 			$strLogsDir =  $strRootDir . '/var/logs';
 		}
 
-		error_log(sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage . " (logMessage is deprecated)"), 3, $strLogsDir . '/' . $strLog);
+		error_log(\sprintf("[%s] %s\n", date('d-M-Y H:i:s'), $strMessage . " (logMessage is deprecated)"), 3, $strLogsDir . '/' . $strLog);
 	}
 
 	/**
@@ -196,7 +196,7 @@ class ModuleVisitorLog
 		// 	$strLogsDir =  $strRootDir . '/var/logs';
 		// }
 
-		$strMessage = sprintf("%s %s\n", $uuid, $message);
+		$strMessage = \sprintf("%s %s\n", $uuid, $message);
 
 		// $logger = new \Monolog\Logger('visitors');
 		// $logger->pushHandler(new \Monolog\Handler\StreamHandler($strLogsDir . '/' . $strLog, \Monolog\Logger::DEBUG));

@@ -131,8 +131,9 @@ class ModuleVisitorSearchEngine // extends Frontend
 	protected function reset()
 	{
 		// NEVER TRUST USER INPUT
-		if (\function_exists('filter_var'))	// Adjustment for hoster without the filter extension
+		if (\function_exists('filter_var'))
 		{
+			// Adjustment for hoster without the filter extension
 			$this->_http_referer  = isset($_SERVER['HTTP_REFERER']) ? filter_var($_SERVER['HTTP_REFERER'], FILTER_SANITIZE_URL) : self::REFERER_UNKNOWN;
 		}
 		else
@@ -150,8 +151,9 @@ class ModuleVisitorSearchEngine // extends Frontend
 		if ($referer != "")
 		{
 			// NEVER TRUST USER INPUT
-			if (\function_exists('filter_var'))	// Adjustment for hoster without the filter extension
+			if (\function_exists('filter_var'))
 			{
+				// Adjustment for hoster with the filter extension
 				$this->_http_referer = filter_var($referer, FILTER_SANITIZE_URL);
 			}
 			else
@@ -336,8 +338,9 @@ class ModuleVisitorSearchEngine // extends Frontend
 			{
 				$this->_keywords = $this->_parse_result['wd'];
 			}
-			if ($this->_keywords == 'QQ')    // I don't know what QQ is, but no keyword from an user
+			if ($this->_keywords == 'QQ')
 			{
+				// I don't know what QQ is, but no keyword from an user
 				$this->_search_engine = self::SEARCH_ENGINE_UNKNOWN;
 				$this->_keywords      = self::KEYWORDS_UNKNOWN;
 

@@ -875,7 +875,8 @@ class ModuleVisitorsTag extends Frontend
 		// Page Counter End
 
 		if ($objVisitIP->numRows < 1)
-		{ // Browser Check wenn nicht geblockt
+		{
+			// Browser Check wenn nicht geblockt
 			// Only counting if User Agent is set.
 			if (Environment::get('httpUserAgent') !=='')
 			{
@@ -1095,7 +1096,8 @@ class ModuleVisitorsTag extends Frontend
 				// Debug log_message('visitorCheckReferrer $ReferrerDNS:'.print_r($ReferrerDNS,true), 'debug.log');
 				// Debug log_message('visitorCheckReferrer Host:'.print_r($this->ModuleVisitorReferrer->getHost(),true), 'debug.log');
 				if ($ReferrerDNS != 'o' && $ReferrerDNS != 'w')
-				{ 	// not the own, not wrong
+				{
+					// not the own, not wrong
 					// Insert
 					$arrSet = array
 					(

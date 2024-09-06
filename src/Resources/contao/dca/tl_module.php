@@ -52,10 +52,10 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['visitors_screencount'] = array
 	'label'                   => &$GLOBALS['TL_LANG']['tl_module']['visitors_screencount'],
 	'inputType'               => 'checkbox',
 	'explanation'	          => 'visitors_help_module',
-	'sql'                     => [
-									'type' => 'boolean',
-									'default' => false,
-								],
+	'sql'                     => array(
+		'type' => 'boolean',
+		'default' => false,
+	),
 	'eval'                    => array('mandatory'=>false, 'helpwizard'=>true)
 );
 

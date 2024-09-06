@@ -128,7 +128,8 @@ class ModuleVisitorChecks extends Frontend
 		// Suche
 		$CheckUserAgent=str_replace($arrUserAgents, '#', $UserAgent);
 		if ($UserAgent != $CheckUserAgent)
-		{ 	// es wurde ersetzt also was gefunden
+		{
+			// es wurde ersetzt also was gefunden
 			ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'checkUserAgent: True');
 
 			return true;
@@ -212,8 +213,9 @@ class ModuleVisitorChecks extends Frontend
 	public function visitorGetUserIP()
 	{
 		$UserIP = Environment::get('ip');
-		if (strpos($UserIP, ',') !== false) // first IP
+		if (strpos($UserIP, ',') !== false)
 		{
+			// first IP
 			$UserIP = trim(substr($UserIP, 0, strpos($UserIP, ',')));
 		}
 		if (
@@ -225,8 +227,9 @@ class ModuleVisitorChecks extends Frontend
 			$_SERVER['HTTP_X_FORWARDED_FOR'] = '';
 
 			$UserIP = Environment::get('ip');
-			if (strpos($UserIP, ',') !== false) // first IP
+			if (strpos($UserIP, ',') !== false)
 			{
+				// first IP
 				$UserIP = trim(substr($UserIP, 0, strpos($UserIP, ',')));
 			}
 			$_SERVER['HTTP_X_FORWARDED_FOR'] = $HTTPXFF;

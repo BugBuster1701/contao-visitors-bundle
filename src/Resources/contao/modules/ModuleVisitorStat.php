@@ -65,17 +65,14 @@ class ModuleVisitorStat extends BackendModule
 		System::loadLanguageFile('tl_visitors_referrer');
 
 		if (Input::post('act', true)=='export') // action Export
-		{
-			$this->generateExport();
+		{$this->generateExport();
 		}
 
 		if (Input::post('id')>0) // Auswahl im Statistikmenü
-		{
-			$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
+		{$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
 		}
 		elseif (Input::get('id')>0) // Auswahl in der Kategorieübersicht
-		{
-			$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
+		{$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
 		}
 		else
 		{
@@ -128,8 +125,7 @@ class ModuleVisitorStat extends BackendModule
 		// array[0..n]   : array(0, array('id' => '1', ....), 1, ....)
 
 		if ($this->intKatID == 0) // direkter Aufruf ohne ID
-		{
-			$this->intKatID       = $this->getCatIdByCategories($arrVisitorCategories);
+		{$this->intKatID       = $this->getCatIdByCategories($arrVisitorCategories);
 			$this->boolAllowReset = $this->isUserInVisitorStatisticResetGroups($this->intKatID);
 		}
 		else
@@ -338,7 +334,7 @@ class ModuleVisitorStat extends BackendModule
 		{
 			$this->Template->visitorssearchengine = false;
 		}
-		
+
 		// ScreenCountActivated?
 		$this->Template->visitorsscreenactivated = $this->isScreencountActivated($this->intKatID);
 	}
@@ -393,55 +389,54 @@ class ModuleVisitorStat extends BackendModule
 				->limit($visitors_statistic_days)
 				->execute($KatID, $VisitorsXid);
 		$intRowsVisitors = $objVisitors->numRows;
-		if ($intRowsVisitors>0)
-		{ // Zählungen vorhanden
-			while ($objVisitors->next())
+		if ($intRowsVisitors>0) // Zählungen vorhanden
+		{while ($objVisitors->next())
+		{
+			if ($objVisitors->published == 1)
 			{
-				if ($objVisitors->published == 1)
-				{
-					$objVisitors->published = '<span class="visitors_stat_yes">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes'] . '</span>';
-				}
-				else
-				{
-					$objVisitors->published = '<span class="visitors_stat_no">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] . '</span>';
-				}
-				if (!\strlen($objVisitors->visitors_startdate))
-				{
-					$visitors_startdate = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate_not_defined'];
-				}
-				else
-				{
-					$visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
-				}
-				// day of the week prüfen
-				if (
-					strpos(Config::get('dateFormat'), 'D')===false  // day of the week short
+				$objVisitors->published = '<span class="visitors_stat_yes">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes'] . '</span>';
+			}
+			else
+			{
+				$objVisitors->published = '<span class="visitors_stat_no">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] . '</span>';
+			}
+			if (!\strlen($objVisitors->visitors_startdate))
+			{
+				$visitors_startdate = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate_not_defined'];
+			}
+			else
+			{
+				$visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
+			}
+			// day of the week prüfen
+			if (
+				strpos(Config::get('dateFormat'), 'D')===false  // day of the week short
 				 && strpos(Config::get('dateFormat'), 'l')===false
-				) { // day of the week long
-					$visitors_day_of_week_prefix = 'D, ';
-				}
-				$arrVisitorsStat[] = array
-				(
-					'visitors_id'           => $objVisitors->id,
-					'visitors_name'         => StringUtil::specialchars(StringUtil::ampersand($objVisitors->visitors_name)),
-					'visitors_active'       => $objVisitors->published,
-					'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
-					'visitors_date_ymd'     => $objVisitors->visitors_date,
-					'visitors_startdate'    => $visitors_startdate,
-					'visitors_visit'        => $this->getFormattedNumber($objVisitors->visitors_visit, 0),
-					'visitors_hit'          => $this->getFormattedNumber($objVisitors->visitors_hit, 0)
-				);
-				if ($objVisitors->visitors_date == date("Y-m-d"))
-				{
-					$visitors_today_visit = $objVisitors->visitors_visit;
-					$visitors_today_hit   = $objVisitors->visitors_hit;
-				}
-				if ($objVisitors->visitors_date == date("Y-m-d", time()-(60*60*24)))
-				{
-					$visitors_yesterday_visit = $objVisitors->visitors_visit;
-					$visitors_yesterday_hit   = $objVisitors->visitors_hit;
-				}
-			} // while
+			) { // day of the week long
+				$visitors_day_of_week_prefix = 'D, ';
+			}
+			$arrVisitorsStat[] = array
+			(
+				'visitors_id'           => $objVisitors->id,
+				'visitors_name'         => StringUtil::specialchars(StringUtil::ampersand($objVisitors->visitors_name)),
+				'visitors_active'       => $objVisitors->published,
+				'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
+				'visitors_date_ymd'     => $objVisitors->visitors_date,
+				'visitors_startdate'    => $visitors_startdate,
+				'visitors_visit'        => $this->getFormattedNumber($objVisitors->visitors_visit, 0),
+				'visitors_hit'          => $this->getFormattedNumber($objVisitors->visitors_hit, 0)
+			);
+			if ($objVisitors->visitors_date == date("Y-m-d"))
+			{
+				$visitors_today_visit = $objVisitors->visitors_visit;
+				$visitors_today_hit   = $objVisitors->visitors_hit;
+			}
+			if ($objVisitors->visitors_date == date("Y-m-d", time()-(60*60*24)))
+			{
+				$visitors_yesterday_visit = $objVisitors->visitors_visit;
+				$visitors_yesterday_hit   = $objVisitors->visitors_hit;
+			}
+		} // while
 			$arrVisitorsStat[104]['VisitorsID'] = $objVisitors->id;
 			$visitors_visit_start = $objVisitors->visitors_visit_start;
 			$visitors_hit_start   = $objVisitors->visitors_hit_start;
@@ -523,7 +518,7 @@ class ModuleVisitorStat extends BackendModule
                                 vid=? AND visitors_date BETWEEN ? AND ?
                             GROUP BY M
                             ORDER BY M %s';
-			$sqlMonth = sprintf($sqlMonth, $ORDER);
+			$sqlMonth = \sprintf($sqlMonth, $ORDER);
 
 			// Total je Monat (aktueller und letzter)
 			$objVisitorsToMo = Database::getInstance()
@@ -1551,11 +1546,11 @@ class ModuleVisitorStat extends BackendModule
 	{
 		$objVisitorScreens = Database::getInstance()
 								->prepare("SELECT
-                                            count(`id`) as anz 
+                                            count(`id`) as anz
                                        FROM
                                             tl_module
-                                        WHERE `visitors_categories` = ? 
-											AND `type`='visitors' 
+                                        WHERE `visitors_categories` = ?
+											AND `type`='visitors'
 											AND `visitors_screencount`=1
                                         ")
 								->execute($visitor_category_id);

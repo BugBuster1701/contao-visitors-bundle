@@ -20,7 +20,6 @@ namespace BugBuster\Visitors\Stat\Export;
 use BugBuster\Visitors\ModuleVisitorStatPageCounter;
 use Contao\Config;
 use Contao\Database;
-use Contao\Environment;
 use Contao\Input;
 use Contao\System;
 use PhpOffice\PhpSpreadsheet\IOFactory;
