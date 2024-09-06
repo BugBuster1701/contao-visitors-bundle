@@ -2389,11 +2389,15 @@ class ModuleVisitorBrowser3
 	 * Überprüfen, ob der String bereits eine Dezimalstelle hat
 	 * Wenn keine Dezimalstelle vorhanden ist, füge ".0" hinzu
 	 * Wenn bereits vorhanden, den String unverändert zurückgeben
+	 * Wenn String "unknown", den String unverändert zurückgeben
 	 * 
 	 * @param string $input
 	 * @return string
 	 */
 	public function convertToFloatString($input) {
+		if ('unknown' === $input) {
+			return $input;
+		}
 		// Überprüfen, ob der String bereits eine Dezimalstelle hat
 		if (strpos($input, '.') === false) {
 			// Wenn keine Dezimalstelle vorhanden ist, füge ".0" hinzu
