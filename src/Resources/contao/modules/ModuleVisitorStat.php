@@ -124,8 +124,10 @@ class ModuleVisitorStat extends BackendModule
 		// empty array   : array('id' => '0', 'title' => '---------');
 		// array[0..n]   : array(0, array('id' => '1', ....), 1, ....)
 
-		if ($this->intKatID == 0) // direkter Aufruf ohne ID
-		{$this->intKatID       = $this->getCatIdByCategories($arrVisitorCategories);
+		if ($this->intKatID == 0)
+		{
+			// direkter Aufruf ohne ID
+			$this->intKatID       = $this->getCatIdByCategories($arrVisitorCategories);
 			$this->boolAllowReset = $this->isUserInVisitorStatisticResetGroups($this->intKatID);
 		}
 		else
@@ -389,54 +391,56 @@ class ModuleVisitorStat extends BackendModule
 				->limit($visitors_statistic_days)
 				->execute($KatID, $VisitorsXid);
 		$intRowsVisitors = $objVisitors->numRows;
-		if ($intRowsVisitors>0) // Zählungen vorhanden
-		{while ($objVisitors->next())
+		if ($intRowsVisitors>0)
 		{
-			if ($objVisitors->published == 1)
+			// Zählungen vorhanden
+			while ($objVisitors->next())
 			{
-				$objVisitors->published = '<span class="visitors_stat_yes">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes'] . '</span>';
-			}
-			else
-			{
-				$objVisitors->published = '<span class="visitors_stat_no">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] . '</span>';
-			}
-			if (!\strlen($objVisitors->visitors_startdate))
-			{
-				$visitors_startdate = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate_not_defined'];
-			}
-			else
-			{
-				$visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
-			}
-			// day of the week prüfen
-			if (
-				strpos(Config::get('dateFormat'), 'D')===false  // day of the week short
-				 && strpos(Config::get('dateFormat'), 'l')===false
-			) { // day of the week long
-				$visitors_day_of_week_prefix = 'D, ';
-			}
-			$arrVisitorsStat[] = array
-			(
-				'visitors_id'           => $objVisitors->id,
-				'visitors_name'         => StringUtil::specialchars(StringUtil::ampersand($objVisitors->visitors_name)),
-				'visitors_active'       => $objVisitors->published,
-				'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
-				'visitors_date_ymd'     => $objVisitors->visitors_date,
-				'visitors_startdate'    => $visitors_startdate,
-				'visitors_visit'        => $this->getFormattedNumber($objVisitors->visitors_visit, 0),
-				'visitors_hit'          => $this->getFormattedNumber($objVisitors->visitors_hit, 0)
-			);
-			if ($objVisitors->visitors_date == date("Y-m-d"))
-			{
-				$visitors_today_visit = $objVisitors->visitors_visit;
-				$visitors_today_hit   = $objVisitors->visitors_hit;
-			}
-			if ($objVisitors->visitors_date == date("Y-m-d", time()-(60*60*24)))
-			{
-				$visitors_yesterday_visit = $objVisitors->visitors_visit;
-				$visitors_yesterday_hit   = $objVisitors->visitors_hit;
-			}
-		} // while
+				if ($objVisitors->published == 1)
+				{
+					$objVisitors->published = '<span class="visitors_stat_yes">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_yes'] . '</span>';
+				}
+				else
+				{
+					$objVisitors->published = '<span class="visitors_stat_no">' . $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['pub_no'] . '</span>';
+				}
+				if (!\strlen($objVisitors->visitors_startdate))
+				{
+					$visitors_startdate = $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate_not_defined'];
+				}
+				else
+				{
+					$visitors_startdate = $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], $objVisitors->visitors_startdate);
+				}
+				// day of the week prüfen
+				if (
+					strpos(Config::get('dateFormat'), 'D')===false  // day of the week short
+					&& strpos(Config::get('dateFormat'), 'l')===false
+				) { // day of the week long
+					$visitors_day_of_week_prefix = 'D, ';
+				}
+				$arrVisitorsStat[] = array
+				(
+					'visitors_id'           => $objVisitors->id,
+					'visitors_name'         => StringUtil::specialchars(StringUtil::ampersand($objVisitors->visitors_name)),
+					'visitors_active'       => $objVisitors->published,
+					'visitors_date'         => $this->parseDateVisitors($GLOBALS['TL_LANGUAGE'], strtotime($objVisitors->visitors_date), $visitors_day_of_week_prefix),
+					'visitors_date_ymd'     => $objVisitors->visitors_date,
+					'visitors_startdate'    => $visitors_startdate,
+					'visitors_visit'        => $this->getFormattedNumber($objVisitors->visitors_visit, 0),
+					'visitors_hit'          => $this->getFormattedNumber($objVisitors->visitors_hit, 0)
+				);
+				if ($objVisitors->visitors_date == date("Y-m-d"))
+				{
+					$visitors_today_visit = $objVisitors->visitors_visit;
+					$visitors_today_hit   = $objVisitors->visitors_hit;
+				}
+				if ($objVisitors->visitors_date == date("Y-m-d", time()-(60*60*24)))
+				{
+					$visitors_yesterday_visit = $objVisitors->visitors_visit;
+					$visitors_yesterday_hit   = $objVisitors->visitors_hit;
+				}
+			} // while
 			$arrVisitorsStat[104]['VisitorsID'] = $objVisitors->id;
 			$visitors_visit_start = $objVisitors->visitors_visit_start;
 			$visitors_hit_start   = $objVisitors->visitors_hit_start;
