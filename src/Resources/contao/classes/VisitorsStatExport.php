@@ -137,7 +137,7 @@ class VisitorsStatExport extends System
 
 	protected function exportCSV()
 	{
-		header('Content-Type: text/csv; charset=' . $GLOBALS['TL_CONFIG']['characterSet']);
+		header('Content-Type: text/csv; charset=' . System::getContainer()->getParameter('kernel.charset'));
 		header('Content-Disposition: attachment;filename="visitors_statistic-export.utf8.csv"');
 		header('Cache-Control: max-age=0');
 		if ($this->BrowserAgent == 'IE')
