@@ -105,7 +105,7 @@
 	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">&nbsp;</td>
 	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">
 	    <?php if ($this->allow_reset) : ?>
-			<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zero&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" height="16" width="16"></a>
+			<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zero&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" data-turbo="false" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" height="16" width="16"></a>
 		<?php else: ?>
 			<img src="system/themes/<?= $this->theme ?>/icons/error.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']; ?>" width="16" height="16">
 		<?php endif; ?>
@@ -373,7 +373,7 @@ break;
 				<th colspan="5"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top20']; ?></th>
 				<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist">
 				<?php if ($this->allow_reset) : ?>
-					<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zerobrowser&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" height="16" width="16"></a>
+					<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zerobrowser&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" data-turbo="false" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" height="16" width="16"></a>
 				<?php else: ?>
 					<span>&nbsp;</span>
 				<?php endif; ?>
@@ -539,7 +539,7 @@ break;
 			<tr>
 			    <td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= isset($Referrer[0]) ? \Contao\Idna::decode($Referrer[0]) : ''; ?></td>
 			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $Referrer[1] ?? ''; ?></td>
-   			    <td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a onclick="Backend.openModalIframe({'width':780,'height':600,'title':'<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>','url':this.href});return false" title="<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>" href="<?= $this->route('visitors_backend_details') ?>?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/icons/show.svg"></a><?php endif; ?></td>
+   			    <td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a data-turbo="false" onclick="Backend.openModalIframe({'width':780,'height':600,'title':'<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>','url':this.href});return false" title="<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>" href="<?= $this->route('visitors_backend_details') ?>?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/icons/show.svg"></a><?php endif; ?></td>
 			</tr>
 	<?php endforeach; ?>
 			</tbody>
