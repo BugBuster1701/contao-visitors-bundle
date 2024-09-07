@@ -20,15 +20,12 @@ namespace BugBuster\VisitorsBundle\Controller;
 use BugBuster\Visitors\BackendVisitors;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Handles the Visitors back end routes.
- *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
- *
- * @Route("/visitors", defaults={"_scope" = "backend", "_token_check" = true})
  */
+#[Route('/visitors', defaults: ['_scope' => 'backend', '_token_check' => true])]
 class VisitorsController extends AbstractController
 {
     /**
@@ -36,8 +33,8 @@ class VisitorsController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/details", name="visitors_backend_details")
      */
+    #[Route('/details', name: 'visitors_backend_details')]
     public function detailsAction()
     {
         $this->container->get('contao.framework')->initialize();

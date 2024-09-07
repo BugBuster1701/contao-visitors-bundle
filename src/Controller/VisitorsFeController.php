@@ -20,15 +20,12 @@ namespace BugBuster\VisitorsBundle\Controller;
 use BugBuster\Visitors\FrontendVisitors;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Handles the Visitors front end routes.
- *
- * @copyright  Glen Langer 2023 <http://contao.ninja>
- *
- * @Route("/visitors", defaults={"_scope" = "frontend", "_token_check" = false})
  */
+#[Route('/visitors', defaults: ['_scope' => 'frontend', '_token_check' => false])]
 class VisitorsFeController extends AbstractController
 {
     /**
@@ -36,8 +33,8 @@ class VisitorsFeController extends AbstractController
      *
      * @return Response
      *
-     * @Route("/scco", name="visitors_frontend_screencount")
      */
+    #[Route('/scco', name: 'visitors_frontend_screencount')]
     public function sccoAction()
     {
         $this->container->get('contao.framework')->initialize();

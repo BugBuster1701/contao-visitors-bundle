@@ -24,13 +24,12 @@ use Contao\PageModel;
 use Contao\System;
 use Doctrine\Dbal\Connection;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Handles the Visitors front end routes.
- *
- * @Route("/visitors", defaults={"_scope" = "frontend", "_token_check" = false})
  */
+#[Route('/visitors', defaults: ['_scope' => 'frontend', '_token_check' => false])]
 class VisitorsFeAjaxController
 {
     private $db;
@@ -50,9 +49,8 @@ class VisitorsFeAjaxController
 
     /**
      * Renders the Counter Values as JSON.
-     *
-     * @Route("/coval/{vc}/{pid}/{protected}/{pagetype}/{specialid}", name="visitors_frontend_countervalues")
      */
+    #[Route('/coval/{vc}/{pid}/{protected}/{pagetype}/{specialid}', name: 'visitors_frontend_countervalues')]
     public function __invoke(int $vc, int $pid, int $protected, int $pagetype, int $specialid): JsonResponse
     {
         $this->objPage = PageModel::findWithDetails($pid);
