@@ -25,27 +25,27 @@
 		"forum":"https://community.contao.org/de/forumdisplay.php?28-visitors"
 	},
 	"require":{
-		"php": "^8.2",
-		"bugbuster/contao-botdetection-bundle":"^1.9",
+		"php": ">=8.3.0,<8.4.0",
+		"bugbuster/contao-botdetection-bundle":"^1.14",
 		"bugbuster/contao-clienthints-request-bundle":"^1.0",
-		"contao/core-bundle": "5.3.*",
-		"doctrine/dbal": "^3.3",		
+		"contao/core-bundle": ">=5.4.0,<5.7.0",
+		"doctrine/dbal": "^3.6",
 		"phpoffice/phpspreadsheet": "^2.2",
-		"symfony/http-foundation": "^5.4 || ^6.0",
+		"symfony/http-foundation": "^6.4 || ^7.0",
 		"symfony/deprecation-contracts": "^2.1 || ^3.0",
-		"monolog/monolog": "^2.9"
+		"monolog/monolog": "^3.5.0"
 	},
 	"require-dev": {
 			"contao/manager-plugin": "^2.0",
 			"friendsofphp/php-cs-fixer": "^3.10",
-			"phpunit/phpunit": "^8.5 || ^9.3"
+			"phpunit/phpunit": "^9.5.19"
 	},
 	"conflict": {
 			"contao/manager-plugin": "<2.0 || >=3.0"
 	},
 	"autoload":{
 			"psr-4": {
-					"BugBuster\\VisitorsBundle\\": "src/"
+				"BugBuster\\VisitorsBundle\\": "src/"
 		},
 		"classmap": [
 					"src/Resources/contao/"
@@ -58,14 +58,6 @@
 		]
 	},
 	"extra":{
-		"contao":{
-			"transifex": {
-				"project": "contao-visitors-bundle",
-				"prefix": "master-",
-				"languages_cto": "src/Resources/contao/languages",
-				"languages_tx": ".tx"
-			}
-		},
 		"contao-manager-plugin": "BugBuster\\VisitorsBundle\\ContaoManager\\Plugin"
 	},
 	"config": {
