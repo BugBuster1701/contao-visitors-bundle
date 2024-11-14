@@ -1,7 +1,7 @@
 # Contao 4/5 Visitors Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
-![Contao Version](https://img.shields.io/badge/Contao-5.2+-orange) ![Contao Version](https://img.shields.io/badge/Contao-4.13-orange) 
+![Contao Version](https://img.shields.io/badge/Contao-5.4-orange) ![Contao Version](https://img.shields.io/badge/Contao-5.3-orange) ![Contao Version](https://img.shields.io/badge/Contao-4.13-orange) 
 [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
 
@@ -16,10 +16,14 @@ A Contao 4/5 counter extension for hits and visits
 
 Installation Guide (EN): [INSTALLATION_EN.md](INSTALLATION_EN.md)
 
+__Attention__: Users of Contao 5.4 use `^1.15` as version number! 
+__Attention__: Users of Contao 5.3 use `^1.14` as version number! 
 __Attention__: Users of Contao 4.13 use `^1.8` as version number! 
 
 Installationsanleitung (DE): [INSTALLATION_DE.md](INSTALLATION_DE.md)
 
+__Achtung__: Nutzer von Contao 5.4, verwenden `^1.15` als Versionsangabe!
+__Achtung__: Nutzer von Contao 5.3, verwenden `^1.14` als Versionsangabe!
 __Achtung__: Nutzer von Contao 4.13, verwenden `^1.8` als Versionsangabe!
 
 
