@@ -58,6 +58,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
     public const PAGE_TYPE_FORBIDDEN = 403; // 403 = Forbidden Page
 
+    public const PAGE_TYPE_MAINTENANCE = 503; // 503 = Maintenance Page
+
     protected $strTemplate = 'mod_visitors_fe_all';
 
     protected $useragent_filter = '';
@@ -158,13 +160,21 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         System::loadLanguageFile('default');
         System::loadLanguageFile('tl_visitors');
 
-        $this->setCounters($objPage);
         $page_type = $this->visitorGetPageType($objPage);
         $objPageIdSpecial = 0;
         if (self::PAGE_TYPE_NORMAL < $page_type) {
             $objPageIdSpecial = $this->visitorGetPageIdByType($objPage->id, $page_type, $objPage->alias);
         }
+
+        if (self::PAGE_TYPE_MAINTENANCE == $page_type) {
+            $this->strTemplate = 'mod_visitors_error';
+            $template = new FrontendTemplate($this->strTemplate);
+
+            return $template->getResponse();
+        }
+        
         $counting = '<!-- not counted t'.$page_type.' p'.$objPage->id.' s'.$objPageIdSpecial.' -->';
+        $this->setCounters($objPage);
         if (true === $this->_HitCounted || true === $this->_VisitCounted) {
             $counting = '<!-- counted t'.$page_type.' p'.$objPage->id.' s'.$objPageIdSpecial.' -->';
         }
@@ -703,6 +713,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         // 3 = Isotope
         // 4 = Event/Calendar
         // 403 = Forbidden
+        // 503 = Maintenance Page
 
         $page_type = self::PAGE_TYPE_NORMAL;
 
@@ -716,6 +727,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
                 return $page_type;
             }
+        }
+
+        if ('error_503' == $objPage->type) {
+            $page_type = self::PAGE_TYPE_MAINTENANCE;
+            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageType: '.$page_type);
+
+            return $page_type;
         }
 
         // Set the item from the auto_item parameter
@@ -851,6 +869,13 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         if (self::PAGE_TYPE_FORBIDDEN === $PageType) {
             // Page ID von der 403 Seite ermitteln - nicht mehr
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNormal over 403: '.$PageId);
+
+            return $PageId;
+        }
+
+        if (self::PAGE_TYPE_MAINTENANCE === $PageType) {
+            // Page ID von der 503 Seite ermitteln - nicht mehr
+            ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNormal over 503: '.$PageId);
 
             return $PageId;
         }
