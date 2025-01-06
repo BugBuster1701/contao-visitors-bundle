@@ -1061,8 +1061,8 @@ class ModuleVisitorsTag extends Frontend
 				(
 					'vid'                   => $vid,
 					'tstamp'                => time(),
-					'visitors_searchengine' => $SearchEngine,
-					'visitors_keywords'		=> $Keywords
+					'visitors_searchengine' => substr($SearchEngine,0,59),
+					'visitors_keywords'		=> substr($Keywords,0,254)
 				);
 				Database::getInstance()
 						->prepare("INSERT INTO tl_visitors_searchengines %s")
