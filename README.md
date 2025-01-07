@@ -1,7 +1,7 @@
 # Contao 4/5 Visitors Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
-![Contao Version](https://img.shields.io/badge/Contao-5.2+-orange) ![Contao Version](https://img.shields.io/badge/Contao-4.13-orange) 
+![Contao Version](https://img.shields.io/badge/Contao-5.4-orange) ![Contao Version](https://img.shields.io/badge/Contao-5.3-orange) ![Contao Version](https://img.shields.io/badge/Contao-4.13-orange) 
 [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
 
