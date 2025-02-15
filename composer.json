@@ -21,11 +21,11 @@
 	"support":{
 		"issues":"https://github.com/BugBuster1701/contao-visitors-bundle/issues",
 		"source":"https://github.com/BugBuster1701/contao-visitors-bundle",
-		"wiki":"http://de.contaowiki.org/Visitors",
+		"docs":"https://docs.contao.ninja/de/visitors.html",
 		"forum":"https://community.contao.org/de/forumdisplay.php?28-visitors"
 	},
 	"require":{
-		"php": ">=8.3.0,<8.4.0",
+		"php": ">=8.3.0,<8.5.0",
 		"bugbuster/contao-botdetection-bundle":"^1.14",
 		"bugbuster/contao-clienthints-request-bundle":"^1.0",
 		"contao/core-bundle": ">=5.4.0,<5.7.0",
