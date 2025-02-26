@@ -18,3 +18,6 @@ src/cache/largebrowscap_*/largebrowscap.patterns.*
 .phpunit.result.cache
 
 todo.txt
+
+#ECS
+tools/ecs/vendor/

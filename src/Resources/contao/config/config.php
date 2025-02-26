@@ -13,7 +13,7 @@
  */
 
 \define('VISITORS_VERSION', '1.8');
-\define('VISITORS_BUILD', '6');
+\define('VISITORS_BUILD', '7');
 
 /**
  * Backend css version number are added to style sheets files to make
