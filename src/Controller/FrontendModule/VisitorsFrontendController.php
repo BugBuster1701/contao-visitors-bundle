@@ -41,7 +41,7 @@ use Doctrine\DBAL\Connection;
 // use Psr\Log\LogLevel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VisitorsFrontendController extends AbstractFrontendModuleController
@@ -1597,8 +1597,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $arrSet = [
                     'vid' => $vid,
                     'tstamp' => time(),
-                    'visitors_searchengine' => $SearchEngine,
-                    'visitors_keywords' => $Keywords,
+                    'visitors_searchengine' => substr($SearchEngine,0,59),
+                    'visitors_keywords' => substr($Keywords,0,254)
                 ];
 
                 $this->container->get('database_connection')

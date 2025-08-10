@@ -1,75 +1,79 @@
 
-
-<div class="clear"></div>
-<div class="tl_panel cf">
+<div class="tl_formbody">
+	<div class="tl_panel">
 	<!-- Kategorie Zeile //-->
-	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
-	<div class="tl_submit_panel tl_subpanel">
-		<input type="image" alt="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" title="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" class="tl_img_submit mod_visitors_be_reset" src="system/themes/<?= $this->theme ?>/icons/sync.svg" width="16" height="16" value="statistics" id="filter" name="filter">
-	</div>
-	<div class="tl_limit tl_subpanel">
-		<strong><?= $this->visitorsstatkat ?>:</strong>
-		<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
-		<select class="tl_select" name="id">
+		<div class="tl_subpanel" style="padding-right: 32px;">
+			<strong><?= $this->visitorsstatkat ?>:</strong>
+			<form method="post" style="display: contents;" data-turbo="false" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
+				<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
+				<select class="tl_select" name="id">
 <?php foreach ($this->visitorskats as $visitorskat): ?>
   <?php if ($visitorskat['id'] == $this->visitorskatid) : ?>
-		    <option selected="selected" value="<?= $visitorskat['id'] ?>"><?= $visitorskat['title'] ?></option>
+					<option selected="selected" value="<?= $visitorskat['id'] ?>"><?= $visitorskat['title'] ?></option>
    <?php else: ?>
-		    <option value="<?= $visitorskat['id'] ?>"><?= $visitorskat['title'] ?></option>
+					<option value="<?= $visitorskat['id'] ?>"><?= $visitorskat['title'] ?></option>
    <?php endif; ?>
 <?php endforeach; ?>
-		</select>
-	</div>
-	</form>
-	<!-- Kategorie Ende //-->
-</div> <!--  tl_panel cf-->
-<?php if ($this->visitorskatid > 0 && $this->visitorsanzcounter > 0) : ?>
-<div class="tl_panel cf">
-	<!-- Export Zeile //-->
-	<form method="post" class="tl_form" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
-		<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
-		<input type="hidden" name="act" value="export">
-		<input type="hidden" name="catid" value="<?= $this->visitorskatid ?>">
-		<div class="" style="float:left;">
-
-		    <div class="tl_subpanel" style="padding-right: 14px; padding-left: 24px;">
-		        <button id="save" class="tl_submit" style="border-radius: 4px;" type="submit" name="visitors_export_submit"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'] ?></button>
-	    	</div>
-
-		    <div class="tl_subpanel" style="padding-left: 14px;">
-	        	<input type="text" class="tl_text" id="days" name="visitors_export_days" value="<?= $this->visitors_export_days ?>" style="width: 40px;">
-	    	</div>
-			<div class="tl_subpanel" style="text-align: center;padding-left: 24px;"><span style="font-weight: bold;"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['number_of_days'].':' ?></span>
-				<br><span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_page_title'].')' ?></span>
-			</div>
-
-	<?php if (class_exists('ZipArchive', false)) : ?>
-			<div class="tl_sorting tl_subpanel">
-				<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
-	        	<select class="tl_select" id="tl_sort" name="visitors_export_format">
-	          		<option value="xlsx"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['excel'] ?></option>
-	          		<option value="ods"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['opendocument'] ?></option>
-	          		<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
-	        	</select>
-			</div>
-	<?php else: ?>
-			<div class="tl_sorting tl_subpanel">
-				<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
-	        	<select class="tl_select" id="tl_sort" name="visitors_export_format">
-	          		<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
-	        	</select>
-			</div>
-	<?php endif; ?>
-
-			<div class="tl_subpanel" style="text-align: center; padding-right: 24px;"><span style="font-weight: bold;"><?= $this->visitors_exportfield ?></span>
-				<br><span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit'].','.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit'].')' ?></span>
-			</div>
-
+				</select>
+				<input class="tl_submit_panel mod_visitors_be_reset" style="padding-left: 10px; min-width: 20px;" type="image" 
+					alt="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" 
+					title="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" 
+					src="system/themes/<?= $this->theme ?>/icons/sync.svg" 
+					width="20" 
+					height="20" 
+					value="statistics" 
+					id="filter" 
+					name="filter">		
+			</form>
 		</div>
-	</form>
+	<!-- Kategorie Ende //-->
+	</div> <!-- tl_panel -->
+</div> <!--  tl_formbody-->
+<?php if ($this->visitorskatid > 0 && $this->visitorsanzcounter > 0) : ?>
+<div class="tl_formbody">
+	<div class="tl_panel" style="justify-content: flex-start;">
+	<!-- Export Zeile //-->
+		<div class="tl_subpanel" style="text-align: center; padding-right: 24px;">
+			<span style="font-weight: bold;"><?= $this->visitors_exportfield ?><br>
+				<span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit'].','.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit'].')' ?></span>
+			</span>
+		</div>
+		<form method="post" class="tl_form" style="display: contents;" data-turbo="false" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
+			<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
+			<input type="hidden" name="act" value="export">
+			<input type="hidden" name="catid" value="<?= $this->visitorskatid ?>">
+		<?php if (class_exists('ZipArchive', false)) : ?>
+			<div class="tl_subpanel">
+				<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
+				<select class="tl_select" id="tl_sort" name="visitors_export_format">
+					<option value="xlsx"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['excel'] ?></option>
+					<option value="ods"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['opendocument'] ?></option>
+					<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
+				</select>
+			</div>
+		<?php else: ?>
+			<div class="tl_sorting tl_subpanel">
+				<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
+				<select class="tl_select" id="tl_sort" name="visitors_export_format">
+					<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
+				</select>
+			</div>
+		<?php endif; ?>
+			<div class="tl_subpanel" style="text-align: center;padding-left: 24px;">
+				<span style="font-weight: bold;"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['number_of_days'].':' ?><br>
+					<span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_page_title'].')' ?></span>
+				</span>
+			</div>
+			<div class="tl_subpanel" style="padding-left: 14px;">
+				<input type="text" class="tl_text" id="days" name="visitors_export_days" value="<?= $this->visitors_export_days ?>" style="width: 40px;">
+			</div>
+			<div class="tl_subpanel" style="padding-right: 14px; padding-left: 24px;">
+				<button id="save" class="tl_submit" style="border-radius: 4px;" type="submit" name="visitors_export_submit"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'] ?></button>
+			</div>
+		</form>
 	<!-- Export Zeile Ende //-->
-</div> <!--  tl_panel cf-->
-<div class="clear"></div>
+	</div> <!-- tl_panel -->
+</div> <!--  tl_formbody-->
 <?php endif; ?>
 <br> <br>
 <?php if (0 == $this->visitorsanzcounter) : ?>
@@ -79,7 +83,7 @@
 	    <td class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_data']; ?></td>
 	</tr>
 	<tr>
-	    <td>&nbsp;</td>
+		<td>&nbsp;</td>
 	</tr>
 	</tbody>
 	</table>
@@ -91,37 +95,37 @@
 	<table class="mod_visitors_be_table" style="width: 100%;">
 	<tbody>
 	<tr>
-	    <th style="width: 320px; padding-left: 2px;"                     class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']; ?></th>
-	    <th style="width: 60px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']; ?></th>
-	    <th style="width: 120px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate']; ?></th>
-	    <th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist">&nbsp;</th>
-	    <th style="width: 80px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset']; ?></th>
-	    <th style="width: 40px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist">&nbsp;</th>
+		<th style="width: 320px; padding-left: 2px;"                     class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['name']; ?></th>
+		<th style="width: 60px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['active']; ?></th>
+		<th style="width: 120px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['startdate']; ?></th>
+		<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist">&nbsp;</th>
+		<th style="width: 80px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset']; ?></th>
+		<th style="width: 40px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist">&nbsp;</th>
 	</tr>
 	<tr>
-	    <td style="padding-left: 2px;"                     class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][0]['visitors_name']; ?></td>
-	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][0]['visitors_active']; ?></td>
-	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][0]['visitors_startdate']; ?></td>
-	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">&nbsp;</td>
-	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">
-	    <?php if ($this->allow_reset) : ?>
-			<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zero&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" height="16" width="16"></a>
+		<td style="padding-left: 2px;"                     class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][0]['visitors_name']; ?></td>
+		<td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][0]['visitors_active']; ?></td>
+		<td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][0]['visitors_startdate']; ?></td>
+		<td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">&nbsp;</td>
+		<td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">
+		<?php if ($this->allow_reset) : ?>
+			<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zero&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" data-turbo="false" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zero']; ?>" height="16" width="16"></a>
 		<?php else: ?>
 			<img src="system/themes/<?= $this->theme ?>/icons/error.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['reset_not_allowed']; ?>" width="16" height="16">
 		<?php endif; ?>
-	    </td>
-	    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">&nbsp;</td>
+		</td>
+		<td style="padding-left: 2px; text-align: center;" class="tl_file_list bct">&nbsp;</td>
 	</tr>
 	<tr>
-	    <td colspan="6">&nbsp;</td>
+		<td colspan="6">&nbsp;</td>
 	</tr>
 	</tbody>
 	</table>
   </div>
 <?php if ($this->visitorsstatTotals[$vcid]['VisitorsTotalVisitCount'] > 0) : ?>
 <?php if ($this->visitorskatid > 0) : ?>
-    <div class="tl_listing_container">
-        <div class="mod_visitors_be_statistics w50">
+	<div class="tl_listing_container">
+		<div class="mod_visitors_be_statistics w50">
 			<table summary="Table lists statistik" class="mod_visitors_be_table">
 			<tbody>
 			<tr>
@@ -130,45 +134,45 @@
 			    <th style="min-width: 70px;  padding-right: 5px; text-align: right;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['total']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatTotals[$vcid]['VisitorsTotalVisitCount']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatTotals[$vcid]['VisitorsTotalHitCount']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['total']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatTotals[$vcid]['VisitorsTotalVisitCount']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatTotals[$vcid]['VisitorsTotalHitCount']; ?></td>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['today']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_today_visit']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_today_hit']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['today']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_today_visit']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_today_hit']; ?></td>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['yesterday']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_yesterday_visit']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_yesterday_hit']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['yesterday']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_yesterday_visit']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatDays[$vcid][100]['visitors_yesterday_hit']; ?></td>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['CurrentWeekVisits']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['CurrentWeekHits']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_week']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['CurrentWeekVisits']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['CurrentWeekHits']; ?></td>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['LastWeekVisits']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['LastWeekHits']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_week']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['LastWeekVisits']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatWeeks[$vcid]['LastWeekHits']; ?></td>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['CurrentMonthVisits']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['CurrentMonthHits']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['current_month']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['CurrentMonthVisits']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['CurrentMonthHits']; ?></td>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['LastMonthVisits']; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['LastMonthHits']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['last_month']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['LastMonthVisits']; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $this->visitorsstatMonths[$vcid]['LastMonthHits']; ?></td>
 			</tr>
 <?php foreach ($this->visitorsstatOtherMonths[$vcid] as $otherMonth) : ?>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $otherMonth[0].' '.$otherMonth[1]; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherMonth[2]; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherMonth[3]; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $otherMonth[0].' '.$otherMonth[1]; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherMonth[2]; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherMonth[3]; ?></td>
 			</tr>
 <?php endforeach; ?>
 			</tbody>
@@ -177,15 +181,15 @@
 			<table summary="Table lists statistik" class="mod_visitors_be_table">
 			<tbody>
 			<tr>
-			    <th style="width: 120px; padding-left: 2px; text-align: left;"   class="tl_folder_tlist">&nbsp;<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['period']; ?></th>
-			    <th style="min-width: 70px;  padding-right: 5px; text-align: right;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
-			    <th style="min-width: 70px;  padding-right: 5px; text-align: right;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
+				<th style="width: 120px; padding-left: 2px; text-align: left;"   class="tl_folder_tlist">&nbsp;<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['period']; ?></th>
+				<th style="min-width: 70px;  padding-right: 5px; text-align: right;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+				<th style="min-width: 70px;  padding-right: 5px; text-align: right;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
 			</tr>
 <?php foreach ($this->visitorsstatOtherYears[$vcid] as $otherYear) : ?>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $otherYear[0]; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherYear[1]; ?></td>
-			    <td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherYear[2]; ?></td>
+				<td style="padding-left: 2px; text-align: left;"  class="tl_file_list"><?= $otherYear[0]; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherYear[1]; ?></td>
+				<td style="padding-left: 2px; text-align: right;" class="tl_file_list"><?= $otherYear[2]; ?></td>
 			</tr>
 <?php endforeach; ?>
 			</tbody>
@@ -193,42 +197,41 @@
 		</div>
 		<div class="mod_visitors_be_initial w50">
 <?php if ($this->visitorsstatDays[$vcid][110]['visitors_visit_start'] > 0 || $this->visitorsstatDays[$vcid][110]['visitors_hit_start'] > 0) : ?>
-            <table summary="Table lists initial" class="mod_visitors_be_table" style="margin-left: auto;">
+			<table summary="Table lists initial" class="mod_visitors_be_table" style="margin-left: auto;">
 			<tbody>
 			<tr>
-			    <th style="width: 120px; padding-left: 2px; text-align: left;"   class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['parameter']; ?></th>
-			    <th style="width: 105px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
-			    <th style="width: 105px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
+				<th style="width: 120px; padding-left: 2px; text-align: left;"   class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['parameter']; ?></th>
+				<th style="width: 105px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+				<th style="width: 105px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit']; ?></th>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"   class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']; ?></td>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][110]['visitors_visit_start']; ?></td>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][110]['visitors_hit_start']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"   class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['initial_values']; ?></td>
+				<td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][110]['visitors_visit_start']; ?></td>
+				<td style="padding-left: 2px; text-align: center;" class="tl_file_list bct"><?= $this->visitorsstatDays[$vcid][110]['visitors_hit_start']; ?></td>
 			</tr>
 			</tbody>
 			</table>
 			<br>
 <?php endif; ?>
-            <table summary="Table lists average" class="mod_visitors_be_table" style="margin-left: auto;">
+			<table summary="Table lists average" class="mod_visitors_be_table" style="margin-left: auto;">
 			<tbody>
 			<tr>
-			    <th style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_legend']; ?></th>
-			    <th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageDays']; ?></th>
-			    <th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageDays30']; ?></th>
-			    <th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageDays60']; ?></th>
-
+				<th style="padding-left: 2px; text-align: left;"  class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_legend']; ?></th>
+				<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageDays']; ?></th>
+				<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageDays30']; ?></th>
+				<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageDays60']; ?></th>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"   class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_visits']; ?></td>
-			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageVisits']; ?></td>
-			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageVisits30']; ?></td>
-			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageVisits60']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"   class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_visits']; ?></td>
+				<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageVisits']; ?></td>
+				<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageVisits30']; ?></td>
+				<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageVisits60']; ?></td>
 			</tr>
 			<tr>
-			    <td style="padding-left: 2px; text-align: left;"   class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_hits']; ?></td>
-			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits']; ?></td>
-			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits30']; ?></td>
-			    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits60']; ?></td>
+				<td style="padding-left: 2px; text-align: left;"   class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_hits']; ?></td>
+				<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits']; ?></td>
+				<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits30']; ?></td>
+				<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatAverages[$vcid]['VisitorsAverageHits60']; ?></td>
 			</tr>
 			<tr>
 				<td colspan="4" style="width: 330px; text-align: center; font-size: 0.75rem;" class="bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['average_tipp']; ?></td>
@@ -239,19 +242,19 @@
 			<table class="mod_visitors_be_table" style="margin-left: auto;" summary="Table lists day with most visitors">
 			<tbody>
 			<tr>
-			    <th class="tl_folder_tlist" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']; ?>:</th>
-			    <th class="tl_folder_tlist" style="padding-left: 2px; text-align: right;">&nbsp;</th>
-			    <th class="tl_folder_tlist" style="padding-left: 2px; text-align: right;"><?= $this->visitorsstatBestDay[$vcid]['VisitorsBestDayDate']; ?></th>
+				<th class="tl_folder_tlist" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['most_visitors']; ?>:</th>
+				<th class="tl_folder_tlist" style="padding-left: 2px; text-align: right;">&nbsp;</th>
+				<th class="tl_folder_tlist" style="padding-left: 2px; text-align: right;"><?= $this->visitorsstatBestDay[$vcid]['VisitorsBestDayDate']; ?></th>
 			</tr>
 			<tr>
-			    <td class="tl_file_list bct" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']; ?>:</td>
-			    <td class="tl_file_list bct" style="padding-right: 2px; text-align: right;">&nbsp;</td>
-			    <td class="tl_file_list bct" style="padding-right: 2px; text-align: right;"><?= $this->visitorsstatBestDay[$vcid]['VisitorsBestDayVisits']; ?></td>
+				<td class="tl_file_list bct" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']; ?>:</td>
+				<td class="tl_file_list bct" style="padding-right: 2px; text-align: right;">&nbsp;</td>
+				<td class="tl_file_list bct" style="padding-right: 2px; text-align: right;"><?= $this->visitorsstatBestDay[$vcid]['VisitorsBestDayVisits']; ?></td>
 			</tr>
 			<tr>
-			    <td class="tl_file_list bct" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']; ?>:</td>
-			    <td class="tl_file_list bct" style="padding-right: 2px; text-align: right;">&nbsp;</td>
-			    <td class="tl_file_list bct" style="padding-right: 2px; text-align: right;"><?= $this->visitorsstatBestDay[$vcid]['VisitorsBestDayHits']; ?></td>
+				<td class="tl_file_list bct" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']; ?>:</td>
+				<td class="tl_file_list bct" style="padding-right: 2px; text-align: right;">&nbsp;</td>
+				<td class="tl_file_list bct" style="padding-right: 2px; text-align: right;"><?= $this->visitorsstatBestDay[$vcid]['VisitorsBestDayHits']; ?></td>
 			</tr>
 			</tbody>
 			</table>
@@ -259,19 +262,19 @@
 			<table summary="Table lists day with fewest visitors" class="mod_visitors_be_table" style="margin-left: auto;">
 				<tbody>
 				<tr>
-				    <th style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']; ?>:</th>
-				    <th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist">&nbsp;</th>
-				    <th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatBadDay[$vcid]['VisitorsBadDayDate']; ?></th>
+					<th style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['fewest_visitors']; ?>:</th>
+					<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist">&nbsp;</th>
+					<th style="padding-left: 2px; text-align: right;" class="tl_folder_tlist"><?= $this->visitorsstatBadDay[$vcid]['VisitorsBadDayDate']; ?></th>
 				</tr>
 				<tr>
-				    <td style="padding-left: 2px; text-align: left;" class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']; ?>:</td>
-				    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct">&nbsp;</td>
-				    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBadDay[$vcid]['VisitorsBadDayVisits']; ?></td>
+					<td style="padding-left: 2px; text-align: left;" class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['visitors_this_day']; ?>:</td>
+					<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct">&nbsp;</td>
+					<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBadDay[$vcid]['VisitorsBadDayVisits']; ?></td>
 				</tr>
 				<tr>
-				    <td style="padding-left: 2px; text-align: left;" class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']; ?>:</td>
-				    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct">&nbsp;</td>
-				    <td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBadDay[$vcid]['VisitorsBadDayHits']; ?></td>
+					<td style="padding-left: 2px; text-align: left;" class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['hits_this_day']; ?>:</td>
+					<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct">&nbsp;</td>
+					<td style="padding-right: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBadDay[$vcid]['VisitorsBadDayHits']; ?></td>
 				</tr>
 				</tbody>
 			</table>
@@ -279,8 +282,8 @@
 			<table class="mod_visitors_be_table" style="margin-left: auto;" summary="Table lists online">
 				<tbody>
 				<tr>
-				    <th class="tl_folder_tlist" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']; ?>:</th>
-				    <th class="tl_folder_tlist" style="padding-left: 2px; text-align: right;"><?= $this->visitorsstatOnline[$vcid]; ?></th>
+					<th class="tl_folder_tlist" style="padding-left: 2px; text-align: left;"><?= $GLOBALS['TL_LANG']['MSC']['tl_vivitors_stat']['currently online']; ?>:</th>
+					<th class="tl_folder_tlist" style="padding-left: 2px; text-align: right;"><?= $this->visitorsstatOnline[$vcid]; ?></th>
 				</tr>
 				</tbody>
 			</table>
@@ -365,197 +368,197 @@ break;
 	<hr>
 <?php endif; ?>
 	<div class="tl_content tl_listing_container list_view ">
-	  <div class="tl_listing block">
-		<div class="mod_visitors_be_browser w50">
-			<table  class="mod_visitors_be_table">
-			<tbody>
-			<tr>
-				<th colspan="5"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top20']; ?></th>
-				<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist">
-				<?php if ($this->allow_reset) : ?>
-					<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zerobrowser&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" height="16" width="16"></a>
-				<?php else: ?>
-					<span>&nbsp;</span>
-				<?php endif; ?>
-				</th>
-			</tr>
-			<tr>
-				<th colspan="2" style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></th>
-			    <th colspan="2" style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_lang']; ?></th>
-			    <th colspan="2" style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_os']; ?></th>
-			</tr>
-<?php $vsbu = 0; ?>
-<?php foreach ($this->visitorsstatBrowser[$vcid] as $browser) : ?>
-<?php if ($browser[0][0] || $browser[1][0] || $browser[2][0]) : ?>
-  <?php if ('Unknown' != $browser[0][0] && 'Unknown' != $browser[1][0] && 'Unknown' != $browser[2][0]) : ?>
-  <?php ++$vsbu; ?>
-			<tr>
-				<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= $browser[0][0] ? $browser[0][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[0][1].')' : '</td><td class="tl_file_list">'; ?></td>
-				<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $browser[1][0] ? $browser[1][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[1][1].')' : '</td><td class="tl_file_list">'; ?></td>
-				<td style="padding-left: 10px; text-align: left;"  class="tl_file_list"><?= $browser[2][0] ? $browser[2][0].'</td><td style="padding-right: 2px; text-align: right;" class="tl_file_list">('.$browser[2][1].')' : '</td><td class="tl_file_list">'; ?></td>
-			</tr>
-  <?php endif; ?>
-<?php endif; ?>
-<?php endforeach; ?>
-<?php if (0 == $vsbu) : ?>
-			<tr>
-		    	<td colspan="6"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
-			</tr>
-<?php endif; ?>
-			</tbody>
-			</table>
-		</div>
-		<div class="mod_visitors_be_browser_mini w50">
-			<div class="mod_visitors_be_browser2">
-				<table  class="mod_visitors_be_table" style="margin-left:auto;">
+	  	<div class="tl_listing block">
+			<div class="mod_visitors_be_browser w50">
+				<table  class="mod_visitors_be_table">
 				<tbody>
-				<tr style="height: 25px;">
-					<th colspan="2"  style="height: 19px; padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top10']; ?></th>
+				<tr>
+					<th colspan="5"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top20']; ?></th>
+					<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist">
+					<?php if ($this->allow_reset) : ?>
+						<a href="<?= $this->route('contao_backend') ?>?do=visitorstat&amp;act=zerobrowser&amp;zid=<?= $this->visitorsstatDays[$vcid][0]['visitors_id']; ?>&amp;id=<?= $this->visitorskatid; ?>" data-turbo="false" title="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" onclick="if (!confirm('<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser_confirm']; ?>')) return false; Backend.getScrollOffset();"><img src="<?= $this->visitors_base; ?><?= $this->theme0; ?>/down0.svg" alt="<?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['zerobrowser']; ?>" height="16" width="16"></a>
+					<?php else: ?>
+						<span>&nbsp;</span>
+					<?php endif; ?>
+					</th>
 				</tr>
 				<tr>
-					<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></th>
-					<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['number']; ?></th>
+					<th colspan="2" style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></th>
+					<th colspan="2" style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_lang']; ?></th>
+					<th colspan="2" style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_os']; ?></th>
 				</tr>
-<?php $vsbu = 0; ?>
-<?php foreach ($this->visitorsstatBrowser2[$vcid] as $browser) : ?>
-<?php if ($browser[0] || $vsbu > 0) : ?>
+	<?php $vsbu = 0; ?>
+	<?php foreach ($this->visitorsstatBrowser[$vcid] as $browser) : ?>
+	<?php if ($browser[0][0] || $browser[1][0] || $browser[2][0]) : ?>
+	<?php if ('Unknown' != $browser[0][0] && 'Unknown' != $browser[1][0] && 'Unknown' != $browser[2][0]) : ?>
+	<?php ++$vsbu; ?>
 				<tr>
-					<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= $browser[0] ? $browser[0].'</td>' : '&nbsp;</td>'; ?>
-					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $browser[1] ? $browser[1].'</td>' : '&nbsp;</td>'; ?>
+					<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= $browser[0][0] ? $browser[0][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[0][1].')' : '</td><td class="tl_file_list">'; ?></td>
+					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $browser[1][0] ? $browser[1][0].'</td><td style="padding-left: 2px; text-align: right;"  class="tl_file_list">('.$browser[1][1].')' : '</td><td class="tl_file_list">'; ?></td>
+					<td style="padding-left: 10px; text-align: left;"  class="tl_file_list"><?= $browser[2][0] ? $browser[2][0].'</td><td style="padding-right: 2px; text-align: right;" class="tl_file_list">('.$browser[2][1].')' : '</td><td class="tl_file_list">'; ?></td>
 				</tr>
-<?php ++$vsbu; ?>
-<?php endif; ?>
-<?php endforeach; ?>
-<?php if (0 == $vsbu) : ?>
-				<tr><td colspan="2"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td></tr>
-<?php endif; ?>
+	<?php endif; ?>
+	<?php endif; ?>
+	<?php endforeach; ?>
+	<?php if (0 == $vsbu) : ?>
+				<tr>
+					<td colspan="6"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
+				</tr>
+	<?php endif; ?>
 				</tbody>
 				</table>
 			</div>
-			<div class="mod_visitors_be_browser_other"> <!-- Unknown -->
-				<table  class="mod_visitors_be_table" style="margin-left:auto;">
-				<tbody>
-				<tr>
-					<th colspan="2"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_definition']; ?></th>
-				</tr>
-<?php if ($this->visitorsstatBrowserDefinition[$vcid]['KNO'] > 0) : ?>
-				<tr>
-					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_known'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version'].' ('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'].')'; ?></td>
-					<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['KNO']; ?></td>
-				</tr>
-				<tr>
-					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_unknown'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></td>
-					<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['UNK']; ?></td>
-				</tr>
-				<tr>
-					<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_os'].' ('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'].')'; ?></td>
-					<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['OSALL']; ?></td>
-				</tr>
-<?php else : ?>
-				<tr>
-			    	<td colspan="2"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
-				</tr>
-<?php endif; ?>
-	            </tbody>
-				</table>
+			<div class="mod_visitors_be_browser_mini w50">
+				<div class="mod_visitors_be_browser2">
+					<table  class="mod_visitors_be_table" style="margin-left:auto;">
+					<tbody>
+					<tr style="height: 25px;">
+						<th colspan="2"  style="height: 19px; padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_top10']; ?></th>
+					</tr>
+					<tr>
+						<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></th>
+						<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['number']; ?></th>
+					</tr>
+	<?php $vsbu = 0; ?>
+	<?php foreach ($this->visitorsstatBrowser2[$vcid] as $browser) : ?>
+	<?php if ($browser[0] || $vsbu > 0) : ?>
+					<tr>
+						<td style="padding-left: 2px; text-align: left;"   class="tl_file_list"><?= $browser[0] ? $browser[0].'</td>' : '&nbsp;</td>'; ?>
+						<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $browser[1] ? $browser[1].'</td>' : '&nbsp;</td>'; ?>
+					</tr>
+	<?php ++$vsbu; ?>
+	<?php endif; ?>
+	<?php endforeach; ?>
+	<?php if (0 == $vsbu) : ?>
+					<tr><td colspan="2"  class="tl_file_list"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td></tr>
+	<?php endif; ?>
+					</tbody>
+					</table>
+				</div>
+				<div class="mod_visitors_be_browser_other"> <!-- Unknown -->
+					<table  class="mod_visitors_be_table" style="margin-left:auto;">
+					<tbody>
+					<tr>
+						<th colspan="2"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_definition']; ?></th>
+					</tr>
+	<?php if ($this->visitorsstatBrowserDefinition[$vcid]['KNO'] > 0) : ?>
+					<tr>
+						<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_known'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version'].' ('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'].')'; ?></td>
+						<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['KNO']; ?></td>
+					</tr>
+					<tr>
+						<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_unknown'].' '.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_version']; ?></td>
+						<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['UNK']; ?></td>
+					</tr>
+					<tr>
+						<td style="padding-left: 2px; text-align: left;"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_os'].' ('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_osdif'].')'; ?></td>
+						<td style="padding-left: 2px; text-align: right;" class="tl_file_list bct"><?= $this->visitorsstatBrowserDefinition[$vcid]['OSALL']; ?></td>
+					</tr>
+	<?php else : ?>
+					<tr>
+						<td colspan="2"  class="tl_file_list bct"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
+					</tr>
+	<?php endif; ?>
+					</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
-	  </div>
 	</div> <!-- 4 -->
 	<div style="clear:left;"></div>
 	<hr>
 	<div class="tl_content tl_listing_container list_view ">
-	  <div class="tl_listing block">
-		<div class="mod_visitors_be_searchenginekeywords w50">
-			<table  class="mod_visitors_be_table">
-			<tbody>
-			<tr>
-				<th colspan="3"  style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchenginekeywords_top']; ?></th>
-			</tr>
-			<tr>
-			    <th style="width: 110px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine']; ?></th>
-			    <th style="padding-left: 2px; text-align: center;"               class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchenginekeywords']; ?></th>
-			    <th style="width: 70px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['number']; ?></th>
-			</tr>
-<?php if (false !== $this->visitorssearchengine) : ?>
-	<?php foreach ($this->visitorssearchenginekeywords as $searchenginekeywords) : ?>
-			<tr>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchenginekeywords[0] ?? ''; ?></td>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchenginekeywords[1] ?? ''; ?></td>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchenginekeywords[2] ?? ''; ?></td>
-			</tr>
-	<?php endforeach; ?>
-<?php endif; ?>
-			</tbody>
-			</table>
+		<div class="tl_listing block">
+			<div class="mod_visitors_be_searchenginekeywords w50">
+				<table  class="mod_visitors_be_table">
+				<tbody>
+				<tr>
+					<th colspan="3"  style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchenginekeywords_top']; ?></th>
+				</tr>
+				<tr>
+					<th style="width: 110px; padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine']; ?></th>
+					<th style="padding-left: 2px; text-align: center;"               class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchenginekeywords']; ?></th>
+					<th style="width: 70px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['number']; ?></th>
+				</tr>
+	<?php if (false !== $this->visitorssearchengine) : ?>
+		<?php foreach ($this->visitorssearchenginekeywords as $searchenginekeywords) : ?>
+				<tr>
+					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchenginekeywords[0] ?? ''; ?></td>
+					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchenginekeywords[1] ?? ''; ?></td>
+					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchenginekeywords[2] ?? ''; ?></td>
+				</tr>
+		<?php endforeach; ?>
+	<?php endif; ?>
+				</tbody>
+				</table>
+			</div>
+			<div class="mod_visitors_be_searchengines w50">
+				<table  class="mod_visitors_be_table" style="margin-left:auto;">
+				<tbody>
+				<tr>
+					<th colspan="2"  style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengines_top']; ?></th>
+				</tr>
+				<tr>
+					<th style="width: 90px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
+					<th style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['over']; ?></th>
+				</tr>
+	<?php if (false !== $this->visitorssearchengine) : ?>
+		<?php foreach ($this->visitorssearchengines as $searchengines) : ?>
+				<tr>
+					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchengines[1] ?? ''; ?></td>
+					<td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= $searchengines[0] ?? ''; ?></td>
+				</tr>
+		<?php endforeach; ?>
+	<?php endif; ?>
+				</tbody>
+				</table>
+			</div>
+			<div style="clear:both; width:100%;">
+			<?php if (false === $this->visitorssearchengine) : ?>
+				<p style="text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_no_data']; ?></p>
+			<?php else : ?>
+				<p style="text-align: center; font-size: 0.75rem; height: 40px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']; ?></p>
+			<?php endif; ?>
+			</div>
 		</div>
-		<div class="mod_visitors_be_searchengines w50">
-			<table  class="mod_visitors_be_table" style="margin-left:auto;">
-			<tbody>
-			<tr>
-				<th colspan="2"  style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengines_top']; ?></th>
-			</tr>
-			<tr>
-			    <th style="width: 90px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit']; ?></th>
-			    <th style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['over']; ?></th>
-			</tr>
-<?php if (false !== $this->visitorssearchengine) : ?>
-	<?php foreach ($this->visitorssearchengines as $searchengines) : ?>
-			<tr>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $searchengines[1] ?? ''; ?></td>
-			    <td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= $searchengines[0] ?? ''; ?></td>
-			</tr>
-	<?php endforeach; ?>
-<?php endif; ?>
-			</tbody>
-			</table>
-		</div>
-		<div style="clear:both; width:100%;">
-		<?php if (false === $this->visitorssearchengine) : ?>
-			<p style="text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_no_data']; ?></p>
-		<?php else : ?>
-	    	<p style="text-align: center; font-size: 0.75rem; height: 40px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['searchengine_data']; ?></p>
-    	<?php endif; ?>
-		</div>
-	  </div>
 	</div> <!-- 5 -->
 	<div style="clear:left;"></div>
 	<hr>
 	<div class="tl_content tl_listing_container list_view ">
-	  <div class="tl_listing block">
-		<div class="mod_visitors_be_referrer w50">
-			<table  class="mod_visitors_be_table">
-			<tbody>
-			<tr>
-				<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_top']; ?></th>
-			</tr>
-			<tr>
-			    <th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_dns']; ?></th>
-			    <th style="width: 70px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['number']; ?></th>
-			    <th style="width: 20px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist">&nbsp;</th>
-			</tr>
-<?php if (count($this->visitorsstatReferrer[0]) > 0) : ?>
-	<?php foreach ($this->visitorsstatReferrer[$vcid] as $Referrer) : ?>
-			<tr>
-			    <td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= isset($Referrer[0]) ? \Contao\Idna::decode($Referrer[0]) : ''; ?></td>
-			    <td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $Referrer[1] ?? ''; ?></td>
-   			    <td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a onclick="Backend.openModalIframe({'width':780,'height':600,'title':'<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>','url':this.href});return false" title="<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>" href="<?= $this->route('visitors_backend_details') ?>?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/icons/show.svg"></a><?php endif; ?></td>
-			</tr>
-	<?php endforeach; ?>
-			</tbody>
-			</table>
-			<div style="clear:both; width:100%; height: 40px;">
-			   	<p style="text-align: center; font-size: 0.75rem; height: 50px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_data']; ?></p>
+		<div class="tl_listing block">
+			<div class="mod_visitors_be_referrer w50">
+				<table  class="mod_visitors_be_table">
+				<tbody>
+				<tr>
+					<th colspan="3"  style="padding-left: 2px; text-align: left;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_top']; ?></th>
+				</tr>
+				<tr>
+					<th style="padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_dns']; ?></th>
+					<th style="width: 70px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['number']; ?></th>
+					<th style="width: 20px;  padding-left: 2px; text-align: center;" class="tl_folder_tlist">&nbsp;</th>
+				</tr>
+	<?php if (count($this->visitorsstatReferrer[0]) > 0) : ?>
+		<?php foreach ($this->visitorsstatReferrer[$vcid] as $Referrer) : ?>
+				<tr>
+					<td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= isset($Referrer[0]) ? \Contao\Idna::decode($Referrer[0]) : ''; ?></td>
+					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $Referrer[1] ?? ''; ?></td>
+					<td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a data-turbo="false" onclick="Backend.openModalIframe({'width':780,'height':600,'title':'<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>','url':this.href});return false" title="<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>" href="<?= $this->route('visitors_backend_details') ?>?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/icons/show.svg"></a><?php endif; ?></td>
+				</tr>
+		<?php endforeach; ?>
+				</tbody>
+				</table>
+				<div style="clear:both; width:100%; height: 40px;">
+					<p style="text-align: center; font-size: 0.75rem; height: 50px;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['referrer_data']; ?></p>
+				</div>
+	<?php else : ?>
+				<tr>
+					<td colspan="3"  class="tl_file_list" style="text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
+				</tr>
+				</tbody>
+				</table>
+	<?php endif; ?>
 			</div>
-<?php else : ?>
-			<tr>
-		    	<td colspan="3"  class="tl_file_list" style="text-align: center; font-size: 0.75rem;"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['browser_no_data']; ?></td>
-			</tr>
-			</tbody>
-			</table>
-<?php endif; ?>
 		</div>
-	  </div>
 	</div> <!-- 6 -->
 	<div style="clear:left;"></div>
 	<?php if (false !== $this->visitorsscreenactivated) : ?>
@@ -571,13 +574,13 @@ break;
 	<?php endif; ?>
 <?php endif; ?>
 <?php else : ?>
-	    <table class="tl_listing">
+		<table class="tl_listing">
 		<tbody>
 		<tr>
-		    <td class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']; ?></td>
+			<td class="tl_folder_tlist"><?= $GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['no_stat_data']; ?></td>
 		</tr>
 		<tr>
-		    <td>&nbsp;</td>
+			<td>&nbsp;</td>
 		</tr>
 		</tbody>
 		</table>
