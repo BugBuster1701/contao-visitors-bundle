@@ -92,9 +92,9 @@ class VisitorsFeAjaxController
                 WHERE pid = :pid AND published = :published
                 ORDER BY id
                 LIMIT :limit');
-        $stmt->bindValue('pid', $vc, \PDO::PARAM_INT);
-        $stmt->bindValue('published', 1, \PDO::PARAM_INT);
-        $stmt->bindValue('limit', 1, \PDO::PARAM_INT);
+        $stmt->bindValue('pid', $vc, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('published', 1, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('limit', 1, \Doctrine\DBAL\ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $row = $resultSet->fetchAssociative();

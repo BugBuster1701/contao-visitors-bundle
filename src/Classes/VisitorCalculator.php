@@ -131,8 +131,8 @@ class VisitorCalculator
 
                     ');
 
-        $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
-        $stmt->bindValue('vdate', $today, \PDO::PARAM_STR);
+        $stmt->bindValue('vid', $VisitorsId, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vdate', $today, \Doctrine\DBAL\ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() > 0) {
@@ -160,8 +160,8 @@ class VisitorCalculator
                         vid = :vid AND visitors_type = :vtype
                     ');
 
-        $stmt->bindValue('vid', $VisitorsId, \PDO::PARAM_INT);
-        $stmt->bindValue('vtype', 'v', \PDO::PARAM_STR);
+        $stmt->bindValue('vid', $VisitorsId, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vtype', 'v', \Doctrine\DBAL\ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $objVisitorsOnlineCount = $resultSet->fetchAssociative();
@@ -194,7 +194,7 @@ class VisitorCalculator
                         vid = :vid
                     ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTotalVisitCount = $objVisitors['visitors_visit_start']; // Startwert
@@ -217,7 +217,7 @@ class VisitorCalculator
                             vid = :vid
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTotalHitCount = $objVisitors['visitors_hit_start']; // Startwert
@@ -240,8 +240,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
-        $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
+        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d'), \Doctrine\DBAL\ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysVisitCount = 0;
@@ -264,8 +264,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
-        $stmt->bindValue('vdate', date('Y-m-d'), \PDO::PARAM_STR);
+        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d'), \Doctrine\DBAL\ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysHitCount = 0;
@@ -288,8 +288,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
-        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
+        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \Doctrine\DBAL\ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayVisitCount = 0;
@@ -312,8 +312,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
-        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \PDO::PARAM_STR);
+        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \Doctrine\DBAL\ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayHitCount = 0;
@@ -355,9 +355,9 @@ class VisitorCalculator
                             visitors_page_type = :vpagetype
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \PDO::PARAM_INT);
-        $stmt->bindValue('vpageid', $objPageId, \PDO::PARAM_INT);
-        $stmt->bindValue('vpagetype', $pagetype, \PDO::PARAM_INT);
+        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vpageid', $objPageId, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vpagetype', $pagetype, \Doctrine\DBAL\ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsPageHits = 0;
@@ -432,7 +432,7 @@ class VisitorCalculator
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -449,7 +449,7 @@ class VisitorCalculator
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -468,7 +468,7 @@ class VisitorCalculator
                         WHERE alias = :alias
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $strAlias, \PDO::PARAM_STR);
+            $stmt->bindValue('alias', $strAlias, \Doctrine\DBAL\ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -485,7 +485,7 @@ class VisitorCalculator
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -560,7 +560,7 @@ class VisitorCalculator
                             WHERE jumpTo = :jumpto
                             LIMIT 1
                             ');
-                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -580,8 +580,8 @@ class VisitorCalculator
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
-            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
+            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -599,7 +599,7 @@ class VisitorCalculator
                     WHERE jumpTo = :jumpto
                     LIMIT 1
                     ');
-                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -618,8 +618,8 @@ class VisitorCalculator
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
-            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
+            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -636,7 +636,7 @@ class VisitorCalculator
                         WHERE alias = :alias
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
+            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -654,7 +654,7 @@ class VisitorCalculator
                             WHERE jumpTo = :jumpto
                             LIMIT 1
                             ');
-                $stmt->bindValue('jumpto', $PageId, \PDO::PARAM_INT);
+                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -673,8 +673,8 @@ class VisitorCalculator
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \PDO::PARAM_STR);
-            $stmt->bindValue('jumpTo', $PageId, \PDO::PARAM_STR);
+            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
