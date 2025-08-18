@@ -67,14 +67,16 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['edit'],
 				'href'                => 'table=tl_visitors',
 				'icon'                => 'edit.svg',
-				'attributes'          => 'class="contextmenu"'
+				'attributes'          => 'class="contextmenu"',
+				'primary'             => true
 			),
 			'editheader' => array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['editheader'],
 				'href'                => 'act=edit',
 				'icon'                => 'header.svg',
-				'attributes'          => 'class="edit-header"'
+				'attributes'          => 'class="edit-header"',
+				'primary'             => true
 			),
 			'copy' => array
 			(
@@ -99,7 +101,8 @@ $GLOBALS['TL_DCA']['tl_visitors_category'] = array
 			(
 				'label'               => &$GLOBALS['TL_LANG']['tl_visitors_category']['stat'],
 				'href'                => 'do=visitorstat',
-				'icon'                => 'bundles/bugbustervisitors/iconVisitor.png'
+				'icon'                => 'bundles/bugbustervisitors/iconVisitor.png',
+				'primary'             => true
 			)
 		)
 	),
