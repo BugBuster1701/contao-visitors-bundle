@@ -28,7 +28,7 @@
 		"php": ">=8.3.0,<8.5.0",
 		"bugbuster/contao-botdetection-bundle":"^1.14",
 		"bugbuster/contao-clienthints-request-bundle":"^1.0",
-		"contao/core-bundle": ">=5.4.0,<5.7.0",
+		"contao/core-bundle": ">=5.6.0,<5.7.0",
 		"doctrine/dbal": "^3.6.2 || ^4.3",
 		"phpoffice/phpspreadsheet": "^3.4 || ^4.0",
 		"symfony/http-foundation": "^6.4 || ^7.0",
