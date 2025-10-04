@@ -30,7 +30,7 @@
 	</div> <!-- tl_panel -->
 </div> <!--  tl_formbody-->
 <?php if ($this->visitorskatid > 0 && $this->visitorsanzcounter > 0) : ?>
-	<?php if ($this->Template->visitorsexportavailable) : ?>
+	<?php if ($this->visitorsexportavailable) : ?>
 	<div class="tl_formbody">
 		<div class="tl_panel" style="justify-content: flex-start;">
 		<!-- Export Zeile //-->
