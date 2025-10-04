@@ -131,11 +131,11 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.0">
-        <source>Block time</source>
+        <source>Interruption of the requests</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.1">
-        <source>After interruption of the requests at this time, an access is counted as an additional visitor.</source>
+        <source>After interruption of the requests at this time, an access is counted as an additional visits.</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_checks.0">
