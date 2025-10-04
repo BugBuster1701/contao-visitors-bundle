@@ -30,50 +30,52 @@
 	</div> <!-- tl_panel -->
 </div> <!--  tl_formbody-->
 <?php if ($this->visitorskatid > 0 && $this->visitorsanzcounter > 0) : ?>
-<div class="tl_formbody">
-	<div class="tl_panel" style="justify-content: flex-start;">
-	<!-- Export Zeile //-->
-		<div class="tl_subpanel" style="text-align: center; padding-right: 24px;">
-			<span style="font-weight: bold;"><?= $this->visitors_exportfield ?><br>
-				<span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit'].','.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit'].')' ?></span>
-			</span>
-		</div>
-		<form method="post" class="tl_form" style="display: contents;" data-turbo="false" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
-			<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
-			<input type="hidden" name="act" value="export">
-			<input type="hidden" name="catid" value="<?= $this->visitorskatid ?>">
-		<?php if (class_exists('ZipArchive', false)) : ?>
-			<div class="tl_subpanel">
-				<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
-				<select class="tl_select" id="tl_sort" name="visitors_export_format">
-					<option value="xlsx"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['excel'] ?></option>
-					<option value="ods"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['opendocument'] ?></option>
-					<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
-				</select>
-			</div>
-		<?php else: ?>
-			<div class="tl_sorting tl_subpanel">
-				<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
-				<select class="tl_select" id="tl_sort" name="visitors_export_format">
-					<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
-				</select>
-			</div>
-		<?php endif; ?>
-			<div class="tl_subpanel" style="text-align: center;padding-left: 24px;">
-				<span style="font-weight: bold;"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['number_of_days'].':' ?><br>
-					<span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_page_title'].')' ?></span>
+	<?php if ($this->Template->visitorsexportavailable) : ?>
+	<div class="tl_formbody">
+		<div class="tl_panel" style="justify-content: flex-start;">
+		<!-- Export Zeile //-->
+			<div class="tl_subpanel" style="text-align: center; padding-right: 24px;">
+				<span style="font-weight: bold;"><?= $this->visitors_exportfield ?><br>
+					<span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['visit'].','.$GLOBALS['TL_LANG']['MSC']['tl_visitors_stat']['hit'].')' ?></span>
 				</span>
 			</div>
-			<div class="tl_subpanel" style="padding-left: 14px;">
-				<input type="text" class="tl_text" id="days" name="visitors_export_days" value="<?= $this->visitors_export_days ?>" style="width: 40px;">
-			</div>
-			<div class="tl_subpanel" style="padding-right: 14px; padding-left: 24px;">
-				<button id="save" class="tl_submit" style="border-radius: 4px;" type="submit" name="visitors_export_submit"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'] ?></button>
-			</div>
-		</form>
-	<!-- Export Zeile Ende //-->
-	</div> <!-- tl_panel -->
-</div> <!--  tl_formbody-->
+			<form method="post" class="tl_form" style="display: contents;" data-turbo="false" action="<?= $this->route('contao_backend') ?>?do=visitorstat">
+				<input type="hidden" name="REQUEST_TOKEN" value="<?= $this->requestToken ?>">
+				<input type="hidden" name="act" value="export">
+				<input type="hidden" name="catid" value="<?= $this->visitorskatid ?>">
+			<?php if (class_exists('ZipArchive', false)) : ?>
+				<div class="tl_subpanel">
+					<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
+					<select class="tl_select" id="tl_sort" name="visitors_export_format">
+						<option value="xlsx"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['excel'] ?></option>
+						<option value="ods"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['opendocument'] ?></option>
+						<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
+					</select>
+				</div>
+			<?php else: ?>
+				<div class="tl_sorting tl_subpanel">
+					<strong><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['format'] ?>:</strong>
+					<select class="tl_select" id="tl_sort" name="visitors_export_format">
+						<option value="csv" ><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['csv'] ?></option>
+					</select>
+				</div>
+			<?php endif; ?>
+				<div class="tl_subpanel" style="text-align: center;padding-left: 24px;">
+					<span style="font-weight: bold;"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['number_of_days'].':' ?><br>
+						<span style="font-weight: normal;"><?= '('.$GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_page_title'].')' ?></span>
+					</span>
+				</div>
+				<div class="tl_subpanel" style="padding-left: 14px;">
+					<input type="text" class="tl_text" id="days" name="visitors_export_days" value="<?= $this->visitors_export_days ?>" style="width: 40px;">
+				</div>
+				<div class="tl_subpanel" style="padding-right: 14px; padding-left: 24px;">
+					<button id="save" class="tl_submit" style="border-radius: 4px;" type="submit" name="visitors_export_submit"><?= $GLOBALS['TL_LANG']['tl_visitors_stat_export']['export'] ?></button>
+				</div>
+			</form>
+		<!-- Export Zeile Ende //-->
+		</div> <!-- tl_panel -->
+	</div> <!--  tl_formbody-->
+	<?php endif; ?>
 <?php endif; ?>
 <br> <br>
 <?php if (0 == $this->visitorsanzcounter) : ?>

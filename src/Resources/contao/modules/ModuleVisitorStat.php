@@ -65,14 +65,22 @@ class ModuleVisitorStat extends BackendModule
 		System::loadLanguageFile('tl_visitors_referrer');
 
 		if (Input::post('act', true)=='export') // action Export
-		{$this->generateExport();
+		{
+			// check if phpoffice/spreadsheet is installed
+			if (class_exists(\PhpOffice\PhpSpreadsheet\Spreadsheet::class)) 
+			{
+				$this->generateExport();
+			}
+			
 		}
 
 		if (Input::post('id')>0) // Auswahl im Statistikmenü
-		{$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
+		{
+			$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
 		}
 		elseif (Input::get('id')>0) // Auswahl in der Kategorieübersicht
-		{$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
+		{
+			$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
 		}
 		else
 		{
@@ -339,6 +347,16 @@ class ModuleVisitorStat extends BackendModule
 
 		// ScreenCountActivated?
 		$this->Template->visitorsscreenactivated = $this->isScreencountActivated($this->intKatID);
+
+		// phpoffice/spreadsheet installed?
+		if (class_exists(\PhpOffice\PhpSpreadsheet\Spreadsheet::class)) 
+		{
+			$this->Template->visitorsexportavailable = true;
+		}
+		else
+		{
+			$this->Template->visitorsexportavailable = false;
+		}
 	}
 
 	/**
