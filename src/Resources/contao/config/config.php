@@ -11,7 +11,7 @@
  * @license    LGPL-3.0-or-later
  */
 
-define('VISITORS_VERSION', '1.16');
+define('VISITORS_VERSION', '1.17');
 define('VISITORS_BUILD', '2');
 
 /*
