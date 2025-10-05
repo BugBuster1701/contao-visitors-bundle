@@ -127,13 +127,13 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.0">
-        <source>Visitors per day</source>
-        <target>Besucher pro Tag</target>
+        <source>Visits per day</source>
+        <target>Besuche pro Tag</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.1">
-        <source>With activation is also displayed in the front end a line with the average number of visitors per day.</source>
-        <target>Bei Aktivierung erscheint im Frontend zusätzlich eine Zeile mit der Durchschnittsanzahl der Besucher pro Tag.</target>
+        <source>With activation is also displayed in the front end a line with the average number of visits per day.</source>
+        <target>Bei Aktivierung erscheint im Frontend zusätzlich eine Zeile mit der Durchschnittsanzahl der Besuche pro Tag.</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.0">

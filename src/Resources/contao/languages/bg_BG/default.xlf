@@ -22,8 +22,7 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.average_visits">
-        <source>Visitors per day:</source>
-        <target>Посетители на ден:</target>
+        <source>Visits per day:</source>
         
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.browser_definition">
@@ -301,8 +300,7 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.fewest_visitors">
-        <source>Day with the fewest visitors</source>
-        <target>Ден с най-малко посещения</target>
+        <source>Day with the fewest visits</source>
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.hits_this_day">
@@ -311,8 +309,7 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.most_visitors">
-        <source>Day with the most visitors</source>
-        <target>Ден с най-много посещения</target>
+        <source>Day with the most visits</source>
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.visitors_this_day">
@@ -351,8 +348,7 @@
         
       </trans-unit>
       <trans-unit id="visitors.AverageVisitsLegend">
-        <source>Visitors per day:</source>
-        <target>Посетители на ден:</target>
+        <source>Visits per day:</source>
         
       </trans-unit>
       <trans-unit id="visitors.TodayHitCountLegend">

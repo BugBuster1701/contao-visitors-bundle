@@ -27,8 +27,8 @@
         
       </trans-unit>
       <trans-unit id="XPL.visitors_help_module.0.1">
-        <source>With the change of a user agent with a unique string and entry in this field can be prevented, that will count your own requests.&lt;br&gt;Detailed instructions, can be found in the Wiki.</source>
-        <target>Изменив значение User-Agent на уникальную строку и указав ее здесь, можно прекратить подсчет собственных запросов.&lt;br&gt;Подробные инструкции можно найти в Wiki.</target>
+        <source>With the change of a user agent with a unique string and entry in this field can be prevented, that will count your own requests.&lt;br&gt;Detailed instructions, can be found in the manual.</source>
+        <target>Изменив значение User-Agent на уникальную строку и указав ее здесь, можно прекратить подсчет собственных запросов.&lt;br&gt;Подробные инструкции можно найти в руководстве.</target>
         
       </trans-unit>
       <trans-unit id="XPL.visitors_help_module.1.0">

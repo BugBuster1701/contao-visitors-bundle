@@ -27,8 +27,8 @@
         
       </trans-unit>
       <trans-unit id="XPL.visitors_help_module.0.1">
-        <source>With the change of a user agent with a unique string and entry in this field can be prevented, that will count your own requests.&lt;br&gt;Detailed instructions, can be found in the Wiki.</source>
-        <target>Mit Änderung der Browser-Kennung durch ein eindeutigen String und Eintragung in dieses Feld kann verhindert werden, dass die eigenen Zugriffe mitgezählt werden.&lt;br&gt;Genaue Anleitung dazu sind im Wiki / Forum zu finden.</target>
+        <source>With the change of a user agent with a unique string and entry in this field can be prevented, that will count your own requests.&lt;br&gt;Detailed instructions, can be found in the manual.</source>
+        <target>Mit Änderung der Browser-Kennung durch ein eindeutigen String und Eintragung in dieses Feld kann verhindert werden, dass die eigenen Zugriffe mitgezählt werden.&lt;br&gt;Genaue Anleitung dazu sind im Handbuch zu finden.</target>
         
       </trans-unit>
       <trans-unit id="XPL.visitors_help_module.1.0">

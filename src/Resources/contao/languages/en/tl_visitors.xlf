@@ -102,11 +102,11 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.0">
-        <source>Visitors per day</source>
+        <source>Visits per day</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.1">
-        <source>With activation is also displayed in the front end a line with the average number of visitors per day.</source>
+        <source>With activation is also displayed in the front end a line with the average number of visits per day.</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.0">

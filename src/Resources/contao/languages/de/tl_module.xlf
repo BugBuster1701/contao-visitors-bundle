@@ -47,8 +47,8 @@
         
       </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.1">
-        <source>Here you can specify a partial identifier, it will be no counting. These HTTP_USER_AGENT partial identifier of the browser must be changed.&lt;br&gt;See Wiki.</source>
-        <target>Hier kann eine Teilkennung angegeben werden, bei der keine Zählung erfolgen soll. Dazu muss die HTTP_USER_AGENT Kennung des Browsers verändert werden.&lt;br&gt;Siehe Wiki.</target>
+        <source>Here you can specify a partial identifier, it will be no counting. These HTTP_USER_AGENT partial identifier of the browser must be changed.&lt;br&gt;See manual.</source>
+        <target>Hier kann eine Teilkennung angegeben werden, bei der keine Zählung erfolgen soll. Dazu muss die HTTP_USER_AGENT Kennung des Browsers verändert werden.&lt;br&gt;Siehe Handbuch.</target>
         
       </trans-unit>
     </body>

@@ -21,8 +21,7 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.average_visits">
-        <source>Visitors per day:</source>
-        <target>بازدیدکننده در هر روز:</target>
+        <source>Visits per day:</source>
         
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.browser_definition">
@@ -290,7 +289,7 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.fewest_visitors">
-        <source>Day with the fewest visitors</source>
+        <source>Day with the fewest visits</source>
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.hits_this_day">
@@ -299,8 +298,7 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.most_visitors">
-        <source>Day with the most visitors</source>
-        <target>روز با بیشترین بازدیدکننده‌ها</target>
+        <source>Day with the most visits</source>
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.visitors_this_day">
@@ -335,8 +333,7 @@
         
       </trans-unit>
       <trans-unit id="visitors.AverageVisitsLegend">
-        <source>Visitors per day:</source>
-        <target>بازدید در هر روز:</target>
+        <source>Visits per day:</source>
         
       </trans-unit>
       <trans-unit id="visitors.TodayHitCountLegend">
