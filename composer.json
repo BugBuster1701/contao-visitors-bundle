@@ -26,12 +26,22 @@
 	},
 	"require":{
 		"php": ">=8.3.0,<8.5.0",
+		"ext-filter": "*",
+		"ext-mbstring": "*",
 		"bugbuster/contao-botdetection-bundle":"^1.14",
 		"bugbuster/contao-clienthints-request-bundle":"^1.0",
 		"contao/core-bundle": ">=5.6.0,<5.7.0",
 		"doctrine/dbal": "^3.6.2 || ^4.3",
-		"symfony/http-foundation": "^6.4 || ^7.0",
+		"psr/log": "^1.1 || 2.0 || ^3.0",
+		"symfony/config": "^7.3",
+		"symfony/dependency-injection": "^7.3",
 		"symfony/deprecation-contracts": "^3.0",
+		"symfony/framework-bundle": "^7.3",
+		"symfony/http-foundation": "^6.4 || ^7.0",
+		"symfony/http-kernel": "^7.3",
+		"symfony/routing": "^7.3",
+		"symfony/security-bundle": "^7.3",
+		"symfony/translation-contracts": "^3.0",
 		"monolog/monolog": "^3.5.0"
 	},
 	"suggest": {
@@ -40,7 +50,12 @@
 	"require-dev": {
 			"contao/manager-plugin": "^2.0",
 			"friendsofphp/php-cs-fixer": "^3.10",
-			"phpunit/phpunit": "^9.5.19"
+			"phpunit/phpunit": "^9.5.19",
+			"phpstan/phpstan": "^2.0",
+			"phpstan/phpstan-doctrine": "^2.0",
+			"phpstan/phpstan-phpunit": "^2.0",
+			"phpstan/phpstan-symfony": "^2.0",
+			"shipmonk/composer-dependency-analyser": "^1.8"
 	},
 	"conflict": {
 			"contao/manager-plugin": "<2.0 || >=3.0"
@@ -82,6 +97,7 @@
         "ecs": "@php tools/ecs/vendor/bin/ecs check src/ tests/ --config tools/ecs/config/default.php --fix --ansi",
         "ecs-legacy": "@php tools/ecs/vendor/bin/ecs check src/Resources/contao/ --config tools/ecs/config/legacy.php --fix --ansi",
         "ecs-template": "@php tools/ecs/vendor/bin/ecs check src/Resources/contao/templates --config tools/ecs/config/template.php --fix --ansi",
-        "unit-tests": "@php vendor/bin/phpunit --testdox --colors=always"
+        "unit-tests": "@php vendor/bin/phpunit --testdox --colors=always",
+		"depcheck": "@php vendor/bin/composer-dependency-analyser --config=depcheck.php --ignore-unknown-classes"
     }
 }
