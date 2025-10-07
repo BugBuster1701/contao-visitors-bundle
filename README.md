@@ -34,6 +34,9 @@ __Achtung__: Nutzer von Contao 4.13, verwenden `^1.8` als Versionsangabe!
 * English: https://docs.contao.ninja/en/visitors.html
 * German: https://docs.contao.ninja/de/visitors.html
 
+## Deprecated features
+Read the [DEPRECATED.md](DEPRECATED.md)
+
 ## For Translators
 
 Translations are managed using Transifex. To create a new translation or to help to maintain an existing one, please register at transifex.com.
