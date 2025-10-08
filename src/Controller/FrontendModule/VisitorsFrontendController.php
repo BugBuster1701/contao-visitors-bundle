@@ -171,6 +171,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
 
         $routeScreenCount = System::getContainer()->get('router')->generate('visitors_frontend_screencount');
 
+        $arrVisitors = [];
         if ('mod_visitors_fe_invisible' === $this->strTemplate) {
             // invisible, but counting!
             $arrVisitors[] = [
@@ -840,7 +841,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
      *
      * @return int
      */
-    protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias)
+    protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias): int
     {
         if (self::PAGE_TYPE_NORMAL === $PageType) {
             ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNormal: '.$PageId);
@@ -1025,6 +1026,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         }
 
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unknown PageType: '.$PageType);
+
+        return $PageId; // Fallback
     }
 
     /**

@@ -508,7 +508,7 @@ class VisitorCalculator
      *
      * @return int
      */
-    protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias)
+    protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias): int
     {
         if (self::PAGE_TYPE_NORMAL === $PageType) {
             // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdNormal: '.$PageId);
@@ -686,5 +686,6 @@ class VisitorCalculator
         }
 
         // ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unknown PageType: '.$PageType);
+        return $PageId;
     }
 }

@@ -132,6 +132,8 @@ class ModuleVisitorStatIsotopeProductCounter extends BackendModule
 			while ($objIsotopeStatCount->next())
 			{
 				$alias   = false;
+				$title   = '';
+				// Get Isotope Product and Page Alias
 				$aliases = $this->getIsotopeAliases($objIsotopeStatCount->visitors_page_id, $objIsotopeStatCount->visitors_page_pid);
 				if (isset($aliases['PageAlias']) && false !== $aliases['PageAlias'])
 				{

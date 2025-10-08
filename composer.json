@@ -98,6 +98,7 @@
         "ecs-legacy": "@php tools/ecs/vendor/bin/ecs check src/Resources/contao/ --config tools/ecs/config/legacy.php --fix --ansi",
         "ecs-template": "@php tools/ecs/vendor/bin/ecs check src/Resources/contao/templates --config tools/ecs/config/template.php --fix --ansi",
         "unit-tests": "@php vendor/bin/phpunit --testdox --colors=always",
-		"depcheck": "@php vendor/bin/composer-dependency-analyser --config=depcheck.php --ignore-unknown-classes"
+		"depcheck": "@php vendor/bin/composer-dependency-analyser --config=depcheck.php --ignore-unknown-classes",
+		"phpstan": "@php vendor/bin/phpstan analyze src/ tests/ --memory-limit=1G"
     }
 }

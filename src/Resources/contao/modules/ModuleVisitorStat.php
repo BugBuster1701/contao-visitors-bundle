@@ -42,6 +42,8 @@ class ModuleVisitorStat extends BackendModule
 	 */
 	protected $strTemplate = 'mod_visitors_be_stat';
 
+	protected $Template;
+
 	/**
 	 * Kat ID
 	 * @var int
@@ -106,6 +108,34 @@ class ModuleVisitorStat extends BackendModule
 	protected function compile()
 	{
 		$intCatIdAllowed = false;
+		$arrVisitorsStatDays = array();
+		$arrVisitorsStatWeek = array();
+		$arrVisitorsStatMonth = array();
+		$arrVisitorsStatOtherMonth = array();
+		$arrVisitorsStatOtherYears = array();
+		$arrVisitorsStatTotal = array();
+		$arrVisitorsStatAverage = array();
+		$arrVisitorsStatOnline = array();
+		$arrVisitorsStatBestDay = array();
+		$arrVisitorsStatBadDay = array();
+		$arrVisitorsChart = array();
+		$arrVisitorsPageVisitHits = array();
+		$arrVisitorsPageVisitHitsDays = array();
+		$arrVisitorsPageVisitHitsToday = array();
+		$arrVisitorsPageVisitHitsYesterday = array();
+		$arrVisitorsNewsVisitHits = array();
+		$arrVisitorsNewsVisitHitsDays = array();
+		$arrVisitorsFaqVisitHits = array();
+		$arrVisitorsFaqVisitHitsDays = array();
+		$arrVisitorsIsotopeVisitHits = array();
+		$arrVisitorsEventsVisitHits	= array();
+		$arrVisitorsEventsVisitHitsDays = array();
+		$arrVisitorsStatBrowser = array();
+		$arrVisitorsStatBrowser2 = array();
+		$arrVisitorsStatBrowserDefinition = array();
+		$arrVisitorsStatReferrer = array();
+		$arrVisitorsScreenTopResolution = array();
+		$arrVisitorsScreenTopResolutionDays	= array();
 		/*
 		if ($this->intKatID == 0) //direkter Aufruf ohne ID
 		{
@@ -370,6 +400,7 @@ class ModuleVisitorStat extends BackendModule
 		$visitors_yesterday_hit   = 0;
 		$visitors_visit_start     = 0;
 		$visitors_hit_start       = 0;
+		$visitors_statistic_days  = 14;
 		$visitors_day_of_week_prefix = '';
 		// Anzahl Tage zu erst auslesen die angezeigt werden sollen
 		$objVisitors = Database::getInstance()->prepare("SELECT tv.visitors_statistic_days FROM tl_visitors tv WHERE tv.pid = ? AND tv.id = ?")
