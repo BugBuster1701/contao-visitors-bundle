@@ -34,6 +34,8 @@ class ModuleVisitorStatScreenCounter extends BackendModule
 	 */
 	protected static $instance;
 
+	protected $TemplatePartial;
+
 	/**
 	 * Constructor
 	 */

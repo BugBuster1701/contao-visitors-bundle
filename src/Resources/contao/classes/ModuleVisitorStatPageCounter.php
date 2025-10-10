@@ -42,6 +42,8 @@ class ModuleVisitorStatPageCounter extends BackendModule
 
 	protected $yesterday;
 
+	protected $TemplatePartial;
+
 	const PAGE_TYPE_NORMAL      = 0;    // 0 = reale Seite / Reader ohne Parameter - Auflistung der News/FAQs
 
 	const PAGE_TYPE_NEWS        = 1;    // 1 = Nachrichten/News
@@ -602,14 +604,14 @@ class ModuleVisitorStatPageCounter extends BackendModule
 				$objPage->loadDetails();
 
 				$objRootPage = PageModel::findById($objPage->rootId);
-			}
+				$objPage = PageModel::find403ByPid($objRootPage->id);
+			}			
 		}
 		else
 		{
 			throw new NoRootPageFoundException('No root page found');
 		}
-		$objPage = PageModel::find403ByPid($objRootPage->id);
-
+		
 		return $objPage->alias;
 	}
 

@@ -1,12 +1,11 @@
 # Contao 4/5 Visitors Bundle
 
 [![Latest Stable Version](https://poser.pugx.org/bugbuster/contao-visitors-bundle/v/stable.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
-![Contao Version](https://img.shields.io/badge/Contao-5.4-orange) ![Contao Version](https://img.shields.io/badge/Contao-5.3-orange) ![Contao Version](https://img.shields.io/badge/Contao-4.13-orange) 
+![Contao Version](https://img.shields.io/badge/Contao-5.6-orange) ![Contao Version](https://img.shields.io/badge/Contao-5.3-orange) ![Contao Version](https://img.shields.io/badge/Contao-4.13-orange) 
 [![Total Downloads](https://poser.pugx.org/bugbuster/contao-visitors-bundle/downloads.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle) 
 [![License](https://poser.pugx.org/bugbuster/contao-visitors-bundle/license.svg)](https://packagist.org/packages/bugbuster/contao-visitors-bundle)
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d55179131ab34d38a364685b57872af4)](https://www.codacy.com/app/BugBuster1701/contao-visitors-bundle?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=BugBuster1701/contao-visitors-bundle&amp;utm_campaign=Badge_Grade)
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/d55179131ab34d38a364685b57872af4)](https://app.codacy.com/gh/BugBuster1701/contao-visitors-bundle/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ## About
 
@@ -33,6 +32,9 @@ __Achtung__: Nutzer von Contao 4.13, verwenden `^1.8` als Versionsangabe!
 
 * English: https://docs.contao.ninja/en/visitors.html
 * German: https://docs.contao.ninja/de/visitors.html
+
+## Deprecated features
+Read the [DEPRECATED.md](DEPRECATED.md)
 
 ## For Translators
 

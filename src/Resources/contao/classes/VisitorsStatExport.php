@@ -102,6 +102,7 @@ class VisitorsStatExport extends System
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 		}
+		/* @phpstan-ignore class.notFound */
 		$objWriter = IOFactory::createWriter($objVisitorExcel, 'Xlsx');
 		$objWriter->save('php://output');
 		exit;
@@ -130,6 +131,7 @@ class VisitorsStatExport extends System
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 		}
+		/* @phpstan-ignore class.notFound */
 		$objWriter = IOFactory::createWriter($objVisitorODS, 'Ods');
 		$objWriter->save('php://output');
 		exit;
@@ -150,6 +152,7 @@ class VisitorsStatExport extends System
 		}
 
 		$objVisitorCSV = $this->generateExportData();
+		/* @phpstan-ignore class.notFound */
 		$objWriter = IOFactory::createWriter($objVisitorCSV, 'Csv')
 					->setDelimiter(',')
 					->setEnclosure('"')
@@ -182,7 +185,7 @@ class VisitorsStatExport extends System
                                         tvc.id = ?
                                     ORDER BY tvc.title, tv.id, tvs.visitors_date")
 							->execute($this->catid);
-
+		/* @phpstan-ignore class.notFound */
 		$objVisitorExcel = new Spreadsheet();
 		$objVisitorExcel->setActiveSheetIndex(0);
 		$objVisitorExcel->getActiveSheet()->setTitle($GLOBALS['TL_LANG']['tl_visitors_stat_export']['export_title']);
@@ -222,8 +225,9 @@ class VisitorsStatExport extends System
 			$objVisitorExcel->getActiveSheet()->setCellValue('E' . $row, date(Config::get('dateFormat'), strtotime($objStatistic->visitors_date)));
 			$objVisitorExcel->getActiveSheet()->setCellValue('F' . $row, empty($objStatistic->visitors_visit) ? '0' : $objStatistic->visitors_visit);
 			$objVisitorExcel->getActiveSheet()->setCellValue('G' . $row, empty($objStatistic->visitors_hit) ? '0' : $objStatistic->visitors_hit);
-
+			/* @phpstan-ignore class.notFound */
 			$objVisitorExcel->getActiveSheet()->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+			/* @phpstan-ignore class.notFound */
 			$objVisitorExcel->getActiveSheet()->getStyle('D' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 		}
 		$VisitorsID = $objStatistic->visitors_id;
@@ -256,7 +260,7 @@ class VisitorsStatExport extends System
 				$objVisitorExcel->getActiveSheet()->setCellValue('B' . $row, $arrVisitorsPageVisitHit['lang']);
 				$objVisitorExcel->getActiveSheet()->setCellValue('C' . $row, $arrVisitorsPageVisitHit['visits']);
 				$objVisitorExcel->getActiveSheet()->setCellValue('D' . $row, $arrVisitorsPageVisitHit['hits']);
-
+				/* @phpstan-ignore class.notFound */
 				$objVisitorExcel->getActiveSheet()->getStyle('B' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
 			}
 		}

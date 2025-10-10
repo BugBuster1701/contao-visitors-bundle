@@ -127,22 +127,22 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.0">
-        <source>Visitors per day</source>
-        <target>Посетителей за день</target>
+        <source>Visits per day</source>
+        <target>Посещения за день</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.1">
-        <source>With activation is also displayed in the front end a line with the average number of visitors per day.</source>
-        <target>При активации отобразится во внешнем интерфейсе, как среднее количество посетителей в день.</target>
+        <source>With activation is also displayed in the front end a line with the average number of visits per day.</source>
+        <target>При активации отобразится во внешнем интерфейсе, как среднее количество посещения в день.</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.0">
-        <source>Block time</source>
-        <target>Время блокировки</target>
+        <source>Interruption of the requests</source>
+        <target>Прерывание запросов</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.1">
-        <source>After interruption of the requests at this time, an access is counted as an additional visitor.</source>
+        <source>After interruption of the requests at this time, an access is counted as an additional visits.</source>
         <target>Время в секундах. После этого интервала времени доступ засчитывается в качестве еще одного посещения.</target>
         
       </trans-unit>

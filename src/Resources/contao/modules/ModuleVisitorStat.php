@@ -42,6 +42,8 @@ class ModuleVisitorStat extends BackendModule
 	 */
 	protected $strTemplate = 'mod_visitors_be_stat';
 
+	protected $Template;
+
 	/**
 	 * Kat ID
 	 * @var int
@@ -65,14 +67,22 @@ class ModuleVisitorStat extends BackendModule
 		System::loadLanguageFile('tl_visitors_referrer');
 
 		if (Input::post('act', true)=='export') // action Export
-		{$this->generateExport();
+		{
+			// check if phpoffice/spreadsheet is installed
+			if (class_exists(\PhpOffice\PhpSpreadsheet\Spreadsheet::class)) 
+			{
+				$this->generateExport();
+			}
+			
 		}
 
 		if (Input::post('id')>0) // Auswahl im Statistikmenü
-		{$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
+		{
+			$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
 		}
 		elseif (Input::get('id')>0) // Auswahl in der Kategorieübersicht
-		{$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
+		{
+			$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
 		}
 		else
 		{
@@ -98,6 +108,34 @@ class ModuleVisitorStat extends BackendModule
 	protected function compile()
 	{
 		$intCatIdAllowed = false;
+		$arrVisitorsStatDays = array();
+		$arrVisitorsStatWeek = array();
+		$arrVisitorsStatMonth = array();
+		$arrVisitorsStatOtherMonth = array();
+		$arrVisitorsStatOtherYears = array();
+		$arrVisitorsStatTotal = array();
+		$arrVisitorsStatAverage = array();
+		$arrVisitorsStatOnline = array();
+		$arrVisitorsStatBestDay = array();
+		$arrVisitorsStatBadDay = array();
+		$arrVisitorsChart = array();
+		$arrVisitorsPageVisitHits = array();
+		$arrVisitorsPageVisitHitsDays = array();
+		$arrVisitorsPageVisitHitsToday = array();
+		$arrVisitorsPageVisitHitsYesterday = array();
+		$arrVisitorsNewsVisitHits = array();
+		$arrVisitorsNewsVisitHitsDays = array();
+		$arrVisitorsFaqVisitHits = array();
+		$arrVisitorsFaqVisitHitsDays = array();
+		$arrVisitorsIsotopeVisitHits = array();
+		$arrVisitorsEventsVisitHits	= array();
+		$arrVisitorsEventsVisitHitsDays = array();
+		$arrVisitorsStatBrowser = array();
+		$arrVisitorsStatBrowser2 = array();
+		$arrVisitorsStatBrowserDefinition = array();
+		$arrVisitorsStatReferrer = array();
+		$arrVisitorsScreenTopResolution = array();
+		$arrVisitorsScreenTopResolutionDays	= array();
 		/*
 		if ($this->intKatID == 0) //direkter Aufruf ohne ID
 		{
@@ -339,6 +377,16 @@ class ModuleVisitorStat extends BackendModule
 
 		// ScreenCountActivated?
 		$this->Template->visitorsscreenactivated = $this->isScreencountActivated($this->intKatID);
+
+		// phpoffice/spreadsheet installed?
+		if (class_exists(\PhpOffice\PhpSpreadsheet\Spreadsheet::class)) 
+		{
+			$this->Template->visitorsexportavailable = true;
+		}
+		else
+		{
+			$this->Template->visitorsexportavailable = false;
+		}
 	}
 
 	/**
@@ -352,6 +400,7 @@ class ModuleVisitorStat extends BackendModule
 		$visitors_yesterday_hit   = 0;
 		$visitors_visit_start     = 0;
 		$visitors_hit_start       = 0;
+		$visitors_statistic_days  = 14;
 		$visitors_day_of_week_prefix = '';
 		// Anzahl Tage zu erst auslesen die angezeigt werden sollen
 		$objVisitors = Database::getInstance()->prepare("SELECT tv.visitors_statistic_days FROM tl_visitors tv WHERE tv.pid = ? AND tv.id = ?")

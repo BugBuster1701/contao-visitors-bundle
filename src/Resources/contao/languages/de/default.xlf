@@ -22,8 +22,8 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.average_visits">
-        <source>Visitors per day:</source>
-        <target>Besucher pro Tag:</target>
+        <source>Visits per day:</source>
+        <target>Besuche pro Tag:</target>
         
       </trans-unit>
       <trans-unit id="MSC.tl_visitors_stat.browser_definition">
@@ -302,8 +302,8 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.fewest_visitors">
-        <source>Day with the fewest visitors</source>
-        <target>Tag mit den wenigsten Besuchern</target>
+        <source>Day with the fewest visits</source>
+        <target>Tag mit den wenigsten Besuchen</target>
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.hits_this_day">
@@ -312,8 +312,8 @@
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.most_visitors">
-        <source>Day with the most visitors</source>
-        <target>Tag mit den meisten Besuchern</target>
+        <source>Day with the most visits</source>
+        <target>Tag mit den meisten Besuchen</target>
         
       </trans-unit>
       <trans-unit id="MSC.tl_vivitors_stat.visitors_this_day">
@@ -352,8 +352,8 @@
         
       </trans-unit>
       <trans-unit id="visitors.AverageVisitsLegend">
-        <source>Visitors per day:</source>
-        <target>Besucher pro Tag:</target>
+        <source>Visits per day:</source>
+        <target>Besuche pro Tag:</target>
         
       </trans-unit>
       <trans-unit id="visitors.TodayHitCountLegend">

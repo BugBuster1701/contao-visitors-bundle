@@ -22,7 +22,7 @@ use BugBuster\VisitorsBundle\Classes\VisitorLogger;
 use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\PageModel;
 use Contao\System;
-use Doctrine\Dbal\Connection;
+use Doctrine\DBAL\Connection;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 

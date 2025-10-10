@@ -11,8 +11,8 @@
  * @license    LGPL-3.0-or-later
  */
 
-define('VISITORS_VERSION', '1.16');
-define('VISITORS_BUILD', '1');
+define('VISITORS_VERSION', '1.17');
+define('VISITORS_BUILD', '0');
 
 /*
  * Backend css version number are added to style sheets files to make
@@ -28,14 +28,12 @@ define('VISITORS_BE_CSS', '1.2.3');
 $GLOBALS['BE_MOD']['content']['visitors'] = array
 (
 	'tables'     => array('tl_visitors_category', 'tl_visitors'),
-	'icon'       => 'bundles/bugbustervisitors/iconVisitor.png',
 	'stylesheet' => 'bundles/bugbustervisitors/mod_visitors_be_' . VISITORS_BE_CSS . '.css'
 );
 
 $GLOBALS['BE_MOD']['system']['visitorstat'] = array
 (
 	'callback'   => 'BugBuster\Visitors\ModuleVisitorStat',
-	'icon'       => 'bundles/bugbustervisitors/iconVisitor.png',
 	'stylesheet' => 'bundles/bugbustervisitors/mod_visitors_be_' . VISITORS_BE_CSS . '.css'
 );
 

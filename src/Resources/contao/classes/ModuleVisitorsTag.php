@@ -94,6 +94,7 @@ class ModuleVisitorsTag extends Frontend
 	 */
 	public function replaceInsertTagsVisitors($strTag)
 	{
+		$visitors_category_id = 0;
 		$arrTag = StringUtil::trimsplit('::', $strTag);
 		if ($arrTag[0] != 'visitors')
 		{
@@ -412,6 +413,8 @@ class ModuleVisitorsTag extends Frontend
 			case "averagevisits":
 				// Average Visits
 				ModuleVisitorLog::writeLog(__METHOD__, __LINE__, ':' . $arrTag[2]);
+				$VisitorsAverageVisits = 0;
+
 				if ($objVisitors->visitors_average)
 				{
 					$today     = date('Y-m-d');
@@ -439,10 +442,6 @@ class ModuleVisitorsTag extends Frontend
 							$VisitorsAverageVisits = 0;
 						}
 					}
-				}
-				else
-				{
-					$VisitorsAverageVisits = 0;
 				}
 
 				return $boolSeparator ? $this->getFormattedNumber($VisitorsAverageVisits, 0) : $VisitorsAverageVisits;
@@ -1394,12 +1393,15 @@ class ModuleVisitorsTag extends Frontend
 		{
 			throw new NoRootPageFoundException('No root page found');
 		}
+		/* @phpstan-ignore variable.undefined */
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Root Page ID over URL: ' . $objRootPage->id);
 		if ($next === false)
 		{
+			/* @phpstan-ignore variable.undefined */
 			return $objRootPage->id;
 		}
 		// simple PageRoot:generate
+		/* @phpstan-ignore variable.undefined */
 		$objNextPage = PageModel::findFirstPublishedByPid($objRootPage->id);
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Next Page ID over URL: ' . $objNextPage->id);
 
@@ -1510,7 +1512,7 @@ class ModuleVisitorsTag extends Frontend
 	 * @param  string  $PageAlias
 	 * @return integer
 	 */
-	protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias)
+	protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias): int
 	{
 		if ($PageType == self::PAGE_TYPE_NORMAL)
 		{
@@ -1591,8 +1593,9 @@ class ModuleVisitorsTag extends Frontend
 				return $objIsotope->id;
 			}
 		}
-
+		
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unknown PageType: ' . $PageType);
+		return $PageId;
 	}
 
 	/**

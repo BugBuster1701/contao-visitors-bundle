@@ -43,8 +43,7 @@
         
       </trans-unit>
       <trans-unit id="tl_module.visitors_useragent.1">
-        <source>Here you can specify a partial identifier, it will be no counting. These HTTP_USER_AGENT partial identifier of the browser must be changed.&lt;br&gt;See Wiki.</source>
-        <target>Тук можете да посочите частичен идентификатор, който няма да се брои в отчета. Тези HTTP_USER_AGENT частични идентификатори на браузъра трябва да бъдат сменени.&lt;br&gt;Виж Wiki.</target>
+        <source>Here you can specify a partial identifier, it will be no counting. These HTTP_USER_AGENT partial identifier of the browser must be changed.&lt;br&gt;See manual.</source>
         
       </trans-unit>
     </body>

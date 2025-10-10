@@ -172,7 +172,7 @@ $GLOBALS['TL_DCA']['tl_visitors'] = array
 		(
 			'label'                   => &$GLOBALS['TL_LANG']['tl_visitors']['visitors_block_time'],
 			'inputType'               => 'text',
-			'sql'                     => "int(10) unsigned NOT NULL default '1800'",
+			'sql'                     => "int(10) unsigned NOT NULL default '43200'",
 			'eval'                    => array('mandatory'=>true, 'maxlength'=>10, 'rgxp'=>'digit', 'helpwizard'=>false, 'tl_class'=>'w50 w50h')
 		),
 		'visitors_thousands_separator'=> array

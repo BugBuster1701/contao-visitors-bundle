@@ -127,23 +127,21 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.0">
-        <source>Visitors per day</source>
-        <target>Посетители на ден</target>
+        <source>Visits per day</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.1">
-        <source>With activation is also displayed in the front end a line with the average number of visitors per day.</source>
-        <target>След активиране се показва на сайта като ред със среден брой посетители на ден.</target>
+        <source>With activation is also displayed in the front end a line with the average number of visits per day.</source>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.0">
-        <source>Block time</source>
-        <target>Блок време</target>
+        <source>Interruption of the requests</source>
+        <target>Прекъсване на заявките</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.1">
-        <source>After interruption of the requests at this time, an access is counted as an additional visitor.</source>
-        <target>След посоченото време за прекратяване на заявките, достъпът се брои като за нов посетител.</target>
+        <source>After interruption of the requests at this time, an access is counted as an additional visits.</source>
+        <target>След посоченото време за прекратяване на заявките, достъпът се брои като за нов посещения.</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_checks.0">

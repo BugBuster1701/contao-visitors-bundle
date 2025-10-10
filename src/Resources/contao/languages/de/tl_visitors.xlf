@@ -127,23 +127,23 @@
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.0">
-        <source>Visitors per day</source>
-        <target>Besucher pro Tag</target>
+        <source>Visits per day</source>
+        <target>Besuche pro Tag</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_average.1">
-        <source>With activation is also displayed in the front end a line with the average number of visitors per day.</source>
-        <target>Bei Aktivierung erscheint im Frontend zusätzlich eine Zeile mit der Durchschnittsanzahl der Besucher pro Tag.</target>
+        <source>With activation is also displayed in the front end a line with the average number of visits per day.</source>
+        <target>Bei Aktivierung erscheint im Frontend zusätzlich eine Zeile mit der Durchschnittsanzahl der Besuche pro Tag.</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.0">
-        <source>Block time</source>
-        <target>Blockzeit</target>
+        <source>Interruption of the requests</source>
+        <target>Zugriffspause</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_block_time.1">
-        <source>After interruption of the requests at this time, an access is counted as an additional visitor.</source>
-        <target>Zeit in Sekunden. Nach Zugriffspause dieser Zeit wird ein Zugriff als weiterer Besucher gezählt.</target>
+        <source>After interruption of the requests at this time, an access is counted as an additional visits.</source>
+        <target>Zeit in Sekunden. Nach Zugriffspause dieser Zeit wird ein Zugriff als weiterer Besuch gezählt.</target>
         
       </trans-unit>
       <trans-unit id="tl_visitors.visitors_expert_debug_checks.0">

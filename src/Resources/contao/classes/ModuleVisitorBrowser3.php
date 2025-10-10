@@ -354,7 +354,7 @@ class ModuleVisitorBrowser3
 	 * Protected routine to calculate and determine what the browser is in use (including platform)
 	 */
 	protected function determine() {
-		$this->getClientHints($_SERVER);
+		$this->getClientHints();
 		$this->checkPlatform();
 		$this->checkBrowsers();
 		$this->checkForAol();
@@ -696,7 +696,7 @@ class ModuleVisitorBrowser3
      * Determine if the browser is MS Edge or Edg (Edge Chromium)
      * @return boolean True if the browser is MS Edge otherwise false
      */
-    protected function checkBrowserEdge() 
+    protected function checkBrowserEdge(): bool
     {
 		// Test for versions for Edge
 		if (stripos($this->_agent, 'Edge') !== false 
@@ -705,6 +705,7 @@ class ModuleVisitorBrowser3
 			$aresult = explode('/', stristr($this->_agent, 'Edge'));
 			$aresult[1] = $this->fixVersion($aresult[1]);
 			$aversion = explode('.', $aresult[1]);
+			$arrEdgeMap = [];
 			require __DIR__ . '/../config/edgeMap.php';
 			if (\array_key_exists($aversion[0].'.'.$aversion[1], $arrEdgeMap))
 			{
@@ -769,6 +770,8 @@ class ModuleVisitorBrowser3
 
 			return true;
 		}
+
+		return false;
 	}
 
     /**
