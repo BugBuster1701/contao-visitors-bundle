@@ -18,7 +18,7 @@ define('VISITORS_BUILD', '0');
  * Backend css version number are added to style sheets files to make
  * the web browser reload those resources after a Visitors update.
  */
-define('VISITORS_BE_CSS', '1.2.3');
+define('VISITORS_BE_CSS', '1.2.4');
 
 /*
  * -------------------------------------------------------------------------
