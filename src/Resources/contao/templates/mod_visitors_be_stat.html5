@@ -15,15 +15,15 @@
    <?php endif; ?>
 <?php endforeach; ?>
 				</select>
-				<input class="tl_submit_panel mod_visitors_be_reset" style="padding-left: 10px; min-width: 20px;" type="image" 
-					alt="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" 
-					title="<?= \Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>" 
-					src="system/themes/<?= $this->theme ?>/icons/sync.svg" 
-					width="20" 
-					height="20" 
-					value="statistics" 
-					id="filter" 
-					name="filter">		
+				<input class="tl_submit_panel mod_visitors_be_reset" style="padding-left: 10px; min-width: 20px;" type="image"
+					alt="<?= Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>"
+					title="<?= Contao\StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['showOnly']) ?>"
+					src="system/themes/<?= $this->theme ?>/icons/sync.svg"
+					width="20"
+					height="20"
+					value="statistics"
+					id="filter"
+					name="filter">
 			</form>
 		</div>
 	<!-- Kategorie Ende //-->
@@ -542,9 +542,9 @@ break;
 	<?php if (count($this->visitorsstatReferrer[0]) > 0) : ?>
 		<?php foreach ($this->visitorsstatReferrer[$vcid] as $Referrer) : ?>
 				<tr>
-					<td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= isset($Referrer[0]) ? \Contao\Idna::decode($Referrer[0]) : ''; ?></td>
+					<td style="padding-left: 2px; text-align: left;" class="tl_file_list"><?= isset($Referrer[0]) ? Contao\Idna::decode($Referrer[0]) : ''; ?></td>
 					<td style="padding-left: 2px; text-align: center;" class="tl_file_list"><?= $Referrer[1] ?? ''; ?></td>
-					<td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a data-turbo="false" onclick="Backend.openModalIframe({'width':780,'height':600,'title':'<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>','url':this.href});return false" title="<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= \Contao\Idna::decode($Referrer[0]); ?>" href="<?= $this->route('visitors_backend_details') ?>?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/icons/show.svg"></a><?php endif; ?></td>
+					<td style="text-align: center;" class="tl_file_list"><?php if ($Referrer[2]) : ?><a data-turbo="false" onclick="Backend.openModalIframe({'width':780,'height':600,'title':'<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= Contao\Idna::decode($Referrer[0]); ?>','url':this.href});return false" title="<?= $GLOBALS['TL_LANG']['tl_visitors_referrer']['details_for']; ?> <?= Contao\Idna::decode($Referrer[0]); ?>" href="<?= $this->route('visitors_backend_details') ?>?tl_referrer=<?= str_rot13($Referrer[0]); ?>&amp;tl_vid=<?= $Referrer[2]; ?>"><img width="16" height="16" alt="Details" src="system/themes/<?= $this->theme; ?>/icons/show.svg"></a><?php endif; ?></td>
 				</tr>
 		<?php endforeach; ?>
 				</tbody>
