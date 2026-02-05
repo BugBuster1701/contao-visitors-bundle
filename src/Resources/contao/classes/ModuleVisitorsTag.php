@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2024 <http://contao.ninja>
+ * @copyright  Glen Langer 2026 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -1060,8 +1060,8 @@ class ModuleVisitorsTag extends Frontend
 				(
 					'vid'                   => $vid,
 					'tstamp'                => time(),
-					'visitors_searchengine' => substr($SearchEngine,0,59),
-					'visitors_keywords'		=> substr($Keywords,0,254)
+					'visitors_searchengine' => substr($SearchEngine, 0, 59),
+					'visitors_keywords'		=> substr($Keywords, 0, 254)
 				);
 				Database::getInstance()
 						->prepare("INSERT INTO tl_visitors_searchengines %s")
@@ -1386,22 +1386,22 @@ class ModuleVisitorsTag extends Frontend
 			{
 				$objPage->loadDetails();
 
-				$objRootPage = PageModel::findByPk($objPage->rootId);
+				$objRootPage = PageModel::findById($objPage->rootId);
 			}
 		}
 		else
 		{
 			throw new NoRootPageFoundException('No root page found');
 		}
-		/* @phpstan-ignore variable.undefined */
+		/** @phpstan-ignore variable.undefined */
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Root Page ID over URL: ' . $objRootPage->id);
 		if ($next === false)
 		{
-			/* @phpstan-ignore variable.undefined */
+			/** @phpstan-ignore variable.undefined */
 			return $objRootPage->id;
 		}
 		// simple PageRoot:generate
-		/* @phpstan-ignore variable.undefined */
+		/** @phpstan-ignore variable.undefined */
 		$objNextPage = PageModel::findFirstPublishedByPid($objRootPage->id);
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Next Page ID over URL: ' . $objNextPage->id);
 
@@ -1593,8 +1593,9 @@ class ModuleVisitorsTag extends Frontend
 				return $objIsotope->id;
 			}
 		}
-		
+
 		ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Unknown PageType: ' . $PageType);
+
 		return $PageId;
 	}
 

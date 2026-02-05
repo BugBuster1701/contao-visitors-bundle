@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2024 <http://contao.ninja>
+ * @copyright  Glen Langer 2026 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -117,15 +117,13 @@ class ModuleVisitorLog
 				break;
 			case "VisitorsFrontendController":
 				if ($GLOBALS['visitors']['debug']['tag']) // @todo temporär, eigene Regel notwendig
-				{
-					// self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+				{// self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
 					self::logMonolog($GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
 			case "ModuleVisitorBrowser3":
 				if ($GLOBALS['visitors']['debug']['tag']) // @todo temporär, eigene Regel notwendig
-				{
-					// self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
+				{// self::logMessage(sprintf('[%s] [%s] [%s] %s', $GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value), 'visitors_debug');
 					self::logMonolog($GLOBALS['visitors']['debug']['first'], $vclass . '::' . $arrNamespace[1], $line, $value);
 				}
 				break;
