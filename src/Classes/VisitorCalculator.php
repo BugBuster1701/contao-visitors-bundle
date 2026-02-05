@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2024 <http://contao.ninja>
+ * @copyright  Glen Langer 2026 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -22,6 +22,7 @@ use Contao\Input;
 use Contao\PageModel;
 use Contao\System;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 
 class VisitorCalculator
 {
@@ -131,8 +132,8 @@ class VisitorCalculator
 
                     ');
 
-        $stmt->bindValue('vid', $VisitorsId, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', $today, \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $VisitorsId, ParameterType::INTEGER);
+        $stmt->bindValue('vdate', $today, ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() > 0) {
@@ -160,8 +161,8 @@ class VisitorCalculator
                         vid = :vid AND visitors_type = :vtype
                     ');
 
-        $stmt->bindValue('vid', $VisitorsId, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vtype', 'v', \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $VisitorsId, ParameterType::INTEGER);
+        $stmt->bindValue('vtype', 'v', ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $objVisitorsOnlineCount = $resultSet->fetchAssociative();
@@ -194,7 +195,7 @@ class VisitorCalculator
                         vid = :vid
                     ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTotalVisitCount = $objVisitors['visitors_visit_start']; // Startwert
@@ -217,7 +218,7 @@ class VisitorCalculator
                             vid = :vid
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTotalHitCount = $objVisitors['visitors_hit_start']; // Startwert
@@ -240,8 +241,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d'), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d'), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysVisitCount = 0;
@@ -264,8 +265,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d'), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d'), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysHitCount = 0;
@@ -288,8 +289,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayVisitCount = 0;
@@ -312,8 +313,8 @@ class VisitorCalculator
                             vid = :vid AND visitors_date = :vdate
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayHitCount = 0;
@@ -355,9 +356,9 @@ class VisitorCalculator
                             visitors_page_type = :vpagetype
                         ');
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vpageid', $objPageId, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vpagetype', $pagetype, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vpageid', $objPageId, ParameterType::INTEGER);
+        $stmt->bindValue('vpagetype', $pagetype, ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsPageHits = 0;
@@ -432,7 +433,7 @@ class VisitorCalculator
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -449,7 +450,7 @@ class VisitorCalculator
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -468,7 +469,7 @@ class VisitorCalculator
                         WHERE alias = :alias
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $strAlias, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('alias', $strAlias, ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -485,7 +486,7 @@ class VisitorCalculator
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -505,8 +506,6 @@ class VisitorCalculator
      * @param int    $PageId
      * @param int    $PageType
      * @param string $PageAlias
-     *
-     * @return int
      */
     protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias): int
     {
@@ -560,7 +559,7 @@ class VisitorCalculator
                             WHERE jumpTo = :jumpto
                             LIMIT 1
                             ');
-                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -580,8 +579,8 @@ class VisitorCalculator
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -599,7 +598,7 @@ class VisitorCalculator
                     WHERE jumpTo = :jumpto
                     LIMIT 1
                     ');
-                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -618,8 +617,8 @@ class VisitorCalculator
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -636,7 +635,7 @@ class VisitorCalculator
                         WHERE alias = :alias
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -654,7 +653,7 @@ class VisitorCalculator
                             WHERE jumpTo = :jumpto
                             LIMIT 1
                             ');
-                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -673,8 +672,8 @@ class VisitorCalculator
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {

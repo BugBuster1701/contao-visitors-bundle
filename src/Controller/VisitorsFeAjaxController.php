@@ -23,6 +23,7 @@ use Contao\CoreBundle\Monolog\ContaoContext;
 use Contao\PageModel;
 use Contao\System;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\ParameterType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -92,9 +93,9 @@ class VisitorsFeAjaxController
                 WHERE pid = :pid AND published = :published
                 ORDER BY id
                 LIMIT :limit');
-        $stmt->bindValue('pid', $vc, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('published', 1, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('limit', 1, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('pid', $vc, ParameterType::INTEGER);
+        $stmt->bindValue('published', 1, ParameterType::INTEGER);
+        $stmt->bindValue('limit', 1, ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $row = $resultSet->fetchAssociative();
