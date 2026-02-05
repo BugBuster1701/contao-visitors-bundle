@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2024 <http://contao.ninja>
+ * @copyright  Glen Langer 2026 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -11,14 +11,14 @@
  * @license    LGPL-3.0-or-later
  */
 
-define('VISITORS_VERSION', '1.17');
+define('VISITORS_VERSION', '1.18');
 define('VISITORS_BUILD', '0');
 
 /*
  * Backend css version number are added to style sheets files to make
  * the web browser reload those resources after a Visitors update.
  */
-define('VISITORS_BE_CSS', '1.2.3');
+define('VISITORS_BE_CSS', '1.2.4');
 
 /*
  * -------------------------------------------------------------------------

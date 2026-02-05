@@ -1,4 +1,41 @@
 /* Style sheet visitors backend */
+.mod_visitors_be_panel {
+  background:var(--panel-bg);
+  border-bottom:1px solid var(--content-border);
+  flex-wrap:wrap;
+  padding:8px 15px;
+  text-align:right
+}
+.mod_visitors_be_panel,
+.mod_visitors_be_subpanel {
+  align-items:center;
+  display:flex;
+  gap:3px;
+  justify-content:flex-end
+}
+.mod_visitors_be_panel:last-of-type {
+  -moz-column-gap:10px;
+  column-gap:10px;
+  min-width:100px;
+}
+.mod_visitors_be_subpanel button,
+.mod_visitors_be_subpanel input,
+.mod_visitors_be_subpanel select {
+  height:30px
+}
+.mod_visitors_be_subpanel {
+  letter-spacing:-.31em
+}
+.mod_visitors_be_subpanel>* {
+  margin:0;
+}
+.mod_visitors_be_subpanel * {
+  letter-spacing:normal
+}
+.mod_visitors_be_subpanel strong {
+  vertical-align:middle
+}
+
 .mod_visitors_be_reset {
   border: 0 none !important;
 }

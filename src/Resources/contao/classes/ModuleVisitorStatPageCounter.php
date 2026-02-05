@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2024 <http://contao.ninja>
+ * @copyright  Glen Langer 2026 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -605,13 +605,13 @@ class ModuleVisitorStatPageCounter extends BackendModule
 
 				$objRootPage = PageModel::findById($objPage->rootId);
 				$objPage = PageModel::find403ByPid($objRootPage->id);
-			}			
+			}
 		}
 		else
 		{
 			throw new NoRootPageFoundException('No root page found');
 		}
-		
+
 		return $objPage->alias;
 	}
 

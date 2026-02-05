@@ -5,7 +5,7 @@ declare(strict_types=1);
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2024 <http://contao.ninja>
+ * @copyright  Glen Langer 2026 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -39,9 +39,10 @@ use Contao\System;
 use Contao\Template;
 use Doctrine\DBAL\Connection;
 // use Psr\Log\LogLevel;
+use Doctrine\DBAL\ParameterType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class VisitorsFrontendController extends AbstractFrontendModuleController
@@ -214,9 +215,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         LIMIT :limit')
         ;
 
-        $stmt->bindValue('pid', $this->visitors_category, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('published', 1, \Doctrine\DBAL\ParameterType::STRING);
-        $stmt->bindValue('limit', 1, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('pid', $this->visitors_category, ParameterType::INTEGER);
+        $stmt->bindValue('published', 1, ParameterType::STRING);
+        $stmt->bindValue('limit', 1, ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() < 1) {
@@ -334,8 +335,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     ')
         ;
 
-        $stmt->bindValue('vid', $VisitorsId, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', $today, \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $VisitorsId, ParameterType::INTEGER);
+        $stmt->bindValue('vdate', $today, ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() > 0) {
@@ -366,8 +367,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     ')
         ;
 
-        $stmt->bindValue('vid', $VisitorsId, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vtype', 'v', \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $VisitorsId, ParameterType::INTEGER);
+        $stmt->bindValue('vtype', 'v', ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $objVisitorsOnlineCount = $resultSet->fetchAssociative();
@@ -403,7 +404,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTotalVisitCount = $objVisitors['visitors_visit_start']; // Startwert
@@ -429,7 +430,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTotalHitCount = $objVisitors['visitors_hit_start']; // Startwert
@@ -455,8 +456,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d'), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d'), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysVisitCount = 0;
@@ -482,8 +483,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d'), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d'), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsTodaysHitCount = 0;
@@ -509,8 +510,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayVisitCount = 0;
@@ -536,8 +537,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vdate', date('Y-m-d', strtotime('-1 days')), ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsYesterdayHitCount = 0;
@@ -579,9 +580,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('vid', $objVisitors['id'], \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vpageid', $objPageId, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vpagetype', $visitors_page_type, \Doctrine\DBAL\ParameterType::INTEGER);
+        $stmt->bindValue('vid', $objVisitors['id'], ParameterType::INTEGER);
+        $stmt->bindValue('vpageid', $objPageId, ParameterType::INTEGER);
+        $stmt->bindValue('vpagetype', $visitors_page_type, ParameterType::INTEGER);
         $resultSet = $stmt->executeQuery();
 
         $VisitorsPageHits = 0;
@@ -617,8 +618,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('pid', $this->visitors_category, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('published', 1, \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('pid', $this->visitors_category, ParameterType::INTEGER);
+        $stmt->bindValue('published', 1, ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         if ($resultSet->rowCount() < 1) {
@@ -674,8 +675,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         ')
         ;
 
-        $stmt->bindValue('pid', $visitors_category_id, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('published', 1, \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('pid', $visitors_category_id, ParameterType::INTEGER);
+        $stmt->bindValue('published', 1, ParameterType::STRING);
         $resultSet = $stmt->executeQuery();
 
         while (false !== ($objVisitors = $resultSet->fetchAssociative())) {
@@ -750,7 +751,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -771,7 +772,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -794,7 +795,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         WHERE alias = :alias
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $strAlias, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('alias', $strAlias, ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -815,7 +816,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         WHERE jumpTo = :jumpto
                         LIMIT 1
                         ');
-            $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -838,8 +839,6 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
      * @param int    $PageId
      * @param int    $PageType
      * @param string $PageAlias
-     *
-     * @return int
      */
     protected function visitorGetPageIdByType($PageId, $PageType, $PageAlias): int
     {
@@ -894,7 +893,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             WHERE jumpTo = :jumpto
                             LIMIT 1
                             ');
-                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -915,8 +914,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -935,7 +934,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     WHERE jumpTo = :jumpto
                     LIMIT 1
                     ');
-                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -955,8 +954,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -974,7 +973,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                         WHERE alias = :alias
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -993,7 +992,7 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             WHERE jumpTo = :jumpto
                             LIMIT 1
                             ');
-                $stmt->bindValue('jumpto', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('jumpto', $PageId, ParameterType::INTEGER);
                 $resultSet = $stmt->executeQuery();
 
                 if ($resultSet->rowCount() > 0) {
@@ -1013,8 +1012,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             r.jumpTo = :jumpTo
                         LIMIT 1
                         ');
-            $stmt->bindValue('alias', $alias, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('jumpTo', $PageId, \Doctrine\DBAL\ParameterType::INTEGER);
+            $stmt->bindValue('alias', $alias, ParameterType::STRING);
+            $stmt->bindValue('jumpTo', $PageId, ParameterType::INTEGER);
             $resultSet = $stmt->executeQuery();
 
             if ($resultSet->rowCount() > 0) {
@@ -1062,10 +1061,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 AND vid = :vid
                                 AND (visitors_type = :vtype OR visitors_type = :btype)
                                 ');
-        $stmt->bindValue('blocktime', $BlockTime, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vtype', 'v', \Doctrine\DBAL\ParameterType::STRING);
-        $stmt->bindValue('btype', 'b', \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('blocktime', $BlockTime, ParameterType::INTEGER);
+        $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+        $stmt->bindValue('vtype', 'v', ParameterType::STRING);
+        $stmt->bindValue('btype', 'b', ParameterType::STRING);
         $stmt->executeQuery();
 
         // Hit Blocker for IE8 Bullshit and Browser Counting
@@ -1076,9 +1075,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 AND vid = :vid
                                 AND visitors_type = :vtype
                                 ');
-        $stmt->bindValue('blocktime', 3, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-        $stmt->bindValue('vtype', 'h', \Doctrine\DBAL\ParameterType::STRING);
+        $stmt->bindValue('blocktime', 3, ParameterType::INTEGER);
+        $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+        $stmt->bindValue('vtype', 'h', ParameterType::STRING);
         $stmt->executeQuery();
 
         if (true === $ModuleVisitorChecks->checkBE()) {
@@ -1099,9 +1098,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             AND vid = :vid
                             AND visitors_type = :vtype
                             ');
-        $objHitIP->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-        $objHitIP->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-        $objHitIP->bindValue('vtype', 'h', \Doctrine\DBAL\ParameterType::STRING);
+        $objHitIP->bindValue('vip', $ClientIP, ParameterType::STRING);
+        $objHitIP->bindValue('vid', $vid, ParameterType::INTEGER);
+        $objHitIP->bindValue('vtype', 'h', ParameterType::STRING);
         $resHitIP = $objHitIP->executeQuery();
 
         // Hits und Visits lesen
@@ -1115,8 +1114,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             WHERE
                                 visitors_date = :vdate AND vid = :vid
                             ');
-        $objHitCounter->bindValue('vdate', $CURDATE, \Doctrine\DBAL\ParameterType::STRING);
-        $objHitCounter->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
+        $objHitCounter->bindValue('vdate', $CURDATE, ParameterType::STRING);
+        $objHitCounter->bindValue('vid', $vid, ParameterType::INTEGER);
         $resHitCounter = $objHitCounter->executeQuery();
 
         // Hits setzen
@@ -1132,9 +1131,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                         visitors_ip = :vip,
                                         visitors_type = :vtype
                                     ');
-                $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-                $stmt->bindValue('vtype', 'h', \Doctrine\DBAL\ParameterType::STRING);
+                $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                $stmt->bindValue('vip', $ClientIP, ParameterType::STRING);
+                $stmt->bindValue('vtype', 'h', ParameterType::STRING);
                 $stmt->executeQuery();
 
                 // Insert
@@ -1147,10 +1146,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                     visitors_visit = :vv,
                                     visitors_hit = :vh
                                 ');
-                $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('vdate', $CURDATE, \Doctrine\DBAL\ParameterType::STRING);
-                $stmt->bindValue('vv', 1, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('vh', 1, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                $stmt->bindValue('vdate', $CURDATE, ParameterType::STRING);
+                $stmt->bindValue('vv', 1, ParameterType::INTEGER);
+                $stmt->bindValue('vh', 1, ParameterType::INTEGER);
                 $stmt->executeQuery();
                 /*
                 $arrSet = array
@@ -1188,9 +1187,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                         visitors_ip = :vip,
                                         visitors_type = :vtype
                                     ');
-                $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-                $stmt->bindValue('vtype', 'h', \Doctrine\DBAL\ParameterType::STRING);
+                $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                $stmt->bindValue('vip', $ClientIP, ParameterType::STRING);
+                $stmt->bindValue('vtype', 'h', ParameterType::STRING);
                 $stmt->executeQuery();
 
                 // Insert Counter
@@ -1202,8 +1201,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 WHERE
                                     id = :vid
                                 ');
-                $stmt->bindValue('vhit', $visitors_hits, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('vid', $objHitCounterResult['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('vhit', $visitors_hits, ParameterType::INTEGER);
+                $stmt->bindValue('vid', $objHitCounterResult['id'], ParameterType::INTEGER);
                 $stmt->executeQuery();
 
                 // for page counter
@@ -1225,9 +1224,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     AND vid = :vid
                     AND visitors_type = :vtype
                     ');
-        $objVisitIP->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-        $objVisitIP->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-        $objVisitIP->bindValue('vtype', 'v', \Doctrine\DBAL\ParameterType::STRING);
+        $objVisitIP->bindValue('vip', $ClientIP, ParameterType::STRING);
+        $objVisitIP->bindValue('vid', $vid, ParameterType::INTEGER);
+        $objVisitIP->bindValue('vtype', 'v', ParameterType::STRING);
         $resVisitIP = $objVisitIP->executeQuery();
 
         if ($resVisitIP->rowCount() < 1) {
@@ -1241,9 +1240,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 visitors_ip = :vip,
                                 visitors_type = :vtype
                             ');
-            $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-            $stmt->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('vtype', 'v', \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+            $stmt->bindValue('vip', $ClientIP, ParameterType::STRING);
+            $stmt->bindValue('vtype', 'v', ParameterType::STRING);
             $stmt->executeQuery();
 
             $stmt = $dbconnection->prepare(
@@ -1256,9 +1255,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             AND
                                 visitors_date = :vdate
                             ');
-            $stmt->bindValue('vvis', $visitors_visit, \Doctrine\DBAL\ParameterType::INTEGER);
-            $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-            $stmt->bindValue('vdate', $CURDATE, \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('vvis', $visitors_visit, ParameterType::INTEGER);
+            $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+            $stmt->bindValue('vdate', $CURDATE, ParameterType::STRING);
             $stmt->executeQuery();
 
             // for page counter
@@ -1277,9 +1276,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             AND
                                 visitors_type = :vtype
                             ');
-            $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-            $stmt->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('vtype', 'v', \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+            $stmt->bindValue('vip', $ClientIP, ParameterType::STRING);
+            $stmt->bindValue('vtype', 'v', ParameterType::STRING);
             $stmt->executeQuery();
 
             $this->_VB = true;
@@ -1327,12 +1326,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                             AND
                                                 visitors_page_type = :vpagetype
                                             ');
-            $objPageHitVisit->bindValue('vpagedate', $CURDATE, \Doctrine\DBAL\ParameterType::STRING);
-            $objPageHitVisit->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-            $objPageHitVisit->bindValue('vpageid', $objPageId, \Doctrine\DBAL\ParameterType::INTEGER);
-            $objPageHitVisit->bindValue('vpagepid', $objPageIdOrg, \Doctrine\DBAL\ParameterType::INTEGER);
-            $objPageHitVisit->bindValue('vpagelang', $objPage->language, \Doctrine\DBAL\ParameterType::STRING);
-            $objPageHitVisit->bindValue('vpagetype', $visitors_page_type, \Doctrine\DBAL\ParameterType::INTEGER);
+            $objPageHitVisit->bindValue('vpagedate', $CURDATE, ParameterType::STRING);
+            $objPageHitVisit->bindValue('vid', $vid, ParameterType::INTEGER);
+            $objPageHitVisit->bindValue('vpageid', $objPageId, ParameterType::INTEGER);
+            $objPageHitVisit->bindValue('vpagepid', $objPageIdOrg, ParameterType::INTEGER);
+            $objPageHitVisit->bindValue('vpagelang', $objPage->language, ParameterType::STRING);
+            $objPageHitVisit->bindValue('vpagetype', $visitors_page_type, ParameterType::INTEGER);
             $resPageHitVisit = $objPageHitVisit->executeQuery();
 
             // eventuell $GLOBALS['TL_LANGUAGE']
@@ -1353,14 +1352,14 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                         visitors_page_hit   = :vpagehit,
                                         visitors_page_lang  = :vpagelang
                                     ');
-                    $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                    $stmt->bindValue('vpagedate', $CURDATE, \Doctrine\DBAL\ParameterType::STRING);
-                    $stmt->bindValue('vpageid', $objPageId, \Doctrine\DBAL\ParameterType::INTEGER);
-                    $stmt->bindValue('vpagepid', $objPageIdOrg, \Doctrine\DBAL\ParameterType::INTEGER);
-                    $stmt->bindValue('vpagetype', $visitors_page_type, \Doctrine\DBAL\ParameterType::INTEGER);
-                    $stmt->bindValue('vpagevis', 1, \Doctrine\DBAL\ParameterType::INTEGER);
-                    $stmt->bindValue('vpagehit', 1, \Doctrine\DBAL\ParameterType::INTEGER);
-                    $stmt->bindValue('vpagelang', $objPage->language, \Doctrine\DBAL\ParameterType::STRING);
+                    $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                    $stmt->bindValue('vpagedate', $CURDATE, ParameterType::STRING);
+                    $stmt->bindValue('vpageid', $objPageId, ParameterType::INTEGER);
+                    $stmt->bindValue('vpagepid', $objPageIdOrg, ParameterType::INTEGER);
+                    $stmt->bindValue('vpagetype', $visitors_page_type, ParameterType::INTEGER);
+                    $stmt->bindValue('vpagevis', 1, ParameterType::INTEGER);
+                    $stmt->bindValue('vpagehit', 1, ParameterType::INTEGER);
+                    $stmt->bindValue('vpagelang', $objPage->language, ParameterType::STRING);
                     $stmt->executeQuery();
                     /*
         	        $arrSet = array
@@ -1402,9 +1401,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 WHERE
                                     id = :vid
                                 ');
-                $stmt->bindValue('vpagehit', $visitors_page_hits, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('vpagevis', $visitors_page_visits, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('vid', $objPageHitVisitResult['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('vpagehit', $visitors_page_hits, ParameterType::INTEGER);
+                $stmt->bindValue('vpagevis', $visitors_page_visits, ParameterType::INTEGER);
+                $stmt->bindValue('vid', $objPageHitVisitResult['id'], ParameterType::INTEGER);
                 $stmt->executeQuery();
             }
         }
@@ -1422,9 +1421,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                     AND vid = :vid
                     AND visitors_type = :vtype
                     ');
-        $objBrowserIP->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-        $objBrowserIP->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-        $objBrowserIP->bindValue('vtype', 'b', \Doctrine\DBAL\ParameterType::STRING);
+        $objBrowserIP->bindValue('vip', $ClientIP, ParameterType::STRING);
+        $objBrowserIP->bindValue('vid', $vid, ParameterType::INTEGER);
+        $objBrowserIP->bindValue('vtype', 'b', ParameterType::STRING);
         $resBrowserIP = $objBrowserIP->executeQuery();
 
         if ($resBrowserIP->rowCount() < 1) { // Browser Check wenn nicht geblockt
@@ -1456,9 +1455,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                             visitors_ip = :vip,
                                             visitors_type = :vtype
                                         ');
-                        $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                        $stmt->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-                        $stmt->bindValue('vtype', 'b', \Doctrine\DBAL\ParameterType::STRING);
+                        $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                        $stmt->bindValue('vip', $ClientIP, ParameterType::STRING);
+                        $stmt->bindValue('vtype', 'b', ParameterType::STRING);
                         $stmt->executeQuery();
                     } else {
                         // blocked: Update tstamp
@@ -1474,9 +1473,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                         AND
                                             visitors_type = :vtype
                                         ');
-                        $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                        $stmt->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-                        $stmt->bindValue('vtype', 'b', \Doctrine\DBAL\ParameterType::STRING);
+                        $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                        $stmt->bindValue('vip', $ClientIP, ParameterType::STRING);
+                        $stmt->bindValue('vtype', 'b', ParameterType::STRING);
                         $stmt->executeQuery();
                     }
                     if (null === $ModuleVisitorBrowser3->getLang()) {
@@ -1519,10 +1518,10 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                                 AND visitors_os = :vos
                                                 AND visitors_lang = :vlang
                                                 ');
-                        $objBrowserCounter->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                        $objBrowserCounter->bindValue('vbrowser', $arrBrowser['brversion'], \Doctrine\DBAL\ParameterType::STRING);
-                        $objBrowserCounter->bindValue('vos', $arrBrowser['Platform'], \Doctrine\DBAL\ParameterType::STRING);
-                        $objBrowserCounter->bindValue('vlang', $arrBrowser['lang'], \Doctrine\DBAL\ParameterType::STRING);
+                        $objBrowserCounter->bindValue('vid', $vid, ParameterType::INTEGER);
+                        $objBrowserCounter->bindValue('vbrowser', $arrBrowser['brversion'], ParameterType::STRING);
+                        $objBrowserCounter->bindValue('vos', $arrBrowser['Platform'], ParameterType::STRING);
+                        $objBrowserCounter->bindValue('vlang', $arrBrowser['lang'], ParameterType::STRING);
                         $resBrowserCounter = $objBrowserCounter->executeQuery();
 
                         // setzen
@@ -1555,8 +1554,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                             WHERE
                                                 id = :vid
                                             ');
-                            $stmt->bindValue('vcounter', $visitors_counter, \Doctrine\DBAL\ParameterType::INTEGER);
-                            $stmt->bindValue('vid', $objBrowserCounterResult['id'], \Doctrine\DBAL\ParameterType::INTEGER);
+                            $stmt->bindValue('vcounter', $visitors_counter, ParameterType::INTEGER);
+                            $stmt->bindValue('vid', $objBrowserCounterResult['id'], ParameterType::INTEGER);
                             $stmt->executeQuery();
                         }
                         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Browser counted: '.$arrBrowser['brversion'].' '.$arrBrowser['Platform']);
@@ -1578,9 +1577,9 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                             AND
                                 visitors_type = :vtype
                             ');
-            $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-            $stmt->bindValue('vip', $ClientIP, \Doctrine\DBAL\ParameterType::STRING);
-            $stmt->bindValue('vtype', 'b', \Doctrine\DBAL\ParameterType::STRING);
+            $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+            $stmt->bindValue('vip', $ClientIP, ParameterType::STRING);
+            $stmt->bindValue('vtype', 'b', ParameterType::STRING);
             $stmt->executeQuery();
         }
     }
@@ -1600,8 +1599,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                 $arrSet = [
                     'vid' => $vid,
                     'tstamp' => time(),
-                    'visitors_searchengine' => substr($SearchEngine,0,59),
-                    'visitors_keywords' => substr($Keywords,0,254)
+                    'visitors_searchengine' => substr($SearchEngine, 0, 59),
+                    'visitors_keywords' => substr($Keywords, 0, 254)
                 ];
 
                 $this->container->get('database_connection')
@@ -1623,8 +1622,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                 ')
                 ;
 
-                $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                $stmt->bindValue('tstamp', $CleanTime, \Doctrine\DBAL\ParameterType::INTEGER);
+                $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                $stmt->bindValue('tstamp', $CleanTime, ParameterType::INTEGER);
                 $stmt->executeQuery();
             } // keywords
         } // searchengine
@@ -1679,8 +1678,8 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
                                     ')
                     ;
 
-                    $stmt->bindValue('vid', $vid, \Doctrine\DBAL\ParameterType::INTEGER);
-                    $stmt->bindValue('tstamp', $CleanTime, \Doctrine\DBAL\ParameterType::INTEGER);
+                    $stmt->bindValue('vid', $vid, ParameterType::INTEGER);
+                    $stmt->bindValue('tstamp', $CleanTime, ParameterType::INTEGER);
                     $stmt->executeQuery();
                 }
             } // if PF

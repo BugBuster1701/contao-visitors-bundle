@@ -3,7 +3,7 @@
 /*
  * This file is part of a BugBuster Contao Bundle.
  *
- * @copyright  Glen Langer 2024 <http://contao.ninja>
+ * @copyright  Glen Langer 2026 <http://contao.ninja>
  * @author     Glen Langer (BugBuster)
  * @package    Contao Visitors Bundle
  * @link       https://github.com/BugBuster1701/contao-visitors-bundle
@@ -27,6 +27,7 @@ use Contao\Environment;
 use Contao\Input;
 use Contao\StringUtil;
 use Contao\System;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 /**
  * Class ModuleVisitorStat
@@ -67,22 +68,18 @@ class ModuleVisitorStat extends BackendModule
 		System::loadLanguageFile('tl_visitors_referrer');
 
 		if (Input::post('act', true)=='export') // action Export
-		{
-			// check if phpoffice/spreadsheet is installed
-			if (class_exists(\PhpOffice\PhpSpreadsheet\Spreadsheet::class)) 
+		{// check if phpoffice/spreadsheet is installed
+			if (class_exists(Spreadsheet::class))
 			{
 				$this->generateExport();
 			}
-			
 		}
 
 		if (Input::post('id')>0) // Auswahl im Statistikmenü
-		{
-			$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
+		{$this->intKatID = preg_replace('@\D@', '', Input::post('id')); //  only digits
 		}
 		elseif (Input::get('id')>0) // Auswahl in der Kategorieübersicht
-		{
-			$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
+		{$this->intKatID = preg_replace('@\D@', '', Input::get('id')); //  only digits
 		}
 		else
 		{
@@ -379,7 +376,7 @@ class ModuleVisitorStat extends BackendModule
 		$this->Template->visitorsscreenactivated = $this->isScreencountActivated($this->intKatID);
 
 		// phpoffice/spreadsheet installed?
-		if (class_exists(\PhpOffice\PhpSpreadsheet\Spreadsheet::class)) 
+		if (class_exists(Spreadsheet::class))
 		{
 			$this->Template->visitorsexportavailable = true;
 		}
