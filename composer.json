@@ -25,7 +25,7 @@
 		"forum":"https://community.contao.org/de/forumdisplay.php?28-visitors"
 	},
 	"require":{
-		"php": ">=8.3.0,<8.5.0",
+		"php": "^8.3",
 		"ext-filter": "*",
 		"ext-mbstring": "*",
 		"bugbuster/contao-botdetection-bundle":"^1.15",
