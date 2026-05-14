@@ -868,10 +868,11 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Auto Item: '.($_GET['auto_item'] ?? '--'));
         // wenn gleich dann hat Url ein Suffix wie .html, wenn ungleich dann Suffix ''
         if (substr($uri, -\strlen($urlSuffix)) === $urlSuffix) {
-            // Suffix vorhanden
-            // Alias nehmen
-            $alias = substr($uri, strrpos($uri, '/') + 1, -\strlen($urlSuffix));
-            if (false === $alias) {
+            // Suffix vorhanden entfernen
+            $uri = substr($uri, 0, -\strlen($urlSuffix));
+            // Alias nehmen, alles nach dem letzten / im URI
+            $alias = substr($uri, strrpos($uri, '/') + 1);
+            if ('' === $alias) {
                 ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '.$PageId);
 
                 return $PageId; // kein Parameter, Readerseite selbst
@@ -879,6 +880,12 @@ class VisitorsFrontendController extends AbstractFrontendModuleController
         } else {
             // Suffix nicht vorhanden
             $alias = substr($uri, strrpos($uri, '/') + 1);
+            if ('' === $alias) {
+                // wenn Readerseite mit / endet, z.B. /news/ dann ist kein Alias vorhanden
+                ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'PageIdReaderSelf: '.$PageId);
+
+                return $PageId; // kein Parameter, Readerseite selbst
+            }
         }
         ModuleVisitorLog::writeLog(__METHOD__, __LINE__, 'Alias: '.$alias.' Suffix: '.$urlSuffix);
 
